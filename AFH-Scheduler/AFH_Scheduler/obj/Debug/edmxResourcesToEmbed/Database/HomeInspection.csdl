@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HomeInspectionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Home_History">
+    <Key>
+      <PropertyRef Name="HHistory_ID" />
+    </Key>
+    <Property Name="HHistory_ID" Type="Int64" Nullable="false" />
+    <Property Name="HHistory_Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="FK_PHome_ID" Type="Int64" />
+    <Property Name="FK_IOutcome_Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Inspection_Outcome" Relationship="Self.FK_Home_History_0_0" FromRole="Home_History" ToRole="Inspection_Outcome" />
+    <NavigationProperty Name="Provider_Homes" Relationship="Self.FK_Home_History_1_0" FromRole="Home_History" ToRole="Provider_Homes" />
+  </EntityType>
+  <EntityType Name="Inspection_Outcome">
+    <Key>
+      <PropertyRef Name="IOutcome_Code" />
+    </Key>
+    <Property Name="IOutcome_Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IOutcome_Mintime" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="IOutcome_Maxtime" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Home_History" Relationship="Self.FK_Home_History_0_0" FromRole="Inspection_Outcome" ToRole="Home_History" />
+  </EntityType>
+  <EntityType Name="Provider_Homes">
+    <Key>
+      <PropertyRef Name="PHome_ID" />
+    </Key>
+    <Property Name="PHome_ID" Type="Int64" Nullable="false" />
+    <Property Name="PHome_Address" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="PHome_City" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="PHome_Zipcode" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="PHome_Phonenumber" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="FK_Provider_ID" Type="Int64" />
+    <NavigationProperty Name="Home_History" Relationship="Self.FK_Home_History_1_0" FromRole="Provider_Homes" ToRole="Home_History" />
+    <NavigationProperty Name="Provider" Relationship="Self.FK_Provider_Homes_0_0" FromRole="Provider_Homes" ToRole="Providers" />
+    <NavigationProperty Name="Scheduled_Inspections" Relationship="Self.FK_Scheduled_Inspections_0_0" FromRole="Provider_Homes" ToRole="Scheduled_Inspections" />
+  </EntityType>
+  <EntityType Name="Provider">
+    <Key>
+      <PropertyRef Name="Provider_ID" />
+    </Key>
+    <Property Name="Provider_ID" Type="Int64" Nullable="false" />
+    <Property Name="Provider_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Provider_Homes" Relationship="Self.FK_Provider_Homes_0_0" FromRole="Providers" ToRole="Provider_Homes" />
+  </EntityType>
+  <EntityType Name="Scheduled_Inspections">
+    <Key>
+      <PropertyRef Name="SInspections_Id" />
+    </Key>
+    <Property Name="SInspections_Id" Type="Int64" Nullable="false" />
+    <Property Name="SInspections_Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="FK_PHome_ID" Type="Int64" />
+    <NavigationProperty Name="Provider_Homes" Relationship="Self.FK_Scheduled_Inspections_0_0" FromRole="Scheduled_Inspections" ToRole="Provider_Homes" />
+  </EntityType>
+  <Association Name="FK_Home_History_0_0">
+    <End Role="Inspection_Outcome" Type="Self.Inspection_Outcome" Multiplicity="0..1" />
+    <End Role="Home_History" Type="Self.Home_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inspection_Outcome">
+        <PropertyRef Name="IOutcome_Code" />
+      </Principal>
+      <Dependent Role="Home_History">
+        <PropertyRef Name="FK_IOutcome_Code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Home_History_1_0">
+    <End Role="Provider_Homes" Type="Self.Provider_Homes" Multiplicity="0..1" />
+    <End Role="Home_History" Type="Self.Home_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provider_Homes">
+        <PropertyRef Name="PHome_ID" />
+      </Principal>
+      <Dependent Role="Home_History">
+        <PropertyRef Name="FK_PHome_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Provider_Homes_0_0">
+    <End Role="Providers" Type="Self.Provider" Multiplicity="0..1" />
+    <End Role="Provider_Homes" Type="Self.Provider_Homes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Providers">
+        <PropertyRef Name="Provider_ID" />
+      </Principal>
+      <Dependent Role="Provider_Homes">
+        <PropertyRef Name="FK_Provider_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Scheduled_Inspections_0_0">
+    <End Role="Provider_Homes" Type="Self.Provider_Homes" Multiplicity="0..1" />
+    <End Role="Scheduled_Inspections" Type="Self.Scheduled_Inspections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provider_Homes">
+        <PropertyRef Name="PHome_ID" />
+      </Principal>
+      <Dependent Role="Scheduled_Inspections">
+        <PropertyRef Name="FK_PHome_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HomeInspectionEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Home_History" EntityType="Self.Home_History" />
+    <EntitySet Name="Inspection_Outcome" EntityType="Self.Inspection_Outcome" />
+    <EntitySet Name="Provider_Homes" EntityType="Self.Provider_Homes" />
+    <EntitySet Name="Providers" EntityType="Self.Provider" />
+    <EntitySet Name="Scheduled_Inspections" EntityType="Self.Scheduled_Inspections" />
+    <AssociationSet Name="FK_Home_History_0_0" Association="Self.FK_Home_History_0_0">
+      <End Role="Inspection_Outcome" EntitySet="Inspection_Outcome" />
+      <End Role="Home_History" EntitySet="Home_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Home_History_1_0" Association="Self.FK_Home_History_1_0">
+      <End Role="Provider_Homes" EntitySet="Provider_Homes" />
+      <End Role="Home_History" EntitySet="Home_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Provider_Homes_0_0" Association="Self.FK_Provider_Homes_0_0">
+      <End Role="Providers" EntitySet="Providers" />
+      <End Role="Provider_Homes" EntitySet="Provider_Homes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Scheduled_Inspections_0_0" Association="Self.FK_Scheduled_Inspections_0_0">
+      <End Role="Provider_Homes" EntitySet="Provider_Homes" />
+      <End Role="Scheduled_Inspections" EntitySet="Scheduled_Inspections" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
