@@ -1,0 +1,39 @@
+﻿<Window x:Class="AFH_Scheduler.Complete.Rescheduling_Follow_Up"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:AFH_Scheduler.Complete"
+        mc:Ignorable="d"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Title="Rescheduling_Follow_Up" ResizeMode="NoResize" Height="348" Width="678">
+
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,95,4,75" Width="630">
+        <TextBlock FlowDirection="LeftToRight" VerticalAlignment="Top" TextWrapping="Wrap" FontSize="18" Width="221">When would you like to reschedule the follow up?</TextBlock>
+        <Grid FlowDirection="LeftToRight" Width="259">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="136"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="Auto" MinWidth="93"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Text="{Binding RescheduledFollowUpDate}" Name="DateTextBox" Grid.Column="0" Grid.Row="0" FontSize="18" Margin="10,0,0,0" HorizontalAlignment="Left" Width="113"/>
+            <Button Name="RescheduleButton" Style="{StaticResource MaterialDesignRaisedLightButton}" Grid.Column="0" Grid.Row="2" Margin="10,0,11,0" FontSize="14" ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+                    Command="{Binding Path=SubmittingUpdateCommand}">
+                _RESCHEDULE
+            </Button>
+            <Button IsCancel="True" Name="CancelReschedule" Style="{StaticResource MaterialDesignRaisedLightButton}" Grid.Column="2" Grid.Row="2" Margin="10,0,11,0" ToolTip="Resource name: MaterialDesignRaisedLightButton" FontSize="14">
+                _CANCEL
+            </Button>
+        </Grid>
+    </StackPanel>
+
+</Window>

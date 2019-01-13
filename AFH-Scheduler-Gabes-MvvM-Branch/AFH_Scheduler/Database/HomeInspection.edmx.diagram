@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d9060502a26544578552236b28833904" Name="Diagram1">
+        <EntityTypeShape EntityType="HomeInspectionModel.Home_History" Width="1.5" PointX="5.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeInspectionModel.Inspection_Outcome" Width="1.5" PointX="1.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeInspectionModel.Provider_Homes" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeInspectionModel.Provider" Width="1.5" PointX="1" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeInspectionModel.Scheduled_Inspections" Width="1.5" PointX="5.5" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="HomeInspectionModel.FK_Home_History_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="HomeInspectionModel.FK_Home_History_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="HomeInspectionModel.FK_Provider_Homes_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="HomeInspectionModel.FK_Scheduled_Inspections_0_0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
