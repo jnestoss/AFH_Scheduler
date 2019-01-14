@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AFH_Scheduler;
 using AFH_Scheduler.Algorithm;
-using AFH_Scheduler.Complete;
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Helper_Classes;
+using static AFH_Scheduler.History.openHistoryDetailDialog;
 
 namespace AFH_Scheduler.History
 {
@@ -64,18 +64,8 @@ namespace AFH_Scheduler.History
             get
             {
                 if (_messageService == null)
-                    _messageService = new OpenMessageDialogs();
+                    _messageService = new openHistoryDetailDialog();
                 return _messageService;
-            }
-        }
-        private string _followUpDate;
-        public string FollowUpDate
-        {
-            get { return _followUpDate; }
-            set
-            {
-                _followUpDate = value;
-                OnPropertyChanged("FollowUpDate");
             }
         }
         private bool _isexpanded;
@@ -90,16 +80,14 @@ namespace AFH_Scheduler.History
         }
         private void LoadHomeHistory(object obj)
         {
-            IsExpanded = true;
+            EditHistoryDialogOpen(obj);
+            //IsExpanded = true;
         }
         private void EditHistoryDialogOpen(object obj)
         {
-            RescheduleVM rescheduleVM = new RescheduleVM(FollowUpDate, MessageService);
-            var updateOrNot = MessageService.ShowDialog(rescheduleVM);
-            if (updateOrNot == true)
-            {
-                FollowUpDate = rescheduleVM.RescheduledFollowUpDate;
-            }
+            HistoryModel historyModel = (HistoryModel)obj;
+            HistoryDetailViewVM historyDetailView = new HistoryDetailViewVM(historyModel.HomeID, MessageService);
+            var updateOrNot = MessageService.ShowDialog(historyDetailView);
         }
         public string Name
         {
@@ -128,18 +116,20 @@ namespace AFH_Scheduler.History
         {
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                long providerID;
-                var provs = db.Home_History.ToList();
+                string providername;
+                var provs = db.Provider_Homes.ToList();
                 foreach (var item in provs)
                 {
-                    providerID = db.Provider_Homes.First(r => r.PHome_ID == item.FK_PHome_ID.Value).FK_Provider_ID.Value;//providerID;
+                    providername = db.Providers.First(r => r.Provider_ID == item.FK_Provider_ID.Value).Provider_Name;//providerName;
                     //Console.WriteLine(item. + "*************************************************************************************************");
                     Homes.Add(
                         new HistoryModel
                         (
-                            providerID,//providerID
-                            item.FK_PHome_ID.Value,//Home_ID
-                            item.HHistory_Date//recentDate
+                            item.FK_Provider_ID.Value,//providerID
+                            item.PHome_ID,//Home_ID
+                            providername,//providerName
+                            item.PHome_Address,
+                            item.PHome_Zipcode
                         )
                     );
                 }

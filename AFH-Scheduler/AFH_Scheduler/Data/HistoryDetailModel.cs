@@ -8,24 +8,21 @@ using System.Threading.Tasks;
 
 namespace AFH_Scheduler.Data
 {
-    public class HistoryModel : INotifyPropertyChanged
+    public class HistoryDetailModel: INotifyPropertyChanged
     {
         private bool _isSelected;
         private long _providerID;
-        private string _providerName;
         private long _homeID;
-        private string _address;
-        private string _zipcode;
-        private string _recentInspection;
+        private string _inspectiondate;
+        private string _inspectionoutcome;
 
-        public HistoryModel(long proID, long phomeID,string providerName,string address,string zipcode)
+        public HistoryDetailModel(long proID, long phomeID, string inspectiondate, string inspectionoutcome)
         {
             IsSelected = false;
             ProviderID = proID;
             HomeID = phomeID;
-            Address = address;
-            ProviderName = providerName;
-            ZipCode = zipcode;
+            _inspectiondate = inspectiondate;
+            _inspectionoutcome = inspectionoutcome;
         }
 
         public bool IsSelected
@@ -49,16 +46,6 @@ namespace AFH_Scheduler.Data
                 OnPropertyChanged("ProviderID");
             }
         }
-        public string ProviderName
-        {
-            get { return _providerName; }
-            set
-            {
-                if (_providerName == value) return;
-                _providerName = value;
-                OnPropertyChanged("ProviderName");
-            }
-        }
 
         public long HomeID
         {
@@ -71,25 +58,24 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public string Address
+        public string InspectionDate
         {
-            get { return _address; }
+            get { return _inspectiondate; }
             set
             {
-                if (_address == value) return;
-                _address = value;
-                OnPropertyChanged("Address");
+                if (_inspectiondate == value) return;
+                _inspectiondate = value;
+                OnPropertyChanged("InspectionDate");
             }
         }
-
-        public string ZipCode
+        public string InspectionOutcome
         {
-            get { return _zipcode; }
+            get { return _inspectionoutcome; }
             set
             {
-                if (_zipcode == value) return;
-                _zipcode = value;
-                OnPropertyChanged("ZipCode");
+                if (_inspectionoutcome == value) return;
+                _inspectionoutcome = value;
+                OnPropertyChanged("InspectionOutcome");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -99,6 +85,6 @@ namespace AFH_Scheduler.Data
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
-                
+
     }
 }

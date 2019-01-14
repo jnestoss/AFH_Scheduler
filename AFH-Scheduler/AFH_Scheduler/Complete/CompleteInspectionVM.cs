@@ -46,7 +46,7 @@ namespace AFH_Scheduler.Complete
             get
             {
                 if (_messageService == null)
-                    _messageService = new OpenMessageDialogs();
+                    _messageService = new openHistoryDetailDialog();
                 return _messageService;
             }
         }
