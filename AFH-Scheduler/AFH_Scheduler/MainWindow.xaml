@@ -26,10 +26,20 @@
     </Window.Resources>
 
     <StackPanel Background="WhiteSmoke">
-        <Grid Height="40" Background="#FF2196F3">
+        
+      
+      
+        <StackPanel Height="40" Background="#FF2196F3" Orientation="Horizontal">
             <StackPanel HorizontalAlignment="Left" Margin="10 0">
                 <TextBox Text="Adult Family Home Scheduler" FontSize="18" Width="250" Foreground="WhiteSmoke" IsReadOnly="True"></TextBox> 
             </StackPanel>
+
+          <Grid
+                x:Name="DragableArea"
+                Background="Transparent"
+                MouseDown="DragCommand"
+                Width="635"/>          
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
                 <Button  Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
@@ -55,7 +65,7 @@
                 </Button>
                 
             </StackPanel>
-        </Grid>
+        </StackPanel>
         <Grid Height="100">
             <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">-->
             <ItemsControl ItemsSource="{Binding PageViewModels}">
@@ -95,4 +105,5 @@
         </Grid>
         -->
     </StackPanel>
+
 </Window>
