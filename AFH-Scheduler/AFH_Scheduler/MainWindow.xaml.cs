@@ -24,5 +24,14 @@ namespace AFH_Scheduler
         {
             InitializeComponent();
         }
+
+
+        private void DragCommand(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
     }
 }
