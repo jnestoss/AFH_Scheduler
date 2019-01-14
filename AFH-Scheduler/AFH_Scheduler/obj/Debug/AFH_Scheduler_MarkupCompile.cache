@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\
+C:\Users\Scott\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\
 AFH_Scheduler
 none
 false
 DEBUG;TRACE
-C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\App.xaml
+C:\Users\Scott\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\App.xaml
 51431123964
 2502983494
 361751131942
-24-1712377594
+24-1542471048
 Complete\CompleteInspectionView.xaml;Complete\Rescheduling_Follow_Up.xaml;History\HistoryView.xaml;MainWindow.xaml;Schedules\SchedulerView.xaml;
 
-False
+True
 
