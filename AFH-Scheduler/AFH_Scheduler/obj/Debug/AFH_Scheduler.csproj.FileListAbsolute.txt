@@ -99,9 +99,6 @@ C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Schedule
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler_MarkupCompile.cache
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler_MarkupCompile.lref
-C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\App.baml
-C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Complete\Rescheduling_Follow_Up.baml
-C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\MainWindow.baml
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.g.resources
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.Properties.Resources.resources
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csproj.GenerateResource.cache
@@ -109,3 +106,6 @@ C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Schedule
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csproj.CopyComplete
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.exe
 C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.pdb
+C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\App.baml
+C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Complete\Rescheduling_Follow_Up.baml
+C:\Users\gevans96\Source\Repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\MainWindow.baml
