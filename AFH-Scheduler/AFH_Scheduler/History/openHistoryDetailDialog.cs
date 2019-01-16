@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace AFH_Scheduler.Complete
+namespace AFH_Scheduler.History
 {
     public interface OpenMessageDialogService
     {
         Window DialogBox { get; set; }
-        bool? ShowDialog(RescheduleVM rescheduleVM);
+        bool? ShowDialog(HistoryDetailViewVM historyDetailViewVM);
         void ReleaseMessageBox(string message);
         bool MessageConfirmation(string message, string caption);
         void DialogResultIsTrue();
     }
-    public class openHistoryDetailDialog : OpenMessageDialogService
+
+    public class openHistoryDetailDialog: OpenMessageDialogService
     {
         private Window _dialogBox;
         public Window DialogBox
@@ -38,10 +39,10 @@ namespace AFH_Scheduler.Complete
             MessageBox.Show(message);
         }
 
-        public bool? ShowDialog(RescheduleVM rescheduleVM)
+        public bool? ShowDialog(HistoryDetailViewVM historyDetailViewVM)
         {
             //Rescheduling_Follow_Up follow = new Rescheduling_Follow_Up(rescheduleVM);
-            DialogBox = new Rescheduling_Follow_Up(rescheduleVM);
+            DialogBox = new HistoryDetailView(historyDetailViewVM);
             return DialogBox.ShowDialog();
         }
 

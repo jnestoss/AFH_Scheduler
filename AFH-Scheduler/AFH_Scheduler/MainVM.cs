@@ -94,7 +94,6 @@ namespace AFH_Scheduler
 
         private void SetThickness(string name)
         {
-            Console.WriteLine("HI HI HI");
             switch (name)
             {
                 case "Schedules":
