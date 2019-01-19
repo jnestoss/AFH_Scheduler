@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\AFH-Scheduler",
+    "\\AFH-Scheduler\\AFH_Scheduler",
+    "\\AFH-Scheduler\\AFH_Scheduler\\Schedules",
+    "\\AFH-Scheduler\\AFH_Scheduler\\UserControls"
   ],
+  "SelectedNode": "\\AFH-Scheduler\\AFH_Scheduler\\UserControls",
   "PreviewInSolutionExplorer": false
 }

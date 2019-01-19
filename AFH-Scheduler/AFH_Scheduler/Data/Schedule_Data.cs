@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -43,6 +43,7 @@ namespace AFH_Scheduler.Data
         public bool IsSelected {
             get { return _isSelected; }
             set {
+                ObservableProviders.ClearSelected();
                 if (_isSelected == value) return;
                 _isSelected = value;
                 OnPropertyChanged("IsSelected");

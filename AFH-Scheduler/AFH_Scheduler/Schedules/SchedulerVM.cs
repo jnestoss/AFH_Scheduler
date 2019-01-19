@@ -114,6 +114,10 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+        public static void RadioSelect()
+        {
+            Console.WriteLine("Button is selected");
+        }
 
     }
 }

@@ -152,6 +152,7 @@
       <DependentUpon>HomeInspection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataReader.cs" />
+    <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\CompleteSchedule_Model.cs" />
     <Compile Include="Data\HistoryModel.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
