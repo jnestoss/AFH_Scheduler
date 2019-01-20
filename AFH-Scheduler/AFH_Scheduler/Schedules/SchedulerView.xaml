@@ -27,16 +27,16 @@
                         </Border>
                     </DataGridCheckBoxColumn.Header>
                 </DataGridCheckBoxColumn>
-                    
-                <DataGridTextColumn Binding="{Binding ProviderID}" Header="Provider ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding ProviderID}" Header="Provider ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
             
                 <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                 <!-- set a max length to get an indicator in the editor -->
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Phone}" Header="Phone" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-            
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Address}" Header="Address" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding Phone}" Header="Phone" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding Address}" Header="Address" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                             <Setter Property="HorizontalAlignment" Value="Right" />
@@ -55,10 +55,10 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </materialDesign:MaterialDataGridTextColumn>
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding RecentInspection}" Header="Recent Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding NextInspection}" Header="Next Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding RecentInspection}" Header="Recent Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding NextInspection}" Header="Next Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                 <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
-                <materialDesign:MaterialDataGridComboBoxColumn Header="Food" SelectedValueBinding="{Binding Food}" ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Foods}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Header="18th Month Drop Date" Binding="{Binding EighteenthMonthDate}" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
             </DataGrid.Columns>
                 
         </DataGrid>
@@ -70,7 +70,9 @@
                     <Setter Property="Margin" Value="100,100,100,100"/>
                 </Style>
             </StackPanel.Resources>-->
-            <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10 0" FontSize="10" Width="120" ToolTip="Resource name: MaterialDesignRaisedLightButton">
+            <TextBlock FontSize="18">Excel File Directory(Full Path):</TextBlock>
+            <TextBox Text="{Binding ExcelFileName}" Width="255"  Margin="20 0" FontSize="18"></TextBox>
+            <Button Command="{Binding Path=ExportTableCommand}" Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10 0" FontSize="10" Width="120" ToolTip="Resource name: MaterialDesignRaisedLightButton">
                 _EXPORT TO EXCEL
             </Button>
             <Button Command="{Binding Path=RefreshTableCommand}" Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10 0" MaxWidth="255" ToolTip="Resource name: MaterialDesignRaisedLightButton">

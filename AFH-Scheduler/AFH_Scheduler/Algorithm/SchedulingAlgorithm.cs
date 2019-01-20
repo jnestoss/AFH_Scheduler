@@ -159,6 +159,15 @@ namespace AFH_Scheduler.Algorithm
 
         #endregion
 
+        #region 18th Month Drop Date
+        public string SettingEighteenthMonth(string scheduled_Date)
+        {
+            DateTime eighteenthMonthDate = ExtractDateTime(scheduled_Date).AddDays(548);
+            return ConvertDateToString(eighteenthMonthDate);
+        }
+
+        #endregion
+
         #region ExtractDateTime(string)
         public DateTime ExtractDateTime(string date)//Date format: mm/dd/yy
         {

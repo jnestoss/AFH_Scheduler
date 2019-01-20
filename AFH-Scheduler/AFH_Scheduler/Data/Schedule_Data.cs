@@ -18,7 +18,7 @@ namespace AFH_Scheduler.Data
         private string _address;
         private string _recentInspection;
         private string _nextInspection;
-        private string _food;
+        private string _eighteenthMonthDate;
 
         public ScheduleModel(long id,
             string name,
@@ -26,7 +26,7 @@ namespace AFH_Scheduler.Data
             string address,
             string recentDate,
             string nextInspection,
-            string food)
+            string eighteenthMonthDate)
         {
             IsSelected = false;
             ProviderID = id;
@@ -35,7 +35,7 @@ namespace AFH_Scheduler.Data
             Address = address;
             RecentInspection = recentDate;
             NextInspection = nextInspection;
-            Food = food;
+            EighteenthMonthDate = eighteenthMonthDate;
         }
 
 
@@ -108,12 +108,13 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public string Food {
-            get { return _food; }
+        public string EighteenthMonthDate
+        {
+            get { return _eighteenthMonthDate; }
             set {
-                if (_food == value) return;
-                _food = value;
-                OnPropertyChanged("Food");
+                if (_eighteenthMonthDate == value) return;
+                _eighteenthMonthDate = value;
+                OnPropertyChanged("EighteenthMonthDate");
             }
         }
 

@@ -15,7 +15,7 @@ namespace AFH_Scheduler.Complete
         bool MessageConfirmation(string message, string caption);
         void DialogResultIsTrue();
     }
-    public class openHistoryDetailDialog : OpenMessageDialogService
+    public class CompleteOpenMessageDialogs : OpenMessageDialogService
     {
         private Window _dialogBox;
         public Window DialogBox

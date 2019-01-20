@@ -23,11 +23,11 @@
                 
                 <DataGridTextColumn Binding="{Binding ProviderID}" Header="Provider ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 -->
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                 <!--
                 <DataGridTextColumn Binding="{Binding HomeID}" Header="Home ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 -->
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Address}" Header="Address" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding Address}" Header="Address" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                             <Setter Property="HorizontalAlignment" Value="Right" />
@@ -47,7 +47,7 @@
                     </DataGridTextColumn.ElementStyle>
                 </materialDesign:MaterialDataGridTextColumn>
 
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding City}" Header="City" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding City}" Header="City" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                             <Setter Property="HorizontalAlignment" Value="Right" />
@@ -67,7 +67,7 @@
                     </DataGridTextColumn.ElementStyle>
                 </materialDesign:MaterialDataGridTextColumn>
 
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ZipCode}" Header="ZipCode" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ZipCode}" Header="ZipCode" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                             <Setter Property="HorizontalAlignment" Value="Right" />
@@ -90,7 +90,7 @@
                 <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding InspectionDate}" Header="Completed Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                 <DataGridCheckBoxColumn Header="Follow-Up?" Binding="{Binding FollowUpSelected, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}" EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
-
+                
                 <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding FollowUpDate, UpdateSourceTrigger=PropertyChanged}" Header="Follow-Up Date" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                 <materialDesign:MaterialDataGridComboBoxColumn Header="Deficiences" ItemsSourceBinding="{Binding Deficiences}" SelectedValueBinding="{Binding SelectedOutcome, UpdateSourceTrigger=PropertyChanged}"/>

@@ -18,12 +18,12 @@
             DockPanel.Dock="Top">
 
             <DataGrid.Columns>
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ProviderID}" Header="Provider ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ProviderID}" Header="Provider ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                 <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding HomeID}" Header="Home ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Address}" Header="Address" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ZipCode}" Header="ZipCode" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding HomeID}" Header="Home ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding Address}" Header="Address" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ZipCode}" Header="ZipCode" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                 <!-- set a max length to get an indicator in the editor -->
                 <!--
                 <materialDesign:MaterialDataGridTextColumn Binding="{Binding NextInspection}" Header="Next Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
