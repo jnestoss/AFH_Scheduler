@@ -43,6 +43,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="JetEntityFrameworkProvider, Version=6.0.0.0, Culture=neutral, PublicKeyToken=756cf6beb8fe7b41, processorArchitecture=x86">
+      <HintPath>..\packages\JetEntityFrameworkProvider.6.1.4\lib\JetEntityFrameworkProvider.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -121,21 +124,20 @@
       <DependentUpon>Rescheduling_Follow_Up.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\HomeInspection.Context.cs" />
-    <Compile Include="Database\HomeInspection.Context1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HomeInspection.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\HomeInspection.cs" />
     <Compile Include="Database\HomeInspection.Designer.cs">
       <DependentUpon>HomeInspection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Database\HomeInspection1.cs">
+    <Compile Include="Database\HomeInspection1.cs" />
+    <Compile Include="Database\HomeInspection1.Designer.cs">
+      <DependentUpon>HomeInspection1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database\HomeInspection2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HomeInspection.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\HomeInspection1.Designer.cs">
+    <Compile Include="Database\HomeInspection2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HomeInspection.edmx</DependentUpon>
@@ -170,6 +172,11 @@
     </Compile>
     <Compile Include="History\HistoryVM.cs" />
     <Compile Include="History\openHistoryDetailDialog.cs" />
+    <Compile Include="HomeInspectionDbDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
@@ -208,10 +215,21 @@
     <None Include="Database\HomeInspection.db.sqbpro" />
     <EntityDeploy Include="Database\HomeInspection.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HomeInspection1.Designer.cs</LastGenOutput>
+      <LastGenOutput>HomeInspection2.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Database\HomeInspection.edmx.diagram">
       <DependentUpon>HomeInspection.edmx</DependentUpon>
+    </None>
+    <None Include="HomeInspectionDbDataSet.xsc">
+      <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="HomeInspectionDbDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>HomeInspectionDbDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="HomeInspectionDbDataSet.xss">
+      <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -225,13 +243,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccessDatabase\HomeInspectionDb.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Database\HomeInspection.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HomeInspection.Context1.cs</LastGenOutput>
+      <LastGenOutput>HomeInspection.Context2.cs</LastGenOutput>
     </Content>
     <Content Include="Database\HomeInspection.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HomeInspection1.cs</LastGenOutput>
+      <LastGenOutput>HomeInspection2.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
