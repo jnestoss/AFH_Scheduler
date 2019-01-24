@@ -180,6 +180,28 @@
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
+    <Compile Include="obj\Debug\AFH_Scheduler_Content.g.cs" />
+    <Compile Include="obj\Debug\App.g.cs" />
+    <Compile Include="obj\Debug\Complete\CompleteInspectionView.g.cs" />
+    <Compile Include="obj\Debug\Complete\Rescheduling_Follow_Up.g.cs" />
+    <Compile Include="obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+    <Compile Include="obj\Debug\History\HistoryDetailView.g.cs" />
+    <Compile Include="obj\Debug\History\HistoryView.g.cs" />
+    <Compile Include="obj\Debug\MainWindow.g.cs" />
+    <Compile Include="obj\Debug\Schedules\SchedulerView.g.cs" />
+    <Compile Include="obj\Debug\ShowMeTheXaml_XamlDictionary.g.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\AFH_Scheduler_Content.g.cs" />
+    <Compile Include="obj\Release\App.g.cs" />
+    <Compile Include="obj\Release\Complete\CompleteInspectionView.g.cs" />
+    <Compile Include="obj\Release\Complete\Rescheduling_Follow_Up.g.cs" />
+    <Compile Include="obj\Release\GeneratedInternalTypeHelper.g.cs" />
+    <Compile Include="obj\Release\History\HistoryView.g.cs" />
+    <Compile Include="obj\Release\MainWindow.g.cs" />
+    <Compile Include="obj\Release\Schedules\SchedulerView.g.cs" />
+    <Compile Include="obj\Release\ShowMeTheXaml_XamlDictionary.g.cs" />
     <Compile Include="Schedules\SchedulerView.xaml.cs">
       <DependentUpon>SchedulerView.xaml</DependentUpon>
     </Compile>
@@ -211,6 +233,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="bin\Debug\AFH_Scheduler.exe.config" />
+    <None Include="bin\Debug\System.Data.SQLite.dll.config" />
     <None Include="Database\HomeInspection.db" />
     <None Include="Database\HomeInspection.db.sqbpro" />
     <EntityDeploy Include="Database\HomeInspection.edmx">
@@ -231,6 +255,12 @@
     <None Include="HomeInspectionDbDataSet.xss">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
+    <None Include="obj\Release\AFH_Scheduler.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Release\AFH_Scheduler_MarkupCompile.cache" />
+    <None Include="obj\Release\AFH_Scheduler_MarkupCompile.lref" />
+    <None Include="obj\Release\Complete\CompleteInspectionView.baml" />
+    <None Include="obj\Release\History\HistoryView.baml" />
+    <None Include="obj\Release\Schedules\SchedulerView.baml" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -246,6 +276,29 @@
     <Content Include="AccessDatabase\HomeInspectionDb.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="bin\Debug\AccessDatabase\HomeInspectionDb.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\AFH_Scheduler.exe" />
+    <Content Include="bin\Debug\AFH_Scheduler.pdb" />
+    <Content Include="bin\Debug\Devart.Data.dll" />
+    <Content Include="bin\Debug\Devart.Data.SQLite.dll" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
+    <Resource Include="bin\Debug\EntityFramework.SqlServer.xml" />
+    <Resource Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\JetEntityFrameworkProvider.dll" />
+    <Content Include="bin\Debug\MaterialDesignColors.dll" />
+    <Content Include="bin\Debug\MaterialDesignThemes.Wpf.dll" />
+    <Content Include="bin\Debug\MaterialDesignThemes.Wpf.pdb" />
+    <Resource Include="bin\Debug\MaterialDesignThemes.Wpf.xml" />
+    <Content Include="bin\Debug\ShowMeTheXAML.dll" />
+    <Content Include="bin\Debug\System.Data.SQLite.dll" />
+    <Content Include="bin\Debug\System.Data.SQLite.EF6.dll" />
+    <Content Include="bin\Debug\System.Data.SQLite.Linq.dll" />
+    <Resource Include="bin\Debug\System.Data.SQLite.xml" />
+    <Content Include="bin\Debug\x64\SQLite.Interop.dll" />
+    <Content Include="bin\Debug\x86\SQLite.Interop.dll" />
     <Content Include="Database\HomeInspection.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HomeInspection.Context2.cs</LastGenOutput>
@@ -259,6 +312,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Release\" />
     <Folder Include="Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
