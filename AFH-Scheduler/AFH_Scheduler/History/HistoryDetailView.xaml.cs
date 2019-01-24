@@ -24,5 +24,12 @@ namespace AFH_Scheduler.History
             InitializeComponent();
             DataContext = historyDetailViewVM;
         }
+        private void DragCommand(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
     }
 }

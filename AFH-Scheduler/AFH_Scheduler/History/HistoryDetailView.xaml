@@ -11,7 +11,9 @@
             WindowStyle="None"
             Title="HistoryDetailView" Height="720" Width="1080">
     <StackPanel Background="WhiteSmoke">
-        <Grid Height="40" Background="#FF2196F3">
+        <Grid Height="40" Background="#FF2196F3"
+                x:Name="DragableArea"
+                MouseDown="DragCommand">
             <StackPanel HorizontalAlignment="Left" Margin="10 0">
                 <TextBox Text="[Home Name] Inspecition History" FontSize="18" Width="250" Foreground="WhiteSmoke" IsReadOnly="True"></TextBox>
             </StackPanel>
