@@ -30,7 +30,7 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
-        public string _excelFilename;
+        /*public string _excelFilename;
         public string ExcelFileName
         {
             get { return _excelFilename; }
@@ -39,10 +39,54 @@ namespace AFH_Scheduler.Schedules
                 _excelFilename = value;
                 OnPropertyChanged("ExcelFileName");
             }
+        }*/
+
+        public bool _datePickerEnabled;
+        public bool DatePickerEnabled
+        {
+            get { return _datePickerEnabled; }
+            set
+            {
+                _datePickerEnabled = value;
+                TextFieldEnabled = !_datePickerEnabled;
+                OnPropertyChanged("DatePickerEnabled");
+            }
         }
 
-        private OpenMessageDialogService _messageService;
-        public OpenMessageDialogService MessageService
+        public bool _textFieldEnabled;
+        public bool TextFieldEnabled
+        {
+            get { return _textFieldEnabled; }
+            set
+            {
+                _textFieldEnabled = value;
+                OnPropertyChanged("TextFieldEnabled");
+            }
+        }
+
+        public object _selectedFilter;
+        public object SelectedFilter
+        {
+            get { return _selectedFilter; }
+            set
+            {
+                _selectedFilter = value;
+                OnPropertyChanged("SelectedFilter");
+            }
+        }
+        public string _filterItem;
+        public string FilterItem
+        {
+            get { return _filterItem; }
+            set
+            {
+                _filterItem = value;
+                OnPropertyChanged("FilterItem");
+            }
+        }
+
+        private IOpenMessageDialogService _messageService;
+        public IOpenMessageDialogService MessageService
         {
             get
             {
@@ -50,6 +94,103 @@ namespace AFH_Scheduler.Schedules
                     _messageService = new SchedulesOpenDialog();
                 return _messageService;
             }
+        }
+
+        private RelayCommand _filterTableCommand;
+        public ICommand FilterTableCommand
+        {
+            get
+            {
+                if (_filterTableCommand == null)
+                    _filterTableCommand = new RelayCommand(FilterTheTable);
+                return _filterTableCommand;
+            }
+        }
+
+        private void FilterTheTable(object obj)
+        {
+
+            if (SelectedFilter is null)
+            {
+                MessageService.ReleaseMessageBox("You have not specified what to filter out.");
+                return;
+            }
+            if (FilterItem.Equals(""))
+            {
+                RefreshTable(obj);
+                return;
+            }
+
+            var temp = new ObservableCollection<ScheduleModel>();
+            if (SelectedFilter.ToString().Contains("Provider ID"))
+            {
+                foreach(var item in Providers)
+                {
+                    if (item.ProviderID.ToString().Equals(FilterItem))
+                    {
+                        temp.Add(item);                        
+                    }
+                }
+            }
+
+            else if(SelectedFilter.ToString().Contains("Name"))
+            {
+                foreach (var item in Providers)
+                {
+                    if (item.ProviderName.Contains(FilterItem))
+                    {
+                        temp.Add(item);
+                    }
+                }
+            }
+
+            else if (SelectedFilter.ToString().Contains("Phone-Number"))
+            {
+                foreach (var item in Providers)
+                {
+                    if (!(item.Phone is null) && item.Phone.Equals(FilterItem))
+                    {
+                        temp.Add(item);
+                    }
+                }
+            }
+
+            else if (SelectedFilter.ToString().Contains("Address"))
+            {
+                foreach (var item in Providers)
+                {
+                    if (item.Address.Equals(FilterItem))
+                    {
+                        temp.Add(item);
+                    }
+                }
+            }
+
+            Providers.Clear();
+            foreach (var returnItem in temp)
+            {
+                Providers.Add(returnItem);
+            }
+            
+        }
+
+        private RelayCommand _openEditHistoryDialog;
+        public ICommand OpenEditHistoryDialogCommand
+        {
+            get
+            {
+                if (_openEditHistoryDialog == null)
+                    _openEditHistoryDialog = new RelayCommand(EditHistoryDialogOpen);
+                return _openEditHistoryDialog;
+            }
+        }
+
+        private void EditHistoryDialogOpen(object obj)
+        {
+            /*HistoryModel historyModel = (HistoryModel)obj;
+            HistoryDetailViewVM historyDetailView = new HistoryDetailViewVM(historyModel.HomeID, MessageService);
+            var updateOrNot = MessageService.ShowDialog(historyDetailView);*/
+            MessageService.ReleaseMessageBox("Outcome Code can not be edited currently.");
         }
 
         private RelayCommand _refreshTable;
@@ -82,9 +223,15 @@ namespace AFH_Scheduler.Schedules
 
         private void ExportTable(object obj)
         {
-            if (ExcelFileName.Equals("") || !(Directory.Exists(ExcelFileName)))
+            /*if (ExcelFileName.Equals("") || !(Directory.Exists(ExcelFileName)))
             {
                 MessageService.ReleaseMessageBox("Directory not found");
+                return;
+            }*/
+            string fileName = MessageService.ExcelSaveDialog();
+            if (fileName == null)
+            {
+                MessageService.ReleaseMessageBox("Excel File was not saved.");
                 return;
             }
             using (HomeInspectionEntities db = new HomeInspectionEntities())
@@ -137,9 +284,10 @@ namespace AFH_Scheduler.Schedules
 
                         //xlApp.Visible = false;
                         //xlApp.UserControl = false;
-                        xlWorkbook.SaveAs(ExcelFileName + "\\TestSchedule.xlsx", FileFormat: XlFileFormat.xlWorkbookDefault);
+                        xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlWorkbookDefault);
+                        //xlWorkbook.SaveAs(ExcelFileName + "\\TestSchedule.xlsx", FileFormat: XlFileFormat.xlWorkbookDefault);
                         //xlWorkbook.SaveAs("C:\\excelLocationTest\\TestSchedule.xlsx", FileFormat: XlFileFormat.xlWorkbookDefault);
-                        
+
 
                     }
                     catch (Exception e)
@@ -163,6 +311,8 @@ namespace AFH_Scheduler.Schedules
         public SchedulerVM()
         {
             _providers = new ObservableCollection<ScheduleModel>();
+            FilterItem = "";
+            TextFieldEnabled = true;
             /*
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
@@ -191,6 +341,11 @@ namespace AFH_Scheduler.Schedules
             }*/
 
             GenData();
+
+            foreach(var provider in Providers)
+            {
+                GenHistoryData(provider);
+            }
         }
 
         public string Name {
@@ -216,6 +371,7 @@ namespace AFH_Scheduler.Schedules
                             (
                                 item.Provider_ID,
                                 item.Provider_Name,
+                                house.PHome_ID,
                                 house.PHome_Phonenumber, //Phone Number
                                 house.PHome_Address,//Address
                                 alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID)).HHistory_Date,
@@ -226,6 +382,29 @@ namespace AFH_Scheduler.Schedules
                     }
                 }
 
+            }
+        }
+
+        public void GenHistoryData(ScheduleModel house)
+        {
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                long providerID;
+                var provs = db.Home_History.Where(x => x.FK_PHome_ID == house.HomeID).ToList();
+                foreach (var item in provs)
+                {
+                    providerID = db.Provider_Homes.First(r => r.PHome_ID == item.FK_PHome_ID.Value).FK_Provider_ID.Value;//providerID;
+                    //Console.WriteLine(item. + "*************************************************************************************************");
+                    house.HomesHistory.Add(
+                        new HistoryDetailModel
+                        (
+                            providerID,//providerID
+                            item.FK_PHome_ID.Value,//Home_ID
+                            item.HHistory_Date,//InspectionDate
+                            item.Inspection_Outcome.IOutcome_Code
+                        )
+                    );
+                }
             }
         }
 

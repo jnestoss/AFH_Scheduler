@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 using AFH_Scheduler.Helper_Classes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace AFH_Scheduler.Data
 {
-    public class ScheduleModel : INotifyPropertyChanged
+    public class ScheduleModel : ObservableObject, INotifyPropertyChanged
     {
+        private ObservableCollection<HistoryDetailModel> _homeshistory;
         private bool _isSelected;
         private long _providerID;
+        private long _homeID;
         private string _providerName;
         private string _phone;
         private string _address;
@@ -22,23 +25,37 @@ namespace AFH_Scheduler.Data
 
         public ScheduleModel(long id,
             string name,
+            long homeID,
             string phone,
             string address,
             string recentDate,
             string nextInspection,
-            string eighteenthMonthDate)
+            string eighteenthMonthDate
+            )
         {
             IsSelected = false;
             ProviderID = id;
             ProviderName = name;
+            HomeID = homeID;
             Phone = phone;
             Address = address;
             RecentInspection = recentDate;
             NextInspection = nextInspection;
             EighteenthMonthDate = eighteenthMonthDate;
+            HomesHistory = new ObservableCollection<HistoryDetailModel>();
         }
-
-
+        public ObservableCollection<HistoryDetailModel> HomesHistory
+        {
+            get { return _homeshistory; }
+            set
+            {
+                if (value != _homeshistory)
+                {
+                    _homeshistory = value;
+                    OnPropertyChanged("HomesHistory");
+                }
+            }
+        }
 
         public bool IsSelected {
             get { return _isSelected; }
@@ -55,6 +72,17 @@ namespace AFH_Scheduler.Data
                 if (_providerID == value) return;
                 _providerID = value;
                 OnPropertyChanged("ProviderID");
+            }
+        }
+
+        public long HomeID
+        {
+            get { return _homeID; }
+            set
+            {
+                if (_homeID == value) return;
+                _homeID = value;
+                OnPropertyChanged("HomeID");
             }
         }
 
