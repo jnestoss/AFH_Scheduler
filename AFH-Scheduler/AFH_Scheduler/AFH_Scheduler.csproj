@@ -181,28 +181,6 @@
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
-    <Compile Include="obj\Debug\AFH_Scheduler_Content.g.cs" />
-    <Compile Include="obj\Debug\App.g.cs" />
-    <Compile Include="obj\Debug\Complete\CompleteInspectionView.g.cs" />
-    <Compile Include="obj\Debug\Complete\Rescheduling_Follow_Up.g.cs" />
-    <Compile Include="obj\Debug\GeneratedInternalTypeHelper.g.cs" />
-    <Compile Include="obj\Debug\History\HistoryDetailView.g.cs" />
-    <Compile Include="obj\Debug\History\HistoryView.g.cs" />
-    <Compile Include="obj\Debug\MainWindow.g.cs" />
-    <Compile Include="obj\Debug\Schedules\SchedulerView.g.cs" />
-    <Compile Include="obj\Debug\ShowMeTheXaml_XamlDictionary.g.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="obj\Release\AFH_Scheduler_Content.g.cs" />
-    <Compile Include="obj\Release\App.g.cs" />
-    <Compile Include="obj\Release\Complete\CompleteInspectionView.g.cs" />
-    <Compile Include="obj\Release\Complete\Rescheduling_Follow_Up.g.cs" />
-    <Compile Include="obj\Release\GeneratedInternalTypeHelper.g.cs" />
-    <Compile Include="obj\Release\History\HistoryView.g.cs" />
-    <Compile Include="obj\Release\MainWindow.g.cs" />
-    <Compile Include="obj\Release\Schedules\SchedulerView.g.cs" />
-    <Compile Include="obj\Release\ShowMeTheXaml_XamlDictionary.g.cs" />
     <Compile Include="Schedules\SchedulerView.xaml.cs">
       <DependentUpon>SchedulerView.xaml</DependentUpon>
     </Compile>
@@ -256,12 +234,6 @@
     <None Include="HomeInspectionDbDataSet.xss">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
-    <None Include="obj\Release\AFH_Scheduler.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Release\AFH_Scheduler_MarkupCompile.cache" />
-    <None Include="obj\Release\AFH_Scheduler_MarkupCompile.lref" />
-    <None Include="obj\Release\Complete\CompleteInspectionView.baml" />
-    <None Include="obj\Release\History\HistoryView.baml" />
-    <None Include="obj\Release\Schedules\SchedulerView.baml" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
