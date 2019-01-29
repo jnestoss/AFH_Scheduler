@@ -13,214 +13,220 @@
     mc:Ignorable="d">
 
     <ScrollViewer MaxHeight="400">
-        <Grid Width="600" Margin="16">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-
-            <TextBlock Grid.Row="0" FontSize="24">Edit Home Information</TextBlock>
-
-
+        <StackPanel Orientation="Vertical">
             <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                Provider ID
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                FontSize="24">
+                Edit Home Information
             </TextBlock>
-            <TextBox
-                x:Name="pug"
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                x:FieldModifier="public"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding Path=SelectedSchedule.ProviderId, UpdateSourceTrigger=Explicit}" />
+            <Grid Width="600" Margin="16">
 
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                Home ID
-            </TextBlock>
-            <TextBox
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding SelectedSchedule.HomeID, UpdateSourceTrigger=Explicit}" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                Name
-            </TextBlock>
-            <TextBox
-                Grid.Row="3"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding SelectedSchedules.ProviderName, UpdateSourceTrigger=Explicit}" />
-
-            <TextBlock
-                Grid.Row="4"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                Phone Number
-            </TextBlock>
-            <TextBox
-                Grid.Row="4"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding SelectedSchedules.ProviderID, UpdateSourceTrigger=Explicit}" />
-
-            <TextBlock
-                Grid.Row="5"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                Address
-            </TextBlock>
-            <TextBox
-                Grid.Row="5"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding SelectedSchedules.ProviderID, UpdateSourceTrigger=Explicit}" />
-
-            <TextBlock
-                Grid.Row="6"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                City
-            </TextBlock>
-            <TextBox
-                Grid.Row="6"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding SelectedSchedules.ProviderID, UpdateSourceTrigger=Explicit}" />
-
-            <TextBlock
-                Grid.Row="7"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                ZIP Code
-            </TextBlock>
-            <TextBox
-                Grid.Row="7"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding SelectedSchedules.ProviderID, UpdateSourceTrigger=Explicit}" />
-
-            <TextBlock
-                Grid.Row="8"
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
-                Next Inspection
-            </TextBlock>
-            <TextBox
-                Grid.Row="8"
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding SelectedSchedules.ProviderID, UpdateSourceTrigger=Explicit}" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
 
 
-            <StackPanel
-                Grid.Row="9"
-                Grid.Column="1"
-                Margin="0,16,16,0"
-                HorizontalAlignment="Right"
-                Orientation="Horizontal">
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    Provider ID
+                </TextBlock>
+                <TextBox
+                    x:Name="pug"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    x:FieldModifier="public"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.ProviderID, UpdateSourceTrigger=Explicit}" />
 
-                <Button
-                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-                    IsDefault="True"
-                    Style="{DynamicResource MaterialDesignFlatButton}">
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    Home ID
+                </TextBlock>
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.HomeID, UpdateSourceTrigger=Explicit}" />
 
-                    <Button.CommandParameter>
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    Name
+                </TextBlock>
+                <TextBox
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.ProviderName, UpdateSourceTrigger=Explicit}" />
 
-                        <system:String>Submit</system:String>
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    Phone Number
+                </TextBlock>
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.Phone, UpdateSourceTrigger=Explicit}" />
 
-                    </Button.CommandParameter>
-                    ACCEPT
-                </Button>
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    Address
+                </TextBlock>
+                <TextBox
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.Address, UpdateSourceTrigger=Explicit}" />
 
-                <Button
-                    Margin="8,0,0,0"
-                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-                    IsCancel="True"
-                    Style="{DynamicResource MaterialDesignFlatButton}">
+                <TextBlock
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    City
+                </TextBlock>
+                <TextBox
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.City, UpdateSourceTrigger=Explicit}" />
 
-                    <Button.CommandParameter>
+                <TextBlock
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    ZIP Code
+                </TextBlock>
+                <TextBox
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.ZIP, UpdateSourceTrigger=Explicit}" />
 
-                        <system:String>Cancel</system:String>
+                <TextBlock
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    Next Inspection
+                </TextBlock>
+                <TextBox
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding SelectedSchedule.NextInspection, UpdateSourceTrigger=Explicit}" />
 
-                    </Button.CommandParameter>
-                    CANCEL
-                </Button>
 
-                <Button
-                    Margin="8,0,0,0"
-                    Background="Red"
-                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-                    IsCancel="True"
-                    Style="{DynamicResource MaterialDesignFlatButton}"
-                    TextBlock.Foreground="Black">
 
-                    <Button.CommandParameter>
+                <StackPanel
+                    Grid.Row="9"
+                    Grid.Column="1"
+                    Margin="0,16,16,0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
 
-                        <system:String>Delete</system:String>
+                    <Button
+                        Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                        IsDefault="True"
+                        Style="{DynamicResource MaterialDesignFlatButton}">
 
-                    </Button.CommandParameter>
-                    Delete
-                </Button>
+                        <Button.CommandParameter>
 
-            </StackPanel>
+                            <system:String>Submit</system:String>
 
-        </Grid>
+                        </Button.CommandParameter>
+                        ACCEPT
+                    </Button>
+
+                    <Button
+                        Margin="8,0,0,0"
+                        Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                        IsCancel="True"
+                        Style="{DynamicResource MaterialDesignFlatButton}">
+
+                        <Button.CommandParameter>
+
+                            <system:String>Cancel</system:String>
+
+                        </Button.CommandParameter>
+                        CANCEL
+                    </Button>
+
+                    <Button
+                        Margin="8,0,0,0"
+                        Background="Red"
+                        Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                        IsCancel="True"
+                        Style="{DynamicResource MaterialDesignFlatButton}"
+                        TextBlock.Foreground="Black">
+
+                        <Button.CommandParameter>
+
+                            <system:String>Delete</system:String>
+
+                        </Button.CommandParameter>
+                        Delete
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

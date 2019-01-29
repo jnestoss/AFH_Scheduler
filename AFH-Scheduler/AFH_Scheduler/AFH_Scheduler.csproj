@@ -97,6 +97,9 @@
     <Page Include="Dialogs\EditDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
+    <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Page>
     <Page Include="Dialogs\HistoryDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
@@ -165,6 +168,9 @@
       <DependentUpon>EditDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditVM.cs" />
+    <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
+      <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\HistoryDialog.xaml.cs">
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>

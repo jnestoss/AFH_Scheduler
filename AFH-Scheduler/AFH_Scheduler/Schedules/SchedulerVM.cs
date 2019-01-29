@@ -10,6 +10,7 @@ using System.Windows;
 using AFH_Scheduler.Algorithm;
 using System.Windows.Input;
 using AFH_Scheduler.Dialogs;
+using AFH_Scheduler.Dialogs.Errors;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
@@ -24,6 +25,7 @@ namespace AFH_Scheduler.Schedules
         private ScheduleModel SelectedSchedule {
             get { return _selectedSchedule; }
             set {
+                if (_selectedSchedule == value) return;
                 _selectedSchedule = value;
             }
         }
@@ -172,14 +174,33 @@ namespace AFH_Scheduler.Schedules
 
         private async void ExecuteEditDialog(object o)
         {
-            var view = new EditDialog();
-            view.setDataContext(SelectedSchedule);
+            if (SelectedSchedule == null)
+            {
+                var view = new NoHomeSelectedErrorDialog();
 
-            //if (view.DataContext == null) Environment.Exit(0);
+                var result = await DialogHost.Show(view, ClosingEventHandler2);
+            }
+            else
+            {
+                var view = new EditDialog();
 
-            var result = await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+                Console.WriteLine(SelectedSchedule.ProviderID);
+                Console.WriteLine(SelectedSchedule.ProviderName);
+                Console.WriteLine(SelectedSchedule.HomeID);
+                Console.WriteLine(SelectedSchedule.Address);
+                Console.WriteLine(SelectedSchedule.City);
+                Console.WriteLine(SelectedSchedule.ZIP);
+                Console.WriteLine(SelectedSchedule.NextInspection);
+                Console.WriteLine(SelectedSchedule.IsSelected);
 
-            Console.WriteLine(result);
+                view.setDataContext(SelectedSchedule);
+
+                //if (view.DataContext == null) Environment.Exit(0);
+
+                var result = await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+
+                Console.WriteLine(result);
+            }
         }
 
         private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs) 
@@ -200,7 +221,10 @@ namespace AFH_Scheduler.Schedules
             
         }
 
-
+        private void ClosingEventHandler2(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("");
+        }
 
     }
 }

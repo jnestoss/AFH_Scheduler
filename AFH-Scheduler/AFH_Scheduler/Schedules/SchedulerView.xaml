@@ -27,7 +27,7 @@
 
     <DockPanel LastChildFill="False">
 
-        <materialDesign:DialogHost Identifier="RootDialog">
+        <materialDesign:DialogHost Identifier="EditDialog">
 
             <Canvas
                 Width="1000"

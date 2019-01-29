@@ -51,8 +51,8 @@ namespace AFH_Scheduler.Data
         public bool IsSelected {
             get { return _isSelected; }
             set {
-                if (value == true) _schedulerVM.ClearSelected();
-                //if (value == true) _schedulerVM.ClearSelected2(this);
+                //if (value == true) _schedulerVM.ClearSelected();
+                if (value == true) _schedulerVM.ClearSelected2(this);
                 else _isSelected = value;
                 OnPropertyChanged("IsSelected");
             }
