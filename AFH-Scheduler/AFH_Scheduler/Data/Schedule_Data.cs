@@ -6,36 +6,44 @@ using System.Threading.Tasks;
 using AFH_Scheduler.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using AFH_Scheduler.Schedules;
 
 namespace AFH_Scheduler.Data
 {
     public class ScheduleModel : INotifyPropertyChanged
     {
-        private bool _isSelected;
+        public bool _isSelected;
         private long _providerID;
+        private long _homeID;
         private string _providerName;
         private string _phone;
         private string _address;
+        private string _city;
+        private string _ZIP;
         private string _recentInspection;
         private string _nextInspection;
-        private string _food;
+        private readonly SchedulerVM _schedulerVM;
 
-        public ScheduleModel(long id,
+        public ScheduleModel(long providerID,
+            long homeID,
             string name,
             string phone,
             string address,
+            string homeCity,
+            string homeZIP,
             string recentDate,
             string nextInspection,
-            string food)
+            SchedulerVM schedulerVM)
         {
+            _schedulerVM = schedulerVM;
             IsSelected = false;
-            ProviderID = id;
+            ProviderID = providerID;
+            HomeID = homeID;
             ProviderName = name;
             Phone = phone;
             Address = address;
             RecentInspection = recentDate;
             NextInspection = nextInspection;
-            Food = food;
         }
 
 
@@ -43,9 +51,9 @@ namespace AFH_Scheduler.Data
         public bool IsSelected {
             get { return _isSelected; }
             set {
-                ObservableProviders.ClearSelected();
-                if (_isSelected == value) return;
-                _isSelected = value;
+                if (value == true) _schedulerVM.ClearSelected();
+                //if (value == true) _schedulerVM.ClearSelected2(this);
+                else _isSelected = value;
                 OnPropertyChanged("IsSelected");
             }
         }
@@ -56,6 +64,15 @@ namespace AFH_Scheduler.Data
                 if (_providerID == value) return;
                 _providerID = value;
                 OnPropertyChanged("ProviderID");
+            }
+        }
+
+        public long HomeID {
+            get { return _homeID; }
+            set {
+                if (_homeID == value) return;
+                _homeID = value;
+                OnPropertyChanged("HomeID");
             }
         }
 
@@ -87,6 +104,24 @@ namespace AFH_Scheduler.Data
             }
         }
 
+        public string City {
+            get { return _city; }
+            set {
+                if (_city == value) return;
+                _city = value;
+                OnPropertyChanged("City");
+            }
+        }
+
+        public string ZIP {
+            get { return _ZIP; }
+            set {
+                if (_ZIP == value) return;
+                _ZIP = value;
+                OnPropertyChanged("ZIP");
+            }
+        }
+
         public string RecentInspection
         {
             get { return _recentInspection; }
@@ -109,13 +144,9 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public string Food {
-            get { return _food; }
-            set {
-                if (_food == value) return;
-                _food = value;
-                OnPropertyChanged("Food");
-            }
+        public void SetSelectedToFalse()
+        {
+            _isSelected = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Scott\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\App.xaml
-51431123964
+6-1892661273
 2502983494
-37203701904
+39-651822897
 24-1542471048
-Complete\CompleteInspectionView.xaml;Complete\Rescheduling_Follow_Up.xaml;History\HistoryView.xaml;MainWindow.xaml;Schedules\SchedulerView.xaml;
+Complete\CompleteInspectionView.xaml;Complete\Rescheduling_Follow_Up.xaml;Dialogs\EditDialog.xaml;History\HistoryView.xaml;MainWindow.xaml;Schedules\SchedulerView.xaml;
 
-True
+False
 
