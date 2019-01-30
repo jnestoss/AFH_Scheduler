@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using AFH_Scheduler.Schedules;
 using System.Collections.ObjectModel;
 
 namespace AFH_Scheduler.Data
@@ -19,22 +20,30 @@ namespace AFH_Scheduler.Data
         private string _providerName;
         private string _phone;
         private string _address;
+        private string _city;
+        private string _ZIP;
         private string _recentInspection;
         private string _nextInspection;
         private string _eighteenthMonthDate;
 
-        public ScheduleModel(long id,
+        public ScheduleModel(long providerID,
+            long homeID,
             string name,
             long homeID,
             string phone,
             string address,
+            string homeCity,
+            string homeZIP,
             string recentDate,
             string nextInspection,
+            SchedulerVM schedulerVM,
             string eighteenthMonthDate
             )
         {
+            _schedulerVM = schedulerVM;
             IsSelected = false;
-            ProviderID = id;
+            ProviderID = providerID;
+            HomeID = homeID;
             ProviderName = name;
             HomeID = homeID;
             Phone = phone;
@@ -60,8 +69,9 @@ namespace AFH_Scheduler.Data
         public bool IsSelected {
             get { return _isSelected; }
             set {
-                if (_isSelected == value) return;
-                _isSelected = value;
+                //if (value == true) _schedulerVM.ClearSelected();
+                if (value == true) _schedulerVM.ClearSelected2(this);
+                else _isSelected = value;
                 OnPropertyChanged("IsSelected");
             }
         }
@@ -75,11 +85,9 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public long HomeID
-        {
+        public long HomeID {
             get { return _homeID; }
-            set
-            {
+            set {
                 if (_homeID == value) return;
                 _homeID = value;
                 OnPropertyChanged("HomeID");
@@ -114,6 +122,24 @@ namespace AFH_Scheduler.Data
             }
         }
 
+        public string City {
+            get { return _city; }
+            set {
+                if (_city == value) return;
+                _city = value;
+                OnPropertyChanged("City");
+            }
+        }
+
+        public string ZIP {
+            get { return _ZIP; }
+            set {
+                if (_ZIP == value) return;
+                _ZIP = value;
+                OnPropertyChanged("ZIP");
+            }
+        }
+
         public string RecentInspection
         {
             get { return _recentInspection; }
@@ -136,6 +162,10 @@ namespace AFH_Scheduler.Data
             }
         }
 
+        public void SetSelectedToFalse()
+        {
+            _isSelected = false;
+        }
         public string EighteenthMonthDate
         {
             get { return _eighteenthMonthDate; }

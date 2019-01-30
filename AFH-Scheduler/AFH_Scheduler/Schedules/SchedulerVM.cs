@@ -9,6 +9,11 @@ using AFH_Scheduler.Data;
 using System.Windows;
 using AFH_Scheduler.Algorithm;
 using System.Windows.Input;
+using AFH_Scheduler.Dialogs;
+using AFH_Scheduler.Dialogs.Errors;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
 
@@ -17,8 +22,18 @@ namespace AFH_Scheduler.Schedules
     public class SchedulerVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
+        private ScheduleModel _selectedSchedule;
+        private ScheduleModel SelectedSchedule {
+            get { return _selectedSchedule; }
+            set {
+                if (_selectedSchedule == value) return;
+                _selectedSchedule = value;
+            }
+        }
+
         //Observable and bound to DataGrid
-        private ObservableCollection<ScheduleModel> _providers;
+        private static ObservableCollection<ScheduleModel> _providers;
         public ObservableCollection<ScheduleModel> Providers {
             get { return _providers; }
             set {
@@ -208,6 +223,8 @@ namespace AFH_Scheduler.Schedules
         {
             Providers.Clear();
             GenData();
+            //SelectedSchedule = Providers.First();
+            //SelectedSchedule.IsSelected = true;
         }
 
         private RelayCommand _exportTable;
@@ -354,6 +371,38 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+        public void ClearSelected2(ScheduleModel sm)
+        {
+            if (SelectedSchedule != null)
+                SelectedSchedule.IsSelected = false;
+            SelectedSchedule = sm;
+        }
+
+        //clear all selected items
+        public void ClearSelected()
+        {
+            //for (int i = 0; i < Providers.Count; i++)
+            //{
+                
+            var item = Providers.Where(X => X.IsSelected == true);
+            foreach (ScheduleModel p in item)
+            {
+                p.IsSelected = false;
+            }
+            //Providers.Wher
+            //while (item != null)
+            //{
+            //    if (item != null) item.IsSelected = false;
+            //    item = Providers.Where(X => X.IsSelected == true).FirstOrDefault();
+            //}
+            //}
+
+            //foreach(ScheduleModel sm in Providers)
+            //{
+            //    sm.IsSelected = false;
+            //}
+        }
+
         public void GenData()
         {
             using(HomeInspectionEntities db = new HomeInspectionEntities())
@@ -370,13 +419,16 @@ namespace AFH_Scheduler.Schedules
                             new ScheduleModel
                             (
                                 item.Provider_ID,
+                                house.PHome_ID,
                                 item.Provider_Name,
                                 house.PHome_ID,
                                 house.PHome_Phonenumber, //Phone Number
                                 house.PHome_Address,//Address
+                                house.PHome_City,
+                                house.PHome_Zipcode,
                                 alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID)).HHistory_Date,
                                 insp,
-                                alg.SettingEighteenthMonth(insp)
+                                this
                             )
                         );
                     }
@@ -408,6 +460,63 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+
+
+        public ICommand RunEditDialogCommand => new RelayCommand(ExecuteEditDialog);
+
+        private async void ExecuteEditDialog(object o)
+        {
+            if (SelectedSchedule == null)
+            {
+                var view = new NoHomeSelectedErrorDialog();
+
+                var result = await DialogHost.Show(view, ClosingEventHandler2);
+            }
+            else
+            {
+                var view = new EditDialog();
+
+                Console.WriteLine(SelectedSchedule.ProviderID);
+                Console.WriteLine(SelectedSchedule.ProviderName);
+                Console.WriteLine(SelectedSchedule.HomeID);
+                Console.WriteLine(SelectedSchedule.Address);
+                Console.WriteLine(SelectedSchedule.City);
+                Console.WriteLine(SelectedSchedule.ZIP);
+                Console.WriteLine(SelectedSchedule.NextInspection);
+                Console.WriteLine(SelectedSchedule.IsSelected);
+
+                view.setDataContext(SelectedSchedule);
+
+                //if (view.DataContext == null) Environment.Exit(0);
+
+                var result = await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+
+                Console.WriteLine(result);
+            }
+        }
+
+        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs) 
+        {
+            Console.WriteLine("Dialog closed successfully");
+            if ((String)eventArgs.Parameter == "Cancel") return;
+
+            
+
+            //((EditDialog)eventArgs.Session.Content).
+            //Console.WriteLine(eventArgs.OriginalSource);
+
+
+            using(HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                var homes = db.Providers.ToList();
+            }
+            
+        }
+
+        private void ClosingEventHandler2(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("");
+        }
 
     }
 }
