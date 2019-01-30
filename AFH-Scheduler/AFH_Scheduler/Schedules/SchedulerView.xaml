@@ -27,8 +27,84 @@
 
     <DockPanel LastChildFill="False">
 
-        <materialDesign:DialogHost Identifier="EditDialog">
+        <StackPanel 
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0 15">
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="320"/>
+                    <ColumnDefinition Width="Auto" MinWidth="133"/>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+                    FontSize="18" 
+                    Grid.Column="0" 
+                    HorizontalAlignment="Right">Filter By:</TextBlock>
+                <TextBox 
+                    Name="FilterTextBox" 
+                    IsEnabledChanged="FilterTextBox_IsEnabledChanged"  
+                    IsEnabled="{Binding TextFieldEnabled}" 
+                    Text="{Binding FilterItem}" FontSize="18" Grid.Column="1" Margin="20 0"/>
+
+                <DatePicker 
+                    SelectedDate="{Binding StartDatePicked}"
+                    Name="DatePickerStart" 
+                    Visibility="Hidden" 
+                    IsEnabled="true"  
+                    Grid.Column="1" 
+                    FlowDirection="LeftToRight" 
+                    FontSize="18" 
+                    HorizontalAlignment="Left" 
+                    Margin="10 0" 
+                    MinWidth="100" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                <TextBlock 
+                    Name="ToTextBlock" 
+                    FontSize="18" 
+                    Visibility="Hidden" 
+                    Grid.Column="1" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"  
+                    Margin="10 0" FlowDirection="LeftToRight">To</TextBlock>
+
+                <DatePicker 
+                    SelectedDate="{Binding EndDatePicked}"
+                    Name="DatePickerEnd" 
+                    Visibility="Hidden" 
+                    IsEnabled="true" 
+                    Grid.Column="1" 
+                    FlowDirection="LeftToRight" 
+                    FontSize="18" 
+                    HorizontalAlignment="Right" 
+                    Margin="10 0" 
+                    MinWidth="100" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                <ComboBox FontSize="18" Grid.Column="2" SelectedItem="{Binding SelectedFilter}">
+                    <ComboBoxItem Content="Provider ID"/>
+                    <ComboBoxItem Content="Name"/>
+                    <ComboBoxItem Content="Address"/>
+                    <ComboBoxItem IsSelected="{Binding DatePickerEnabled}" Content="Next Inspection Date"/>
+                </ComboBox>
+                <Button 
+                    Grid.Column="3" 
+                    Command="{Binding Path=FilterTableCommand}" 
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    Margin="10 0" FontSize="14" 
+                    Width="100" 
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                    _FILTER
+                </Button>
+            </Grid>
+        </StackPanel>
+        <materialDesign:DialogHost Identifier="EditDialog">
+        
             <Canvas
                 Width="1000"
                 Height="500"
@@ -69,13 +145,6 @@
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Name" />
 
-                        <!--  set a max length to get an indicator in the editor  -->
-                        <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Phone}"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Phone"
-                            MaxLength="255" />
-
                         <materialDesign:MaterialDataGridTextColumn
                             Width="120"
                             Binding="{Binding Address}"
@@ -115,6 +184,57 @@
                         <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
                     </DataGrid.Columns>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <DataGrid
+                        
+                        Margin="36 0 36 0"
+                        ItemsSource="{Binding HomesHistory}"
+                        CanUserSortColumns="True"
+                        CanUserAddRows="True"
+                        AutoGenerateColumns="False"
+                        materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                        materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                        DockPanel.Dock="Top"
+                        IsReadOnly="True">
+
+                                <DataGrid.Columns>
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding ProviderID}" 
+                                        Header="Provider ID" 
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding HomeID}" 
+                                        Header="Home ID" 
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding InspectionDate}" 
+                                        Header="Previous Inspection Date" 
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding InspectionOutcome}" 
+                                        Header="Inspection Outcome" 
+                                        MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="{Binding Path=DataContext.OpenEditHistoryDialogCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" x:Name="EditHistory_Button" Style="{StaticResource MaterialDesignRaisedLightButton}" ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                                                    _EDIT
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
 
                 </DataGrid>
 
@@ -156,6 +276,7 @@
                 </Style>
             </StackPanel.Resources>-->
             <Button
+                Command="{Binding Path=ExportTableCommand}"
                 Width="120"
                 Margin="10,0"
                 FontSize="10"

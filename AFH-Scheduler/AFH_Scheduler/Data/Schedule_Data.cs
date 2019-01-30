@@ -8,10 +8,11 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using AFH_Scheduler.Schedules;
 using System.Collections.ObjectModel;
+using AFH_Scheduler.Helper_Classes;
 
 namespace AFH_Scheduler.Data
 {
-    public class ScheduleModel : ObservableObject, INotifyPropertyChanged
+    public class ScheduleModel : INotifyPropertyChanged
     {
         private ObservableCollection<HistoryDetailModel> _homeshistory;
         private bool _isSelected;
@@ -25,11 +26,11 @@ namespace AFH_Scheduler.Data
         private string _recentInspection;
         private string _nextInspection;
         private string _eighteenthMonthDate;
+        private readonly SchedulerVM _schedulerVM;
 
         public ScheduleModel(long providerID,
             long homeID,
             string name,
-            long homeID,
             string phone,
             string address,
             string homeCity,
@@ -45,7 +46,6 @@ namespace AFH_Scheduler.Data
             ProviderID = providerID;
             HomeID = homeID;
             ProviderName = name;
-            HomeID = homeID;
             Phone = phone;
             Address = address;
             RecentInspection = recentDate;

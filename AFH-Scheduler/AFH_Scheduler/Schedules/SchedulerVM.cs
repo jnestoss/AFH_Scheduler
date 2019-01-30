@@ -100,6 +100,30 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+        private DateTime _startDatePicked;
+        public DateTime StartDatePicked
+        {
+            get { return _startDatePicked; }
+            set
+            {
+                _startDatePicked = value;
+
+                OnPropertyChanged("StartDatePicked");
+            }
+        }
+
+        private DateTime _endDatePicked;
+        public DateTime EndDatePicked
+        {
+            get { return _endDatePicked; }
+            set
+            {
+                _endDatePicked = value;
+
+                OnPropertyChanged("EndDatePicked");
+            }
+        }
+
         private IOpenMessageDialogService _messageService;
         public IOpenMessageDialogService MessageService
         {
@@ -124,15 +148,14 @@ namespace AFH_Scheduler.Schedules
 
         private void FilterTheTable(object obj)
         {
-
+            RefreshTable(obj);
             if (SelectedFilter is null)
             {
                 MessageService.ReleaseMessageBox("You have not specified what to filter out.");
                 return;
             }
-            if (FilterItem.Equals(""))
+            if (FilterItem.Equals("") && !DatePickerEnabled)
             {
-                RefreshTable(obj);
                 return;
             }
 
@@ -159,22 +182,22 @@ namespace AFH_Scheduler.Schedules
                 }
             }
 
-            else if (SelectedFilter.ToString().Contains("Phone-Number"))
+            else if (SelectedFilter.ToString().Contains("Address"))
             {
                 foreach (var item in Providers)
                 {
-                    if (!(item.Phone is null) && item.Phone.Equals(FilterItem))
+                    if (item.Address.Contains(FilterItem))
                     {
                         temp.Add(item);
                     }
                 }
             }
 
-            else if (SelectedFilter.ToString().Contains("Address"))
+            else if (SelectedFilter.ToString().Contains("Next Inspection Date"))
             {
                 foreach (var item in Providers)
                 {
-                    if (item.Address.Equals(FilterItem))
+                    if (IsInspectionWithinDateRange(item.NextInspection))
                     {
                         temp.Add(item);
                     }
@@ -187,6 +210,16 @@ namespace AFH_Scheduler.Schedules
                 Providers.Add(returnItem);
             }
             
+        }
+
+        private bool IsInspectionWithinDateRange(string nextInspection)
+        {
+            var inspectDate = alg.ExtractDateTime(nextInspection);
+            if((DateTime.Compare(inspectDate, StartDatePicked) >= 0) && (DateTime.Compare(inspectDate, EndDatePicked) <= 0))
+            {
+                return true;
+            }
+            return false;
         }
 
         private RelayCommand _openEditHistoryDialog;
@@ -330,6 +363,8 @@ namespace AFH_Scheduler.Schedules
             _providers = new ObservableCollection<ScheduleModel>();
             FilterItem = "";
             TextFieldEnabled = true;
+            StartDatePicked = DateTime.Today;
+            EndDatePicked = DateTime.Today;
             /*
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
@@ -421,14 +456,14 @@ namespace AFH_Scheduler.Schedules
                                 item.Provider_ID,
                                 house.PHome_ID,
                                 item.Provider_Name,
-                                house.PHome_ID,
                                 house.PHome_Phonenumber, //Phone Number
                                 house.PHome_Address,//Address
                                 house.PHome_City,
                                 house.PHome_Zipcode,
                                 alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID)).HHistory_Date,
                                 insp,
-                                this
+                                this,
+                                alg.SettingEighteenthMonth(insp)
                             )
                         );
                     }
