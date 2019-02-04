@@ -87,6 +87,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\NewHomeModel.cs" />
+    <Compile Include="Dialogs\NewHomeCreatorVM.cs" />
+    <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
+      <DependentUpon>NewHomeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Schedules\SchedulesOpenDialog.cs" />
     <Page Include="Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -103,6 +108,10 @@
     </Page>
     <Page Include="Dialogs\HistoryDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Page>
+    <Page Include="Dialogs\NewHomeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="History\HistoryDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>

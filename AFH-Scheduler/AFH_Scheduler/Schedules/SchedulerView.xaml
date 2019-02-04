@@ -40,6 +40,8 @@
                     <ColumnDefinition Width="Auto" MinWidth="320"/>
                     <ColumnDefinition Width="Auto" MinWidth="133"/>
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="133"/>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock 
                     FontSize="18" 
@@ -101,13 +103,34 @@
                     ToolTip="Resource name: MaterialDesignRaisedLightButton">
                     _FILTER
                 </Button>
+
+
+
+                <Button
+                Grid.Column="4"
+                Command="{Binding Path=ExportTableCommand}"
+                MaxWidth="255"
+                Margin="10"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                    _EXPORT TO EXCEL
+                </Button>
+                <Button
+                Grid.Column="5"
+                MaxWidth="255"
+                Margin="10"
+                Command="{Binding Path=RefreshTableCommand}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                    _REFRESH TABLE
+                </Button>
             </Grid>
         </StackPanel>
-        <materialDesign:DialogHost Identifier="EditDialog">
-        
+
+        <materialDesign:DialogHost Height="300" DockPanel.Dock="Top" Identifier="EditDialog">
+
             <Canvas
                 Width="1000"
-                Height="500"
                 Margin="40,0,40,0"
                 Background="White"
                 DockPanel.Dock="Top">
@@ -136,18 +159,21 @@
 
                         <DataGridTextColumn
                             Binding="{Binding ProviderID}"
+                            IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="Provider ID" />
 
                         <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
                         <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding ProviderName}"
+                            IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Name" />
 
                         <materialDesign:MaterialDataGridTextColumn
                             Width="120"
                             Binding="{Binding Address}"
+                            IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Address">
                             <DataGridTextColumn.HeaderStyle>
@@ -173,13 +199,22 @@
                         </materialDesign:MaterialDataGridTextColumn>
                         <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding RecentInspection}"
+                            IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Recent Inspection"
                             MaxLength="255" />
                         <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding NextInspection}"
+                            IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Next Inspection"
+                            MaxLength="255" />
+
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding EighteenthMonthDate}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="18th Month Drop"
                             MaxLength="255" />
                         <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
@@ -201,22 +236,26 @@
                                 <DataGrid.Columns>
 
                                     <materialDesign:MaterialDataGridTextColumn 
-                                        Binding="{Binding ProviderID}" 
+                                        Binding="{Binding ProviderID}"
+                                        IsReadOnly="True" 
                                         Header="Provider ID" 
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
                                     <materialDesign:MaterialDataGridTextColumn 
-                                        Binding="{Binding HomeID}" 
+                                        Binding="{Binding HomeID}"
+                                        IsReadOnly="True" 
                                         Header="Home ID" 
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                                     <materialDesign:MaterialDataGridTextColumn 
-                                        Binding="{Binding InspectionDate}" 
+                                        Binding="{Binding InspectionDate}"
+                                        IsReadOnly="True" 
                                         Header="Previous Inspection Date" 
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                                     <materialDesign:MaterialDataGridTextColumn 
-                                        Binding="{Binding InspectionOutcome}" 
+                                        Binding="{Binding InspectionOutcome}"
+                                        IsReadOnly="True" 
                                         Header="Inspection Outcome" 
                                         MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
@@ -241,7 +280,7 @@
 
                 <materialDesign:PopupBox
                     Canvas.Left="940"
-                    Canvas.Top="440"
+                    Canvas.Top="240"
                     Closed="PopupBox_OnClosed"
                     Opened="PopupBox_OnOpened"
                     PlacementMode="TopAndAlignCentres"
@@ -258,42 +297,53 @@
                         <Button Command="{Binding RunEditDialogCommand}" ToolTip="Edit">
                             <materialDesign:PackIcon Kind="Edit" />
                         </Button>
+                        <!--
+                        <Button Command="{Binding Path=RefreshTableCommand}" ToolTip="Refresh Table">
+                            <materialDesign:PackIcon Kind="Refresh" />
+                        </Button>
+                        <Button Command="{Binding Path=ExportTableCommand}" ToolTip="Export to Excel">
+                            <materialDesign:PackIcon Kind="Export" />
+                        </Button>-->
+                        <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a New Home">
+                            <materialDesign:PackIcon Kind="Add" />
+                        </Button>
+                        <Button Command="{Binding Path=DeleteHomeCommand}" ToolTip="Remove Selected Home">
+                            <materialDesign:PackIcon Kind="Remove" />
+                        </Button>
+
+
                     </StackPanel>
                 </materialDesign:PopupBox>
+
             </Canvas>
 
         </materialDesign:DialogHost>
+            <!--
+        <StackPanel        
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Bottom" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Right"                            
+            Margin="50">
 
-        <StackPanel
-            Margin="50,50,50,50"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            DockPanel.Dock="Bottom"
-            Orientation="Horizontal">
-            <!--<StackPanel.Resources>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="100,100,100,100"/>
-                </Style>
-            </StackPanel.Resources>-->
             <Button
                 Command="{Binding Path=ExportTableCommand}"
-                Width="120"
-                Margin="10,0"
-                FontSize="10"
+                MaxWidth="255"
+                Margin="10"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Resource name: MaterialDesignRaisedLightButton">
                 _EXPORT TO EXCEL
             </Button>
             <Button
                 MaxWidth="255"
-                Margin="10,0"
+                Margin="10"
                 Command="{Binding Path=RefreshTableCommand}"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Resource name: MaterialDesignRaisedLightButton">
                 _REFRESH TABLE
             </Button>
         </StackPanel>
-
+            -->
     </DockPanel>
 
     <!--

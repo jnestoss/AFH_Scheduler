@@ -31,7 +31,6 @@ namespace AFH_Scheduler.Data
         public ScheduleModel(long providerID,
             long homeID,
             string name,
-            string phone,
             string address,
             string homeCity,
             string homeZIP,
@@ -46,7 +45,6 @@ namespace AFH_Scheduler.Data
             ProviderID = providerID;
             HomeID = homeID;
             ProviderName = name;
-            Phone = phone;
             Address = address;
             RecentInspection = recentDate;
             NextInspection = nextInspection;

@@ -56,6 +56,17 @@ namespace AFH_Scheduler.Schedules
             }
         }*/
 
+        public bool _dialogHostSuccess;
+        public bool DialogHostSuccess
+        {
+            get { return _dialogHostSuccess; }
+            set
+            {
+                _dialogHostSuccess = value;
+                OnPropertyChanged("DialogHostSuccess");
+            }
+        }
+
         public bool _datePickerEnabled;
         public bool DatePickerEnabled
         {
@@ -256,6 +267,10 @@ namespace AFH_Scheduler.Schedules
         {
             Providers.Clear();
             GenData();
+            foreach (var provider in Providers)
+            {
+                GenHistoryData(provider);
+            }
             //SelectedSchedule = Providers.First();
             //SelectedSchedule.IsSelected = true;
         }
@@ -358,6 +373,86 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+        private RelayCommand _addNewHomeCommand;
+        public ICommand AddNewHomeCommand
+        {
+            get
+            {
+                if (_addNewHomeCommand == null)
+                    _addNewHomeCommand = new RelayCommand(CreateNewHomeAsync);
+                return _addNewHomeCommand;
+            }
+        }
+
+        private async void CreateNewHomeAsync(object obj)
+        {
+            var createdHome = new NewHomeCreatorVM(MessageService);
+            var view = new NewHomeDialog(createdHome);
+            var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler);
+
+            if (DialogHostSuccess)
+            {
+               string recentDate;
+               var home = createdHome.NewHomeCreated;
+               var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(home.HomeID));
+               if (recentInspec == null)
+               {
+                   recentDate = "";
+               }
+               else
+                   recentDate = recentInspec.HHistory_Date;
+               Providers.Add(
+                  new ScheduleModel
+                  (
+                  Convert.ToInt64(home.ProviderID),
+                  Convert.ToInt64(home.HomeID),
+                  home.ProviderName,
+                  home.Address,
+                  home.City,
+                  home.Zipcode,
+                  recentDate,
+                  alg.ConvertDateToString(home.InspectionDate),//insp,
+                  this,
+                  alg.SettingEighteenthMonth(alg.ConvertDateToString(home.InspectionDate))
+                  )
+                  );
+                  MessageService.ReleaseMessageBox("New Home has been added to the database");
+             }
+
+            
+        }
+
+        private RelayCommand _deleteHomeCommand;
+        public ICommand DeleteHomeCommand
+        {
+            get
+            {
+                if (_deleteHomeCommand == null)
+                    _deleteHomeCommand = new RelayCommand(DeleteHome);
+                return _deleteHomeCommand;
+            }
+        }
+
+        private void DeleteHome(object obj)
+        {
+            if (SelectedSchedule == null)
+            {
+                MessageService.ReleaseMessageBox("Please select a home to delete.");
+                return;
+            }
+            if (MessageService.MessageConfirmation("Are you sure you want to delete " + SelectedSchedule.Address + "?" +
+                " It will be removed from the database.", "Deleting Home"))
+            {
+                if (MessageService.MessageConfirmation("Are you TRULY sure you want to delete " + SelectedSchedule.Address + "?"
+                    , "Deleting Home"))
+                {
+                    Providers.Remove(SelectedSchedule);
+                    MessageService.ReleaseMessageBox("Selected Home has been removed from the table.");
+                }
+            }
+            ClearSelected2(null);
+        }
+
         public SchedulerVM()
         {
             _providers = new ObservableCollection<ScheduleModel>();
@@ -448,19 +543,27 @@ namespace AFH_Scheduler.Schedules
                     var homes = db.Provider_Homes.Where(r=> r.FK_Provider_ID == item.Provider_ID).ToList();
                     foreach (var house in homes)
                     {
+                        string recentDate;
+                        var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID));
+                        if (recentInspec == null)
+                        {
+                            recentDate = "";
+                        }
+                        else
+                            recentDate = recentInspec.HHistory_Date;
+
                         var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
-                        //Console.WriteLine(item. + "*************************************************************************************************");
+                        
                         Providers.Add(
                             new ScheduleModel
                             (
                                 item.Provider_ID,
                                 house.PHome_ID,
-                                item.Provider_Name,
-                                house.PHome_Phonenumber, //Phone Number
+                                item.Provider_Name, //Phone Number
                                 house.PHome_Address,//Address
                                 house.PHome_City,
                                 house.PHome_Zipcode,
-                                alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID)).HHistory_Date,
+                                recentDate,
                                 insp,
                                 this,
                                 alg.SettingEighteenthMonth(insp)
@@ -481,7 +584,7 @@ namespace AFH_Scheduler.Schedules
                 foreach (var item in provs)
                 {
                     providerID = db.Provider_Homes.First(r => r.PHome_ID == item.FK_PHome_ID.Value).FK_Provider_ID.Value;//providerID;
-                    //Console.WriteLine(item. + "*************************************************************************************************");
+                    
                     house.HomesHistory.Add(
                         new HistoryDetailModel
                         (
@@ -504,7 +607,7 @@ namespace AFH_Scheduler.Schedules
             if (SelectedSchedule == null)
             {
                 var view = new NoHomeSelectedErrorDialog();
-
+                
                 var result = await DialogHost.Show(view, ClosingEventHandler2);
             }
             else
@@ -524,7 +627,7 @@ namespace AFH_Scheduler.Schedules
 
                 //if (view.DataContext == null) Environment.Exit(0);
 
-                var result = await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+                var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler); 
 
                 Console.WriteLine(result);
             }
@@ -533,15 +636,18 @@ namespace AFH_Scheduler.Schedules
         private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs) 
         {
             Console.WriteLine("Dialog closed successfully");
-            if ((String)eventArgs.Parameter == "Cancel") return;
-
-            
+            if ((String)eventArgs.Parameter == "Cancel")
+            {
+                DialogHostSuccess = false;
+                return;
+            }
+            DialogHostSuccess = true;
 
             //((EditDialog)eventArgs.Session.Content).
             //Console.WriteLine(eventArgs.OriginalSource);
 
 
-            using(HomeInspectionEntities db = new HomeInspectionEntities())
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var homes = db.Providers.ToList();
             }
