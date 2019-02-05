@@ -26,28 +26,93 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="0">Provider:</TextBlock>
-                <ComboBox FontSize="18"  Grid.Column="1" Grid.Row="0" ItemsSource="{Binding NewHomeCreated.Providers}" SelectedValue="{Binding NewHomeCreated.SelectedProviderName, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
-                <!-- <TextBox Text="{Binding NewHomeCreated.Provider, UpdateSourceTrigger=PropertyChanged}" Margin="10" FontSize="18" Grid.Column="1" Grid.Row="0" MinWidth="255"/>
-            
-            
-            <TextBlock Margin="10" FontSize="18" Grid.Column="2" Grid.Row="0">Provider Name:</TextBlock>
-            <TextBox Text="{Binding NewHomeCreated.ProviderName, UpdateSourceTrigger=PropertyChanged}" Margin="10" FontSize="18" Grid.Column="3" Grid.Row="0" MinWidth="255"/>
-            -->
+            <ComboBox 
+                    Name="ProviderComboBox"
+                    FontSize="18"  
+                    Grid.Column="1" 
+                    Grid.Row="0" 
+                    ItemsSource="{Binding NewHomeCreated.Providers}" 
+                    SelectedValue="{Binding NewHomeCreated.SelectedProviderName, UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
 
-                <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="1">Home ID:</TextBlock>
-                <TextBox Text="{Binding NewHomeCreated.HomeID, UpdateSourceTrigger=PropertyChanged}" Margin="10" FontSize="18" Grid.Column="1" Grid.Row="1" MinWidth="255"/>
+            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="1">Home ID:</TextBlock>
+            <TextBox
+                Name="HomeIDTextBox"
+                    Margin="10" 
+                    FontSize="18" 
+                    Grid.Column="1" 
+                    Grid.Row="1" 
+                    MinWidth="255">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeID" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <local:NewHomeValidation Message="Home ID isn't in correct format. Use only whole numbers." 
+                                                     Regex="^[0-9]+$"
+                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
 
-                <TextBlock Margin="10" FontSize="18" Grid.Column="2" Grid.Row="1">Address:</TextBlock>
-                <TextBox Text="{Binding NewHomeCreated.Address, UpdateSourceTrigger=PropertyChanged}" Margin="10" FontSize="18" Grid.Column="3" Grid.Row="1" MinWidth="255"/>
+            <TextBlock Margin="10" FontSize="18" Grid.Column="2" Grid.Row="1">Address:</TextBlock>
+            <TextBox 
+                Name="AddressTextBox"
+                    Margin="10" 
+                    FontSize="18" 
+                    Grid.Column="3" 
+                    Grid.Row="1" 
+                    MinWidth="255">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <local:NewHomeValidation Message="Address isn't in correct format." 
+                                                     Regex="^[0-9]+ [a-zA-z0-9]+( [a-zA-z0-9]+)?$"
+                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-                <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="2">City:</TextBlock>
-                <TextBox Text="{Binding NewHomeCreated.City, UpdateSourceTrigger=PropertyChanged}" Margin="10" FontSize="18" Grid.Column="1" Grid.Row="2" MinWidth="255"/>
+            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="2">City:</TextBlock>
+            <TextBox
+                Name="CityTextBox" 
+                    Margin="10" 
+                    FontSize="18" 
+                    Grid.Column="1" 
+                    Grid.Row="2" 
+                    MinWidth="255">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.City" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <local:NewHomeValidation Message="City isn't in correct format." 
+                                                     Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
+                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-                <TextBlock Margin="10" FontSize="18" Grid.Column="2" Grid.Row="2">Zipcode:</TextBlock>
-                <TextBox Text="{Binding NewHomeCreated.Zipcode, UpdateSourceTrigger=PropertyChanged}" Margin="10" FontSize="18" Grid.Column="3" Grid.Row="2" MinWidth="255"/>
+            <TextBlock Margin="10" FontSize="18" Grid.Column="2" Grid.Row="2">Zipcode:</TextBlock>
+            <TextBox
+                Name="ZipCodeTextBox" 
+                    Margin="10" 
+                    FontSize="18" 
+                    Grid.Column="3" 
+                    Grid.Row="2" 
+                    MinWidth="255">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.Zipcode" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <local:NewHomeValidation Message="Zipcode isn't in correct format." 
+                                                     Regex="^[0-9]{5}(-[0-9]{4})?$"
+                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>                
+            </TextBox>
 
-                <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="3">Inspection Date:</TextBlock>
+            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="3">Inspection Date:</TextBlock>
                 <DatePicker 
                     Grid.Column="1"
                     Grid.Row="3"
@@ -59,23 +124,50 @@
                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
             </Grid>
-            <Grid Margin="30" HorizontalAlignment="Right">
+
+        <Grid Margin="30" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
-
                 <Button 
             Grid.Column="0"
             Name="SubmitButton" 
             IsDefault="True"
-            Style="{StaticResource MaterialDesignRaisedLightButton}"
             Margin="10,0,10,1" 
             FontSize="18" 
             ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             Width="100"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
-                    _SUBMIT
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=NewHomeCreated.IsProviderSelected}" 
+                                               Value="True"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeIDTextBox}" 
+                                               Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddressTextBox}" 
+                                               Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CityTextBox}" 
+                                               Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZipCodeTextBox}" 
+                                               Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.CommandParameter>
+
+                    <system:String>Submit</system:String>
+
+                </Button.CommandParameter>
+                    
+                _SUBMIT
                 </Button>
 
                 <Button 
@@ -87,6 +179,12 @@
             MaxWidth="100" Margin="10,0,11,0" 
             ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             FontSize="14">
+                <Button.CommandParameter>
+
+                    <system:String>Cancel</system:String>
+
+                </Button.CommandParameter>
+                    
                     _CANCEL
                 </Button>
             </Grid>

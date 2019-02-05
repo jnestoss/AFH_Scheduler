@@ -20,8 +20,16 @@ namespace AFH_Scheduler.Data
         private string _zip;
         private DateTime _inspectionDate;
 
+        private bool _isProviderSelected;
+
         public NewHomeModel(List<string> provs)
         {
+            HomeID = "";
+            Address = "";
+            City = "";
+            Zipcode = "";
+            IsProviderSelected = false;
+
             Providers = new List<string>();
             foreach (var item in provs)
             {
@@ -69,6 +77,7 @@ namespace AFH_Scheduler.Data
                 String[] idAndName = _selectedProviderName.Split('-');
                 ProviderID = idAndName[0];
                 ProviderName = idAndName[1];
+                IsProviderSelected = true;
                 OnPropertyChanged("SelectedProviderName");
             }
         }
@@ -120,6 +129,15 @@ namespace AFH_Scheduler.Data
             {
                 _inspectionDate = value;
                 OnPropertyChanged("InspectionDate");
+            }
+        }
+        public bool IsProviderSelected
+        {
+            get { return _isProviderSelected; }
+            set
+            {
+                _isProviderSelected = value;
+                OnPropertyChanged("IsProviderSelected");
             }
         }
 

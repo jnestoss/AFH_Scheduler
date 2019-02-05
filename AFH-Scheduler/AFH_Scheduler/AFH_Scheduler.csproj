@@ -92,6 +92,7 @@
     <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
       <DependentUpon>NewHomeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\NewHomeValidation.cs" />
     <Compile Include="Schedules\SchedulesOpenDialog.cs" />
     <Page Include="Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

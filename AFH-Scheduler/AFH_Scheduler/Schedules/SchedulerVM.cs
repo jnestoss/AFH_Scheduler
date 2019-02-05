@@ -386,9 +386,9 @@ namespace AFH_Scheduler.Schedules
 
         private async void CreateNewHomeAsync(object obj)
         {
-            var createdHome = new NewHomeCreatorVM(MessageService);
+            var createdHome = new NewHomeCreatorVM();
             var view = new NewHomeDialog(createdHome);
-            var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler);
+            var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandlerNewHome);
 
             if (DialogHostSuccess)
             {
@@ -633,7 +633,7 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
-        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs) 
+        private void ClosingEventHandlerNewHome(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("Dialog closed successfully");
             if ((String)eventArgs.Parameter == "Cancel")
@@ -642,6 +642,14 @@ namespace AFH_Scheduler.Schedules
                 return;
             }
             DialogHostSuccess = true;
+        }
+
+        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("Dialog closed successfully");
+            if ((String)eventArgs.Parameter == "Cancel") return;
+
+
 
             //((EditDialog)eventArgs.Session.Content).
             //Console.WriteLine(eventArgs.OriginalSource);
@@ -651,7 +659,7 @@ namespace AFH_Scheduler.Schedules
             {
                 var homes = db.Providers.ToList();
             }
-            
+
         }
 
         private void ClosingEventHandler2(object sender, DialogClosingEventArgs eventArgs)
