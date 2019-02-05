@@ -72,15 +72,6 @@ C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Deb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\AFH_Scheduler.exe.config
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\AFH_Scheduler.exe
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\AFH_Scheduler.pdb
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\EntityFramework.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\JetEntityFrameworkProvider.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\MaterialDesignColors.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\MaterialDesignThemes.Wpf.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\ShowMeTheXAML.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\System.Data.SQLite.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\System.Data.SQLite.EF6.dll
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\System.Data.SQLite.Linq.dll
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\EntityFramework.xml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\MaterialDesignThemes.Wpf.pdb
@@ -112,3 +103,6 @@ C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Deb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csproj.CopyComplete
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.exe
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.pdb
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\bin\Debug\AccessDatabase\HomeInspectionDb.accdb
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csprojAssemblyReference.cache
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csproj.ResolveComReference.cache

@@ -90,6 +90,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database\LoginDB\User.cs" />
+    <Compile Include="Database\LoginDB\UserFactory.cs" />
     <Compile Include="Schedules\SchedulesOpenDialog.cs" />
     <Page Include="Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -223,6 +225,7 @@
     <None Include="Database\HomeInspection.edmx.diagram">
       <DependentUpon>HomeInspection.edmx</DependentUpon>
     </None>
+    <None Include="Database\LoginDB\LoginDB.db" />
     <None Include="HomeInspectionDbDataSet.xsc">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
