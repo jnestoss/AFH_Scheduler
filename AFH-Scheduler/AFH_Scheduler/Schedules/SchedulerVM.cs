@@ -9,6 +9,11 @@ using AFH_Scheduler.Data;
 using System.Windows;
 using AFH_Scheduler.Algorithm;
 using System.Windows.Input;
+using AFH_Scheduler.Dialogs;
+using AFH_Scheduler.Dialogs.Errors;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
 
@@ -17,8 +22,18 @@ namespace AFH_Scheduler.Schedules
     public class SchedulerVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
+        private ScheduleModel _selectedSchedule;
+        private ScheduleModel SelectedSchedule {
+            get { return _selectedSchedule; }
+            set {
+                if (_selectedSchedule == value) return;
+                _selectedSchedule = value;
+            }
+        }
+
         //Observable and bound to DataGrid
-        private ObservableCollection<ScheduleModel> _providers;
+        private static ObservableCollection<ScheduleModel> _providers;
         public ObservableCollection<ScheduleModel> Providers {
             get { return _providers; }
             set {
@@ -40,6 +55,17 @@ namespace AFH_Scheduler.Schedules
                 OnPropertyChanged("ExcelFileName");
             }
         }*/
+
+        public bool _dialogHostSuccess;
+        public bool DialogHostSuccess
+        {
+            get { return _dialogHostSuccess; }
+            set
+            {
+                _dialogHostSuccess = value;
+                OnPropertyChanged("DialogHostSuccess");
+            }
+        }
 
         public bool _datePickerEnabled;
         public bool DatePickerEnabled
@@ -85,6 +111,30 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+        private DateTime _startDatePicked;
+        public DateTime StartDatePicked
+        {
+            get { return _startDatePicked; }
+            set
+            {
+                _startDatePicked = value;
+
+                OnPropertyChanged("StartDatePicked");
+            }
+        }
+
+        private DateTime _endDatePicked;
+        public DateTime EndDatePicked
+        {
+            get { return _endDatePicked; }
+            set
+            {
+                _endDatePicked = value;
+
+                OnPropertyChanged("EndDatePicked");
+            }
+        }
+
         private IOpenMessageDialogService _messageService;
         public IOpenMessageDialogService MessageService
         {
@@ -109,15 +159,14 @@ namespace AFH_Scheduler.Schedules
 
         private void FilterTheTable(object obj)
         {
-
+            RefreshTable(obj);
             if (SelectedFilter is null)
             {
                 MessageService.ReleaseMessageBox("You have not specified what to filter out.");
                 return;
             }
-            if (FilterItem.Equals(""))
+            if (FilterItem.Equals("") && !DatePickerEnabled)
             {
-                RefreshTable(obj);
                 return;
             }
 
@@ -144,22 +193,22 @@ namespace AFH_Scheduler.Schedules
                 }
             }
 
-            else if (SelectedFilter.ToString().Contains("Phone-Number"))
+            else if (SelectedFilter.ToString().Contains("Address"))
             {
                 foreach (var item in Providers)
                 {
-                    if (!(item.Phone is null) && item.Phone.Equals(FilterItem))
+                    if (item.Address.Contains(FilterItem))
                     {
                         temp.Add(item);
                     }
                 }
             }
 
-            else if (SelectedFilter.ToString().Contains("Address"))
+            else if (SelectedFilter.ToString().Contains("Next Inspection Date"))
             {
                 foreach (var item in Providers)
                 {
-                    if (item.Address.Equals(FilterItem))
+                    if (IsInspectionWithinDateRange(item.NextInspection))
                     {
                         temp.Add(item);
                     }
@@ -172,6 +221,16 @@ namespace AFH_Scheduler.Schedules
                 Providers.Add(returnItem);
             }
             
+        }
+
+        private bool IsInspectionWithinDateRange(string nextInspection)
+        {
+            var inspectDate = alg.ExtractDateTime(nextInspection);
+            if((DateTime.Compare(inspectDate, StartDatePicked) >= 0) && (DateTime.Compare(inspectDate, EndDatePicked) <= 0))
+            {
+                return true;
+            }
+            return false;
         }
 
         private RelayCommand _openEditHistoryDialog;
@@ -208,6 +267,12 @@ namespace AFH_Scheduler.Schedules
         {
             Providers.Clear();
             GenData();
+            foreach (var provider in Providers)
+            {
+                GenHistoryData(provider);
+            }
+            //SelectedSchedule = Providers.First();
+            //SelectedSchedule.IsSelected = true;
         }
 
         private RelayCommand _exportTable;
@@ -308,11 +373,93 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+        private RelayCommand _addNewHomeCommand;
+        public ICommand AddNewHomeCommand
+        {
+            get
+            {
+                if (_addNewHomeCommand == null)
+                    _addNewHomeCommand = new RelayCommand(CreateNewHomeAsync);
+                return _addNewHomeCommand;
+            }
+        }
+
+        private async void CreateNewHomeAsync(object obj)
+        {
+            var createdHome = new NewHomeCreatorVM(MessageService);
+            var view = new NewHomeDialog(createdHome);
+            var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler);
+
+            if (DialogHostSuccess)
+            {
+               string recentDate;
+               var home = createdHome.NewHomeCreated;
+               var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(home.HomeID));
+               if (recentInspec == null)
+               {
+                   recentDate = "";
+               }
+               else
+                   recentDate = recentInspec.HHistory_Date;
+               Providers.Add(
+                  new ScheduleModel
+                  (
+                  Convert.ToInt64(home.ProviderID),
+                  Convert.ToInt64(home.HomeID),
+                  home.ProviderName,
+                  home.Address,
+                  home.City,
+                  home.Zipcode,
+                  recentDate,
+                  alg.ConvertDateToString(home.InspectionDate),//insp,
+                  this,
+                  alg.SettingEighteenthMonth(alg.ConvertDateToString(home.InspectionDate))
+                  )
+                  );
+                  MessageService.ReleaseMessageBox("New Home has been added to the database");
+             }
+
+            
+        }
+
+        private RelayCommand _deleteHomeCommand;
+        public ICommand DeleteHomeCommand
+        {
+            get
+            {
+                if (_deleteHomeCommand == null)
+                    _deleteHomeCommand = new RelayCommand(DeleteHome);
+                return _deleteHomeCommand;
+            }
+        }
+
+        private void DeleteHome(object obj)
+        {
+            if (SelectedSchedule == null)
+            {
+                MessageService.ReleaseMessageBox("Please select a home to delete.");
+                return;
+            }
+            if (MessageService.MessageConfirmation("Are you sure you want to delete " + SelectedSchedule.Address + "?" +
+                " It will be removed from the database.", "Deleting Home"))
+            {
+                if (MessageService.MessageConfirmation("Are you TRULY sure you want to delete " + SelectedSchedule.Address + "?"
+                    , "Deleting Home"))
+                {
+                    Providers.Remove(SelectedSchedule);
+                    MessageService.ReleaseMessageBox("Selected Home has been removed from the table.");
+                }
+            }
+            ClearSelected2(null);
+        }
+
         public SchedulerVM()
         {
             _providers = new ObservableCollection<ScheduleModel>();
             FilterItem = "";
             TextFieldEnabled = true;
+            StartDatePicked = DateTime.Today;
+            EndDatePicked = DateTime.Today;
             /*
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
@@ -354,6 +501,38 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+        public void ClearSelected2(ScheduleModel sm)
+        {
+            if (SelectedSchedule != null)
+                SelectedSchedule.IsSelected = false;
+            SelectedSchedule = sm;
+        }
+
+        //clear all selected items
+        public void ClearSelected()
+        {
+            //for (int i = 0; i < Providers.Count; i++)
+            //{
+                
+            var item = Providers.Where(X => X.IsSelected == true);
+            foreach (ScheduleModel p in item)
+            {
+                p.IsSelected = false;
+            }
+            //Providers.Wher
+            //while (item != null)
+            //{
+            //    if (item != null) item.IsSelected = false;
+            //    item = Providers.Where(X => X.IsSelected == true).FirstOrDefault();
+            //}
+            //}
+
+            //foreach(ScheduleModel sm in Providers)
+            //{
+            //    sm.IsSelected = false;
+            //}
+        }
+
         public void GenData()
         {
             using(HomeInspectionEntities db = new HomeInspectionEntities())
@@ -364,18 +543,29 @@ namespace AFH_Scheduler.Schedules
                     var homes = db.Provider_Homes.Where(r=> r.FK_Provider_ID == item.Provider_ID).ToList();
                     foreach (var house in homes)
                     {
+                        string recentDate;
+                        var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID));
+                        if (recentInspec == null)
+                        {
+                            recentDate = "";
+                        }
+                        else
+                            recentDate = recentInspec.HHistory_Date;
+
                         var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
-                        //Console.WriteLine(item. + "*************************************************************************************************");
+                        
                         Providers.Add(
                             new ScheduleModel
                             (
                                 item.Provider_ID,
-                                item.Provider_Name,
                                 house.PHome_ID,
-                                house.PHome_Phonenumber, //Phone Number
+                                item.Provider_Name, //Phone Number
                                 house.PHome_Address,//Address
-                                alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID)).HHistory_Date,
+                                house.PHome_City,
+                                house.PHome_Zipcode,
+                                recentDate,
                                 insp,
+                                this,
                                 alg.SettingEighteenthMonth(insp)
                             )
                         );
@@ -394,7 +584,7 @@ namespace AFH_Scheduler.Schedules
                 foreach (var item in provs)
                 {
                     providerID = db.Provider_Homes.First(r => r.PHome_ID == item.FK_PHome_ID.Value).FK_Provider_ID.Value;//providerID;
-                    //Console.WriteLine(item. + "*************************************************************************************************");
+                    
                     house.HomesHistory.Add(
                         new HistoryDetailModel
                         (
@@ -408,6 +598,66 @@ namespace AFH_Scheduler.Schedules
             }
         }
 
+
+
+        public ICommand RunEditDialogCommand => new RelayCommand(ExecuteEditDialog);
+
+        private async void ExecuteEditDialog(object o)
+        {
+            if (SelectedSchedule == null)
+            {
+                var view = new NoHomeSelectedErrorDialog();
+                
+                var result = await DialogHost.Show(view, ClosingEventHandler2);
+            }
+            else
+            {
+                var view = new EditDialog();
+
+                Console.WriteLine(SelectedSchedule.ProviderID);
+                Console.WriteLine(SelectedSchedule.ProviderName);
+                Console.WriteLine(SelectedSchedule.HomeID);
+                Console.WriteLine(SelectedSchedule.Address);
+                Console.WriteLine(SelectedSchedule.City);
+                Console.WriteLine(SelectedSchedule.ZIP);
+                Console.WriteLine(SelectedSchedule.NextInspection);
+                Console.WriteLine(SelectedSchedule.IsSelected);
+
+                view.setDataContext(SelectedSchedule);
+
+                //if (view.DataContext == null) Environment.Exit(0);
+
+                var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler); 
+
+                Console.WriteLine(result);
+            }
+        }
+
+        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs) 
+        {
+            Console.WriteLine("Dialog closed successfully");
+            if ((String)eventArgs.Parameter == "Cancel")
+            {
+                DialogHostSuccess = false;
+                return;
+            }
+            DialogHostSuccess = true;
+
+            //((EditDialog)eventArgs.Session.Content).
+            //Console.WriteLine(eventArgs.OriginalSource);
+
+
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                var homes = db.Providers.ToList();
+            }
+            
+        }
+
+        private void ClosingEventHandler2(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("");
+        }
 
     }
 }

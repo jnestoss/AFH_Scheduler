@@ -21,6 +21,16 @@ namespace AFH_Scheduler.Schedules
         {
             InitializeComponent();
         }
+  
+        private void PopupBox_OnOpened(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Just making sure the popup has opened.");
+        }
+
+        private void PopupBox_OnClosed(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Just making sure the popup has closed.");
+        }
 
         private void FilterTextBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
