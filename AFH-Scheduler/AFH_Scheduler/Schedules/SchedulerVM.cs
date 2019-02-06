@@ -14,6 +14,7 @@ using AFH_Scheduler.Dialogs.Errors;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
+using AFH_Scheduler.Dialogs.Confirmation;
 
 namespace AFH_Scheduler.Schedules
 {
@@ -178,53 +179,67 @@ namespace AFH_Scheduler.Schedules
             {
                 var view = new NoHomeSelectedErrorDialog();
 
-                var result = await DialogHost.Show(view, ClosingEventHandler2);
+                var result = await DialogHost.Show(view, GenericClosingEventHandler);
             }
             else
             {
                 var view = new EditDialog();
 
-                Console.WriteLine(SelectedSchedule.ProviderID);
-                Console.WriteLine(SelectedSchedule.ProviderName);
-                Console.WriteLine(SelectedSchedule.HomeID);
-                Console.WriteLine(SelectedSchedule.Address);
-                Console.WriteLine(SelectedSchedule.City);
-                Console.WriteLine(SelectedSchedule.ZIP);
-                Console.WriteLine(SelectedSchedule.NextInspection);
-                Console.WriteLine(SelectedSchedule.IsSelected);
-
                 view.setDataContext(SelectedSchedule);
 
-                //if (view.DataContext == null) Environment.Exit(0);
+                var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler);
 
-                var result = await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+                if(result.Equals("Delete"))
+                {
+                    var deleteView = new DeleteConfirmationDialog();
 
-                Console.WriteLine(result);
+                    var deleteResult = await DialogHost.Show(deleteView, GenericClosingEventHandler);
+
+                    if (deleteResult.Equals("Yes"))
+                    {
+                        using (HomeInspectionEntities db = new HomeInspectionEntities())
+                        {
+                            //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
+                            var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == ((EditVM)view.DataContext).SelectedSchedule.HomeID);
+
+                            if (home != null)
+                            {
+                                db.Provider_Homes.Remove(home);
+                                var waitOnSave = db.SaveChangesAsync();
+                            }
+                        }
+                    }
+                }
             }
         }
+
 
         private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs) 
         {
-            Console.WriteLine("Dialog closed successfully");
-            if ((String)eventArgs.Parameter == "Cancel") return;
-
-            
-
-            //((EditDialog)eventArgs.Session.Content).
-            //Console.WriteLine(eventArgs.OriginalSource);
-
-
-            using(HomeInspectionEntities db = new HomeInspectionEntities())
+            if((String)eventArgs.Parameter == "Submit")
             {
-                var homes = db.Providers.ToList();
+                ScheduleModel editedHomeData = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule;
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    var homeID = editedHomeData.HomeID;
+                    var providerID = editedHomeData.ProviderID;
+                    var address = editedHomeData.Address;
+                    var city = editedHomeData.City;
+                    var zip = editedHomeData.ZIP;
+                    var nextInspection = editedHomeData.NextInspection;
+
+                }
+            }   
+            else if ((String)eventArgs.Parameter == "Delete") {
+
             }
-            
         }
 
-        private void ClosingEventHandler2(object sender, DialogClosingEventArgs eventArgs)
+        private void GenericClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
-            Console.WriteLine("");
+            Console.WriteLine("Dialog closed successfully");
         }
+
 
     }
 }

@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -69,6 +72,9 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -87,12 +93,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml.cs">
+      <DependentUpon>DeleteConfirmationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Validations\FutureDateValidationRule.cs" />
+    <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
+    <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
     <Page Include="Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
     <Page Include="Complete\Rescheduling_Follow_Up.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
     <Page Include="Dialogs\EditDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -125,6 +140,8 @@
     <Compile Include="Complete\Rescheduling_Follow_Up.xaml.cs">
       <DependentUpon>Rescheduling_Follow_Up.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ProviderConverter.cs" />
+    <Compile Include="Converters\ProviderListConverter.cs" />
     <Compile Include="Database\HomeInspection.Context.cs" />
     <Compile Include="Database\HomeInspection.Context1.cs">
       <AutoGen>True</AutoGen>

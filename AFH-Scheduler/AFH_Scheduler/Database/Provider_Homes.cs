@@ -25,7 +25,6 @@ public partial class Provider_Homes
         this.Home_History = new HashSet<Home_History>();
 
         this.Scheduled_Inspections = new HashSet<Scheduled_Inspections>();
-
     }
 
 
