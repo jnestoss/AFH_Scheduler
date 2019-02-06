@@ -17,6 +17,8 @@
             Select a home from the table in order to edit its information.
         </TextBlock>
 
+
+
         <Button
             Margin="0,40,0,0"
             HorizontalAlignment="Center"
@@ -25,6 +27,8 @@
             Style="{StaticResource MaterialDesignFlatButton}">
             OK
         </Button>
+
+
 
     </StackPanel>
 

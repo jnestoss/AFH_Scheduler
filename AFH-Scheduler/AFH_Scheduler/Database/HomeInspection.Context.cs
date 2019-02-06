@@ -18,6 +18,7 @@ namespace AFH_Scheduler.Database
         public HomeInspectionEntities()
             : base("name=HomeInspectionEntities")
         {
+            this.Configuration.AutoDetectChangesEnabled = true;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

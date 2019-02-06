@@ -133,6 +133,7 @@ namespace AFH_Scheduler.Complete
         }
         public void GenData()
         {
+            /**
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var outcome = db.Inspection_Outcome.ToList();
@@ -147,7 +148,7 @@ namespace AFH_Scheduler.Complete
 
                 foreach (var inspection in insp)
                 {
-                    if (DateTime.Compare(alg.ExtractDateTime(inspection.SInspections_Date), DateTime.Today) <= 0)
+                    if (DateTime.Compare(alg.ExtractDateTime(inspection.SInspections_Date), DateTime.Today) </long>/= 0)
                     {
                         var providerHome = db.Provider_Homes.Where(r => r.PHome_ID == inspection.FK_PHome_ID).First();
                         var name = db.Providers.Where(r => r.Provider_ID == providerHome.FK_Provider_ID).First().Provider_Name;
@@ -164,6 +165,7 @@ namespace AFH_Scheduler.Complete
                     }
                 }
             }
+            **/
         }
     }
 }

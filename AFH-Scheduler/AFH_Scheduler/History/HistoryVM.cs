@@ -114,6 +114,7 @@ namespace AFH_Scheduler.History
         }
         public void GenData()
         {
+            /**
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 string providername;
@@ -135,6 +136,7 @@ namespace AFH_Scheduler.History
                 }
 
             }
+            **/
         }
     }
 }
