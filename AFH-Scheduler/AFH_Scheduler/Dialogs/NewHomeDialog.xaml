@@ -48,6 +48,7 @@
                         <Binding.ValidationRules>
                             <local:NewHomeValidation Message="Home ID isn't in correct format. Use only whole numbers." 
                                                      Regex="^[0-9]+$"
+                                                     IsHomeID="True"
                                                      ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
@@ -68,6 +69,7 @@
                         <Binding.ValidationRules>
                             <local:NewHomeValidation Message="Address isn't in correct format." 
                                                      Regex="^[0-9]+ [a-zA-z0-9]+( [a-zA-z0-9]+)?$"
+                                                     IsHomeID="False"
                                                      ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
@@ -87,6 +89,7 @@
                         <Binding.ValidationRules>
                             <local:NewHomeValidation Message="City isn't in correct format." 
                                                      Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
+                                                     IsHomeID="False"
                                                      ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
@@ -106,6 +109,7 @@
                         <Binding.ValidationRules>
                             <local:NewHomeValidation Message="Zipcode isn't in correct format." 
                                                      Regex="^[0-9]{5}(-[0-9]{4})?$"
+                                                     IsHomeID="False"
                                                      ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>

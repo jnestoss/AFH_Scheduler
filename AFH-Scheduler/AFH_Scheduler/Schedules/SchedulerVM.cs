@@ -417,7 +417,40 @@ namespace AFH_Scheduler.Schedules
                   )
                   );
                   MessageService.ReleaseMessageBox("New Home has been added to the database");
-             }
+
+                //Add to database
+                /*using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    db.Provider_Homes.Add(new Provider_Homes { PHome_ID = Convert.ToInt64(home.HomeID),
+                        PHome_Address = home.Address,
+                        PHome_City = home.City,
+                        PHome_Zipcode = home.Zipcode,
+                        PHome_Phonenumber = "don't call",
+                        FK_Provider_ID = Convert.ToInt64(home.ProviderID) });
+                    db.SaveChanges();
+
+                    Random randomiz = new Random();
+                    int id = randomiz.Next(111, 8000 + 1);
+                    while (true)
+                    {
+                        var scheduled = db.Scheduled_Inspections.Where(r => r.SInspections_Id != id).ToList();
+                        if (scheduled.Count != 0)
+                        {
+                            id = randomiz.Next(111, 8000 + 1);//456789
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    db.Scheduled_Inspections.Add(new Scheduled_Inspections { SInspections_Id = id,
+                        SInspections_Date = alg.ConvertDateToString(home.InspectionDate),
+                        FK_PHome_ID = Convert.ToInt64(home.HomeID) }
+                    );
+                    db.SaveChanges();
+                }*/
+            }
 
             
         }
@@ -446,6 +479,16 @@ namespace AFH_Scheduler.Schedules
                 if (MessageService.MessageConfirmation("Are you TRULY sure you want to delete " + SelectedSchedule.Address + "?"
                     , "Deleting Home"))
                 {
+                    /*using (HomeInspectionEntities db = new HomeInspectionEntities())
+                    {
+                        Provider_Homes deletingHome = db.Provider_Homes.First(r => r.PHome_ID == SelectedSchedule.HomeID);
+                        db.Provider_Homes.Remove(deletingHome);
+                        db.SaveChanges();
+
+                        Scheduled_Inspections deletingSchedule = db.Scheduled_Inspections.First(r => r.SInspections_Id == 456789);
+                        db.Scheduled_Inspections.Remove(deletingSchedule);
+                        db.SaveChanges();
+                    }*/
                     Providers.Remove(SelectedSchedule);
                     MessageService.ReleaseMessageBox("Selected Home has been removed from the table.");
                 }
