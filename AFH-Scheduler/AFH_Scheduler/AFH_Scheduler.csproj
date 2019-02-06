@@ -92,6 +92,24 @@
     </ApplicationDefinition>
     <Compile Include="Database\LoginDB\User.cs" />
     <Compile Include="Database\LoginDB\UserFactory.cs" />
+    <Compile Include="Data\CompletedHomes.cs" />
+    <Compile Include="Data\NewHomeModel.cs" />
+    <Compile Include="Data\ObservableProviders.cs" />
+    <Compile Include="Dialogs\EditDialog.xaml.cs">
+      <DependentUpon>EditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EditVM.cs" />
+    <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
+      <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\HistoryDialog.xaml.cs">
+      <DependentUpon>HistoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\HistVM.cs" />
+    <Compile Include="Dialogs\NewHomeCreatorVM.cs" />
+    <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
+      <DependentUpon>NewHomeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Schedules\SchedulesOpenDialog.cs" />
     <Page Include="Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -99,6 +117,22 @@
     <Page Include="Complete\Rescheduling_Follow_Up.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\EditDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\HistoryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\NewHomeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="History\HistoryDetailView.xaml">
       <SubType>Designer</SubType>

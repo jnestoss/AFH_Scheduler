@@ -106,3 +106,11 @@ C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Deb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\bin\Debug\AccessDatabase\HomeInspectionDb.accdb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csprojAssemblyReference.cache
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csproj.ResolveComReference.cache
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Errors\NoHomeSelectedErrorDialog.baml
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\EditDialog.g.cs
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Errors\NoHomeSelectedErrorDialog.g.cs
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\HistoryDialog.g.cs
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\NewHomeDialog.g.cs
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\EditDialog.baml
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\HistoryDialog.baml
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\NewHomeDialog.baml
