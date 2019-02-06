@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows.Controls;
 using AFH_Scheduler.Database;
 using System.Linq;
+using AFH_Scheduler.Dialogs;
 
 namespace AFH_Scheduler.Validations
 {
@@ -10,17 +11,17 @@ namespace AFH_Scheduler.Validations
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            Console.WriteLine("%%%%%%%%%%%%" + value + "%%%%%%%%%%%%%");
 
-            String formattedText = (String) value;
-            if (formattedText.EndsWith("_")) formattedText = formattedText.Substring(0, 4);
-
-            int textEntry;
-            if (!Int32.TryParse(formattedText,
-                NumberStyles.Integer,
+            if (!long.TryParse((value ?? "").ToString(),
+                NumberStyles.None,
                 CultureInfo.CurrentCulture,
-                out textEntry)) return new ValidationResult(false, "Invalid ID Entry");
-           
+                out long textEntry)) return new ValidationResult(false, "Invalid ID Entry");
+         
+            if(textEntry == EditVM._homeIDSave)
+            {
+                return ValidationResult.ValidResult;
+            }
+
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var provs = from p in db.Provider_Homes
@@ -28,11 +29,11 @@ namespace AFH_Scheduler.Validations
 
                 //Console.WriteLine(provs);
 
-                foreach (int prov in provs)
+                foreach (long prov in provs)
                 {
                     Console.WriteLine(prov);
 
-                    if(prov == textEntry)
+                    if(prov.Equals(textEntry))
                     {
                         return new ValidationResult(false, "This ID Exists, try a different one");
                     }

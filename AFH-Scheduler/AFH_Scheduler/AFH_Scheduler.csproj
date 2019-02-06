@@ -98,6 +98,7 @@
     </Compile>
     <Compile Include="Validations\FutureDateValidationRule.cs" />
     <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
+    <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
     <Page Include="Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

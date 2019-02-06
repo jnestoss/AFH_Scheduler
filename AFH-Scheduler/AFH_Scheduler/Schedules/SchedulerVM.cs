@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
 using AFH_Scheduler.Dialogs.Confirmation;
+using System.Data.Entity;
 
 namespace AFH_Scheduler.Schedules
 {
@@ -189,7 +190,7 @@ namespace AFH_Scheduler.Schedules
 
                 var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler);
 
-                if(result.Equals("Delete"))
+                if(result.Equals("DELETE"))
                 {
                     var deleteView = new DeleteConfirmationDialog();
 
@@ -205,7 +206,7 @@ namespace AFH_Scheduler.Schedules
                             if (home != null)
                             {
                                 db.Provider_Homes.Remove(home);
-                                var waitOnSave = db.SaveChangesAsync();
+                                db.SaveChanges();
                             }
                         }
                     }
@@ -216,7 +217,7 @@ namespace AFH_Scheduler.Schedules
 
         private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs) 
         {
-            if((String)eventArgs.Parameter == "Submit")
+            if((String)eventArgs.Parameter == "SUBMIT")
             {
                 ScheduleModel editedHomeData = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule;
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
@@ -225,14 +226,30 @@ namespace AFH_Scheduler.Schedules
                     var providerID = editedHomeData.ProviderID;
                     var address = editedHomeData.Address;
                     var city = editedHomeData.City;
+                    Console.WriteLine("OOOOOOOOOOOOOOO: " + city);
                     var zip = editedHomeData.ZIP;
                     var nextInspection = editedHomeData.NextInspection;
 
+                    var foo = EditVM._homeIDSave;
+
+                    var selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
+                    if (selectHome != null)
+                    {                   
+                        //selectHome.PHome_ID = homeID;
+                        selectHome.FK_Provider_ID = providerID;
+                        selectHome.PHome_Address = address;
+                        selectHome.PHome_City = city;
+                        selectHome.PHome_Zipcode = zip;
+                        //selectHome.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == foo).SInspections_Date = nextInspection;
+
+
+                        Console.WriteLine("%%%%%%%%%%%%%%%%%%%%");
+                        //db.Entry(selectHome).State = selectHome.PHome_ID == EditVM.HomeIDSave ? EntityState.Added : EntityState.Modified;
+
+                        db.SaveChanges();
+                    }
                 }
             }   
-            else if ((String)eventArgs.Parameter == "Delete") {
-
-            }
         }
 
         private void GenericClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)

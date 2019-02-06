@@ -44,12 +44,16 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        public static long _homeIDSave;
+
+
         public EditVM(ScheduleModel scheduleData)
         {
             SelectedSchedule = scheduleData;
             CurrentProvider = new Tuple<int, string>((int) SelectedSchedule.ProviderID, SelectedSchedule.ProviderName);
             ProviderIDs = new List<Tuple<int,string>>();
             grabProviderInformation();
+            _homeIDSave = SelectedSchedule.HomeID;
         }
 
         private void grabProviderInformation()

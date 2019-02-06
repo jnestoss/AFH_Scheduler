@@ -97,11 +97,11 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
-                    
+
                     <i:Interaction.Behaviors>
                         <Behaviors:TextBoxInputMaskBehavior InputMask="00000" />
                     </i:Interaction.Behaviors>
-                    
+
                 </TextBox>
 
                 <TextBox
@@ -114,7 +114,7 @@
                     materialDesign:HintAssist.Hint="Provider Phone Number"
                     materialDesign:HintAssist.HintOpacity="0.9"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding SelectedSchedule.Phone, UpdateSourceTrigger=Explicit}">
+                    Text="{Binding SelectedSchedule.Phone, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Behaviors>
                         <Behaviors:TextBoxInputMaskBehavior InputMask="( 999 ) 000 0000" PromptChar="_" />
                     </i:Interaction.Behaviors>
@@ -129,8 +129,15 @@
                     materialDesign:HintAssist.FloatingScale="1.4"
                     materialDesign:HintAssist.Hint="Address"
                     materialDesign:HintAssist.HintOpacity="0.9"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding SelectedSchedule.Address, UpdateSourceTrigger=Explicit}" />
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="SelectedSchedule.Address" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <TextBox
                     Grid.Row="2"
@@ -141,8 +148,15 @@
                     materialDesign:HintAssist.FloatingScale="1.4"
                     materialDesign:HintAssist.Hint="City"
                     materialDesign:HintAssist.HintOpacity="0.9"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding SelectedSchedule.City, UpdateSourceTrigger=Explicit}" />
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="SelectedSchedule.City" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <TextBox
                     Grid.Row="2"
@@ -153,8 +167,15 @@
                     materialDesign:HintAssist.FloatingScale="1.4"
                     materialDesign:HintAssist.Hint="ZIP Code"
                     materialDesign:HintAssist.HintOpacity="0.9"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding SelectedSchedule.ZIP, UpdateSourceTrigger=Explicit}" />
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="SelectedSchedule.ZIP" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
 
                 <TextBlock
@@ -199,9 +220,9 @@
                         IsDefault="True"
                         Style="{DynamicResource MaterialDesignFlatButton}">
                         <Button.CommandParameter>
-                            <system:String>Submit</system:String>
+                            <system:String>SUBMIT</system:String>
                         </Button.CommandParameter>
-                        ACCEPT
+                        SUBMIT
                     </Button>
 
                     <Button
@@ -210,7 +231,7 @@
                         IsCancel="True"
                         Style="{DynamicResource MaterialDesignFlatButton}">
                         <Button.CommandParameter>
-                            <system:String>Cancel</system:String>
+                            <system:String>CANCEL</system:String>
                         </Button.CommandParameter>
                         CANCEL
                     </Button>
@@ -223,9 +244,9 @@
                         Style="{DynamicResource MaterialDesignFlatButton}"
                         TextBlock.Foreground="Black">
                         <Button.CommandParameter>
-                            <system:String>Delete</system:String>
+                            <system:String>DELETE</system:String>
                         </Button.CommandParameter>
-                        Delete
+                        DELETE
                     </Button>
 
                 </StackPanel>
