@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.SettingSubWindows.ProviderListDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.SettingSubWindows"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+    
+    <StackPanel Orientation="Vertical">
+        <DataGrid
+            Margin="36 0 36 0"
+            ItemsSource="{Binding ProvidersList}"
+            CanUserSortColumns="True"
+            CanUserAddRows="True"
+            AutoGenerateColumns="False"
+            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+            materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+            DockPanel.Dock="Top">
+            
+            <DataGrid.Columns>
+
+                <materialDesign:MaterialDataGridTextColumn
+                    IsReadOnly="True"
+                    Binding="{Binding ProviderID}" 
+                    Header="ID" 
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                <materialDesign:MaterialDataGridTextColumn
+                    IsReadOnly="True"
+                    Binding="{Binding ProviderName}" 
+                    Header="Name" 
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button
+            FlowDirection="LeftToRight"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            Command="{Binding }"
+            Style="{StaticResource MaterialDesignRaisedLightButton}" 
+            MaxWidth="255" Margin="10,30,11,0" 
+            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+            FontSize="14">
+            _ADD PROVIDER
+        </Button>
+
+        <Button
+            FlowDirection="LeftToRight"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            IsCancel="True"
+            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+            Name="CancelNewHome" 
+            Style="{StaticResource MaterialDesignRaisedLightButton}" 
+            MaxWidth="100" Margin="10,30,11,0" 
+            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+            FontSize="14">
+            <Button.CommandParameter>
+                <system:String>Cancel</system:String>
+            </Button.CommandParameter>
+            _CLOSE
+        </Button>
+        
+    </StackPanel>
+</UserControl>
