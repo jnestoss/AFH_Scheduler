@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
+using AFH_Scheduler.Dialogs.Confirmation;
+using System.Data.Entity;
 
 namespace AFH_Scheduler.Schedules
 {
@@ -650,33 +652,32 @@ namespace AFH_Scheduler.Schedules
             if (SelectedSchedule == null)
             {
                 var view = new NoHomeSelectedErrorDialog();
-                
-                var result = await DialogHost.Show(view, ClosingEventHandler2);
+
+                var result = await DialogHost.Show(view, GenericClosingEventHandler);
             }
             else
             {
                 var view = new EditDialog();
 
-                Console.WriteLine(SelectedSchedule.ProviderID);
-                Console.WriteLine(SelectedSchedule.ProviderName);
-                Console.WriteLine(SelectedSchedule.HomeID);
-                Console.WriteLine(SelectedSchedule.Address);
-                Console.WriteLine(SelectedSchedule.City);
-                Console.WriteLine(SelectedSchedule.ZIP);
-                Console.WriteLine(SelectedSchedule.NextInspection);
-                Console.WriteLine(SelectedSchedule.IsSelected);
-
                 view.setDataContext(SelectedSchedule);
 
-                //if (view.DataContext == null) Environment.Exit(0);
+                var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler);
 
                 var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandler); 
 
-                Console.WriteLine(result);
+                            if (home != null)
+                            {
+                                db.Provider_Homes.Remove(home);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }
             }
         }
 
         private void ClosingEventHandlerNewHome(object sender, DialogClosingEventArgs eventArgs)
+
         {
             Console.WriteLine("Dialog closed successfully");
             if ((String)eventArgs.Parameter == "Cancel")
@@ -693,22 +694,46 @@ namespace AFH_Scheduler.Schedules
             if ((String)eventArgs.Parameter == "Cancel") return;
 
 
-
-            //((EditDialog)eventArgs.Session.Content).
-            //Console.WriteLine(eventArgs.OriginalSource);
-
-
-            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            if((String)eventArgs.Parameter == "SUBMIT")
             {
-                var homes = db.Providers.ToList();
-            }
+                ScheduleModel editedHomeData = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule;
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    var homeID = editedHomeData.HomeID;
+                    var providerID = editedHomeData.ProviderID;
+                    var address = editedHomeData.Address;
+                    var city = editedHomeData.City;
+                    Console.WriteLine("OOOOOOOOOOOOOOO: " + city);
+                    var zip = editedHomeData.ZIP;
+                    var nextInspection = editedHomeData.NextInspection;
 
-        }
+                    var foo = EditVM._homeIDSave;
 
-        private void ClosingEventHandler2(object sender, DialogClosingEventArgs eventArgs)
+                    var selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
+                    if (selectHome != null)
+                    {                   
+                        //selectHome.PHome_ID = homeID;
+                        selectHome.FK_Provider_ID = providerID;
+                        selectHome.PHome_Address = address;
+                        selectHome.PHome_City = city;
+                        selectHome.PHome_Zipcode = zip;
+                        //selectHome.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == foo).SInspections_Date = nextInspection;
+
+
+                        Console.WriteLine("%%%%%%%%%%%%%%%%%%%%");
+                        //db.Entry(selectHome).State = selectHome.PHome_ID == EditVM.HomeIDSave ? EntityState.Added : EntityState.Modified;
+
+                        db.SaveChanges();
+                    }
+                }
+            }   
+        
+
+        private void GenericClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
-            Console.WriteLine("");
+            Console.WriteLine("Dialog closed successfully");
         }
+
 
     }
 }
