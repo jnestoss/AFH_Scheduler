@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace AFH_Scheduler.Dialogs
 {
-    public class NewHomeCreatorVM : ObservableObject, IPageViewModel
+    public class NewHomeDialogVM : ObservableObject, IPageViewModel
     {
         private NewHomeModel _newHomeCreated;
         public NewHomeModel NewHomeCreated
@@ -27,7 +27,7 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
-        public NewHomeCreatorVM()
+        public NewHomeDialogVM()
         {
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {

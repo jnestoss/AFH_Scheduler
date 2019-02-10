@@ -13,17 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AFH_Scheduler.Dialogs
+namespace AFH_Scheduler.Dialogs.SettingSubWindows
 {
     /// <summary>
-    /// Interaction logic for NewHomeDialog.xaml
+    /// Interaction logic for NormalCurveAdjuster.xaml
     /// </summary>
-    public partial class NewHomeDialog : UserControl
+    public partial class NormalCurveAdjuster : UserControl
     {
-        public NewHomeDialog(NewHomeDialogVM newHomeVm)
+        public NormalCurveAdjuster(NormalCurveAdjusterVM curveVM)
         {
             InitializeComponent();
-            DataContext = newHomeVm;
+            DataContext = curveVM;
         }
     }
 }

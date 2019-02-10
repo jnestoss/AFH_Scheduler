@@ -7,6 +7,8 @@
              xmlns:local="clr-namespace:AFH_Scheduler.Dialogs"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:Behaviors="clr-namespace:AFH_Scheduler.Validations"
              mc:Ignorable="d" >
                
         <StackPanel Orientation="Vertical">
@@ -42,17 +44,19 @@
                     FontSize="18" 
                     Grid.Column="1" 
                     Grid.Row="1" 
-                    MinWidth="255">
+                    MinWidth="255"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.HomeID" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.HomeID" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <local:NewHomeValidation Message="Home ID isn't in correct format. Use only whole numbers." 
+                            <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation Message="Please use only whole numbers." 
                                                      Regex="^[0-9]+$"
-                                                     IsHomeID="True"
                                                      ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
+
             </TextBox>
 
 
@@ -67,9 +71,9 @@
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <local:NewHomeValidation Message="Address isn't in correct format." 
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation Message="Address isn't in correct format." 
                                                      Regex="^[0-9]+ [a-zA-z0-9]+( [a-zA-z0-9]+)?$"
-                                                     IsHomeID="False"
                                                      ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
@@ -87,9 +91,9 @@
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.City" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <local:NewHomeValidation Message="City isn't in correct format." 
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation Message="City isn't in correct format." 
                                                      Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
-                                                     IsHomeID="False"
                                                      ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
@@ -107,13 +111,14 @@
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.Zipcode" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <local:NewHomeValidation Message="Zipcode isn't in correct format." 
-                                                     Regex="^[0-9]{5}(-[0-9]{4})?$"
-                                                     IsHomeID="False"
-                                                     ValidatesOnTargetUpdated="True"/>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+
+                            <Behaviors:NewHomeValidation Message="Zipcode isn't in correct format." 
+                                                         Regex="^[0-9]{5}(-[0-9]{4})?$"
+                                                         ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
-                </TextBox.Text>                
+                </TextBox.Text>
             </TextBox>
 
             <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="3">Inspection Date:</TextBlock>

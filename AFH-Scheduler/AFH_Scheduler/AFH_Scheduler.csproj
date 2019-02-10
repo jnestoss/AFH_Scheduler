@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -51,6 +54,9 @@
     </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="ShowMeTheXAML, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ShowMeTheXAML.1.0.10\lib\net45\ShowMeTheXAML.dll</HintPath>
@@ -72,6 +78,9 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -90,11 +99,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ProviderConverter.cs" />
+    <Compile Include="Converters\ProviderListConverter.cs" />
     <Compile Include="Database\LoginDB\User.cs" />
     <Compile Include="Database\LoginDB\UserFactory.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
+    <Compile Include="Data\ProvidersModel.cs" />
+    <Compile Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml.cs">
+      <DependentUpon>DeleteConfirmationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\EditDialog.xaml.cs">
       <DependentUpon>EditDialog.xaml</DependentUpon>
     </Compile>
@@ -106,17 +121,43 @@
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\HistVM.cs" />
-    <Compile Include="Dialogs\NewHomeCreatorVM.cs" />
+    <Compile Include="Dialogs\NewHomeDialogVM.cs" />
     <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
       <DependentUpon>NewHomeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\NewProviderCreatorVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml.cs">
+      <DependentUpon>NewProviderCreator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml.cs">
+      <DependentUpon>NormalCurveAdjuster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjusterVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\ProviderListDialog.xaml.cs">
+      <DependentUpon>ProviderListDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\ProviderListVM.cs" />
+    <Compile Include="Dialogs\SettingsVM.cs" />
     <Compile Include="Schedules\SchedulesOpenDialog.cs" />
+    <Compile Include="Validations\FutureDateValidationRule.cs" />
+    <Compile Include="Validations\NewHomeValidation.cs" />
+    <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
+    <Compile Include="Validations\NotEmptyValidationRule.cs" />
+    <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
+    <Compile Include="Validations\UniqueProviderIDValidation.cs" />
     <Page Include="Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
     <Page Include="Complete\Rescheduling_Follow_Up.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\EditDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -131,6 +172,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\NewHomeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\ProviderListDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

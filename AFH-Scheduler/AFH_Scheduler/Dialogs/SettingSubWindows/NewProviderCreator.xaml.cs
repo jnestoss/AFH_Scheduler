@@ -13,17 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AFH_Scheduler.Dialogs
+namespace AFH_Scheduler.Dialogs.SettingSubWindows
 {
     /// <summary>
-    /// Interaction logic for NewHomeDialog.xaml
+    /// Interaction logic for NewProviderCreator.xaml
     /// </summary>
-    public partial class NewHomeDialog : UserControl
+    public partial class NewProviderCreator : UserControl
     {
-        public NewHomeDialog(NewHomeDialogVM newHomeVm)
+        public NewProviderCreator(NewProviderCreatorVM newProviderVM)
         {
             InitializeComponent();
-            DataContext = newHomeVm;
+            DataContext = newProviderVM;
         }
     }
 }

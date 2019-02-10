@@ -8,9 +8,10 @@
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d">
-    
-    <StackPanel Orientation="Vertical">
-        <DataGrid
+
+    <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="AddProviderDialog">
+        <StackPanel Orientation="Vertical">
+            <DataGrid
             Margin="36 0 36 0"
             ItemsSource="{Binding ProvidersList}"
             CanUserSortColumns="True"
@@ -19,52 +20,75 @@
             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
             materialDesign:DataGridAssist.ColumnHeaderPadding="8"
             DockPanel.Dock="Top">
-            
-            <DataGrid.Columns>
 
-                <materialDesign:MaterialDataGridTextColumn
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn
+                            Binding="{Binding IsProviderSelected, UpdateSourceTrigger=PropertyChanged}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
+                            ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"/>
+                    
+                    <materialDesign:MaterialDataGridTextColumn
                     IsReadOnly="True"
                     Binding="{Binding ProviderID}" 
                     Header="ID" 
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
                     IsReadOnly="True"
                     Binding="{Binding ProviderName}" 
                     Header="Name" 
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                
-            </DataGrid.Columns>
-        </DataGrid>
 
-        <Button
-            FlowDirection="LeftToRight"
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button  
+                                    IsEnabled="{Binding IsProviderSelected}"
+                                    Command="{Binding Path=DataContext.ProviderDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                                    _DELETE PROVIDER
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal">
+
+                <Button           
             VerticalAlignment="Bottom"
             HorizontalAlignment="Left"
-            Command="{Binding }"
+            Command="{Binding ProviderListCommand}"
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
-            MaxWidth="255" Margin="10,30,11,0" 
+            MaxWidth="255" Margin="10,30,11,20" 
             ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             FontSize="14">
-            _ADD PROVIDER
-        </Button>
+                    _ADD PROVIDER
+                </Button>
 
-        <Button
-            FlowDirection="LeftToRight"
+                
+
+                <Button
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
             IsCancel="True"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-            Name="CancelNewHome" 
+            Name="CloseSettingsButton" 
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
-            MaxWidth="100" Margin="10,30,11,0" 
+            MaxWidth="100" Margin="10,30,11,20" 
             ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             FontSize="14">
-            <Button.CommandParameter>
-                <system:String>Cancel</system:String>
-            </Button.CommandParameter>
-            _CLOSE
-        </Button>
-        
-    </StackPanel>
+                    <Button.CommandParameter>
+                        <system:String>Cancel</system:String>
+                    </Button.CommandParameter>
+                    _CLOSE
+                </Button>
+
+            </StackPanel>
+
+        </StackPanel>
+    </materialDesign:DialogHost>
 </UserControl>

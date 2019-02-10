@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AFH_Scheduler.Dialogs.SettingSubWindows;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,15 +11,25 @@ namespace AFH_Scheduler.Data
 {
     public class ProvidersModel : INotifyPropertyChanged
     {
-        private long _providerID;
+        private string _providerID;
         private string _providerName;
+        private bool _isProviderSelected;
+        private readonly ProviderListVM _providerVM;
 
-        public ProvidersModel(long id, string name)
+        public ProvidersModel(string id, string name)
         {
+            IsProviderSelected = false;
             ProviderID = id;
             ProviderName = name;
         }
-        public long ProviderID
+        public ProvidersModel(ProviderListVM vm, string id, string name)
+        {
+            _providerVM = vm;
+            IsProviderSelected = false;
+            ProviderID = id;
+            ProviderName = name;
+        }
+        public string ProviderID
         {
             get { return _providerID; }
             set
@@ -36,6 +47,17 @@ namespace AFH_Scheduler.Data
                 if (_providerName == value) return;
                 _providerName = value;
                 OnPropertyChanged("ProviderName");
+            }
+        }
+        public bool IsProviderSelected
+        {
+            get { return _isProviderSelected; }
+            set
+            {
+                if (value == true) _providerVM.DeSelect(this);
+                if (_isProviderSelected == value) return;
+                _isProviderSelected = value;
+                OnPropertyChanged("IsProviderSelected");
             }
         }
 

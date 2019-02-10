@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace AFH_Scheduler.Dialogs
 {
-    public class SettingsVM
+    public class SettingsVM : ObservableObject
     {
         private string _normalCurveValue;
         public string NormalCurve
@@ -20,6 +20,18 @@ namespace AFH_Scheduler.Dialogs
             {
                 if (_normalCurveValue == value) return;
                 _normalCurveValue = value;
+                OnPropertyChanged("NormalCurve");
+            }
+        }
+
+        private bool _dialogSettingBool;
+        public bool DialogSettingBoolReturn
+        {
+            get { return _dialogSettingBool; }
+            set
+            {
+                _dialogSettingBool = value;
+                OnPropertyChanged("DialogSettingBoolReturn");
             }
         }
 
@@ -41,12 +53,36 @@ namespace AFH_Scheduler.Dialogs
             var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
         }
 
-        public static void ClosingEventHandlerProviders(object sender, DialogClosingEventArgs eventArgs)
+        private RelayCommand _normalCurveCommand;
+        public ICommand NormalCurveCommand
+        {
+            get
+            {
+                if (_normalCurveCommand == null)
+                    _normalCurveCommand = new RelayCommand(AdjustNormalCurve);
+                return _normalCurveCommand;
+            }
+        }
+
+        private async void AdjustNormalCurve(object obj)
+        {
+            var vm = new NormalCurveAdjusterVM(NormalCurve);
+            var view = new NormalCurveAdjuster(vm);
+            var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
+            if (DialogSettingBoolReturn)
+            {
+                NormalCurve = vm.CurveNumber;
+            }
+        }
+
+        public void ClosingEventHandlerProviders(object sender, DialogClosingEventArgs eventArgs)
         {
             if ((String)eventArgs.Parameter == "Cancel")
             {
+                DialogSettingBoolReturn = false;
                 return;
             }
+            DialogSettingBoolReturn = true;
         }
 
         public SettingsVM()
