@@ -15,6 +15,11 @@ namespace AFH_Scheduler.Algorithm
         {
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = table.Home_History.Where(r => r.FK_PHome_ID == pHome_ID).ToList();
+
+            if(history.Count == 0)
+            {
+                return null;
+            }
             DateTime recentDate = ExtractDateTime(history[0].HHistory_Date);
             DateTime temp;
 
@@ -38,6 +43,10 @@ namespace AFH_Scheduler.Algorithm
         {
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = GrabbingRecentInspection(pHome_ID);
+            if(history == null)
+            {
+                return "";
+            }
 
             Inspection_Outcome outcome = table.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_IOutcome_Code);
 
@@ -155,6 +164,15 @@ namespace AFH_Scheduler.Algorithm
             DateTime followupDate = ExtractDateTime(last_correctionDate).AddDays(60);
             string followUp = ConvertDateToString(followupDate);
             return followUp;
+        }
+
+        #endregion
+
+        #region 18th Month Drop Date
+        public string SettingEighteenthMonth(string scheduled_Date)
+        {
+            DateTime eighteenthMonthDate = ExtractDateTime(scheduled_Date).AddDays(548);
+            return ConvertDateToString(eighteenthMonthDate);
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using AFH_Scheduler.Helper_Classes;
+﻿using AFH_Scheduler.Algorithm;
+using AFH_Scheduler.Helper_Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace AFH_Scheduler.Complete
 {
     public class RescheduleVM : ObservableObject, IPageViewModel
     {
+        private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
         private string _rescheduledFollowUpDate;
         public string RescheduledFollowUpDate
         {
@@ -18,13 +21,27 @@ namespace AFH_Scheduler.Complete
             set
             {
                 _rescheduledFollowUpDate = value;
+
                 OnPropertyChanged("RescheduledFollowUpDate");
+            }
+        }
+
+        private DateTime _datePicked;
+        public DateTime DatePicked
+        {
+            get { return _datePicked; }
+            set
+            {
+                _datePicked = value;
+                RescheduledFollowUpDate = alg.ConvertDateToString(_datePicked);
+
+                OnPropertyChanged("DatePicked");
             }
         }
 
         public RescheduleVM(string followUpDate, OpenMessageDialogService messageService)
         {
-            RescheduledFollowUpDate = followUpDate;
+            DatePicked = alg.ExtractDateTime(followUpDate);
             MessageService = messageService;
         }
 
@@ -34,7 +51,7 @@ namespace AFH_Scheduler.Complete
             get
             {
                 if (_messageService == null)
-                    _messageService = new openHistoryDetailDialog();
+                    _messageService = new CompleteOpenMessageDialogs();
                 return _messageService;
             }
             set

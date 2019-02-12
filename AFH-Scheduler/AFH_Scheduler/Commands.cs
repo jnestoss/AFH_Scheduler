@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using AFH_Scheduler.Dialogs;
 using AFH_Scheduler.Helper_Classes;
+using MaterialDesignThemes.Wpf;
 
 namespace AFH_Scheduler
 {
@@ -21,5 +23,20 @@ namespace AFH_Scheduler
                 win.WindowState = WindowState.Minimized;
             }
         });
+
+        public static readonly RelayCommand OpenSettingsCommand = new RelayCommand(async w =>
+        {
+            var settings = new SettingsVM();
+            var view = new SettingsDialog(settings);
+            var result = await DialogHost.Show(view, "SettingsDialog", ClosingEventHandlerSettings);
+        });
+
+        public static void ClosingEventHandlerSettings(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if ((String)eventArgs.Parameter == "Cancel")
+            {
+                return;
+            }
+        }
     }
 }

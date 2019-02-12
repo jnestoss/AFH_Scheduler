@@ -1,101 +1,367 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<UserControl x:Class="AFH_Scheduler.Schedules.SchedulerView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
-    
+<UserControl
+    x:Class="AFH_Scheduler.Schedules.SchedulerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AFH_Scheduler.Schedules"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
     <DockPanel LastChildFill="False">
-        <DataGrid
-            Margin="36 0 36 0"
-            ItemsSource="{Binding Providers}"
-            CanUserSortColumns="True"
-            CanUserAddRows="True"
-            AutoGenerateColumns="False"
-            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-            materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-            DockPanel.Dock="Top">
-        
-            <DataGrid.Columns>
-            
-                <DataGridCheckBoxColumn Binding="{Binding IsSelected}" ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}" EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-                    <DataGridCheckBoxColumn.Header>
-                        <!--padding to allow hit test to pass thru for sorting -->
-                        <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
-                            <CheckBox HorizontalAlignment="Center" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}" IsChecked="{Binding IsAllItems3Selected}" />
-                        </Border>
-                    </DataGridCheckBoxColumn.Header>
-                </DataGridCheckBoxColumn>
-                    
-                <DataGridTextColumn Binding="{Binding ProviderID}" Header="Provider ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-            
-                <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                <!-- set a max length to get an indicator in the editor -->
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Phone}" Header="Phone" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-            
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Address}" Header="Address" Width="120" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                            <Setter Property="HorizontalAlignment" Value="Right" />
-                            <Setter Property="ContentTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Right" />
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="HorizontalAlignment" Value="Right" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </materialDesign:MaterialDataGridTextColumn>
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding RecentInspection}" Header="Recent Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                <materialDesign:MaterialDataGridTextColumn Binding="{Binding NextInspection}" Header="Next Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
-                <materialDesign:MaterialDataGridComboBoxColumn Header="Food" SelectedValueBinding="{Binding Food}" ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Foods}" />
-            </DataGrid.Columns>
-                
-        </DataGrid>
+        <StackPanel 
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0 15">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="320"/>
+                    <ColumnDefinition Width="Auto" MinWidth="133"/>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="133"/>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+                    FontSize="18" 
+                    Grid.Column="0" 
+                    HorizontalAlignment="Right">Filter By:</TextBlock>
+                <TextBox 
+                    Name="FilterTextBox" 
+                    IsEnabledChanged="FilterTextBox_IsEnabledChanged"  
+                    IsEnabled="{Binding TextFieldEnabled}" 
+                    Text="{Binding FilterItem}" FontSize="18" Grid.Column="1" Margin="20 0"/>
+
+                <DatePicker 
+                    SelectedDate="{Binding StartDatePicked}"
+                    Name="DatePickerStart" 
+                    Visibility="Hidden" 
+                    IsEnabled="true"  
+                    Grid.Column="1" 
+                    FlowDirection="LeftToRight" 
+                    FontSize="18" 
+                    HorizontalAlignment="Left" 
+                    Margin="10 0" 
+                    MinWidth="100" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                <TextBlock 
+                    Name="ToTextBlock" 
+                    FontSize="18" 
+                    Visibility="Hidden" 
+                    Grid.Column="1" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"  
+                    Margin="10 0" FlowDirection="LeftToRight">To</TextBlock>
+
+                <DatePicker 
+                    SelectedDate="{Binding EndDatePicked}"
+                    Name="DatePickerEnd" 
+                    Visibility="Hidden" 
+                    IsEnabled="true" 
+                    Grid.Column="1" 
+                    FlowDirection="LeftToRight" 
+                    FontSize="18" 
+                    HorizontalAlignment="Right" 
+                    Margin="10 0" 
+                    MinWidth="100" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                <ComboBox FontSize="18" Grid.Column="2" SelectedItem="{Binding SelectedFilter}">
+                    <ComboBoxItem Content="Provider ID"/>
+                    <ComboBoxItem Content="Name"/>
+                    <ComboBoxItem Content="Address"/>
+                    <ComboBoxItem IsSelected="{Binding DatePickerEnabled}" Content="Next Inspection Date"/>
+                </ComboBox>
+                <Button 
+                    Grid.Column="3" 
+                    Command="{Binding Path=FilterTableCommand}" 
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    Margin="10 0" FontSize="14" 
+                    Width="100" 
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                    _FILTER
+                </Button>
 
 
-        <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="50,50,50,50">
-            <!--<StackPanel.Resources>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="100,100,100,100"/>
-                </Style>
-            </StackPanel.Resources>-->
-            <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10 0" FontSize="10" Width="120" ToolTip="Resource name: MaterialDesignRaisedLightButton">
+
+                <Button
+                Grid.Column="4"
+                Command="{Binding Path=ExportTableCommand}"
+                MaxWidth="255"
+                Margin="10"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                    _EXPORT TO EXCEL
+                </Button>
+                <Button
+                Grid.Column="5"
+                MaxWidth="255"
+                Margin="10"
+                Command="{Binding Path=RefreshTableCommand}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                    _REFRESH TABLE
+                </Button>
+            </Grid>
+        </StackPanel>
+
+        <materialDesign:DialogHost Height="300" DockPanel.Dock="Top" Identifier="EditDialog">
+
+            <Canvas
+                Width="1000"
+                Margin="40,0,40,0"
+                Background="White"
+                DockPanel.Dock="Top">
+                <DataGrid
+                    Width="1000"
+                    materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                    materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="True"
+                    CanUserSortColumns="True"
+                    ItemsSource="{Binding Providers}">
+
+                    <DataGrid.Columns>
+
+                        <DataGridCheckBoxColumn
+                            Binding="{Binding IsSelected}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
+                            ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
+                            <!--<DataGridCheckBoxColumn.Header>
+
+              <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
+                <CheckBox HorizontalAlignment="Center" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}" IsChecked="{Binding IsAllItems3Selected}" />
+              </Border>
+            </DataGridCheckBoxColumn.Header>-->
+                        </DataGridCheckBoxColumn>
+
+                        <DataGridTextColumn
+                            Binding="{Binding ProviderID}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                            Header="Provider ID" />
+
+                        <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding ProviderName}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Name" />
+
+                        <materialDesign:MaterialDataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Address}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Address">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    Text="{Binding}"
+                                                    TextAlignment="Right"
+                                                    TextWrapping="Wrap" />
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </materialDesign:MaterialDataGridTextColumn>
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RecentInspection}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Recent Inspection"
+                            MaxLength="255" />
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding NextInspection}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Next Inspection"
+                            MaxLength="255" />
+
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding EighteenthMonthDate}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="18th Month Drop"
+                            MaxLength="255" />
+                        <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
+
+                    </DataGrid.Columns>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <DataGrid
+                        
+                        Margin="36 0 36 0"
+                        ItemsSource="{Binding HomesHistory}"
+                        CanUserSortColumns="True"
+                        CanUserAddRows="True"
+                        AutoGenerateColumns="False"
+                        materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                        materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                        DockPanel.Dock="Top"
+                        IsReadOnly="True">
+
+                                <DataGrid.Columns>
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding ProviderID}"
+                                        IsReadOnly="True" 
+                                        Header="Provider ID" 
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding HomeID}"
+                                        IsReadOnly="True" 
+                                        Header="Home ID" 
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding InspectionDate}"
+                                        IsReadOnly="True" 
+                                        Header="Previous Inspection Date" 
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                                    <materialDesign:MaterialDataGridTextColumn 
+                                        Binding="{Binding InspectionOutcome}"
+                                        IsReadOnly="True" 
+                                        Header="Inspection Outcome" 
+                                        MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="{Binding Path=DataContext.OpenEditHistoryDialogCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" x:Name="EditHistory_Button" Style="{StaticResource MaterialDesignRaisedLightButton}" ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                                                    _EDIT
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+
+                </DataGrid>
+
+
+                <materialDesign:PopupBox
+                    Canvas.Left="940"
+                    Canvas.Top="240"
+                    Closed="PopupBox_OnClosed"
+                    Opened="PopupBox_OnOpened"
+                    PlacementMode="TopAndAlignCentres"
+                    Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                    ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
+                    ToolTipService.Placement="Right">
+                    <StackPanel>
+                        <Button ToolTip="Complete Inspection">
+                            <materialDesign:PackIcon Kind="Archive" />
+                        </Button>
+                        <Button ToolTip="Home History">
+                            <materialDesign:PackIcon Kind="HomeVariant" />
+                        </Button>
+                        <Button Command="{Binding RunEditDialogCommand}" ToolTip="Edit">
+                            <materialDesign:PackIcon Kind="Edit" />
+                        </Button>
+                        <!--
+                        <Button Command="{Binding Path=RefreshTableCommand}" ToolTip="Refresh Table">
+                            <materialDesign:PackIcon Kind="Refresh" />
+                        </Button>
+                        <Button Command="{Binding Path=ExportTableCommand}" ToolTip="Export to Excel">
+                            <materialDesign:PackIcon Kind="Export" />
+                        </Button>-->
+                        <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a New Home">
+                            <materialDesign:PackIcon Kind="Add" />
+                        </Button>
+                        <Button Command="{Binding Path=DeleteHomeCommand}" ToolTip="Remove Selected Home">
+                            <materialDesign:PackIcon Kind="Remove" />
+                        </Button>
+
+
+                    </StackPanel>
+                </materialDesign:PopupBox>
+
+            </Canvas>
+
+        </materialDesign:DialogHost>
+            <!--
+        <StackPanel        
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Bottom" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Right"                            
+            Margin="50">
+
+            <Button
+                Command="{Binding Path=ExportTableCommand}"
+                MaxWidth="255"
+                Margin="10"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
                 _EXPORT TO EXCEL
             </Button>
-            <Button Command="{Binding Path=RefreshTableCommand}" Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10 0" MaxWidth="255" ToolTip="Resource name: MaterialDesignRaisedLightButton">
+            <Button
+                MaxWidth="255"
+                Margin="10"
+                Command="{Binding Path=RefreshTableCommand}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
                 _REFRESH TABLE
             </Button>
         </StackPanel>
-
+            -->
     </DockPanel>
 
     <!--
     <Grid>
-        <TextBlock Text="This is the First Page" 
+        <TextBlock Text="This is the First Page"
                    FontWeight="Bold" FontSize="18"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
 
         <TextBox Text="Here's some test" HorizontalAlignment="Center" VerticalAlignment="Top"/>
     </Grid>
 
-    
-    
+
+
 
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
+                VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
