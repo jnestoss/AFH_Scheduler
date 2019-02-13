@@ -11,7 +11,7 @@
 
 
     <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="ProvidersDialog">
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="20,20,20,20">
             <TextBlock Margin="10" FontSize="22" HorizontalAlignment="Center">Settings</TextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -44,15 +44,15 @@
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
                 <Button 
-            Grid.Column="0"
-            Style="{StaticResource MaterialDesignRaisedLightButton}" 
-            Name="SubmitButton" 
-            IsDefault="True"
-            Margin="10,0,10,1" 
-            FontSize="18" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-            Width="100"
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
+                    Grid.Column="0"
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    Name="SubmitButton" 
+                    IsDefault="True"
+                    Margin="10,0,10,1" 
+                    FontSize="18" 
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+                    Width="100"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
                     <Button.CommandParameter>
 
                         <system:String>Submit</system:String>
@@ -64,13 +64,13 @@
 
                 <Button 
                     IsCancel="True"
-            Grid.Column="1"
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-            Name="CancelNewHome" 
-            Style="{StaticResource MaterialDesignRaisedLightButton}" 
-            MaxWidth="100" Margin="10,0,11,0" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-            FontSize="14">
+                    Grid.Column="1"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                    Name="CancelNewHome" 
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    MaxWidth="100" Margin="10,0,11,0" 
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+                    FontSize="14">
                     <Button.CommandParameter>
 
                         <system:String>Cancel</system:String>

@@ -21,41 +21,43 @@
         <conv:ProviderListConverter x:Key="providerListConverter" />
     </UserControl.Resources>
 
-    <ScrollViewer Width="600" MaxHeight="400">
-        <StackPanel Orientation="Vertical">
-            <TextBlock
+
+    <materialDesign:DialogHost HorizontalAlignment="Center" VerticalAlignment="Center" Identifier="DeleteConfirmationDialog">
+        <ScrollViewer Width="600" MaxHeight="400">
+            <StackPanel Orientation="Vertical">
+                <TextBlock
                 Margin="0,10,0,0"
                 HorizontalAlignment="Center"
                 FontSize="24">
                 Edit Home Information
-            </TextBlock>
+                </TextBlock>
 
-            <Grid Width="600" Margin="20">
+                <Grid Width="600" Margin="20">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
 
-                <TextBlock
+                    <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
@@ -65,8 +67,8 @@
                     FontSize="18"
                     Opacity="0.9">
                     Provider Info
-                </TextBlock>
-                <ComboBox
+                    </TextBlock>
+                    <ComboBox
                     Grid.Row="0"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
@@ -80,7 +82,7 @@
                     Text="{Binding CurrentProvider, Converter={StaticResource providerConverter}}" />
 
 
-                <TextBox
+                    <TextBox
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
@@ -90,21 +92,21 @@
                     materialDesign:HintAssist.Hint="Home ID"
                     materialDesign:HintAssist.HintOpacity="0.9"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="SelectedSchedule.HomeID" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
+                        <TextBox.Text>
+                            <Binding Path="SelectedSchedule.HomeID" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
 
-                    <i:Interaction.Behaviors>
-                        <Behaviors:TextBoxInputMaskBehavior InputMask="00000" />
-                    </i:Interaction.Behaviors>
+                        <i:Interaction.Behaviors>
+                            <Behaviors:TextBoxInputMaskBehavior InputMask="00000" />
+                        </i:Interaction.Behaviors>
 
-                </TextBox>
+                    </TextBox>
 
-                <TextBox
+                    <TextBox
                     Grid.Row="1"
                     Grid.Column="3"
                     Grid.ColumnSpan="2"
@@ -115,12 +117,12 @@
                     materialDesign:HintAssist.HintOpacity="0.9"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding SelectedSchedule.Phone, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <Behaviors:TextBoxInputMaskBehavior InputMask="( 999 ) 000 0000" PromptChar="_" />
-                    </i:Interaction.Behaviors>
-                </TextBox>
+                        <i:Interaction.Behaviors>
+                            <Behaviors:TextBoxInputMaskBehavior InputMask="( 999 ) 000 0000" PromptChar="_" />
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
-                <TextBox
+                    <TextBox
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
@@ -130,16 +132,16 @@
                     materialDesign:HintAssist.Hint="Address"
                     materialDesign:HintAssist.HintOpacity="0.9"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="SelectedSchedule.Address" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                        <TextBox.Text>
+                            <Binding Path="SelectedSchedule.Address" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <TextBox
+                    <TextBox
                     Grid.Row="2"
                     Grid.Column="3"
                     Grid.ColumnSpan="1"
@@ -149,16 +151,16 @@
                     materialDesign:HintAssist.Hint="City"
                     materialDesign:HintAssist.HintOpacity="0.9"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="SelectedSchedule.City" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                        <TextBox.Text>
+                            <Binding Path="SelectedSchedule.City" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <TextBox
+                    <TextBox
                     Grid.Row="2"
                     Grid.Column="4"
                     Grid.ColumnSpan="1"
@@ -168,17 +170,17 @@
                     materialDesign:HintAssist.Hint="ZIP Code"
                     materialDesign:HintAssist.HintOpacity="0.9"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="SelectedSchedule.ZIP" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                        <TextBox.Text>
+                            <Binding Path="SelectedSchedule.ZIP" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
 
-                <TextBlock
+                    <TextBlock
                     Grid.Row="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
@@ -188,8 +190,8 @@
                     FontSize="18"
                     Opacity="0.9">
                     Next Inspection Date
-                </TextBlock>
-                <DatePicker
+                    </TextBlock>
+                    <DatePicker
                     x:Name="FutureDatePicker"
                     Grid.Row="3"
                     Grid.Column="1"
@@ -197,17 +199,17 @@
                     Width="100"
                     Margin="60,10,0,0"
                     materialDesign:HintAssist.Hint="Next Inspection Date">
-                    <DatePicker.SelectedDate>
-                        <Binding Path="SelectedSchedule.NextInspection" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Behaviors:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </DatePicker.SelectedDate>
-                </DatePicker>
+                        <DatePicker.SelectedDate>
+                            <Binding Path="SelectedSchedule.NextInspection" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Behaviors:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                    </DatePicker>
 
 
-                <StackPanel
+                    <StackPanel
                     Grid.Row="4"
                     Grid.Column="0"
                     Grid.ColumnSpan="6"
@@ -215,43 +217,42 @@
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
 
-                    <Button
+                        <Button
                         Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
                         IsDefault="True"
                         Style="{DynamicResource MaterialDesignFlatButton}">
-                        <Button.CommandParameter>
-                            <system:String>SUBMIT</system:String>
-                        </Button.CommandParameter>
-                        SUBMIT
-                    </Button>
+                            <Button.CommandParameter>
+                                <system:String>SUBMIT</system:String>
+                            </Button.CommandParameter>
+                            SUBMIT
+                        </Button>
 
-                    <Button
+                        <Button
                         Margin="8,0,0,0"
                         Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
                         IsCancel="True"
                         Style="{DynamicResource MaterialDesignFlatButton}">
-                        <Button.CommandParameter>
-                            <system:String>CANCEL</system:String>
-                        </Button.CommandParameter>
-                        CANCEL
-                    </Button>
+                            <Button.CommandParameter>
+                                <system:String>CANCEL</system:String>
+                            </Button.CommandParameter>
+                            CANCEL
+                        </Button>
 
-                    <Button
+                        <Button
                         Margin="8,0,0,0"
                         Background="Red"
-                        Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                        Command="{Binding DeleteProviderCommand}"
                         IsCancel="True"
                         Style="{DynamicResource MaterialDesignFlatButton}"
+                        ToolTip="Delete this Provider"
                         TextBlock.Foreground="Black">
-                        <Button.CommandParameter>
-                            <system:String>DELETE</system:String>
-                        </Button.CommandParameter>
-                        DELETE
-                    </Button>
+                            Delete
+                        </Button>
 
-                </StackPanel>
+                    </StackPanel>
 
-            </Grid>
-        </StackPanel>
-    </ScrollViewer>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </materialDesign:DialogHost>
 </UserControl>

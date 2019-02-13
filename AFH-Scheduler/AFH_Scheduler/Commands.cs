@@ -28,10 +28,22 @@ namespace AFH_Scheduler
         {
             var settings = new SettingsVM();
             var view = new SettingsDialog(settings);
-            var result = await DialogHost.Show(view, "SettingsDialog", ClosingEventHandlerSettings);
+            var result = await DialogHost.Show(view, "WindowDialogs", SettingsClosingEventHandler);
         });
 
-        public static void ClosingEventHandlerSettings(object sender, DialogClosingEventArgs eventArgs)
+        //public static RelayCommand OpenSettingsCommand => new RelayCommand(ExecuteSettingsDialog);
+
+        //private static async void ExecuteSettingsDialog(object o)
+        //{
+        //    if(App.Current.Windows.Count == 2)
+        //    {
+        //        var settings = new SettingsVM();
+        //        var view = new SettingsDialog(settings);
+        //        var result = await DialogHost.Show(view, "WindowDialogs", SettingsClosingEventHandler);
+        //    }
+        //}
+
+        public static void SettingsClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             if ((String)eventArgs.Parameter == "Cancel")
             {

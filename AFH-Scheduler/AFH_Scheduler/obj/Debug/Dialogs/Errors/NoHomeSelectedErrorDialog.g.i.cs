@@ -9,10 +9,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using AFH_Scheduler.Converters;
-using AFH_Scheduler.Dialogs;
-using AFH_Scheduler.Schedules;
-using AFH_Scheduler.Validations;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes.Wpf.Transitions;
 using System;
@@ -25,7 +21,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
