@@ -33,7 +33,7 @@ namespace AFH_Scheduler
                 DialogAlreadyOpen = true;
                 var settings = new SettingsVM();
                 var view = new SettingsDialog(settings);
-                var result = await DialogHost.Show(view, "SettingsDialog", ClosingEventHandlerSettings);
+                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
                 DialogAlreadyOpen = false;
             }
         });

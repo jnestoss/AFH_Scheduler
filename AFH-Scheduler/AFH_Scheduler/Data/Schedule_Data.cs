@@ -26,7 +26,7 @@ namespace AFH_Scheduler.Data
         private string _recentInspection;
         private string _nextInspection;
         private string _eighteenthMonthDate;
-        private readonly SchedulerVM _schedulerVM;
+        private readonly DataVM _schedulerVM;
 
         public ScheduleModel(long providerID,
             long homeID,
@@ -36,7 +36,7 @@ namespace AFH_Scheduler.Data
             string homeZIP,
             string recentDate,
             string nextInspection,
-            SchedulerVM schedulerVM,
+            DataVM schedulerVM,
             string eighteenthMonthDate
             )
         {

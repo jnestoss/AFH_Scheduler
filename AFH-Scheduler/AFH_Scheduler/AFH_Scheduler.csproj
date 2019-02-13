@@ -58,6 +58,14 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ShowMeTheXAML, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ShowMeTheXAML.1.0.10\lib\net45\ShowMeTheXAML.dll</HintPath>
     </Reference>
@@ -132,6 +140,7 @@
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\HistVM.cs" />
+    <Compile Include="HelperClasses\ICloseable.cs" />
     <Compile Include="Dialogs\NewHomeDialogVM.cs" />
     <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
       <DependentUpon>NewHomeDialog.xaml</DependentUpon>
@@ -156,17 +165,17 @@
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\ProviderListVM.cs" />
     <Compile Include="Dialogs\SettingsVM.cs" />
-    <Compile Include="Schedules\SchedulesOpenDialog.cs" />
+    <Compile Include="Dialogs\SchedulesOpenDialog.cs" />
     <Compile Include="Validations\FutureDateValidationRule.cs" />
     <Compile Include="Validations\NewHomeValidation.cs" />
     <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
     <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
     <Compile Include="Validations\UniqueProviderIDValidation.cs" />
-    <Page Include="Complete\CompleteInspectionView.xaml">
+    <Page Include="ObsoleteCode\Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
-    <Page Include="Complete\Rescheduling_Follow_Up.xaml">
+    <Page Include="ObsoleteCode\Complete\Rescheduling_Follow_Up.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,11 +231,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="History\HistoryDetailView.xaml">
+    <Page Include="ObsoleteCode\History\HistoryDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="History\HistoryView.xaml">
+    <Page Include="ObsoleteCode\History\HistoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
@@ -239,13 +248,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands.cs" />
-    <Compile Include="Complete\CompleteInspectionView.xaml.cs">
+    <Compile Include="ObsoleteCode\Complete\CompleteInspectionView.xaml.cs">
       <DependentUpon>CompleteInspectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Complete\CompleteInspectionVM.cs" />
-    <Compile Include="Complete\CompleteOpenMessageDialogs.cs" />
-    <Compile Include="Complete\RescheduleVM.cs" />
-    <Compile Include="Complete\Rescheduling_Follow_Up.xaml.cs">
+    <Compile Include="ObsoleteCode\Complete\CompleteInspectionVM.cs" />
+    <Compile Include="ObsoleteCode\Complete\CompleteOpenMessageDialogs.cs" />
+    <Compile Include="ObsoleteCode\Complete\RescheduleVM.cs" />
+    <Compile Include="ObsoleteCode\Complete\Rescheduling_Follow_Up.xaml.cs">
       <DependentUpon>Rescheduling_Follow_Up.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\HomeInspection.Context.cs" />
@@ -288,15 +297,15 @@
     <Compile Include="Data\HistoryModel.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\RelayCommand.cs" />
-    <Compile Include="History\HistoryDetailView.xaml.cs">
+    <Compile Include="ObsoleteCode\History\HistoryDetailView.xaml.cs">
       <DependentUpon>HistoryDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="History\HistoryDetailViewVM.cs" />
-    <Compile Include="History\HistoryView.xaml.cs">
+    <Compile Include="ObsoleteCode\History\HistoryDetailViewVM.cs" />
+    <Compile Include="ObsoleteCode\History\HistoryView.xaml.cs">
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="History\HistoryVM.cs" />
-    <Compile Include="History\openHistoryDetailDialog.cs" />
+    <Compile Include="ObsoleteCode\History\HistoryVM.cs" />
+    <Compile Include="ObsoleteCode\History\openHistoryDetailDialog.cs" />
     <Compile Include="HomeInspectionDbDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -305,17 +314,18 @@
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
-    <Compile Include="Schedules\SchedulerView.xaml.cs">
-      <DependentUpon>SchedulerView.xaml</DependentUpon>
+    <Compile Include="DataView.xaml.cs">
+      <DependentUpon>DataView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Schedules\SchedulerVM.cs" />
+    <Compile Include="DataVM.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Schedules\SchedulerView.xaml">
+    <Page Include="DataView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -336,8 +346,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="bin\Debug\AFH_Scheduler.exe.config" />
-    <None Include="bin\Debug\System.Data.SQLite.dll.config" />
     <None Include="Database\HomeInspection.db" />
     <None Include="Database\HomeInspection.db.sqbpro" />
     <EntityDeploy Include="Database\HomeInspection.edmx">
@@ -374,29 +382,6 @@
     <Content Include="AccessDatabase\HomeInspectionDb.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\AccessDatabase\HomeInspectionDb.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\AFH_Scheduler.exe" />
-    <Content Include="bin\Debug\AFH_Scheduler.pdb" />
-    <Content Include="bin\Debug\Devart.Data.dll" />
-    <Content Include="bin\Debug\Devart.Data.SQLite.dll" />
-    <Content Include="bin\Debug\EntityFramework.dll" />
-    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
-    <Resource Include="bin\Debug\EntityFramework.SqlServer.xml" />
-    <Resource Include="bin\Debug\EntityFramework.xml" />
-    <Content Include="bin\Debug\JetEntityFrameworkProvider.dll" />
-    <Content Include="bin\Debug\MaterialDesignColors.dll" />
-    <Content Include="bin\Debug\MaterialDesignThemes.Wpf.dll" />
-    <Content Include="bin\Debug\MaterialDesignThemes.Wpf.pdb" />
-    <Resource Include="bin\Debug\MaterialDesignThemes.Wpf.xml" />
-    <Content Include="bin\Debug\ShowMeTheXAML.dll" />
-    <Content Include="bin\Debug\System.Data.SQLite.dll" />
-    <Content Include="bin\Debug\System.Data.SQLite.EF6.dll" />
-    <Content Include="bin\Debug\System.Data.SQLite.Linq.dll" />
-    <Resource Include="bin\Debug\System.Data.SQLite.xml" />
-    <Content Include="bin\Debug\x64\SQLite.Interop.dll" />
-    <Content Include="bin\Debug\x86\SQLite.Interop.dll" />
     <Content Include="Database\HomeInspection.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HomeInspection.Context2.cs</LastGenOutput>
@@ -409,10 +394,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\" />
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>

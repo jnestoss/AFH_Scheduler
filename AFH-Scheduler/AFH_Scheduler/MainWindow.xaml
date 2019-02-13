@@ -5,117 +5,76 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:AFH_Scheduler"
-        xmlns:schedules="clr-namespace:AFH_Scheduler.Schedules"
-        xmlns:history="clr-namespace:AFH_Scheduler.History"
-        xmlns:complete="clr-namespace:AFH_Scheduler.Complete"
+        xmlns:schedules="clr-namespace:AFH_Scheduler.Schedules"    
         WindowStyle="None"
         mc:Ignorable="d" Height="720" Width="1080" ResizeMode="NoResize" Visibility="Visible"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Title="AFH Scheduler">
 
+
     <Window.Resources>
-        <DataTemplate DataType="{x:Type schedules:SchedulerVM}">
-            <schedules:SchedulerView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type history:HistoryVM}">
-            <history:HistoryView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type complete:CompleteInspectionVM}">
-            <complete:CompleteInspectionView />
+        <DataTemplate DataType="{x:Type schedules:DataVM}">
+            <local:DataView />
         </DataTemplate>
     </Window.Resources>
 
     <StackPanel Background="WhiteSmoke">
-        
-      
-      
+
+
+
         <StackPanel Height="40" Background="#FF2196F3" Orientation="Horizontal">
             <StackPanel HorizontalAlignment="Left" Margin="10 0">
-                <TextBox Text="Adult Family Home Scheduler" FontSize="18" Width="250" Foreground="WhiteSmoke" IsReadOnly="True"></TextBox> 
+                <TextBox Text="Adult Family Home Scheduler" FontSize="18" Width="250" Foreground="WhiteSmoke" IsReadOnly="True"></TextBox>
             </StackPanel>
 
-          <Grid
-                x:Name="DragableArea"
-                Background="Transparent"
-                MouseDown="DragCommand"
-                Width="580"/>          
+            <Grid
+            x:Name="DragableArea"
+            Background="Transparent"
+            MouseDown="DragCommand"
+            Width="580"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button  Background="{x:Null}" 
-                         BorderBrush="{x:Null}" 
-                         Foreground="WhiteSmoke" 
-                         VerticalAlignment="Center"
-                         Command="{x:Static local:Commands.OpenSettingsCommand}"
-                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center"
+                        Command="{x:Static local:Commands.OpenSettingsCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
                     <materialDesign:PackIcon Kind="Cog" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
 
                 <Button  Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
-                
+
                 <Button  Background="{x:Null}" 
-                         BorderBrush="{x:Null}" 
-                         Foreground="WhiteSmoke" 
-                         VerticalAlignment="Center"
-                         Command="{x:Static local:Commands.MinimizeCommand}"
-                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center"
+                        Command="{x:Static local:Commands.MinimizeCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
                     <materialDesign:PackIcon Kind="ChevronDown" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
-                
+
                 <Button  Background="{x:Null}" 
-                         BorderBrush="{x:Null}" 
-                         Foreground="WhiteSmoke" 
-                         VerticalAlignment="Center" 
-                         Command="{x:Static local:Commands.CloseCommand}"
-                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center" 
+                        Command="{x:Static local:Commands.CloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
                     <materialDesign:PackIcon Kind="Close" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
-                
+
             </StackPanel>
         </StackPanel>
-        <Grid Height="100">
-            <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">-->
-            <ItemsControl ItemsSource="{Binding PageViewModels}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Content="{Binding Name}"
-                        Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                        CommandParameter="{Binding }"
-                        Width="360"
-                        Height="50"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        Foreground="#FF2196F3"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-                <!--<Button Uid="0" Width="360" Content="SCHEDULES" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3"></Button>
-                <Button Uid="1" Width="360" Content="INFORMATION" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Click="Button_Click"></Button>
-                <Button Uid="2" Width="360" Content="COMPLETE INSPECTION" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Click="Button_Click"></Button>-->
-            <!--</StackPanel>-->
-            <Grid x:Name="GridCursor" Width="360" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="{Binding ActiveButton}">
-                
-            </Grid>
-        </Grid>
 
 
-        <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="SettingsDialog">
-            <ContentControl Height="550" Content="{Binding CurrentPageViewModel}"/>
+        <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="WindowDialogs">
+            <ContentControl Height="700" Content="{Binding CurrentPageViewModel}"/>
         </materialDesign:DialogHost>
 
-        <!--
-        <Grid x:Name="GridMain" Height="580" Background="AliceBlue">
-            
-        </Grid>
-        -->
+
     </StackPanel>
 
 </Window>

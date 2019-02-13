@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
+using AFH_Scheduler.Dialogs.Errors;
+using AFH_Scheduler.Dialogs.Confirmation;
+using MaterialDesignThemes.Wpf;
+using AFH_Scheduler.HelperClasses;
 
 namespace AFH_Scheduler.Dialogs
 {
-    public class EditVM : ObservableObject, IPageViewModel
+    public class EditVM : ObservableObject, IPageViewModel       //, ICloseable
     {
         public string Name => "Edit Page";
 
@@ -44,8 +48,28 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private RelayCommand _deleteProviderCommand;
+        public RelayCommand DeleteProviderCommand {
+            get {
+                if (_deleteProviderCommand == null)
+                    _deleteProviderCommand = new RelayCommand(ShowProviderList);
+                return _deleteProviderCommand;
+            }
+        }
+
+        private async void ShowProviderList(object obj)
+        {
+            var view = new DeleteConfirmationDialog();
+            var result = await DialogHost.Show(view, "DeleteConfirmationDialog", ClosingEventHandler);
+            //ClosingEventHandler(this, new DialogClosingEventArgs());
+            
+        }
+
         public static long _homeIDSave;
 
+
+        //public event EventHandler<EventArgs> RequestClose;      
+        //public RelayCommand CloseCommand { get; private set; }
 
         public EditVM(ScheduleModel scheduleData)
         {
@@ -54,6 +78,7 @@ namespace AFH_Scheduler.Dialogs
             ProviderIDs = new List<Tuple<int,string>>();
             grabProviderInformation();
             _homeIDSave = SelectedSchedule.HomeID;
+
         }
 
         private void grabProviderInformation()
@@ -66,6 +91,24 @@ namespace AFH_Scheduler.Dialogs
                 {
                     ProviderIDs.Add(new Tuple<int, string>((int) prov.Provider_ID, prov.Provider_Name));
                     Console.WriteLine(prov.Provider_ID);
+                }
+            }
+        }
+
+        public void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if((String)eventArgs.Parameter == "YES")
+            {
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
+                    var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == SelectedSchedule.HomeID);
+
+                    if (home != null)
+                    {
+                        db.Provider_Homes.Remove(home);
+                        db.SaveChanges();
+                    }
                 }
             }
         }
