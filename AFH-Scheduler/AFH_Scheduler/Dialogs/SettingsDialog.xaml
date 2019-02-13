@@ -41,30 +41,10 @@
             <Grid Margin="30" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
-                <Button 
-            Grid.Column="0"
-            Style="{StaticResource MaterialDesignRaisedLightButton}" 
-            Name="SubmitButton" 
-            IsDefault="True"
-            Margin="10,0,10,1" 
-            FontSize="18" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-            Width="100"
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
-                    <Button.CommandParameter>
-
-                        <system:String>Submit</system:String>
-
-                    </Button.CommandParameter>
-
-                    _SUBMIT
-                </Button>
 
                 <Button 
                     IsCancel="True"
-            Grid.Column="1"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
             Name="CancelNewHome" 
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
@@ -77,7 +57,7 @@
 
                     </Button.CommandParameter>
 
-                    _CANCEL
+                    _CLOSE
                 </Button>
             </Grid>
 

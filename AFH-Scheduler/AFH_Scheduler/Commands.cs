@@ -13,6 +13,8 @@ namespace AFH_Scheduler
 {
     public class Commands
     {
+        private static bool DialogAlreadyOpen = false;
+
         public static readonly RelayCommand CloseCommand = new RelayCommand(o => ((Window)o).Close());
 
         public static readonly RelayCommand MinimizeCommand = new RelayCommand(w =>
@@ -26,9 +28,14 @@ namespace AFH_Scheduler
 
         public static readonly RelayCommand OpenSettingsCommand = new RelayCommand(async w =>
         {
-            var settings = new SettingsVM();
-            var view = new SettingsDialog(settings);
-            var result = await DialogHost.Show(view, "SettingsDialog", ClosingEventHandlerSettings);
+            if (!DialogAlreadyOpen)
+            {
+                DialogAlreadyOpen = true;
+                var settings = new SettingsVM();
+                var view = new SettingsDialog(settings);
+                var result = await DialogHost.Show(view, "SettingsDialog", ClosingEventHandlerSettings);
+                DialogAlreadyOpen = false;
+            }
         });
 
         public static void ClosingEventHandlerSettings(object sender, DialogClosingEventArgs eventArgs)
