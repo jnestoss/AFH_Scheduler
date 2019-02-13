@@ -115,6 +115,10 @@
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
+    <Compile Include="Dialogs\CompleteDialog.xaml.cs">
+      <DependentUpon>CompleteDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CompleteVM.cs" />
     <Compile Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml.cs">
       <DependentUpon>DeleteConfirmationDialog.xaml</DependentUpon>
     </Compile>
@@ -126,9 +130,7 @@
     <Compile Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml.cs">
       <DependentUpon>TransferOrDeleteHomes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\EditDialog.xaml.cs">
-      <DependentUpon>EditDialog.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Dialogs\EditDialog.xaml.cs" />
     <Compile Include="Dialogs\EditVM.cs" />
     <Compile Include="Dialogs\Errors\CanNotDeleteProviderError.xaml.cs">
       <DependentUpon>CanNotDeleteProviderError.xaml</DependentUpon>
@@ -172,6 +174,13 @@
     <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
     <Compile Include="Validations\UniqueProviderIDValidation.cs" />
+    <Page Include="Dialogs\CompleteDialog.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Page>
+    <Page Include="Dialogs\EditDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ObsoleteCode\Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
@@ -190,10 +199,6 @@
     <Page Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\EditDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Errors\CanNotDeleteProviderError.xaml">
       <SubType>Designer</SubType>
