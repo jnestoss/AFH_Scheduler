@@ -273,13 +273,16 @@
                 ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
                 ToolTipService.Placement="Right">
                 <StackPanel>
-                    <Button ToolTip="Complete Inspection">
+                    <Button Command="{Binding RunCompleteDialogCommand}" 
+                            ToolTip="Complete Inspection">
                         <materialDesign:PackIcon Kind="Archive" />
                     </Button>
                     <Button ToolTip="Home History">
                         <materialDesign:PackIcon Kind="HomeVariant" />
                     </Button>
-                    <Button Command="{Binding RunEditDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}" ToolTip="Edit">
+                    <Button Command="{Binding RunEditDialogCommand}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}" 
+                            ToolTip="Edit">
                         <materialDesign:PackIcon Kind="Edit" />
                     </Button>
                     <!--

@@ -678,6 +678,27 @@ namespace AFH_Scheduler.Schedules
         //}
 
 
+        public RelayCommand RunCompleteDialogCommand => new RelayCommand(ExecuteCompleteDialog);
+
+        private async void ExecuteCompleteDialog(object o)
+        {
+            if (SelectedSchedule == null)
+            {
+                var view = new NoHomeSelectedErrorDialog();
+
+                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+            }
+            else
+            {
+                var view = new CompleteDialog
+                {
+                    DataContext = new CompleteVM(SelectedSchedule)
+                };
+
+                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandler);
+            }
+        }
+
 
         private void ClosingEventHandlerNewHome(object sender, DialogClosingEventArgs eventArgs)
 
