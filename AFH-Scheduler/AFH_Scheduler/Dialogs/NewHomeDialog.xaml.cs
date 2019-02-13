@@ -20,7 +20,7 @@ namespace AFH_Scheduler.Dialogs
     /// </summary>
     public partial class NewHomeDialog : UserControl
     {
-        public NewHomeDialog(NewHomeCreatorVM newHomeVm)
+        public NewHomeDialog(NewHomeDialogVM newHomeVm)
         {
             InitializeComponent();
             DataContext = newHomeVm;

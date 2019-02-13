@@ -15,18 +15,10 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Title="AFH Scheduler">
 
+
     <Window.Resources>
-        <DataTemplate DataType="{x:Type login:LoginViewVM}">
-            <login:LoginView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type schedules:SchedulerVM}">
-            <schedules:SchedulerView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type history:HistoryVM}">
-            <history:HistoryView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type complete:CompleteInspectionVM}">
-            <complete:CompleteInspectionView />
+        <DataTemplate DataType="{x:Type schedules:DataVM}">
+            <local:DataView />
         </DataTemplate>
     </Window.Resources>
 
@@ -87,33 +79,31 @@
                 </Button>
 
                 <Button  Background="{x:Null}" 
-                         BorderBrush="{x:Null}" 
-                         Foreground="WhiteSmoke" 
-                         VerticalAlignment="Center"
-                         Command="{x:Static local:Commands.MinimizeCommand}"
-                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center"
+                        Command="{x:Static local:Commands.MinimizeCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
                     <materialDesign:PackIcon Kind="ChevronDown" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
 
                 <Button  Background="{x:Null}" 
-                         BorderBrush="{x:Null}" 
-                         Foreground="WhiteSmoke" 
-                         VerticalAlignment="Center" 
-                         Command="{x:Static local:Commands.CloseCommand}"
-                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center" 
+                        Command="{x:Static local:Commands.CloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
                     <materialDesign:PackIcon Kind="Close" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
 
             </StackPanel>
         </StackPanel>
 
-        <ContentControl Height="550" Content="{Binding CurrentPageViewModel}"/>
+        <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="WindowDialogs">
+            <ContentControl Height="700" Content="{Binding CurrentPageViewModel}"/>
+        </materialDesign:DialogHost>
 
-        <!--
-        <Grid x:Name="GridMain" Height="580" Background="AliceBlue">
-            
-        </Grid>
-        -->
+
     </StackPanel>
 
 </Window>

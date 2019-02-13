@@ -18,12 +18,12 @@ namespace AFH_Scheduler.Data
         private bool _followUpSelected;
         private long? _providerID;
         private string _providerName;
-        long _homeID;
-        string _address;
-        string _city;
-        string _zipcode;
-        string _inspectionDate;
-        string _followUpDate;
+        private long _homeID;
+        private string _address;
+        private string _city;
+        private string _zipcode;
+        private string _inspectionDate;
+        private string _followUpDate;
         
         private List<string> _deficiences;
         private string _selectedOutcome;
