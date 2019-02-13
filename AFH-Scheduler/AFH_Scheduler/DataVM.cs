@@ -496,6 +496,7 @@ namespace AFH_Scheduler.Schedules
                             db.SaveChanges();
                             Providers.Remove(SelectedSchedule);
                             MessageService.ReleaseMessageBox("Selected Home has been removed from the table.");
+                            RefreshTable("");
                         }
                         catch(InvalidOperationException e)
                         {

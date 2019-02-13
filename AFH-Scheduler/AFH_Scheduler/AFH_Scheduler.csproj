@@ -118,10 +118,21 @@
     <Compile Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml.cs">
       <DependentUpon>DeleteConfirmationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Confirmation\DeleteProviderDialog.xaml.cs">
+      <DependentUpon>DeleteProviderDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Confirmation\DeleteVM.cs" />
+    <Compile Include="Dialogs\Confirmation\TransferDeleteVM.cs" />
+    <Compile Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml.cs">
+      <DependentUpon>TransferOrDeleteHomes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\EditDialog.xaml.cs">
       <DependentUpon>EditDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditVM.cs" />
+    <Compile Include="Dialogs\Errors\CanNotDeleteProviderError.xaml.cs">
+      <DependentUpon>CanNotDeleteProviderError.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
       <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -137,6 +148,10 @@
     <Compile Include="Dialogs\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\EditProvider.xaml.cs">
+      <DependentUpon>EditProvider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\EditProviderVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\NewProviderCreatorVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml.cs">
       <DependentUpon>NewProviderCreator.xaml</DependentUpon>
@@ -168,9 +183,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dialogs\Confirmation\DeleteProviderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\EditDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\CanNotDeleteProviderError.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -187,6 +214,10 @@
     <Page Include="Dialogs\SettingsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\EditProvider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml">
       <SubType>Designer</SubType>

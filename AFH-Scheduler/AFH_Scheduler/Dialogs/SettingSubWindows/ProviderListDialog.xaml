@@ -43,6 +43,20 @@
                             <DataTemplate>
                                 <Button  
                                     IsEnabled="{Binding IsProviderSelected}"
+                                    Command="{Binding Path=DataContext.ProviderEditCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                                    _EDIT PROVIDER
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button  
+                                    IsEnabled="{Binding IsProviderSelected}"
                                     Command="{Binding Path=DataContext.ProviderDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
                                     ToolTip="Resource name: MaterialDesignRaisedLightButton">
