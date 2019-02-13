@@ -7,8 +7,10 @@ using System.Windows;
 using System.Windows.Input;
 using AFH_Scheduler.Schedules;
 using AFH_Scheduler.History;
+using AFH_Scheduler.Login;
 using AFH_Scheduler.Helper_Classes;
 using AFH_Scheduler.Complete;
+using AFH_Scheduler.Database.LoginDB;
 
 namespace AFH_Scheduler
 {
@@ -20,12 +22,15 @@ namespace AFH_Scheduler
 
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
+        private User _user;
+        private bool _loggedIn;
 
         private Thickness _activeButton;
 
         public MainVM()
         {
             // Add available pages
+            PageViewModels.Add(new LoginViewVM(this));
             PageViewModels.Add(new SchedulerVM());
             PageViewModels.Add(new HistoryVM());
             PageViewModels.Add(new CompleteInspectionVM());
@@ -33,14 +38,41 @@ namespace AFH_Scheduler
             // Set starting page
             CurrentPageViewModel = PageViewModels[0];
             _activeButton = new Thickness(0, 0, 0, 0);
-
+            _loggedIn = false;
         }
 
         #region Properties / Commands
-
-
-        public ICommand ChangePageCommand {
-            get {
+        public bool LoggedIn
+        {
+            get
+            {
+                if (_user != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (_user != null)
+                {
+                    _loggedIn = true;
+                    OnPropertyChanged("IsLoggedIn");
+                }
+                else
+                {
+                    _loggedIn = false;
+                    OnPropertyChanged("IsLoggedIn");
+                }
+            }
+        }
+        public ICommand ChangePageCommand
+        {
+            get
+            {
                 SetThickness(_currentPageViewModel.Name);
                 if (_changePageCommand == null)
                 {
@@ -53,8 +85,10 @@ namespace AFH_Scheduler
             }
         }
 
-        public List<IPageViewModel> PageViewModels {
-            get {
+        public List<IPageViewModel> PageViewModels
+        {
+            get
+            {
                 if (_pageViewModels == null)
                     _pageViewModels = new List<IPageViewModel>();
 
@@ -62,12 +96,15 @@ namespace AFH_Scheduler
             }
         }
 
-        public IPageViewModel CurrentPageViewModel {
-            get {
+        public IPageViewModel CurrentPageViewModel
+        {
+            get
+            {
                 //SetThickness(_currentPageViewModel.Name);
                 return _currentPageViewModel;
             }
-            set {
+            set
+            {
                 if (_currentPageViewModel != value)
                 {
                     _currentPageViewModel = value;
@@ -78,16 +115,30 @@ namespace AFH_Scheduler
             }
         }
 
-        public Thickness ActiveButton {
-            get {
+        public Thickness ActiveButton
+        {
+            get
+            {
                 return _activeButton;
             }
-            set {
+            set
+            {
                 _activeButton = value;
                 OnPropertyChanged("ActiveButton");
             }
         }
 
+        public User Usr
+        {
+            get
+            {
+                return _user;
+            }
+            set
+            {
+                _user = value;
+            }
+        }
         #endregion
 
         #region Methods
@@ -114,7 +165,7 @@ namespace AFH_Scheduler
                 PageViewModels.Add(viewModel);
 
             CurrentPageViewModel = PageViewModels
-                .FirstOrDefault(vm => vm == viewModel);            
+                .FirstOrDefault(vm => vm == viewModel);
         }
 
         #endregion

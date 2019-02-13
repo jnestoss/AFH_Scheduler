@@ -13,7 +13,7 @@ namespace AFH_Scheduler.History
     {
         public HistoryView()
         {
-            InitializeComponent();
+           InitializeComponent();
         }
     }
 }
