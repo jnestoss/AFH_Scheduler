@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\scott\source\repos\AFH_Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Home_History">
           <Key>
             <PropertyRef Name="HHistory_ID" />

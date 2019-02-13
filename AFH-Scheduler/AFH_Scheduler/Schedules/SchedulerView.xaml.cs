@@ -21,5 +21,37 @@ namespace AFH_Scheduler.Schedules
         {
             InitializeComponent();
         }
+  
+        private void PopupBox_OnOpened(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Just making sure the popup has opened.");
+        }
+
+        private void PopupBox_OnClosed(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Just making sure the popup has closed.");
+        }
+
+        private void FilterTextBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (FilterTextBox.IsEnabled)
+            {
+                FilterTextBox.Visibility = Visibility.Visible;
+                DatePickerStart.IsEnabled = false;
+                DatePickerStart.Visibility = Visibility.Hidden;
+                DatePickerEnd.IsEnabled = false;
+                DatePickerEnd.Visibility = Visibility.Hidden;
+                ToTextBlock.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                FilterTextBox.Visibility = Visibility.Hidden;
+                DatePickerStart.IsEnabled = true;
+                DatePickerStart.Visibility = Visibility.Visible;
+                DatePickerEnd.IsEnabled = true;
+                DatePickerEnd.Visibility = Visibility.Visible;
+                ToTextBlock.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

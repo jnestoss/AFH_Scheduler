@@ -13,9 +13,9 @@
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,95,4,75" Width="630">
         <TextBlock FlowDirection="LeftToRight" VerticalAlignment="Top" TextWrapping="Wrap" FontSize="18" Width="221">When would you like to reschedule the follow up?</TextBlock>
-        <Grid FlowDirection="LeftToRight" Width="259">
+        <Grid FlowDirection="LeftToRight">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="136"/>
+                <ColumnDefinition Width="140" MinWidth="100"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="Auto" MinWidth="93"/>
             </Grid.ColumnDefinitions>
@@ -25,9 +25,13 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <DatePicker SelectedDate="{Binding DatePicked}" Grid.Column="0" Grid.Row="0" FontSize="18" Margin="10,0,0,0" MaxWidth="130" 
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+            <!--
             <TextBox Text="{Binding RescheduledFollowUpDate}" Name="DateTextBox" Grid.Column="0" Grid.Row="0" FontSize="18" Margin="10,0,0,0" HorizontalAlignment="Left" Width="113"/>
-            <Button Name="RescheduleButton" Style="{StaticResource MaterialDesignRaisedLightButton}" Grid.Column="0" Grid.Row="2" Margin="10,0,11,0" FontSize="14" ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-                    Command="{Binding Path=SubmittingUpdateCommand}">
+            -->
+            <Button Name="RescheduleButton" Style="{StaticResource MaterialDesignRaisedLightButton}" Grid.Column="0" Grid.Row="2" Margin="10,0,10,1" FontSize="14" ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+                   Width="120" Command="{Binding Path=SubmittingUpdateCommand}">
                 _RESCHEDULE
             </Button>
             <Button IsCancel="True" Name="CancelReschedule" Style="{StaticResource MaterialDesignRaisedLightButton}" Grid.Column="2" Grid.Row="2" Margin="10,0,11,0" ToolTip="Resource name: MaterialDesignRaisedLightButton" FontSize="14">

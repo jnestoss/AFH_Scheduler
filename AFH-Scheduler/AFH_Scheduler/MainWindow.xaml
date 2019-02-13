@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:AFH_Scheduler"
         xmlns:schedules="clr-namespace:AFH_Scheduler.Schedules"
         xmlns:history="clr-namespace:AFH_Scheduler.History"
-        xmlns:complete="clr-namespace:AFH_Scheduler.Complete"      
+        xmlns:complete="clr-namespace:AFH_Scheduler.Complete"
         WindowStyle="None"
         mc:Ignorable="d" Height="720" Width="1080" ResizeMode="NoResize" Visibility="Visible"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -39,9 +39,17 @@
                 x:Name="DragableArea"
                 Background="Transparent"
                 MouseDown="DragCommand"
-                Width="635"/>          
+                Width="580"/>          
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button  Background="{x:Null}" 
+                         BorderBrush="{x:Null}" 
+                         Foreground="WhiteSmoke" 
+                         VerticalAlignment="Center"
+                         Command="{x:Static local:Commands.OpenSettingsCommand}"
+                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                    <materialDesign:PackIcon Kind="Cog" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                </Button>
 
                 <Button  Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
@@ -98,7 +106,10 @@
             </Grid>
         </Grid>
 
-        <ContentControl Height="550" Content="{Binding CurrentPageViewModel}"/>
+
+        <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="SettingsDialog">
+            <ContentControl Height="550" Content="{Binding CurrentPageViewModel}"/>
+        </materialDesign:DialogHost>
 
         <!--
         <Grid x:Name="GridMain" Height="580" Background="AliceBlue">
