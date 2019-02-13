@@ -46,11 +46,14 @@ namespace AFH_Scheduler.Data
             HomeID = homeID;
             ProviderName = name;
             Address = address;
+            City = homeCity;
+            ZIP = homeZIP;
             RecentInspection = recentDate;
             NextInspection = nextInspection;
             EighteenthMonthDate = eighteenthMonthDate;
             HomesHistory = new ObservableCollection<HistoryDetailModel>();
         }
+
         public ObservableCollection<HistoryDetailModel> HomesHistory
         {
             get { return _homeshistory; }

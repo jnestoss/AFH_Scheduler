@@ -38,6 +38,20 @@ namespace AFH_Scheduler.Data
             InspectionDate = DateTime.Now;
         }
 
+        public NewHomeModel(long pHome_ID, 
+            string pHome_Address, 
+            string pHome_City, 
+            string pHome_Zipcode, 
+            DateTime insp)
+        {
+            HomeID = pHome_ID.ToString();
+            Address = pHome_Address;
+            City = pHome_City;
+            Zipcode = pHome_Zipcode;
+            IsProviderSelected = false;
+            InspectionDate = insp;
+        }
+
         public string ProviderID
         {
             get { return _providerID; }
