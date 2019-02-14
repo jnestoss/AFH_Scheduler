@@ -389,7 +389,7 @@ namespace AFH_Scheduler.Schedules
         {
             var createdHome = new NewHomeDialogVM();
             var view = new NewHomeDialog(createdHome);
-            var result = await DialogHost.Show(view, "EditDialog", ClosingEventHandlerNewHome);
+            var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerNewHome);
 
             if (DialogHostSuccess)
             {
@@ -742,8 +742,6 @@ namespace AFH_Scheduler.Schedules
                         selectHome.PHome_Zipcode = zip;
                         //selectHome.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == foo).SInspections_Date = nextInspection;
 
-
-                        Console.WriteLine("%%%%%%%%%%%%%%%%%%%%");
                         //db.Entry(selectHome).State = selectHome.PHome_ID == EditVM.HomeIDSave ? EntityState.Added : EntityState.Modified;
 
                         db.SaveChanges();

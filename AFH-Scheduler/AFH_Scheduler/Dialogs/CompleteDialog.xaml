@@ -16,36 +16,60 @@
     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
     mc:Ignorable="d">
 
-    <Grid Margin="20" 
-          HorizontalAlignment="Center" 
-          VerticalAlignment="Center">
+    <Grid
+        Margin="20"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-             
-        <TextBlock Margin="0,10,0,10" Grid.Column="0" Grid.Row="0" FontSize="18">Follow Up?</TextBlock>
-        <CheckBox IsChecked="False" Grid.Column="1" Grid.Row="0"/>
 
-        <TextBlock Margin="0,10,0,10" Grid.Column="0" Grid.Row="1" FontSize="18">Outcome Code</TextBlock>
-        <ComboBox Grid.Column="1" Grid.Row="1">
-            <ComboBoxItem>A</ComboBoxItem>
-            <ComboBoxItem>B</ComboBoxItem>
-            <ComboBoxItem>C</ComboBoxItem>
-            <ComboBoxItem>D</ComboBoxItem>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,10,0,10"
+            FontSize="18">
+            Follow Up?
+        </TextBlock>
+        <CheckBox
+            Grid.Row="0"
+            Grid.Column="1"
+            IsChecked="False" />
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,10,0,10"
+            FontSize="18">
+            Outcome Code
+        </TextBlock>
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            SelectedIndex="5">
+            <ComboBoxItem>NO - [16-18]</ComboBoxItem>
+            <ComboBoxItem>ENF - [10-12]</ComboBoxItem>
+            <ComboBoxItem>YES - [13-15]</ComboBoxItem>
+            <ComboBoxItem>NQA - [9]</ComboBoxItem>
+            <ComboBoxItem>NNOQA - [6]</ComboBoxItem>
+            <ComboBoxItem>CSAME - [Same]</ComboBoxItem>
+            <ComboBoxItem>CNOQA- [1]</ComboBoxItem>
+            <ComboBoxItem>CQA - [9]</ComboBoxItem>
+            <ComboBoxItem>CSS - [2]</ComboBoxItem>
         </ComboBox>
 
         <Button
-            Grid.Column="0"
             Grid.Row="2"
+            Grid.Column="0"
             MaxWidth="255"
             Margin="20,10,20,10"
             Style="{StaticResource MaterialDesignRaisedLightButton}"
@@ -54,10 +78,12 @@
         </Button>
 
         <Button
-            Grid.Column="1"
             Grid.Row="2"
+            Grid.Column="1"
             MaxWidth="255"
             Margin="20,10,20,10"
+            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+            IsCancel="True"
             Style="{StaticResource MaterialDesignRaisedLightButton}">
             CANCEL
         </Button>
