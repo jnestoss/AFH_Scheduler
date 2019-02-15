@@ -107,7 +107,7 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region SCHEDULING ALGORITHM
-        public DateTime NextScheduledDate(Inspection_Outcome outcome, DateTime recent_inspection)
+        public static DateTime NextScheduledDate(Inspection_Outcome outcome, DateTime recent_inspection)
         {
             Random randomiz = new Random();
             string minTime = outcome.IOutcome_Mintime;
@@ -133,7 +133,7 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region Check If Weekend
-        public DateTime CheckDay(DateTime new_inspectionDate)
+        public static DateTime CheckDay(DateTime new_inspectionDate)
         {
             while (new_inspectionDate.DayOfWeek == DayOfWeek.Saturday || new_inspectionDate.DayOfWeek == DayOfWeek.Sunday)
             {
