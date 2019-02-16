@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\scott\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Release\
+C:\Users\Scott\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Release\
 AFH_Scheduler
 none
 false
 TRACE
-C:\Users\scott\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\App.xaml
+C:\Users\Scott\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\App.xaml
 201317458203
 3-2120122081
 8348498606
-30-1203444809
+271872228439
 Dialogs\CompleteDialog.xaml;Dialogs\EditDialog.xaml;ObsoleteCode\Complete\CompleteInspectionView.xaml;ObsoleteCode\Complete\Rescheduling_Follow_Up.xaml;Dialogs\Confirmation\DeleteConfirmationDialog.xaml;Dialogs\Confirmation\DeleteProviderDialog.xaml;Dialogs\Confirmation\TransferOrDeleteHomes.xaml;Dialogs\Errors\CanNotDeleteProviderError.xaml;Dialogs\Errors\NoHomeSelectedErrorDialog.xaml;Dialogs\HistoryDialog.xaml;Dialogs\NewHomeDialog.xaml;Dialogs\SettingsDialog.xaml;Dialogs\SettingSubWindows\EditProvider.xaml;Dialogs\SettingSubWindows\NewProviderCreator.xaml;Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml;Dialogs\SettingSubWindows\ProviderListDialog.xaml;ObsoleteCode\History\HistoryDetailView.xaml;ObsoleteCode\History\HistoryView.xaml;MainWindow.xaml;DataView.xaml;
 
 True
