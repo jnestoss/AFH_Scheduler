@@ -77,7 +77,7 @@
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
 
                 <Button.Style>
-                    <Style TargetType="Button">
+                    <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
@@ -96,7 +96,7 @@
 
                 </Button.CommandParameter>
 
-                _TRANSFER
+                _CHOW
             </Button>
             
             <Button 

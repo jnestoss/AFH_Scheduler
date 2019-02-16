@@ -11,14 +11,10 @@
              Width="300">
     
     <StackPanel Margin="30">
-        <TextBlock FontSize="16" TextWrapping="Wrap">
-            Are you sure you want to remove this provider from the database?
-        </TextBlock>
+        <TextBlock Text="{Binding DeleteMessage}" FontSize="16" TextWrapping="Wrap"/>
 
         <StackPanel Orientation="Horizontal">
-            <TextBlock FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Left">
-            Provider:
-            </TextBlock>
+            <TextBlock Text="{Binding ItemType}" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Left"/>
             <TextBox MinWidth="160" 
                      Margin="10 0 0 0"
                  HorizontalAlignment="Right"

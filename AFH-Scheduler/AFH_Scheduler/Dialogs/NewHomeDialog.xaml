@@ -72,9 +72,6 @@
                     <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:NewHomeValidation Message="Address isn't in correct format." 
-                                                     Regex="^[0-9]+ [a-zA-z0-9]+( [a-zA-z0-9]+)?$"
-                                                     ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

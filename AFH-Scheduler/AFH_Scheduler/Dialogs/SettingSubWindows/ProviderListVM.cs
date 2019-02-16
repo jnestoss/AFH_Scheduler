@@ -74,7 +74,8 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
         }
         private async void DeleteProvider(object obj)
         {
-            var vm = new DeleteVM(SelectedProvider.ProviderName);
+            var vm = new DeleteVM("Are you sure you want to remove this provider from the database?", "Provider:", 
+                SelectedProvider.ProviderName);
             var deleteView = new DeleteProviderDialog(vm);
 
             var deleteResult = await DialogHost.Show(deleteView, "AddProviderDialog", ClosingEventHandlerAddProviders);
