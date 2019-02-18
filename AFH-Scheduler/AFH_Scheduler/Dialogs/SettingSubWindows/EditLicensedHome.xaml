@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AFH_Scheduler.Dialogs.SettingSubWindows.NewProviderCreator"
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.SettingSubWindows.EditLicensedHome"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,23 +6,26 @@
              xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.SettingSubWindows"
              xmlns:Behaviors="clr-namespace:AFH_Scheduler.Validations"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:system="clr-namespace:System;assembly=mscorlib" 
              mc:Ignorable="d" >
-    
+
     <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <TextBlock FontSize="22" HorizontalAlignment="Center" Margin="0 0 10 0">
+            Edit the License Information
+            </TextBlock>
+        </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Margin="10" FontSize="18">Provider ID:</TextBlock>
+            <TextBlock Margin="10" FontSize="18">License Number:</TextBlock>
             <TextBox 
-                Name="ProviderIDTextBox"
+                Name="LicenseNumTextBox"
                     Margin="10" 
                     FontSize="18"
                     MinWidth="255">
                 <TextBox.Text>
-                    <Binding Path="NewProviderAdded.ProviderID" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="LicensedHomes.HomeLicense" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:UniqueProviderIDValidation ValidatesOnTargetUpdated="True" />
                             <Behaviors:NewHomeValidation Message="Please use only whole numbers." 
                                                      Regex="^[0-9]+$"
                                                      ValidatesOnTargetUpdated="True"/>
@@ -33,19 +36,16 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Margin="10" FontSize="18">Provider Name:</TextBlock>
+            <TextBlock Margin="10" FontSize="18">Homes Name:</TextBlock>
             <TextBox 
-                    Name="NameTextBox"
+                Name="HomeNameTextBox"
                     Margin="10" 
                     FontSize="18"
                     MinWidth="255">
                 <TextBox.Text>
-                    <Binding Path="NewProviderAdded.ProviderName" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="LicensedHomes.HomeName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:NewHomeValidation Message="Please enter the name in the following format: First Last. Hypens are allowed." 
-                                                     Regex="^[A-Z]([a-z][-']?)* [A-Z]([a-z][-']?)*$"
-                                                     ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -66,9 +66,9 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderIDTextBox}" 
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LicenseNumTextBox}" 
                                                Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=NameTextBox}" 
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeNameTextBox}" 
                                                Value="False"/>
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True"/>
@@ -78,7 +78,7 @@
                 </Button.Style>
                 <Button.CommandParameter>
 
-                    <system:String>Submit</system:String>
+                    <system:String>SUBMIT</system:String>
 
                 </Button.CommandParameter>
 
@@ -86,7 +86,7 @@
             </Button>
 
             <Button 
-             IsCancel="True"
+            IsCancel="True"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
             MaxWidth="100" Margin="10,0,11,0" 
