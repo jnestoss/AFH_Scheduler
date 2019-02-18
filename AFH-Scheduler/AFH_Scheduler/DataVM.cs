@@ -732,7 +732,7 @@ namespace AFH_Scheduler.Schedules
 
                     var foo = EditVM._homeIDSave;
 
-                    var selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
+                    Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
                     if (selectHome != null)
                     {
                         //selectHome.PHome_ID = homeID;
