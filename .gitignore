@@ -9,7 +9,10 @@
 *.exe
 *.pdb
 *.cache
-
+*.baml
+*.g.cs
+*.g.i.cs
+*.Iref
 
 # User-specific files
 *.rsuser
