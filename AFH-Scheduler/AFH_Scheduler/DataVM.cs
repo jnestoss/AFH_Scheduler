@@ -726,13 +726,18 @@ namespace AFH_Scheduler.Schedules
                     var providerID = editedHomeData.ProviderID;
                     var address = editedHomeData.Address;
                     var city = editedHomeData.City;
-                    Console.WriteLine("OOOOOOOOOOOOOOO: " + city);
                     var zip = editedHomeData.ZIP;
                     var nextInspection = editedHomeData.NextInspection;
 
                     var foo = EditVM._homeIDSave;
 
                     Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
+
+                    db.Provider_Homes.Remove(selectHome);
+
+                    //create new record here
+
+
                     if (selectHome != null)
                     {
                         //selectHome.PHome_ID = homeID;

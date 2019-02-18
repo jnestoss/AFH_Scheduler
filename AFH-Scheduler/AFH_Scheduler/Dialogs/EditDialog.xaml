@@ -79,11 +79,15 @@
                         Margin="20,10,0,10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
+                        IsEditable="True"    
+                        IsTextSearchEnabled="True"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         materialDesign:HintAssist.Hint="Search"
                         materialDesign:HintAssist.HintOpacity=".26"
-                        IsEditable="False"
                         ItemsSource="{Binding ProviderIDs, Converter={StaticResource providerListConverter}}"
-                        Text="{Binding CurrentProvider, Converter={StaticResource providerConverter}}" />
+                        Text="{Binding CurrentProvider, Converter={StaticResource providerConverter}, UpdateSourceTrigger=LostFocus}">
+
+                    </ComboBox>
 
 
                     <TextBox
@@ -94,7 +98,7 @@
                         Margin="0,10,0,0"
                         VerticalAlignment="Bottom"
                         materialDesign:HintAssist.FloatingScale="1.4"
-                        materialDesign:HintAssist.Hint="Home ID"
+                        materialDesign:HintAssist.Hint="Licence ID"
                         materialDesign:HintAssist.HintOpacity="0.9"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
@@ -106,15 +110,28 @@
                         </TextBox.Text>
 
                         <i:Interaction.Behaviors>
-                            <Behaviors:TextBoxInputMaskBehavior InputMask="00000" />
+                            <Behaviors:TextBoxInputMaskBehavior InputMask="000000" />
                         </i:Interaction.Behaviors>
+                    </TextBox>
+
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Grid.ColumnSpan="2"
+                        Margin="0,10,0,0"
+                        VerticalAlignment="Bottom"
+                        materialDesign:HintAssist.FloatingScale="1.4"
+                        materialDesign:HintAssist.Hint="Licence ID"
+                        materialDesign:HintAssist.HintOpacity="0.9"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+
 
                     </TextBox>
 
                     <TextBox
                         x:Name="PhoneNumber"
-                        Grid.Row="1"
-                        Grid.Column="3"
+                        Grid.Row="2"
+                        Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="0,10,0,0"
                         VerticalAlignment="Bottom"
@@ -130,7 +147,7 @@
 
                     <TextBox
                         x:Name="ProviderAddress"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Grid.Column="0"
                         Grid.ColumnSpan="3"
                         Margin="0,10,5,0"
@@ -150,7 +167,7 @@
 
                     <TextBox
                         x:Name="ProviderCity"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Grid.Column="3"
                         Grid.ColumnSpan="1"
                         Margin="5,10,5,0"
@@ -170,7 +187,7 @@
 
                     <TextBox
                         x:Name="ZIPCode"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Grid.Column="4"
                         Grid.ColumnSpan="1"
                         Margin="5,10,0,0"
@@ -189,7 +206,7 @@
                     </TextBox>
 
                     <TextBlock
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="0,10,0,0"
@@ -201,13 +218,13 @@
                     </TextBlock>
 
                     <ComboBox
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Grid.Column="2"
                         ItemsSource="{Binding OutcomeCodes}"
                         SelectedItem="{Binding SelectedCode, Converter={StaticResource outcomeCodeConverter}}" />
 
                     <Button
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Grid.Column="3"
                         Command="{Binding CalcDate}"
                         Style="{DynamicResource MaterialDesignFlatButton}">
@@ -215,7 +232,7 @@
                     </Button>
 
                     <TextBlock
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="0,10,0,0"
@@ -228,7 +245,7 @@
 
                     <DatePicker
                         x:Name="FutureDatePicker"
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
                         Width="100"
@@ -246,7 +263,7 @@
 
 
                     <StackPanel
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Grid.Column="0"
                         Grid.ColumnSpan="6"
                         Margin="0,50,60,0"
