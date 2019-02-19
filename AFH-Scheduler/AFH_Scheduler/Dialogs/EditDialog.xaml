@@ -70,7 +70,7 @@
                         VerticalAlignment="Center"
                         FontSize="18"
                         Opacity="0.9">
-                        Provider Info
+                        Provider
                     </TextBlock>
                     <ComboBox
                         Grid.Row="0"
@@ -81,12 +81,19 @@
                         VerticalAlignment="Center"
                         IsEditable="True"    
                         IsTextSearchEnabled="True"
+                        StaysOpenOnEdit="True"
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         materialDesign:HintAssist.Hint="Search"
                         materialDesign:HintAssist.HintOpacity=".26"
-                        ItemsSource="{Binding ProviderIDs, Converter={StaticResource providerListConverter}}"
-                        Text="{Binding CurrentProvider, Converter={StaticResource providerConverter}, UpdateSourceTrigger=LostFocus}">
-
+                        ItemsSource="{Binding ComboBoxProviderItems}"
+                        Text="{Binding TextSearch, Delay=250}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
 
 

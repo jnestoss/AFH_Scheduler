@@ -12,6 +12,9 @@ using AFH_Scheduler.Dialogs.Confirmation;
 using MaterialDesignThemes.Wpf;
 using AFH_Scheduler.HelperClasses;
 using AFH_Scheduler.Algorithm;
+using System.ComponentModel;
+using System.Windows.Data;
+
 
 namespace AFH_Scheduler.Dialogs
 {
@@ -23,31 +26,52 @@ namespace AFH_Scheduler.Dialogs
         public ScheduleModel SelectedSchedule {
             get { return _selectedSchedule; }
             set {
+                
                 if (_selectedSchedule == value) return;
                 _selectedSchedule = value;
                 OnPropertyChanged("SelectedSchedule");
             }
         }
 
-        private List<Tuple<int,string>> _providerIDs;
-        public List<Tuple<int, string>> ProviderIDs {
-            get { return _providerIDs; }
+        private readonly ObservableCollection<String> Providers;
+        public ICollectionView ComboBoxProviderItems { get;  }
+
+        private string _TextSearch;
+        public string TextSearch {
+            get => _TextSearch;
             set {
-                if (_providerIDs == value) return;
-                _providerIDs = value;
-                OnPropertyChanged("ProviderIDs");
+                if (_TextSearch != value)
+                {
+                    _TextSearch = value;
+                    ComboBoxProviderItems.Refresh();
+                }
+                //if (Set(ref _TextSearch, value))
+                //{
+                //    Items.Refresh();
+                //}
             }
         }
 
-        private Tuple<int, string> _curProvider;
-        public Tuple<int, string> CurrentProvider {
-            get { return _curProvider; }
-            set {
-                if (_curProvider == value) return;
-                _curProvider = value;
-                OnPropertyChanged("CurrentProvider");
-            }
-        }
+
+        //private List<Tuple<int,string>> _providerIDs;
+        //public List<Tuple<int, string>> ProviderIDs {
+        //    get { return _providerIDs; }
+        //    set {
+        //        if (_providerIDs == value) return;
+        //        _providerIDs = value;
+        //        OnPropertyChanged("ProviderIDs");
+        //    }
+        //}
+
+        //private Tuple<int, string> _curProvider;
+        //public Tuple<int, string> CurrentProvider {
+        //    get { return _curProvider; }
+        //    set {
+        //        if (_curProvider == value) return;
+        //        _curProvider = value;
+        //        OnPropertyChanged("CurrentProvider");
+        //    }
+        //}
 
         private List<String> _outcomeCodes;
         public List<String> OutcomeCodes {
@@ -109,12 +133,23 @@ namespace AFH_Scheduler.Dialogs
         public EditVM(ScheduleModel scheduleData)
         {
             SelectedSchedule = scheduleData;
-            CurrentProvider = new Tuple<int, string>((int) SelectedSchedule.ProviderID, SelectedSchedule.ProviderName);
-            ProviderIDs = new List<Tuple<int,string>>();
-            grabProviderInformation();
+            //CurrentProvider = new Tuple<int, string>((int) SelectedSchedule.ProviderID, SelectedSchedule.ProviderName);
+            //ProviderIDs = new List<Tuple<int,string>>();
+            Providers = new ObservableCollection<string>(GrabProviderInformation());
+
+            var lv = (ListCollectionView)CollectionViewSource.GetDefaultView(Providers);
+
+            ComboBoxProviderItems = lv;
+            lv.CustomSort = Comparer<String>.Create(ProviderSort);
+
             _homeIDSave = SelectedSchedule.HomeID;
             GrabOutcomeCodes();
             SelectedCode = GetMostRecentOutcome(); //set default value to first item from list
+        }
+
+        private int ProviderSort(string x, string y)
+        {
+            return GetDistance(x).CompareTo(GetDistance(y));
         }
 
         private Inspection_Outcome GetMostRecentOutcome()
@@ -154,18 +189,19 @@ namespace AFH_Scheduler.Dialogs
             SelectedSchedule.NextInspection = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now).ToString();
         }
 
-        private void grabProviderInformation()
+        private List<string> GrabProviderInformation()
         {
+            List<string> providerNames = new List<string>();
             using(HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var provs = db.Providers.ToList();
 
                 foreach(Provider prov in provs)
                 {
-                    ProviderIDs.Add(new Tuple<int, string>((int) prov.Provider_ID, prov.Provider_Name));
-                    Console.WriteLine(prov.Provider_ID);
+                    providerNames.Add(prov.Provider_Name);
                 }
             }
+            return providerNames;
         }
 
         public void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
@@ -185,5 +221,78 @@ namespace AFH_Scheduler.Dialogs
                 }
             }
         }
+
+        private int GetDistance(string provider)
+        {
+            if (string.IsNullOrWhiteSpace(TextSearch))
+            {
+                return 0;
+            }
+
+            string[] splitName = provider.Split(' ');
+
+            string first = splitName[0];
+            string last = splitName[splitName.Length - 1];
+
+            first = first.Substring(0, Math.Min(first.Length, TextSearch.Length));
+            last = last.Substring(0, Math.Min(last.Length, TextSearch.Length));
+
+            return Math.Min(GetDistance(first, TextSearch), GetDistance(last, TextSearch));
+        }
+
+        //Taken from: https://github.com/dotnet/command-line-api/blob/master/src/System.CommandLine/Invocation/TypoCorrection.cs
+        private static int GetDistance(string first, string second)
+        {
+
+            if (first == null)
+            {
+                throw new ArgumentNullException(nameof(first));
+            }
+            if (second == null)
+            {
+                throw new ArgumentNullException(nameof(second));
+            }
+
+            int n = first.Length;
+            int m = second.Length;
+            if (n == 0) return m;
+            if (m == 0) return n;
+
+            int curRow = 0, nextRow = 1;
+            int[][] rows = { new int[m + 1], new int[m + 1] };
+
+            for (int j = 0; j <= m; ++j)
+            {
+                rows[curRow][j] = j;
+            }
+
+            for (int i = 1; i <= n; ++i)
+            {
+                rows[nextRow][0] = i;
+                for (int j = 1; j <= m; ++j)
+                {
+                    int dist1 = rows[curRow][j] + 1;
+                    int dist2 = rows[nextRow][j - 1] + 1;
+                    int dist3 = rows[curRow][j - 1] + (first[i - 1].Equals(second[j - 1]) ? 0 : 1);
+
+                    rows[nextRow][j] = Math.Min(dist1, Math.Min(dist2, dist3));
+                }
+
+                // Swap the current and next rows
+                if (curRow == 0)
+                {
+                    curRow = 1;
+                    nextRow = 0;
+                }
+                else
+                {
+                    curRow = 0;
+                    nextRow = 1;
+                }
+            }
+
+            return rows[curRow][m];
+        }
     }
 }
+
