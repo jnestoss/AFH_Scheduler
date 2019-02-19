@@ -17,6 +17,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 using AFH_Scheduler.Dialogs.Confirmation;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace AFH_Scheduler.Schedules
 {
@@ -56,6 +57,19 @@ namespace AFH_Scheduler.Schedules
                 OnPropertyChanged("ExcelFileName");
             }
         }*/
+
+        private ScheduleModel _selectedHome;
+        public ScheduleModel SelectedHome {
+            get => _selectedHome;
+            set {
+                if ( _selectedHome != value )
+                {
+                    _selectedHome = value;
+                    OnPropertyChanged("SelectedHome");
+                }
+            }
+        }
+
 
         public bool _dialogHostSuccess;
         public bool DialogHostSuccess
@@ -327,7 +341,6 @@ namespace AFH_Scheduler.Schedules
                         xlWorksheet.Cells[1, 7] = "Next Inspection Date";
                         xlWorksheet.Cells[1, 8] = "18th Month Drop Dead";
 
-
                         int row = 2;
                         foreach (var provider in Providers)
                         {
@@ -341,7 +354,6 @@ namespace AFH_Scheduler.Schedules
                             xlWorksheet.Cells[row, 6] = provider.RecentInspection;
                             xlWorksheet.Cells[row, 7] = provider.NextInspection;
                             xlWorksheet.Cells[row, 8] = provider.EighteenthMonthDate;
-
 
                             row++;
                         }
@@ -505,7 +517,6 @@ namespace AFH_Scheduler.Schedules
                     }
                 }
             }
-            ClearSelected2(null);
         }
 
         public DataVM()
@@ -518,6 +529,8 @@ namespace AFH_Scheduler.Schedules
 
             GenData();
 
+            
+
             foreach(var provider in Providers)
             {
                 GenHistoryData(provider);
@@ -528,38 +541,6 @@ namespace AFH_Scheduler.Schedules
             get {
                 return "Schedules";
             }
-        }
-
-        public void ClearSelected2(ScheduleModel sm)
-        {
-            if (SelectedSchedule != null)
-                SelectedSchedule.IsSelected = false;
-            SelectedSchedule = sm;
-        }
-
-        //clear all selected items
-        public void ClearSelected()
-        {
-            //for (int i = 0; i < Providers.Count; i++)
-            //{
-                
-            var item = Providers.Where(X => X.IsSelected == true);
-            foreach (ScheduleModel p in item)
-            {
-                p.IsSelected = false;
-            }
-            //Providers.Wher
-            //while (item != null)
-            //{
-            //    if (item != null) item.IsSelected = false;
-            //    item = Providers.Where(X => X.IsSelected == true).FirstOrDefault();
-            //}
-            //}
-
-            //foreach(ScheduleModel sm in Providers)
-            //{
-            //    sm.IsSelected = false;
-            //}
         }
 
         public void GenData()
@@ -633,7 +614,7 @@ namespace AFH_Scheduler.Schedules
 
         private async void ExecuteEditDialog(object o)
         {
-            if (SelectedSchedule == null)
+            if (SelectedHome == null)
             {
                 var view = new NoHomeSelectedErrorDialog();
 
@@ -643,7 +624,7 @@ namespace AFH_Scheduler.Schedules
             {
                 var view = new EditDialog();
 
-                view.setDataContext(SelectedSchedule);
+                view.setDataContext(SelectedHome);
 
                 var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandler);
 

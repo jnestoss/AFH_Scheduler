@@ -25,8 +25,7 @@ namespace AFH_Scheduler.Dialogs
         public ScheduleModel _selectedSchedule;
         public ScheduleModel SelectedSchedule {
             get { return _selectedSchedule; }
-            set {
-                
+            set {               
                 if (_selectedSchedule == value) return;
                 _selectedSchedule = value;
                 OnPropertyChanged("SelectedSchedule");
@@ -44,11 +43,8 @@ namespace AFH_Scheduler.Dialogs
                 {
                     _TextSearch = value;
                     ComboBoxProviderItems.Refresh();
+                    OnPropertyChanged("TextSearch");
                 }
-                //if (Set(ref _TextSearch, value))
-                //{
-                //    Items.Refresh();
-                //}
             }
         }
 

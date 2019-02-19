@@ -124,22 +124,26 @@
                 materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                 materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                 AutoGenerateColumns="False"
+                SelectedItem="{Binding SelectedHome}"
+                SelectionMode="Single"
+                SelectionUnit="FullRow"
                 CanUserAddRows="True"
                 CanUserSortColumns="True"
                 ItemsSource="{Binding Providers}">
 
                 <DataGrid.Columns>
 
+                    <!--
                     <DataGridCheckBoxColumn
                         Binding="{Binding IsSelected}"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
                         ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
-                        <!--<DataGridCheckBoxColumn.Header>
+                        <DataGridCheckBoxColumn.Header>
 
-            <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
-            <CheckBox HorizontalAlignment="Center" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}" IsChecked="{Binding IsAllItems3Selected}" />
-            </Border>
-        </DataGridCheckBoxColumn.Header>-->
+                        <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
+                        <CheckBox HorizontalAlignment="Center" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}" IsChecked="{Binding IsAllItems3Selected}" />
+                        </Border>
+                    </DataGridCheckBoxColumn.Header>
                     </DataGridCheckBoxColumn>
 
                     <DataGridTextColumn
@@ -147,7 +151,8 @@
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                         Header="Provider ID" />
-
+                    -->    
+                    
                     <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding ProviderName}"

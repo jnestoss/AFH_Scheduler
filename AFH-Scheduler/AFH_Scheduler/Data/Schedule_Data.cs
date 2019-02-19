@@ -26,7 +26,6 @@ namespace AFH_Scheduler.Data
         private string _recentInspection;
         private string _nextInspection;
         private string _eighteenthMonthDate;
-        private readonly DataVM _schedulerVM;
 
         public ScheduleModel(long providerID,
             long homeID,
@@ -40,8 +39,6 @@ namespace AFH_Scheduler.Data
             string eighteenthMonthDate
             )
         {
-            _schedulerVM = schedulerVM;
-            IsSelected = false;
             ProviderID = providerID;
             HomeID = homeID;
             ProviderName = name;
@@ -64,16 +61,6 @@ namespace AFH_Scheduler.Data
                     _homeshistory = value;
                     OnPropertyChanged("HomesHistory");
                 }
-            }
-        }
-
-        public bool IsSelected {
-            get { return _isSelected; }
-            set {
-                //if (value == true) _schedulerVM.ClearSelected();
-                if (value == true) _schedulerVM.ClearSelected2(this);
-                else _isSelected = value;
-                OnPropertyChanged("IsSelected");
             }
         }
 
