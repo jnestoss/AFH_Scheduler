@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:AFH_Scheduler"
-        xmlns:schedules="clr-namespace:AFH_Scheduler.Schedules"    
+        xmlns:local="clr-namespace:AFH_Scheduler"  
         WindowStyle="None"
         mc:Ignorable="d" Height="720" Width="1080" ResizeMode="NoResize" Visibility="Visible"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -14,7 +13,7 @@
 
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type schedules:DataVM}">
+        <DataTemplate DataType="{x:Type local:DataVM}">
             <local:DataView />
         </DataTemplate>
     </Window.Resources>

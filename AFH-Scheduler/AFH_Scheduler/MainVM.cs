@@ -1,5 +1,4 @@
-﻿using AFH_Scheduler.Schedules;
-using AFH_Scheduler.Helper_Classes;
+﻿using AFH_Scheduler.Helper_Classes;
 
 namespace AFH_Scheduler
 {

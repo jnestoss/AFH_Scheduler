@@ -144,6 +144,7 @@
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\HistVM.cs" />
+    <Compile Include="Excel\Excel.cs" />
     <Compile Include="HelperClasses\ICloseable.cs" />
     <Compile Include="Dialogs\NewHomeDialogVM.cs" />
     <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
@@ -338,7 +339,6 @@
     <Compile Include="Database\Scheduled_Inspections.cs">
       <DependentUpon>HomeInspection.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataReader.cs" />
     <Compile Include="Data\CompleteSchedule_Model.cs" />
     <Compile Include="Data\HistoryDetailModel.cs" />
     <Compile Include="Data\HistoryModel.cs" />

@@ -19,7 +19,7 @@ using AFH_Scheduler.Dialogs.Confirmation;
 using System.Data.Entity;
 using System.Collections.Generic;
 
-namespace AFH_Scheduler.Schedules
+namespace AFH_Scheduler
 {
     public class DataVM : ObservableObject, IPageViewModel
     {
@@ -303,6 +303,7 @@ namespace AFH_Scheduler.Schedules
 
         private void ExportTable(object obj)
         {
+            Console.WriteLine("WWWWWWWWWWWWWWWW   " + obj.GetType() + "WWWWWWWWWWWWWWWWW");
             /*if (ExcelFileName.Equals("") || !(Directory.Exists(ExcelFileName)))
             {
                 MessageService.ReleaseMessageBox("Directory not found");

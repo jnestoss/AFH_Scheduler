@@ -2,7 +2,6 @@
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Helper_Classes;
-using AFH_Scheduler.Schedules;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;

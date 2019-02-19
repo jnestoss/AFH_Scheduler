@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AFH_Scheduler.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using AFH_Scheduler.Schedules;
 using System.Collections.ObjectModel;
 using AFH_Scheduler.Helper_Classes;
 
