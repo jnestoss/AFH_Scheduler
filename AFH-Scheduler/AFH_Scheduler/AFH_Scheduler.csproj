@@ -104,7 +104,6 @@
     <Compile Include="Database\LoginDB\User.cs" />
     <Compile Include="Database\LoginDB\UserFactory.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
-    <Compile Include="Data\LicensedHomeModel.cs" />
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
@@ -140,10 +139,6 @@
     <Compile Include="Dialogs\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SettingSubWindows\EditLicensedHome.xaml.cs">
-      <DependentUpon>EditLicensedHome.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SettingSubWindows\EditLicensedHomeVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\EditOutcome.xaml.cs">
       <DependentUpon>EditOutcome.xaml</DependentUpon>
     </Compile>
@@ -151,10 +146,6 @@
       <DependentUpon>EditProvider.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\EditProviderVM.cs" />
-    <Compile Include="Dialogs\SettingSubWindows\LicenseHomeListDialog.xaml.cs">
-      <DependentUpon>LicenseHomeListDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SettingSubWindows\LicenseHomeListVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\NewOutcomeCreator.xaml.cs">
       <DependentUpon>NewOutcomeCreator.xaml</DependentUpon>
     </Compile>
@@ -227,19 +218,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\SettingSubWindows\EditLicensedHome.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dialogs\SettingSubWindows\EditOutcome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\EditProvider.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SettingSubWindows\LicenseHomeListDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

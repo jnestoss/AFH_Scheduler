@@ -22,11 +22,7 @@
             DockPanel.Dock="Top">
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn
-                            Binding="{Binding IsProviderSelected, UpdateSourceTrigger=PropertyChanged}"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
-                            ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"/>
-                    
+
                     <materialDesign:MaterialDataGridTextColumn
                     IsReadOnly="True"
                     Binding="{Binding ProviderID}" 
@@ -43,7 +39,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  
-                                    IsEnabled="{Binding IsProviderSelected}"
+                                    CommandParameter="{Binding}"
                                     Command="{Binding Path=DataContext.ProviderEditCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
                                     ToolTip="Resource name: MaterialDesignRaisedLightButton">
@@ -57,7 +53,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  
-                                    IsEnabled="{Binding IsProviderSelected}"
+                                    CommandParameter="{Binding}"
                                     Command="{Binding Path=DataContext.ProviderDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
                                     ToolTip="Resource name: MaterialDesignRaisedLightButton">

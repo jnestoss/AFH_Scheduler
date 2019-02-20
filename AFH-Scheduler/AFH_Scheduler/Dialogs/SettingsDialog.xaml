@@ -38,11 +38,6 @@
                     <materialDesign:PackIcon Kind="Wrench" Foreground="WhiteSmoke" Width="25" Height="25" />
                 </Button>
 
-                <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="2">Licensed Homes:</TextBlock>
-                <Button Command="{Binding LicenseListCommand}" Grid.Column="1" Grid.Row="2" Style="{StaticResource MaterialDesignRaisedLightButton}" ToolTip="Show Provider List">
-                    <materialDesign:PackIcon Kind="ViewList" Foreground="WhiteSmoke" Width="25" Height="25" />
-                </Button>
-
                 <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="3">Outcome Codewords:</TextBlock>
                 <Button Command="{Binding OutcomeListCommand}" Grid.Column="1" Grid.Row="3" Style="{StaticResource MaterialDesignRaisedLightButton}" ToolTip="Show Provider List">
                     <materialDesign:PackIcon Kind="ViewList" Foreground="WhiteSmoke" Width="25" Height="25" />

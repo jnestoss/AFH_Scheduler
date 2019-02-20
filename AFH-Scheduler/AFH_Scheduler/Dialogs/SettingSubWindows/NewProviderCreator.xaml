@@ -22,10 +22,10 @@
                     <Binding Path="NewProviderAdded.ProviderID" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:UniqueProviderIDValidation ValidatesOnTargetUpdated="True" />
                             <Behaviors:NewHomeValidation Message="Please use only whole numbers." 
                                                      Regex="^[0-9]+$"
                                                      ValidatesOnTargetUpdated="True"/>
+                            <Behaviors:UniqueProviderIDValidation ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

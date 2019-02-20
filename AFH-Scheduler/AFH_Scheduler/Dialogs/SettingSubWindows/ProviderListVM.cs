@@ -43,24 +43,6 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
             }
         }
 
-        private ProvidersModel _selectedProvider;
-        private ProvidersModel SelectedProvider
-        {
-            get { return _selectedProvider; }
-            set
-            {
-                if (_selectedProvider == value) return;
-                _selectedProvider = value;
-            }
-        }
-
-        public void DeSelect(ProvidersModel providers)
-        {
-            if (SelectedProvider != null)
-                SelectedProvider.IsProviderSelected = false;
-            SelectedProvider = providers;
-        }
-
         #region Delete Provider Command
         private RelayCommand _providerDeleteCommand;
         public ICommand ProviderDeleteCommand
@@ -74,8 +56,9 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
         }
         private async void DeleteProvider(object obj)
         {
-            var vm = new DeleteVM("Are you sure you want to remove this provider from the database?", "Provider:", 
-                SelectedProvider.ProviderName);
+            var provider = (ProvidersModel)obj;
+            var vm = new DeleteVM("Are you sure you want to remove this provider from the database?", "Provider:",
+                provider.ProviderName);
             var deleteView = new DeleteProviderDialog(vm);
 
             var deleteResult = await DialogHost.Show(deleteView, "AddProviderDialog", ClosingEventHandlerAddProviders);
@@ -84,49 +67,55 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
             {
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    var id = Convert.ToInt64(SelectedProvider.ProviderID);
+                    var id = Convert.ToInt64(provider.ProviderID);
                     var list = db.Provider_Homes.Where(r => r.FK_Provider_ID == id).ToList();
                     if (list.Count > 0)
                     {
 
-                        var transferOrDeleteVM = new TransferDeleteVM(id, SelectedProvider.ProviderName);
+                        var transferOrDeleteVM = new TransferDeleteVM(id, provider.ProviderName);
                         var transferView = new TransferOrDeleteHomes(transferOrDeleteVM);
                         var remainingHomeOption = await DialogHost.Show(transferView, "AddProviderDialog", ClosingEventHandlerAddProviders);
 
-                        long homeID;
-                        string date;
-
-                        if (remainingHomeOption.Equals("Cancel")){
+                        if (remainingHomeOption.Equals("Cancel"))
+                        {
                             return;
                         }
-                        if (remainingHomeOption.Equals("DELETE"))
+                        if (remainingHomeOption.Equals("TRANSFER"))
                         {
-                            
-                            //var errorView = new CanNotDeleteProviderError();
-                            //var errorResult = await DialogHost.Show(errorView, "AddProviderDialog", ClosingEventHandlerAddProviders);
-                            foreach (var house in transferOrDeleteVM.RemainingHomes)
+                            foreach (var house in transferOrDeleteVM.RemovedHomes)
                             {
                                 try
                                 {
-                                    homeID = Convert.ToInt64(house.HomeID);
-                                    Provider_Homes deletingHome = db.Provider_Homes.First(r => r.PHome_ID == homeID);
+                                    Provider_Homes deletingHome = db.Provider_Homes.First(r => r.PHome_ID == house.HomeID);
+                                                                         Scheduled_Inspections deletingSchedule = db.Scheduled_Inspections.First(r => r.FK_PHome_ID == house.HomeID
+                                        && r.SInspections_Date == house.NextInspection);
 
-                                    date = alg.ConvertDateToString(house.InspectionDate);
-                                    Scheduled_Inspections deletingSchedule = db.Scheduled_Inspections.First(r => r.FK_PHome_ID == homeID
-                                    && r.SInspections_Date == date);
+                                        var homesHistory = db.Home_History.Where(r => r.FK_PHome_ID == house.HomeID).ToList();
 
-                                    var homesHistory = db.Home_History.Where(r => r.FK_PHome_ID == homeID).ToList();
-
-                                    db.Provider_Homes.Remove(deletingHome);
-                                    db.SaveChanges();
-
-                                    db.Scheduled_Inspections.Remove(deletingSchedule);
-                                    db.SaveChanges();
-                                    foreach (var historyItem in homesHistory)
-                                    {
-                                        db.Home_History.Remove(historyItem);
+                                        db.Provider_Homes.Remove(deletingHome);
                                         db.SaveChanges();
-                                    }
+
+                                        db.Scheduled_Inspections.Remove(deletingSchedule);
+                                        db.SaveChanges();
+                                        foreach (var historyItem in homesHistory)
+                                        {
+                                            db.Home_History.Remove(historyItem);
+                                            db.SaveChanges();
+                                        }
+                                }
+                                catch (InvalidOperationException e)
+                                {
+
+                                }
+                            }
+
+                            foreach (var chowHome in transferOrDeleteVM.ChowedHomes)
+                            {
+                                try
+                                {
+                                    Provider_Homes tranferingHome = db.Provider_Homes.First(r => r.PHome_ID == chowHome.HomeID);
+                                    tranferingHome.FK_Provider_ID = chowHome.ProviderID;
+                                    db.SaveChanges();
                                 }
                                 catch (InvalidOperationException e)
                                 {
@@ -134,27 +123,13 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                                 }
                             }
                         }
-
-                        else if (remainingHomeOption.Equals("TRANSFER"))
-                        {
-                            long provID;
-                            foreach(var house in transferOrDeleteVM.RemainingHomes)
-                            {
-                                homeID = Convert.ToInt64(house.HomeID);
-                                String[] idAndName = transferOrDeleteVM.ChosenProvider.Split('-');
-                                provID = Convert.ToInt64(idAndName[0]);
-                                Provider_Homes tranferingHome = db.Provider_Homes.First(r => r.PHome_ID == homeID);
-                                tranferingHome.FK_Provider_ID = provID;
-                                db.SaveChanges();
-                            }
-                        }
+                        
                     }
                       Provider deletingProv = db.Providers.First(r => r.Provider_ID == id);
                       db.Providers.Remove(deletingProv);
                       db.SaveChanges();
                       ProvidersList.Clear();
-                      FillProviderTable();                      
-                    
+                      FillProviderTable();                    
                 }
             }
         }
@@ -193,7 +168,6 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                 ProvidersList.Add(
                           new ProvidersModel
                           (
-                              this,
                               vm.NewProviderAdded.ProviderID,
                               vm.NewProviderAdded.ProviderName
                           )
@@ -215,14 +189,15 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
         }
         private async void EditProvider(object obj)
         {
-            var vm = new EditProviderVM(SelectedProvider.ProviderName);
+            var provider = (ProvidersModel)obj;
+            var vm = new EditProviderVM(provider.ProviderName);
             var view = new EditProvider(vm);
             var result = await DialogHost.Show(view, "AddProviderDialog", ClosingEventHandlerAddProviders);
             if (DialogBoolReturn)
             {
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    var id = Convert.ToInt64(SelectedProvider.ProviderID);
+                    var id = Convert.ToInt64(provider.ProviderID);
                     var dbProvider = db.Providers.Where(r => r.Provider_ID == id).First();
 
                     dbProvider.Provider_Name = vm.EditableProviderName;
@@ -230,9 +205,8 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                 }
                 foreach (var prov in ProvidersList)
                 {
-                    if (prov.Equals(SelectedProvider))
+                    if (prov.Equals(provider))
                     {
-                        DeSelect(SelectedProvider);
                         prov.ProviderName = vm.EditableProviderName;
                         break;
                     }
@@ -269,7 +243,6 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                     ProvidersList.Add(
                             new ProvidersModel
                             (
-                                this,
                                 item.Provider_ID.ToString(),
                                 item.Provider_Name
                             )

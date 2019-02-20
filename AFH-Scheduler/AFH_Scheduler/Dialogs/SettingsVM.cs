@@ -92,23 +92,6 @@ namespace AFH_Scheduler.Dialogs
             var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
         }
 
-        private RelayCommand _licenseListCommand;
-        public ICommand LicenseListCommand
-        {
-            get
-            {
-                if (_licenseListCommand == null)
-                    _licenseListCommand = new RelayCommand(ShowLicensedHomes);
-                return _licenseListCommand;
-            }
-        }
-        private async void ShowLicensedHomes(object obj)
-        {
-            var vm = new LicenseHomeListVM();
-            var view = new LicenseHomeListDialog(vm);
-            var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
-        }
-
         public void ClosingEventHandlerProviders(object sender, DialogClosingEventArgs eventArgs)
         {
             if ((String)eventArgs.Parameter == "Cancel")
