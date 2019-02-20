@@ -12,12 +12,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AFH_Scheduler.Schedules
+namespace AFH_Scheduler
 {
 
-    public partial class SchedulerView : UserControl
+    public partial class DataView : UserControl
     {
-        public SchedulerView()
+        public DataView()
         {
             InitializeComponent();
         }
@@ -36,6 +36,7 @@ namespace AFH_Scheduler.Schedules
         {
             if (FilterTextBox.IsEnabled)
             {
+                
                 FilterTextBox.Visibility = Visibility.Visible;
                 DatePickerStart.IsEnabled = false;
                 DatePickerStart.Visibility = Visibility.Hidden;

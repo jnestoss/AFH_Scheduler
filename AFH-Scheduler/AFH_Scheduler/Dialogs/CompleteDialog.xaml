@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="AFH_Scheduler.Dialogs.CompleteDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Behaviors="clr-namespace:AFH_Scheduler.Validations"
+    xmlns:conv="clr-namespace:AFH_Scheduler.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <conv:ProviderConverter x:Key="providerConverter" />
+        <conv:ProviderListConverter x:Key="providerListConverter" />
+        <conv:OutcomeCodeConverter x:Key="outcomeCodeConverter" />
+    </UserControl.Resources>
+
+    <Grid
+        Width="420"
+        Margin="20"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Center"
+            Margin="0,10,0,10"
+            FontSize="22"
+            FontWeight="Bold">
+            Complete Inspection
+        </TextBlock>
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,10,0,10"
+            FontSize="18">
+            Follow Up?
+        </TextBlock>
+        <CheckBox
+            Grid.Row="1"
+            Grid.Column="1"
+            IsChecked="False" />
+
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,10,0,10"
+            FontSize="18">
+            Outcome Code
+        </TextBlock>
+        <ComboBox
+            Grid.Row="2"
+            Grid.Column="1"
+            IsEditable="False"
+            ItemsSource="{Binding OutcomeCodes}"
+            SelectedItem="{Binding SelectedCode, Converter={StaticResource outcomeCodeConverter}}">
+        </ComboBox>
+
+        <Button
+            Grid.Row="2"
+            Grid.Column="2"
+            MaxWidth="255"
+            Margin="20,10,20,10"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            ToolTip="Generate Next Inspection Date"
+            Command="{Binding CalcDate}">
+            GENERATE
+        </Button>
+
+        <DatePicker
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,0,0,0"
+            materialDesign:HintAssist.Hint="Next Inspection Date">
+            <DatePicker.SelectedDate>
+                <Binding Path="SelectedSchedule.NextInspection" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Behaviors:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+        </DatePicker>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+            <Button
+                Width="100"
+                Margin="0,20,10,10"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Submit Inspection">
+                SUBMIT
+            </Button>
+
+            <Button
+                Width="100"
+                Margin="10,20,0,10"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                IsCancel="True"
+                Style="{StaticResource MaterialDesignRaisedLightButton}">
+                CANCEL
+            </Button>
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

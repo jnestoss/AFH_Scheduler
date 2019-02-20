@@ -40,11 +40,12 @@ namespace AFH_Scheduler.Data
             ZipCode = house.PHome_Zipcode;
             InspectionDate = inspection;
             FollowUpDate = "";
-            Deficiences = new List<string>();
-            foreach (var outcom in deficiences)
-            {
-                Deficiences.Add(outcom);
-            }
+            Deficiences = deficiences;
+            //Deficiences = new List<string>();
+            //foreach (var outcom in deficiences)
+            //{
+            //    Deficiences.Add(outcom);
+            //}
         }
         public bool IsSelected
         {

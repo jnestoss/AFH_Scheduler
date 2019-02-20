@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// methods for reading from database
-namespace AFH_Scheduler
+namespace AFH_Scheduler.HelperClasses
 {
-    class DataReader
+    interface ICloseable
     {
-
-
-
-        
+        event EventHandler<EventArgs> RequestClose;
     }
 }
