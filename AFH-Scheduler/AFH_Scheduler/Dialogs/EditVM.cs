@@ -161,7 +161,14 @@ namespace AFH_Scheduler.Dialogs
                 if (mostRecentInspectionOutcome == null)
                 {
                     //initiate next inspection to most recent inspection outcome
-                    return outcomes.Where(x => x.IOutcome_Code == mostRecentInspectionOutcome.Inspection_Outcome.IOutcome_Code).FirstOrDefault();
+                    try
+                    {
+                        return outcomes.Where(x => x.IOutcome_Code == mostRecentInspectionOutcome.Inspection_Outcome.IOutcome_Code).FirstOrDefault();
+                    }
+                    catch (Exception e)
+                    {
+                        return outcomes[0];
+                    }
                 }
                 else
                 {

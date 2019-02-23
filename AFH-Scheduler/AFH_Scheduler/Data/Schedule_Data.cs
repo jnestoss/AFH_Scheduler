@@ -18,6 +18,7 @@ namespace AFH_Scheduler.Data
         private long _providerID;
         private long _homeID;
         private string _providerName;
+        private string _homeName;
         private string _phone;
         private string _address;
         private string _city;
@@ -29,6 +30,8 @@ namespace AFH_Scheduler.Data
         public ScheduleModel(long providerID,
             long homeID,
             string name,
+            string homeName,
+            string phone,
             string address,
             string homeCity,
             string homeZIP,
@@ -41,6 +44,8 @@ namespace AFH_Scheduler.Data
             ProviderID = providerID;
             HomeID = homeID;
             ProviderName = name;
+            HomeName = homeName;
+            Phone = phone;
             Address = address;
             City = homeCity;
             ZIP = homeZIP;
@@ -87,6 +92,17 @@ namespace AFH_Scheduler.Data
                 if (_providerName == value) return;
                 _providerName = value;
                 OnPropertyChanged("ProviderName");
+            }
+        }
+
+        public string HomeName
+        {
+            get { return _homeName; }
+            set
+            {
+                if (_homeName == value) return;
+                _homeName = value;
+                OnPropertyChanged("HomeName");
             }
         }
 

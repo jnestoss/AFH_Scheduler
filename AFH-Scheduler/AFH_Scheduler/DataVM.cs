@@ -290,6 +290,30 @@ namespace AFH_Scheduler
             //SelectedSchedule.IsSelected = true;
         }
 
+        private RelayCommand _importTableCommand;
+        public ICommand ImportTableCommand
+        {
+            get
+            {
+                if (_importTableCommand == null)
+                    _importTableCommand = new RelayCommand(ImportExcelTable);
+                return _importTableCommand;
+            }
+        }
+        private async void ImportExcelTable(object obj)
+        {
+            var importData = new ImportDataPreviewVM();
+            var view = new ImportDataPreview(importData);
+            var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerNewHome);
+            if (result.Equals("IMPORT"))
+            {
+                foreach(var importedHome in importData.ImportedHomes)
+                {
+                    Providers.Add(importedHome);
+                }
+            }
+        }
+
         private RelayCommand _exportTable;
         public ICommand ExportTableCommand
         {
@@ -303,7 +327,7 @@ namespace AFH_Scheduler
 
         private void ExportTable(object obj)
         {
-            Console.WriteLine("WWWWWWWWWWWWWWWW   " + obj.GetType() + "WWWWWWWWWWWWWWWWW");
+            //Console.WriteLine("WWWWWWWWWWWWWWWW   " + obj.GetType() + "WWWWWWWWWWWWWWWWW");
             /*if (ExcelFileName.Equals("") || !(Directory.Exists(ExcelFileName)))
             {
                 MessageService.ReleaseMessageBox("Directory not found");
@@ -325,7 +349,7 @@ namespace AFH_Scheduler
 
                     xlApp = new Microsoft.Office.Interop.Excel.Application
                     {
-                        //Visible = true
+                        Visible = true
                     };
                     
                     try
@@ -363,9 +387,13 @@ namespace AFH_Scheduler
 
                         //xlApp.Visible = false;
                         //xlApp.UserControl = false;
-                        xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlWorkbookDefault);
-                        //xlWorkbook.SaveAs(ExcelFileName + "\\TestSchedule.xlsx", FileFormat: XlFileFormat.xlWorkbookDefault);
-                        //xlWorkbook.SaveAs("C:\\excelLocationTest\\TestSchedule.xlsx", FileFormat: XlFileFormat.xlWorkbookDefault);
+                        if(fileName.Contains(".xlsx"))
+                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlOpenXMLWorkbook);
+                        else if (fileName.Contains(".csv"))
+                        {
+                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlCSVWindows);
+                            xlWorkbook.Close(false);
+                        }
 
 
                     }
@@ -377,6 +405,7 @@ namespace AFH_Scheduler
                     finally
                     {
                         xlApp.Workbooks.Close();
+                        xlApp.Quit();
                     }
                 }
                 catch (Exception e)
@@ -421,6 +450,8 @@ namespace AFH_Scheduler
                   Convert.ToInt64(home.ProviderID),
                   Convert.ToInt64(home.HomeID),
                   home.ProviderName,
+                  "",//Home Name
+                  "",//Phone Number
                   home.Address,
                   home.City,
                   home.Zipcode,
@@ -570,7 +601,9 @@ namespace AFH_Scheduler
                             (
                                 item.Provider_ID,
                                 house.PHome_ID,
-                                item.Provider_Name, //Phone Number
+                                item.Provider_Name, //Provider Name
+                                "",//Home Name
+                                house.PHome_Phonenumber,
                                 house.PHome_Address,//Address
                                 house.PHome_City,
                                 house.PHome_Zipcode,

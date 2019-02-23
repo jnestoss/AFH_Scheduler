@@ -11,6 +11,8 @@
     <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="AddProviderDialog">
         <StackPanel Orientation="Vertical">
             <DataGrid
+            VerticalScrollBarVisibility="Auto"
+            MaxHeight="200"
             Margin="36 0 36 0"
             ItemsSource="{Binding ProvidersList}"
             CanUserSortColumns="True"
@@ -19,15 +21,15 @@
             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
             materialDesign:DataGridAssist.ColumnHeaderPadding="8"
             DockPanel.Dock="Top">
-
                 <DataGrid.Columns>
-
+                    <!--
                     <materialDesign:MaterialDataGridTextColumn
                     IsReadOnly="True"
                     Binding="{Binding ProviderID}" 
                     Header="ID" 
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-
+                    -->
+                    
                     <materialDesign:MaterialDataGridTextColumn
                     IsReadOnly="True"
                     Binding="{Binding ProviderName}" 

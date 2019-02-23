@@ -13,6 +13,7 @@ namespace AFH_Scheduler.Dialogs
     {
         void ReleaseMessageBox(string message);
         bool MessageConfirmation(string message, string caption);
+        string ExcelOpenDialog();
         string ExcelSaveDialog();
     }
     class SchedulesOpenDialog : IOpenMessageDialogService
@@ -27,11 +28,25 @@ namespace AFH_Scheduler.Dialogs
             return choice.Equals(MessageBoxResult.Yes);
         }
 
+        public string ExcelOpenDialog()
+        {
+            OpenFileDialog excelSaveFile = new OpenFileDialog();
+            excelSaveFile.DefaultExt = ".csv";
+            excelSaveFile.Filter = "Excel Worksheets|*.xlsx|Comma Seperated Values|*.csv";
+
+            if (excelSaveFile.ShowDialog() == true)
+            {
+                return excelSaveFile.FileName;
+            }
+
+            return null;
+        }
+
         public string ExcelSaveDialog()
         {
             SaveFileDialog excelSaveFile = new SaveFileDialog();
-            excelSaveFile.DefaultExt = ".xlsx";
-            excelSaveFile.Filter = "Excel Worksheets|*.xlsx";
+            excelSaveFile.DefaultExt = ".csv";
+            excelSaveFile.Filter = "Excel Worksheets|*.xlsx|Comma Seperated Values|*.csv";
             excelSaveFile.OverwritePrompt = true;
 
             if(excelSaveFile.ShowDialog() == true)

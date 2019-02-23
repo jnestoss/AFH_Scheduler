@@ -104,8 +104,9 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                 var editedItem = editVM.SelectedSchedule;
                 if (result.Equals("SUBMIT"))
                 {
-                    selectItem.ProviderID = editVM.CurrentProvider.Item1;
-                    selectItem.ProviderName = editVM.CurrentProvider.Item2;
+                    //selectItem.ProviderID = editedItem.ProviderID;
+                    //selectItem.ProviderName = editedItem.ProviderName;
+                    selectItem.ProviderName = editVM.TextSearch;
                     selectItem.Address = editedItem.Address;
                     selectItem.City = editedItem.City;
                     selectItem.ZIP = editedItem.ZIP;
@@ -163,6 +164,8 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                                 id,
                                 house.PHome_ID,
                                 name,
+                                "",//Home Name
+                                "",//Phone number
                                 house.PHome_Address,
                                 house.PHome_City,
                                 house.PHome_Zipcode,
