@@ -36,9 +36,52 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="CryptSharp, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CryptSharpOfficial.2.1.0.0\lib\CryptSharp.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -100,17 +143,37 @@
     <Compile Include="Converters\ProviderListConverter.cs" />
     <Compile Include="Database\LoginDB\User.cs" />
     <Compile Include="Database\LoginDB\UserFactory.cs" />
+    <Compile Include="DataView.xaml.cs">
+      <DependentUpon>DataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataVM.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
     <Compile Include="Data\LoginModel.cs" />
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
+    <Compile Include="Data\ProvidersModel.cs" />
+    <Compile Include="Dialogs\CompleteDialog.xaml.cs">
+      <DependentUpon>CompleteDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CompleteVM.cs" />
     <Compile Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml.cs">
       <DependentUpon>DeleteConfirmationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Confirmation\DeleteProviderDialog.xaml.cs">
+      <DependentUpon>DeleteProviderDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Confirmation\DeleteVM.cs" />
+    <Compile Include="Dialogs\Confirmation\TransferDeleteVM.cs" />
+    <Compile Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml.cs">
+      <DependentUpon>TransferOrDeleteHomes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditDialog.xaml.cs">
       <DependentUpon>EditDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditVM.cs" />
+    <Compile Include="Dialogs\Errors\CanNotDeleteProviderError.xaml.cs">
+      <DependentUpon>CanNotDeleteProviderError.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
       <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -118,31 +181,67 @@
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\HistVM.cs" />
-    <Compile Include="Dialogs\NewHomeCreatorVM.cs" />
     <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
       <DependentUpon>NewHomeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\NewHomeDialogVM.cs" />
+    <Compile Include="Dialogs\SchedulesOpenDialog.cs" />
+    <Compile Include="Dialogs\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\EditProvider.xaml.cs">
+      <DependentUpon>EditProvider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\EditProviderVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml.cs">
+      <DependentUpon>NewProviderCreator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\NewProviderCreatorVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml.cs">
+      <DependentUpon>NormalCurveAdjuster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjusterVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\ProviderListDialog.xaml.cs">
+      <DependentUpon>ProviderListDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\ProviderListVM.cs" />
+    <Compile Include="Dialogs\SettingsVM.cs" />
+    <Compile Include="HelperClasses\ICloseable.cs" />
     <Compile Include="Login\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Login\LoginViewVM.cs" />
-    <Compile Include="Schedules\SchedulesOpenDialog.cs" />
     <Compile Include="Validations\FutureDateValidationRule.cs" />
+    <Compile Include="Validations\NewHomeValidation.cs" />
     <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
     <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
-    <Page Include="Complete\CompleteInspectionView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </Page>
-    <Page Include="Complete\Rescheduling_Follow_Up.xaml">
-      <SubType>Designer</SubType>
+    <Compile Include="Validations\UniqueProviderIDValidation.cs" />
+    <Page Include="DataView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\CompleteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dialogs\Confirmation\DeleteProviderDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\EditDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\CanNotDeleteProviderError.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -158,12 +257,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="History\HistoryDetailView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Dialogs\SettingsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="History\HistoryView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    <Page Include="Dialogs\SettingSubWindows\EditProvider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\ProviderListDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Login\LoginView.xaml">
       <SubType>Designer</SubType>
@@ -179,15 +291,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands.cs" />
-    <Compile Include="Complete\CompleteInspectionView.xaml.cs">
-      <DependentUpon>CompleteInspectionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Complete\CompleteInspectionVM.cs" />
-    <Compile Include="Complete\CompleteOpenMessageDialogs.cs" />
-    <Compile Include="Complete\RescheduleVM.cs" />
-    <Compile Include="Complete\Rescheduling_Follow_Up.xaml.cs">
-      <DependentUpon>Rescheduling_Follow_Up.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Database\HomeInspection.Context.cs" />
     <Compile Include="Database\HomeInspection.cs" />
     <Compile Include="Database\HomeInspection.Designer.cs">
@@ -228,15 +331,6 @@
     <Compile Include="Data\HistoryModel.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\RelayCommand.cs" />
-    <Compile Include="History\HistoryDetailView.xaml.cs">
-      <DependentUpon>HistoryDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="History\HistoryDetailViewVM.cs" />
-    <Compile Include="History\HistoryView.xaml.cs">
-      <DependentUpon>HistoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="History\HistoryVM.cs" />
-    <Compile Include="History\openHistoryDetailDialog.cs" />
     <Compile Include="HomeInspectionDbDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -245,18 +339,11 @@
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
-    <Compile Include="Schedules\SchedulerView.xaml.cs">
-      <DependentUpon>SchedulerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Schedules\SchedulerVM.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Schedules\SchedulerView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -286,6 +373,7 @@
       <DependentUpon>HomeInspection.edmx</DependentUpon>
     </None>
     <None Include="Database\LoginDB\LoginDB.db" />
+    <None Include="Database\LoginDB\UserLogin.db" />
     <None Include="HomeInspectionDbDataSet.xsc">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
@@ -297,7 +385,9 @@
     <None Include="HomeInspectionDbDataSet.xss">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

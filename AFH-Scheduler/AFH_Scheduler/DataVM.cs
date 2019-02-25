@@ -1,5 +1,4 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System;
 using AFH_Scheduler.Helper_Classes;
@@ -17,12 +16,15 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 using AFH_Scheduler.Dialogs.Confirmation;
 using System.Data.Entity;
+using AFH_Scheduler.Database.LoginDB;
 
 namespace AFH_Scheduler.Schedules
 {
     public class DataVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
+        private User _usr;
 
         private ScheduleModel _selectedSchedule;
         private ScheduleModel SelectedSchedule {
@@ -56,7 +58,11 @@ namespace AFH_Scheduler.Schedules
                 OnPropertyChanged("ExcelFileName");
             }
         }*/
-
+        public void ClearUser()
+        {
+            _usr = null;
+        }
+        
         public bool _dialogHostSuccess;
         public bool DialogHostSuccess
         {
@@ -508,7 +514,7 @@ namespace AFH_Scheduler.Schedules
             ClearSelected2(null);
         }
 
-        public DataVM()
+        public DataVM(User user)
         {
             _providers = new ObservableCollection<ScheduleModel>();
             FilterItem = "";

@@ -10,7 +10,6 @@ using AFH_Scheduler.Database;
 using AFH_Scheduler.Dialogs.Errors;
 using AFH_Scheduler.Dialogs.Confirmation;
 using MaterialDesignThemes.Wpf;
-using AFH_Scheduler.HelperClasses;
 
 namespace AFH_Scheduler.Dialogs
 {

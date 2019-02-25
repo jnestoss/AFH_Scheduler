@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AFH_Scheduler.Data;
+using System.Windows;
 using System.Windows.Input;
 using AFH_Scheduler.Database.LoginDB;
 
@@ -13,6 +14,7 @@ namespace AFH_Scheduler.Login
     class LoginViewVM : ObservableObject, IPageViewModel
     {
         private MainVM _main;
+        private Visibility _invalidLogin;
 
         public string Name
         {
@@ -24,6 +26,9 @@ namespace AFH_Scheduler.Login
         public LoginViewVM(MainVM main)
         {
             _main = main;
+            _username = "";
+            _password = "";
+            _invalidLogin = Visibility.Hidden;
             //_login = new LoginModel();
         }
         private LoginModel _login;
@@ -48,8 +53,54 @@ namespace AFH_Scheduler.Login
         }
         private void LoginIn(object obj)//passes in username,password
         {
-            _main.Usr = UserFactory.CheckPassword("","");
-            _main.CurrentPageViewModel = _main.PageViewModels[1];   
+            //_main.LoggedIn(UserFactory.CheckPassword(Username, Password));
+            User user = UserFactory.CheckPassword(Username, Password);
+            if (user != null)
+            {
+                InvalidLogin = Visibility.Hidden;
+                _main.LoggedIn(user);
+            }
+            else
+            {
+                InvalidLogin = Visibility.Visible;
+            }
+        }
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                OnPropertyChanged("Password");
+            }
+        }
+
+        private string _username;
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChanged("Username");
+            }
+        }
+
+        public Visibility InvalidLogin
+        {
+            get
+            {
+                return _invalidLogin;
+            }
+            set
+            {
+                if (_invalidLogin != value)
+                {
+                    _invalidLogin = value;
+                    OnPropertyChanged("InvalidLogin");
+                }
+            }
         }
     }
 }

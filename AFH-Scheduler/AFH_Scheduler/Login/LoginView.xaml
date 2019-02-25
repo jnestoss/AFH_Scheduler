@@ -27,22 +27,30 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <Label FontSize="36" FontFamily="Sylfaen" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="1">
                 <TextBlock TextDecorations="Underline">Log In:</TextBlock>
             </Label>
-            <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" Margin="32,0,0,0" Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="1" FontSize="18"
+            <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" Name="username" Text="{Binding Username}" Margin="32,0,0,0" Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="1" FontSize="18"
                          VerticalAlignment="Top" AcceptsReturn="True" Width="Auto" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Username"/>
-            <PasswordBox Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}" FontSize="18" Margin="32,0,0,0"
+            <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" Name="password" Text="{Binding Password}" FontSize="18" Margin="32,0,0,0"
                              VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="3" Grid.RowSpan="1"
-                             materialDesign:HintAssist.Hint="Password" />
+                             materialDesign:HintAssist.Hint="Password"
+                     />
             <Button Style="{StaticResource MaterialDesignRaisedButton}" Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="4" Grid.RowSpan="2" Command="{Binding Path=LoginngInCommand}"
                             ToolTip="MaterialDesignRaisedButton">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <materialDesign:PackIcon Kind="HomeLockOpen" Margin="0,0,0,0" Height="24" Width="24" />
                     <TextBlock>Login</TextBlock>
                 </StackPanel>
             </Button>
+            <Label FontSize="24" FontFamily="Sylfaen" Visibility="{Binding InvalidLogin}" Foreground="Red" Grid.Column="3" Grid.ColumnSpan="4" Grid.Row="4" Grid.RowSpan="1">
+                <TextBlock>Invalid Login Credentials</TextBlock>
+            </Label>
         </Grid>
     </DockPanel>
 </UserControl>

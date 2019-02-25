@@ -6,9 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:AFH_Scheduler"
         xmlns:schedules="clr-namespace:AFH_Scheduler.Schedules"
-        xmlns:history="clr-namespace:AFH_Scheduler.History"
-        xmlns:login="clr-namespace:AFH_Scheduler.Login"
-        xmlns:complete="clr-namespace:AFH_Scheduler.Complete"      
+        xmlns:login="clr-namespace:AFH_Scheduler.Login"    
         WindowStyle="None"
         mc:Ignorable="d" Height="720" Width="1080" ResizeMode="NoResize" Visibility="Visible"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -17,6 +15,9 @@
 
 
     <Window.Resources>
+        <DataTemplate DataType="{x:Type login:LoginViewVM}">
+            <login:LoginView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type schedules:DataVM}">
             <local:DataView />
         </DataTemplate>
@@ -27,57 +28,27 @@
 
 
         <StackPanel Height="40" Background="#FF2196F3" Orientation="Horizontal">
-            <Menu IsMainMenu="True" HorizontalAlignment="Left" Background="#FF2196F3" Foreground="WhiteSmoke">
-                <MenuItem Header="_File">
-                    <MenuItem Header="Manage Users" IsEnabled="{Binding LoggedIn}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="Account" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Logout" IsEnabled="{Binding LoggedIn}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="Logout" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="Exit" InputGestureText="Ctrl+E">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="CloseBox" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="_Edit">
-                    <MenuItem Header="_Cut" Command="Cut">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="ContentCut" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="_Copy" Command="Copy">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="ContentCopy" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="_Paste" Command="Paste">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="ContentPaste" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-            </Menu>
             <Grid
                 x:Name="DragableArea"
                 Background="Transparent"
                 MouseDown="DragCommand"
                 Width="635"/>
-            <StackPanel HorizontalAlignment="Center">
-                <Label FontSize="18" Width="150" Foreground="WhiteSmoke">AFH Scheduler</Label>
+            <StackPanel HorizontalAlignment="left">
+                <Label FontSize="18" Width="125" Foreground="WhiteSmoke">AFH Scheduler</Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Width="150">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="180">
 
                 <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
-
+                <Button  Background="{x:Null}" 
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center"
+                        Command="{Binding Path=Logout}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                    <materialDesign:PackIcon Kind="Logout" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                </Button>
                 <Button  Background="{x:Null}" 
                         BorderBrush="{x:Null}" 
                         Foreground="WhiteSmoke" 

@@ -1,5 +1,7 @@
-﻿using AFH_Scheduler.Schedules;
-using AFH_Scheduler.Helper_Classes;
+﻿using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.Login;
+using AFH_Scheduler.Database.LoginDB;
+using AFH_Scheduler.Schedules;
 
 namespace AFH_Scheduler
 {
@@ -9,9 +11,10 @@ namespace AFH_Scheduler
 
         public MainVM()
         {
-            CurrentPageViewModel = new DataVM();
+            CurrentPageViewModel = new LoginViewVM(this);
 
         }
+
 
         #region Properties / Commands
 
@@ -26,6 +29,18 @@ namespace AFH_Scheduler
                     OnPropertyChanged("CurrentPageViewModel");
                 }
             }
+        }
+        public void LoggedIn(User user)
+        {
+            if (user != null)
+            {
+                CurrentPageViewModel = new DataVM(user);
+            }
+        }
+        public void Logout(object obj)
+        {
+            ((DataVM)CurrentPageViewModel).ClearUser();
+            CurrentPageViewModel = new LoginViewVM(this);
         }
 
         #endregion
