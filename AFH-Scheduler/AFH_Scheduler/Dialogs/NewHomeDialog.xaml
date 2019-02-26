@@ -16,35 +16,73 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="200"/>
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="200"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="0">Provider:</TextBlock>
+            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="0">Provider:</TextBlock>
             <ComboBox 
                     Name="ProviderComboBox"
-                    FontSize="18"  
+                    FontSize="16"  
                     Grid.Column="1" 
                     Grid.Row="0" 
                     ItemsSource="{Binding NewHomeCreated.Providers}" 
                     SelectedValue="{Binding NewHomeCreated.SelectedProviderName, UpdateSourceTrigger=PropertyChanged}">
             </ComboBox>
 
-            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="1">Home ID:</TextBlock>
+            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="1">Home License Number:</TextBlock>
+            <TextBox
+                Name="HomeLicenseTextBox"
+                    Margin="10" 
+                Grid.Column="1"
+                Grid.Row="1"
+                    FontSize="16" 
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeLicenseNum" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation Message="Please use only whole numbers." 
+                                                     Regex="^[0-9]+$"
+                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+
+            </TextBox>
+
+
+            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="1">Licensed Home Name:</TextBlock>
+            <TextBox 
+                Name="HomeNameTextBox"
+                    Margin="10" 
+                    Grid.Column="3"
+                    Grid.Row="1"
+                    FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeLicensedName" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="2">Home ID:</TextBlock>
             <TextBox
                 Name="HomeIDTextBox"
                     Margin="10" 
-                    FontSize="18" 
+                    FontSize="16" 
                     Grid.Column="1" 
-                    Grid.Row="1" 
-                    MinWidth="255"
+                    Grid.Row="2" 
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.HomeID" UpdateSourceTrigger="PropertyChanged">
@@ -60,14 +98,13 @@
             </TextBox>
 
 
-            <TextBlock Margin="10" FontSize="18" Grid.Column="2" Grid.Row="1">Address:</TextBlock>
+            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="2">Address:</TextBlock>
             <TextBox 
                 Name="AddressTextBox"
                     Margin="10" 
-                    FontSize="18" 
+                    FontSize="16" 
                     Grid.Column="3" 
-                    Grid.Row="1" 
-                    MinWidth="255">
+                    Grid.Row="2" >
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
@@ -77,14 +114,13 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="2">City:</TextBlock>
+            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="3">City:</TextBlock>
             <TextBox
                 Name="CityTextBox" 
                     Margin="10" 
-                    FontSize="18" 
+                    FontSize="16" 
                     Grid.Column="1" 
-                    Grid.Row="2" 
-                    MinWidth="255">
+                    Grid.Row="3">
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.City" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
@@ -97,14 +133,13 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBlock Margin="10" FontSize="18" Grid.Column="2" Grid.Row="2">Zipcode:</TextBlock>
+            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="3">Zipcode:</TextBlock>
             <TextBox
                 Name="ZipCodeTextBox" 
                     Margin="10" 
-                    FontSize="18" 
+                    FontSize="16" 
                     Grid.Column="3" 
-                    Grid.Row="2" 
-                    MinWidth="255">
+                    Grid.Row="3">
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.Zipcode" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
@@ -118,15 +153,30 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="3">Inspection Date:</TextBlock>
-                <DatePicker 
+
+            <TextBlock VerticalAlignment="Center" Margin="10" FontSize="16" Grid.Column="0" Grid.Row="4">Phone Number(Optional):</TextBlock>
+            <TextBox
+                    Name="PhoneTextBox" 
+                    Margin="10" 
                     Grid.Column="1"
-                    Grid.Row="3"
+                    Grid.Row="4"
+                    FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomePhoneNumber" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="4">Inspection Date:</TextBlock>
+                <DatePicker 
+                    Grid.Column="3"
+                    Grid.Row="4"
                     DisplayDateStart="2/1/2019"
                     SelectedDate="{Binding NewHomeCreated.InspectionDate, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="18"
+                    FontSize="16"
                     Margin="10" 
-                    MinWidth="100" 
                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
             </Grid>
@@ -141,18 +191,22 @@
             Name="SubmitButton" 
             IsDefault="True"
             Margin="10,0,10,1" 
-            FontSize="18" 
+            FontSize="16" 
             ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             Width="100"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
                 <Button.Style>
-                    <Style TargetType="Button">
+                    <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=NewHomeCreated.IsProviderSelected}" 
                                                Value="True"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeLicenseTextBox}" 
+                                               Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeNameTextBox}" 
+                                               Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeIDTextBox}" 
                                                Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddressTextBox}" 
@@ -184,7 +238,7 @@
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
             MaxWidth="100" Margin="10,0,11,0" 
             ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-            FontSize="14">
+            FontSize="16">
                 <Button.CommandParameter>
 
                     <system:String>Cancel</system:String>

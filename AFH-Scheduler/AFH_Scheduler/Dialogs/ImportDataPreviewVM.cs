@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AFH_Scheduler.Algorithm;
 using AFH_Scheduler.Data;
+using AFH_Scheduler.Database;
 using AFH_Scheduler.Helper_Classes;
 using Microsoft.Office.Interop.Excel;
 
@@ -13,6 +15,7 @@ namespace AFH_Scheduler.Dialogs
 {
     public class ImportDataPreviewVM : ObservableObject, IPageViewModel
     {
+        private SchedulingAlgorithm alg = new SchedulingAlgorithm();
         private static ObservableCollection<ScheduleModel> _importedHomes;
         public ObservableCollection<ScheduleModel> ImportedHomes
         {
@@ -23,6 +26,34 @@ namespace AFH_Scheduler.Dialogs
                 {
                     _importedHomes = value;
                     OnPropertyChanged("ImportedHomes");
+                }
+            }
+        }
+
+        private List<long> _uniqueProvIDs;
+        public List<long> UniqueProvIDs
+        {
+            get { return _uniqueProvIDs; }
+            set
+            {
+                if (value != _uniqueProvIDs)
+                {
+                    _uniqueProvIDs = value;
+                    OnPropertyChanged("UniqueProvIDs");
+                }
+            }
+        }
+
+        private List<long> _uniqueHomeIDs;
+        public List<long> UniqueHomeIDs
+        {
+            get { return _uniqueHomeIDs; }
+            set
+            {
+                if (value != _uniqueHomeIDs)
+                {
+                    _uniqueHomeIDs = value;
+                    OnPropertyChanged("UniqueHomeIDs");
                 }
             }
         }
@@ -56,6 +87,8 @@ namespace AFH_Scheduler.Dialogs
         {
             _importedHomes = new ObservableCollection<ScheduleModel>();
             _importedLicenseInfo = new List<List<string>>();
+            _uniqueProvIDs = new List<long>();
+            _uniqueHomeIDs = new List<long>();
         }
 
 
@@ -100,13 +133,25 @@ namespace AFH_Scheduler.Dialogs
                     foreach (Range col in header)
                     {
                         var colCell = col.Cells.Value2;
-                        
+
+                        if (colCell[1, 1].IndexOf("ProviderName", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
+                        {
+                            ImportedLicenseInfo.Add(new List<string>());
+                            foreach (var cel in colCell)
+                            {
+                                if (cel == null)
+                                    ImportedLicenseInfo[0].Add("No Provider");
+                                else
+                                ImportedLicenseInfo[0].Add(cel.ToString());
+                            }
+                        }
+
                         if (colCell[1,1].IndexOf("LicenseNumber", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in colCell)
                             {
-                                ImportedLicenseInfo[0].Add(cel.ToString());
+                                ImportedLicenseInfo[1].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("FacilityName", StringComparison.OrdinalIgnoreCase) > -1)
@@ -114,7 +159,7 @@ namespace AFH_Scheduler.Dialogs
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in col.Cells.Value)
                             {
-                                ImportedLicenseInfo[1].Add(cel.ToString());
+                                ImportedLicenseInfo[2].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("LocationAddress", StringComparison.OrdinalIgnoreCase) > -1)
@@ -122,7 +167,7 @@ namespace AFH_Scheduler.Dialogs
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in col.Cells.Value)
                             {
-                                ImportedLicenseInfo[2].Add(cel.ToString());
+                                ImportedLicenseInfo[3].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("LocationCity", StringComparison.OrdinalIgnoreCase) > -1)
@@ -130,7 +175,7 @@ namespace AFH_Scheduler.Dialogs
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in col.Cells.Value)
                             {
-                                ImportedLicenseInfo[3].Add(cel.ToString());
+                                ImportedLicenseInfo[4].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("LocationZipCode", StringComparison.OrdinalIgnoreCase) > -1)
@@ -138,7 +183,7 @@ namespace AFH_Scheduler.Dialogs
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in col.Cells.Value)
                             {
-                                ImportedLicenseInfo[4].Add(cel.ToString());
+                                ImportedLicenseInfo[5].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("TelephoneNmbr", StringComparison.OrdinalIgnoreCase) > -1)
@@ -147,9 +192,20 @@ namespace AFH_Scheduler.Dialogs
                             foreach (var cel in col.Cells.Value)
                             {
                                 if(cel == null)
-                                    ImportedLicenseInfo[5].Add("");
+                                    ImportedLicenseInfo[6].Add("");
                                 else
-                                    ImportedLicenseInfo[5].Add(cel.ToString());
+                                    ImportedLicenseInfo[6].Add(cel.ToString());
+                            }
+                        }
+                        else if (colCell[1, 1].IndexOf("NextInspection", StringComparison.OrdinalIgnoreCase) > -1)
+                        {
+                            ImportedLicenseInfo.Add(new List<string>());
+                            String[] splitDate;
+                            foreach (var cel in col.Cells.Value)
+                            {
+                                splitDate = cel.ToString().Split(' ');
+                                var actualDate = splitDate[0];
+                                ImportedLicenseInfo[7].Add(actualDate);
                             }
                         }
                     }
@@ -174,33 +230,112 @@ namespace AFH_Scheduler.Dialogs
 
         public void LoadInToTable()
         {
-            /*var temp = ImportedLicenseInfo[0][0]; //LicenseNum
-            var temp2 = ImportedLicenseInfo[1][0]; //Home Name
-            var temp3 = ImportedLicenseInfo[2][0]; //Address
-            var temp4 = ImportedLicenseInfo[3][0]; //City
-            var temp5 = ImportedLicenseInfo[4][0]; //Zipcode
-            var temp6 = ImportedLicenseInfo[5][0]; //Telephone*/
+            /*  ImportedLicenseInfo[0][0]; //Provider Name
+                ImportedLicenseInfo[1][0]; //LicenseNum
+                ImportedLicenseInfo[2][0]; //Home Name
+                ImportedLicenseInfo[3][0]; //Address
+                ImportedLicenseInfo[4][0]; //City
+                ImportedLicenseInfo[5][0]; //Zipcode
+                ImportedLicenseInfo[6][0]; //Telephone
+                ImportedLicenseInfo[7][0]; //NextInspection*/
 
             int rows = ImportedLicenseInfo[0].Count;
             for (int rowItem = 1; rowItem < rows; rowItem++)
             {
-                ImportedHomes.Add(
+                ImportedHomes.Add(// * = From the Excel file
                                 new ScheduleModel
                                 (
-                                    0,   //Provider ID
-                                    Convert.ToInt64(ImportedLicenseInfo[0][rowItem]),     //Home License
-                                    "",                                  //Provider Name
-                                    ImportedLicenseInfo[1][rowItem],     //Home Name
-                                    ImportedLicenseInfo[5][rowItem],     //Phone Number
-                                    ImportedLicenseInfo[2][rowItem],     //Address
-                                    ImportedLicenseInfo[3][rowItem],     //City
-                                    ImportedLicenseInfo[4][rowItem],     //Zip
+                                    GenerateProviderID(),   //Provider ID
+                                    GenerateHomeID(),     //Home Database ID
+                                    ImportedLicenseInfo[0][rowItem],                //Provider Name*
+                                    Convert.ToInt64(ImportedLicenseInfo[1][rowItem]),//License Number*
+                                    ImportedLicenseInfo[2][rowItem],     //Home Name*
+                                    ImportedLicenseInfo[6][rowItem],     //Phone Number*
+                                    ImportedLicenseInfo[3][rowItem],     //Address*
+                                    ImportedLicenseInfo[4][rowItem],     //City*
+                                    ImportedLicenseInfo[5][rowItem],     //Zip*
                                     "",         //Recent
-                                    "",               //Next Inspection
+                                    ImportedLicenseInfo[7][rowItem],               //Next Inspection*
                                     null,               //DataVM
-                                    ""//18th Month Drop Date
+                                    alg.SettingEighteenthMonth(ImportedLicenseInfo[7][rowItem])//18th Month Drop Date
                                 )
                             );
+            }
+        }
+
+        public long GenerateProviderID()
+        {
+            long newID;
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                try
+                {
+                    var recentProviderID = db.Providers.OrderByDescending(r => r.Provider_ID).FirstOrDefault();
+                    if (recentProviderID.Provider_ID == Int64.MaxValue)
+                    {
+                        newID = 0;
+                        while (true)
+                        {
+                            var isUniqueID = db.Providers.Where(r => r.Provider_ID == newID).ToList();
+                            if (isUniqueID.Count == 0 && !UniqueProvIDs.Contains(newID))
+                            {
+                                UniqueProvIDs.Add(newID);
+                                return newID;
+                            }
+                            newID++;
+                        }
+                    }
+                    else
+                        newID = recentProviderID.Provider_ID + 1;
+                    while(UniqueProvIDs.Contains(newID))
+                    {
+                        newID++;
+                    }
+                    UniqueProvIDs.Add(newID);
+                    return newID;
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
+            }
+        }
+
+        public long GenerateHomeID()
+        {
+            long newID;
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                try
+                {
+                    var recentHomeID = db.Provider_Homes.OrderByDescending(r => r.PHome_ID).FirstOrDefault();
+                    if (recentHomeID.PHome_ID == Int64.MaxValue)
+                    {
+                       newID = 0;
+                        while (true)
+                        {
+                            var isUniqueID = db.Provider_Homes.Where(r => r.PHome_ID == newID).ToList();
+                            if (isUniqueID.Count == 0 && !UniqueHomeIDs.Contains(newID))
+                            {
+                                UniqueHomeIDs.Add(newID);
+                                return newID;
+                            }
+                            newID++;
+                        }
+                    }
+                    else
+                        newID = recentHomeID.PHome_ID + 1;
+                    while(UniqueHomeIDs.Contains(newID))
+                    {
+                        newID++;
+                    }
+                    UniqueHomeIDs.Add(newID);
+                    return newID;
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
             }
         }
 

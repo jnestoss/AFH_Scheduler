@@ -33,10 +33,30 @@
 
             <DataGrid.Columns>
                 <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding HomeID}"
+                            Binding="{Binding ProviderName}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                            Header="Provider Name" />
+                
+                <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding HomeLicenseNum}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="License Number" />
+
+                <!--
+                <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding ProviderID}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                            Header="Provider ID" />
+
+                <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding HomeID}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                            Header="Home ID" />
+                -->
 
                 <materialDesign:MaterialDataGridTextColumn
                     Binding="{Binding HomeName}"
@@ -70,6 +90,13 @@
                     Binding="{Binding Phone}" 
                     Header="Telephone" 
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding NextInspection}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Next Inspection Date">
+                </materialDesign:MaterialDataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>

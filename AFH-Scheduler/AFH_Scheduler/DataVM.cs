@@ -174,7 +174,7 @@ namespace AFH_Scheduler
 
         private void FilterTheTable(object obj)
         {
-            RefreshTable(obj);
+            RefreshTable(obj);//Comment out if you want to test the license number/name filter
             if (SelectedFilter is null)
             {
                 MessageService.ReleaseMessageBox("You have not specified what to filter out.");
@@ -186,7 +186,7 @@ namespace AFH_Scheduler
             }
 
             var temp = new ObservableCollection<ScheduleModel>();
-            if (SelectedFilter.ToString().Contains("Provider ID"))
+            /*if (SelectedFilter.ToString().Contains("Provider ID"))
             {
                 foreach(var item in Providers)
                 {
@@ -195,9 +195,9 @@ namespace AFH_Scheduler
                         temp.Add(item);                        
                     }
                 }
-            }
+            }*/
 
-            else if(SelectedFilter.ToString().Contains("Name"))
+            if(SelectedFilter.ToString().Contains("Provider Name"))
             {
                 foreach (var item in Providers)
                 {
@@ -213,6 +213,28 @@ namespace AFH_Scheduler
                 foreach (var item in Providers)
                 {
                     if (item.Address.Contains(FilterItem))
+                    {
+                        temp.Add(item);
+                    }
+                }
+            }
+
+            else if (SelectedFilter.ToString().Contains("License Number"))
+            {
+                foreach (var item in Providers)
+                {
+                    if (item.HomeLicenseNum.ToString().Contains(FilterItem))
+                    {
+                        temp.Add(item);
+                    }
+                }
+            }
+
+            else if (SelectedFilter.ToString().Contains("License Name"))
+            {
+                foreach (var item in Providers)
+                {
+                    if (item.HomeName.Contains(FilterItem))
                     {
                         temp.Add(item);
                     }
@@ -349,7 +371,7 @@ namespace AFH_Scheduler
 
                     xlApp = new Microsoft.Office.Interop.Excel.Application
                     {
-                        Visible = true
+                        //Visible = true
                     };
                     
                     try
@@ -435,8 +457,9 @@ namespace AFH_Scheduler
 
             if (DialogHostSuccess)
             {
-               string recentDate;
-               var home = createdHome.NewHomeCreated;
+                string recentDate;
+                var home = createdHome.NewHomeCreated;
+
                var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(home.HomeID));
                if (recentInspec == null)
                {
@@ -450,8 +473,9 @@ namespace AFH_Scheduler
                   Convert.ToInt64(home.ProviderID),
                   Convert.ToInt64(home.HomeID),
                   home.ProviderName,
-                  "",//Home Name
-                  "",//Phone Number
+                  Convert.ToInt64(home.HomeLicenseNum), //License Number
+                  home.HomeLicensedName,//Home Name
+                  home.HomePhoneNumber,//Phone Number
                   home.Address,
                   home.City,
                   home.Zipcode,
@@ -463,9 +487,11 @@ namespace AFH_Scheduler
                   );
 
                 //Add to database
+                /*
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    db.Provider_Homes.Add(new Provider_Homes { PHome_ID = Convert.ToInt64(home.HomeID),
+                    db.Provider_Homes.Add(new Provider_Homes { 
+                        PHome_ID = Convert.ToInt64(home.HomeID),
                         PHome_Address = home.Address,
                         PHome_City = home.City,
                         PHome_Zipcode = home.Zipcode,
@@ -488,14 +514,15 @@ namespace AFH_Scheduler
                         }
                     }
 
-                    db.Scheduled_Inspections.Add(new Scheduled_Inspections { SInspections_Id = id,
+                    db.Scheduled_Inspections.Add(new Scheduled_Inspections { 
+                        SInspections_Id = id,
                         SInspections_Date = alg.ConvertDateToString(home.InspectionDate),
                         FK_PHome_ID = Convert.ToInt64(home.HomeID) }
                     );
                     db.SaveChanges();
 
                 }
-
+                */
                 MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
 
@@ -602,6 +629,7 @@ namespace AFH_Scheduler
                                 item.Provider_ID,
                                 house.PHome_ID,
                                 item.Provider_Name, //Provider Name
+                                -1, //License Number
                                 "",//Home Name
                                 house.PHome_Phonenumber,
                                 house.PHome_Address,//Address

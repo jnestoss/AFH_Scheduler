@@ -32,8 +32,9 @@ namespace AFH_Scheduler.Dialogs
             {
                 var provs = db.Providers.ToList();
                 List<string> providers = new List<string>();
+                providers.Add("No Provider");
                 string listItem = "";
-                foreach(var item in provs)
+                foreach (var item in provs)
                 {
                     listItem = item.Provider_ID + "-" + item.Provider_Name;
                     providers.Add(listItem);

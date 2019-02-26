@@ -164,6 +164,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                                 id,
                                 house.PHome_ID,
                                 name,
+                                -1, //License Number
                                 "",//Home Name
                                 "",//Phone number
                                 house.PHome_Address,
