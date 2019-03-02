@@ -2,7 +2,6 @@
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Helper_Classes;
-using AFH_Scheduler.Schedules;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -33,8 +32,9 @@ namespace AFH_Scheduler.Dialogs
             {
                 var provs = db.Providers.ToList();
                 List<string> providers = new List<string>();
+                providers.Add("No Provider");
                 string listItem = "";
-                foreach(var item in provs)
+                foreach (var item in provs)
                 {
                     listItem = item.Provider_ID + "-" + item.Provider_Name;
                     providers.Add(listItem);

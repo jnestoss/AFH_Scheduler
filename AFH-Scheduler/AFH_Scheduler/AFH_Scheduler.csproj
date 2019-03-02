@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <Private>True</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
@@ -107,6 +107,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\OutcomeCodeConverter.cs" />
     <Compile Include="Converters\ProviderConverter.cs" />
     <Compile Include="Converters\ProviderListConverter.cs" />
     <Compile Include="Database\LoginDB\User.cs" />
@@ -142,6 +143,11 @@
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\HistVM.cs" />
+    <Compile Include="Dialogs\ImportDataPreview.xaml.cs">
+      <DependentUpon>ImportDataPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ImportDataPreviewVM.cs" />
+    <Compile Include="Excel\Excel.cs" />
     <Compile Include="HelperClasses\ICloseable.cs" />
     <Compile Include="Dialogs\NewHomeDialogVM.cs" />
     <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
@@ -150,10 +156,17 @@
     <Compile Include="Dialogs\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\EditOutcome.xaml.cs">
+      <DependentUpon>EditOutcome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SettingSubWindows\EditProvider.xaml.cs">
       <DependentUpon>EditProvider.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\EditProviderVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\NewOutcomeCreator.xaml.cs">
+      <DependentUpon>NewOutcomeCreator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\OutcomeDialogsVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\NewProviderCreatorVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml.cs">
       <DependentUpon>NewProviderCreator.xaml</DependentUpon>
@@ -162,6 +175,10 @@
       <DependentUpon>NormalCurveAdjuster.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjusterVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\OutcomeCodeListDialog.xaml.cs">
+      <DependentUpon>OutcomeCodeListDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\OutcomeCodeListVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\ProviderListDialog.xaml.cs">
       <DependentUpon>ProviderListDialog.xaml</DependentUpon>
     </Compile>
@@ -173,6 +190,7 @@
     <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
     <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
+    <Compile Include="Validations\UniqueOutcomeCodeword.cs" />
     <Compile Include="Validations\UniqueProviderIDValidation.cs" />
     <Page Include="Dialogs\CompleteDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -180,6 +198,10 @@
     <Page Include="Dialogs\EditDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ImportDataPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ObsoleteCode\Complete\CompleteInspectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -220,7 +242,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dialogs\SettingSubWindows\EditOutcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\SettingSubWindows\EditProvider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\NewOutcomeCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\OutcomeCodeListDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -296,7 +330,6 @@
     <Compile Include="Database\Scheduled_Inspections.cs">
       <DependentUpon>HomeInspection.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataReader.cs" />
     <Compile Include="Data\CompleteSchedule_Model.cs" />
     <Compile Include="Data\HistoryDetailModel.cs" />
     <Compile Include="Data\HistoryModel.cs" />

@@ -9,29 +9,24 @@ using AFH_Scheduler.Database;
 
 namespace AFH_Scheduler.Validations
 {
-    public class UniqueProviderIDValidation : ValidationRule
+    public class UniqueOutcomeCodeword : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
 
-            if (!int.TryParse((value ?? "").ToString(),
-                NumberStyles.None,
-                CultureInfo.CurrentCulture,
-                out int id)) return new ValidationResult(false, "Invalid ID Entry");
-
-            //var test = (string)value;
-            //var id = Convert.ToInt64(test);
+            var test = (string)value;
 
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                var providers = db.Providers.Where(r => r.Provider_ID == id).ToList();
+                var providers = db.Inspection_Outcome.Where(r => r.IOutcome_Code.Equals(test)).ToList();
                 if (providers.Count == 0)
                 {
                     return ValidationResult.ValidResult;
                 }
             }
 
-            return new ValidationResult(false, "This provider ID is already assigned, please use a different one.");
+            return new ValidationResult(false, "This Codeword is already assigned, please use a different one.");
         }
+
     }
 }

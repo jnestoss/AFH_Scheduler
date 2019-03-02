@@ -15,6 +15,9 @@ namespace AFH_Scheduler.Data
         private List<string> _providers;
         private string _selectedProviderName;
         private string _homeID;
+        private string _homeLicense;
+        private string _homeName;
+        private string _homePhone;
         private string _address;
         private string _city;
         private string _zip;
@@ -38,7 +41,7 @@ namespace AFH_Scheduler.Data
             InspectionDate = DateTime.Now;
         }
 
-        public NewHomeModel(long pHome_ID, 
+        /*public NewHomeModel(long pHome_ID, 
             string pHome_Address, 
             string pHome_City, 
             string pHome_Zipcode, 
@@ -50,7 +53,7 @@ namespace AFH_Scheduler.Data
             Zipcode = pHome_Zipcode;
             IsProviderSelected = false;
             InspectionDate = insp;
-        }
+        }*/
 
         public string ProviderID
         {
@@ -88,9 +91,17 @@ namespace AFH_Scheduler.Data
             {
                 if (_selectedProviderName == value) return;
                 _selectedProviderName = value;
-                String[] idAndName = _selectedProviderName.Split('-');
-                ProviderID = idAndName[0];
-                ProviderName = idAndName[1];
+                if(_selectedProviderName.Equals("No Provider"))
+                {
+                    ProviderID = "-1";
+                    ProviderName = "No Provide";
+                }
+                else
+                {
+                    String[] idAndName = _selectedProviderName.Split('-');
+                    ProviderID = idAndName[0];
+                    ProviderName = idAndName[1];
+                }
                 IsProviderSelected = true;
                 OnPropertyChanged("SelectedProviderName");
             }
@@ -103,6 +114,36 @@ namespace AFH_Scheduler.Data
             {
                 _homeID = value;
                 OnPropertyChanged("HomeID");
+            }
+        }
+
+        public string HomeLicenseNum
+        {
+            get { return _homeLicense; }
+            set
+            {
+                _homeLicense = value;
+                OnPropertyChanged("HomeLicenseNum");
+            }
+        }
+
+        public string HomeLicensedName
+        {
+            get { return _homeName; }
+            set
+            {
+                _homeName = value;
+                OnPropertyChanged("HomeLicensedName");
+            }
+        }
+
+        public string HomePhoneNumber
+        {
+            get { return _homePhone; }
+            set
+            {
+                _homePhone = value;
+                OnPropertyChanged("HomePhoneNumber");
             }
         }
 

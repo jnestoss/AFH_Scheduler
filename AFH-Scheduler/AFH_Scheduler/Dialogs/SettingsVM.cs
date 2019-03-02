@@ -75,6 +75,23 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private RelayCommand _outcomeListCommand;
+        public ICommand OutcomeListCommand
+        {
+            get
+            {
+                if (_outcomeListCommand == null)
+                    _outcomeListCommand = new RelayCommand(ShowOutcomeCodes);
+                return _outcomeListCommand;
+            }
+        }
+        private async void ShowOutcomeCodes(object obj)
+        {
+            var vm = new OutcomeCodeListVM();
+            var view = new OutcomeCodeListDialog(vm);
+            var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
+        }
+
         public void ClosingEventHandlerProviders(object sender, DialogClosingEventArgs eventArgs)
         {
             if ((String)eventArgs.Parameter == "Cancel")
