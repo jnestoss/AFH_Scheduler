@@ -173,7 +173,10 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                                 recentDate,
                                 insp,
                                 null,
-                                alg.SettingEighteenthMonth(insp)
+                                alg.DropDateMonth(insp, false),
+                                true,
+                                "",
+                                ""
                             )
                     );
                 }

@@ -15,6 +15,8 @@ namespace AFH_Scheduler.Data
     {
         private ObservableCollection<HistoryDetailModel> _homeshistory;
         private bool _isSelected;
+        private bool _hasNoProvider;
+        private bool _isActive;
         private long _providerID;
         private long _homeID;
         private string _providerName;
@@ -27,6 +29,8 @@ namespace AFH_Scheduler.Data
         private string _recentInspection;
         private string _nextInspection;
         private string _eighteenthMonthDate;
+        private string _rcsRegion;
+        private string _rcsUnit;
 
         public ScheduleModel(long providerID,
             long homeID,
@@ -40,9 +44,20 @@ namespace AFH_Scheduler.Data
             string recentDate,
             string nextInspection,
             DataVM schedulerVM,
-            string eighteenthMonthDate
+            string eighteenthMonthDate,
+            bool active,
+            string region,
+            string unit
             )
         {
+            if (name.Equals("No Provider"))
+            {
+                HasNoProvider = true;
+            }
+            else
+            {
+                HasNoProvider = false;
+            }
             ProviderID = providerID;
             HomeID = homeID;
             ProviderName = name;
@@ -55,6 +70,9 @@ namespace AFH_Scheduler.Data
             RecentInspection = recentDate;
             NextInspection = nextInspection;
             EighteenthMonthDate = eighteenthMonthDate;
+            IsActive = active;
+            RcsRegion = region;
+            RcsUnit = unit;
             HomesHistory = new ObservableCollection<HistoryDetailModel>();
         }
 
@@ -68,6 +86,28 @@ namespace AFH_Scheduler.Data
                     _homeshistory = value;
                     OnPropertyChanged("HomesHistory");
                 }
+            }
+        }
+
+        public bool HasNoProvider
+        {
+            get { return _hasNoProvider; }
+            set
+            {
+                if (_hasNoProvider == value) return;
+                _hasNoProvider = value;
+                OnPropertyChanged("HasNoProvider");
+            }
+        }
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                if (_isActive == value) return;
+                _isActive = value;
+                OnPropertyChanged("IsActive");
             }
         }
 
@@ -190,6 +230,26 @@ namespace AFH_Scheduler.Data
                 if (_eighteenthMonthDate == value) return;
                 _eighteenthMonthDate = value;
                 OnPropertyChanged("EighteenthMonthDate");
+            }
+        }
+        public string RcsRegion
+        {
+            get { return _rcsRegion; }
+            set
+            {
+                if (_rcsRegion == value) return;
+                _rcsRegion = value;
+                OnPropertyChanged("RcsRegion");
+            }
+        }
+        public string RcsUnit
+        {
+            get { return _rcsUnit; }
+            set
+            {
+                if (_rcsUnit == value) return;
+                _rcsUnit = value;
+                OnPropertyChanged("RcsUnit");
             }
         }
 

@@ -27,11 +27,12 @@
                     ItemsSource="{Binding RemainingHomes}">
 
                 <DataGrid.Columns>
+                    <!--
                     <DataGridTextColumn
                             Binding="{Binding ProviderID}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="Provider ID" />
+                            Header="Provider ID" />-->
 
                     <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding ProviderName}"
@@ -40,15 +41,16 @@
                             Header="Provider Name" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding HomeID}"
+                            Binding="{Binding HomeLicenseNum}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="Home Licensing Number" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                    IsReadOnly="True" 
-                    Header="Home Name" 
-                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Binding="{Binding HomeName}"
+                            IsReadOnly="True" 
+                            Header="Home Name" 
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                     <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding Address}"

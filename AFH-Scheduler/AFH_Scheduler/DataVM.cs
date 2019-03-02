@@ -47,6 +47,20 @@ namespace AFH_Scheduler
             }
         }
 
+        private static ObservableCollection<ScheduleModel> _inActiveHomes;
+        public ObservableCollection<ScheduleModel> InActiveHomes
+        {
+            get { return _inActiveHomes; }
+            set
+            {
+                if (value != _inActiveHomes)
+                {
+                    _inActiveHomes = value;
+                    OnPropertyChanged("InActiveHomes");
+                }
+            }
+        }
+
         /*public string _excelFilename;
         public string ExcelFileName
         {
@@ -159,6 +173,43 @@ namespace AFH_Scheduler
                     _messageService = new SchedulesOpenDialog();
                 return _messageService;
             }
+        }
+
+        private RelayCommand _inactiveListCommand;
+        public ICommand InactiveListCommand
+        {
+            get
+            {
+                if (_inactiveListCommand == null)
+                    _inactiveListCommand = new RelayCommand(InactiveListDisplayAsync);
+                return _inactiveListCommand;
+            }
+        }
+
+        private async void InactiveListDisplayAsync(object obj)
+        {
+            var vm = new InactiveHomeListVM(InActiveHomes);
+            var view = new InactiveHomeList(vm);
+            var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerNewHome);
+            if (result.Equals("Submit"))
+            {
+                
+                foreach(var reactive in vm.ReActiveHomes)
+                {
+                    foreach(var update in vm.UpdateHomeSchedules)
+                    {
+                        if (update.Contains(reactive.HomeID.ToString()))
+                        {
+                            String[] inspect = update.Split('-');
+                            reactive.NextInspection = inspect[1];
+                            reactive.EighteenthMonthDate = alg.DropDateMonth(reactive.NextInspection, false);
+                        }
+                    }
+                    Providers.Add(reactive);
+                    InActiveHomes.Remove(reactive);
+                }
+            }
+
         }
 
         private RelayCommand _filterTableCommand;
@@ -331,7 +382,14 @@ namespace AFH_Scheduler
             {
                 foreach(var importedHome in importData.ImportedHomes)
                 {
-                    Providers.Add(importedHome);
+                    if (importedHome.IsActive)
+                    {
+                        Providers.Add(importedHome);
+                    }
+                    else
+                    {
+                        InActiveHomes.Add(importedHome);
+                    }
                 }
             }
         }
@@ -378,7 +436,17 @@ namespace AFH_Scheduler
                     {//Excel work here
                         xlWorkbook = xlApp.Workbooks.Add("");
                         xlWorksheet = (Worksheet)xlWorkbook.ActiveSheet;
-                        
+                        /*"Please include:  
+                         * Region/unit; Checked
+                         * last inspection; Checked
+                         * current inspection; Checked
+                         * how many months and days those are apart; Checked
+                         *** code (result) from current inspection (we have shared codes to use based performance); 
+                         *** forecasted next inspection date; 
+                         * 17 month drop dead date; Checked
+                         * 18 month drop dead date (for forecasted inspection). Checked"
+                         */
+
                         xlWorksheet.Cells[1, 1] = "License Number";
                         xlWorksheet.Cells[1, 2] = "Provider";
                         xlWorksheet.Cells[1, 3] = "Address";
@@ -386,26 +454,41 @@ namespace AFH_Scheduler
                         xlWorksheet.Cells[1, 5] = "Zipcode";
                         xlWorksheet.Cells[1, 6] = "Recent Inspection Date";
                         xlWorksheet.Cells[1, 7] = "Next Inspection Date";
-                        xlWorksheet.Cells[1, 8] = "18th Month Drop Dead";
+                        xlWorksheet.Cells[1, 8] = "Interval in Months";
+                        xlWorksheet.Cells[1, 9] = "Interval in Days";
+                        xlWorksheet.Cells[1, 10] = "17th Month Drop Dead";
+                        xlWorksheet.Cells[1, 11] = "18th Month Drop Dead";
+                        xlWorksheet.Cells[1, 12] = "Outcome"; //From current inspection
+                        xlWorksheet.Cells[1, 13] = "Forecasted Next Inspection";//forecasted next inspection date
+                        xlWorksheet.Cells[1, 14] = "RCS Region";
+                        xlWorksheet.Cells[1, 15] = "RCS Unit";
+
 
                         int row = 2;
                         foreach (var provider in Providers)
                         {
-                            var home = db.Provider_Homes.Where(r => r.PHome_Address == provider.Address).First();                            
+                            //var home = db.Provider_Homes.Where(r => r.PHome_Address == provider.Address).First();                            
 
                             xlWorksheet.Cells[row, 1] = provider.ProviderID;
                             xlWorksheet.Cells[row, 2] = provider.ProviderName;
                             xlWorksheet.Cells[row, 3] = provider.Address;
-                            xlWorksheet.Cells[row, 4] = home.PHome_City;
-                            xlWorksheet.Cells[row, 5] = home.PHome_Zipcode;
+                            xlWorksheet.Cells[row, 4] = provider.City;
+                            xlWorksheet.Cells[row, 5] = provider.ZIP;
                             xlWorksheet.Cells[row, 6] = provider.RecentInspection;
                             xlWorksheet.Cells[row, 7] = provider.NextInspection;
-                            xlWorksheet.Cells[row, 8] = provider.EighteenthMonthDate;
+                            xlWorksheet.Cells[row, 8] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, true);//Interval in Months
+                            xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
+                            xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, true);//17th Month Drop Date
+                            xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
+                            xlWorksheet.Cells[row, 12] = "";//Outcome from current inspection
+                            xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
+                            xlWorksheet.Cells[row, 14] = provider.RcsRegion;//RCS Region
+                            xlWorksheet.Cells[row, 15] = provider.RcsUnit;//RCS Unit
 
                             row++;
                         }
 
-                        xlWorksheet.get_Range("A1", "H1").EntireColumn.AutoFit();
+                        xlWorksheet.get_Range("A1", "N1").EntireColumn.AutoFit();
 
                         //xlApp.Visible = false;
                         //xlApp.UserControl = false;
@@ -470,9 +553,9 @@ namespace AFH_Scheduler
                Providers.Add(
                   new ScheduleModel
                   (
-                  Convert.ToInt64(home.ProviderID),
-                  Convert.ToInt64(home.HomeID),
-                  home.ProviderName,
+                  Convert.ToInt64(home.SelectedProviderName.ProviderID),
+                  home.HomeID,
+                  home.SelectedProviderName.ProviderName,
                   Convert.ToInt64(home.HomeLicenseNum), //License Number
                   home.HomeLicensedName,//Home Name
                   home.HomePhoneNumber,//Phone Number
@@ -480,9 +563,12 @@ namespace AFH_Scheduler
                   home.City,
                   home.Zipcode,
                   recentDate,
-                  alg.ConvertDateToString(home.InspectionDate),//insp,
+                  home.InspectionDate.ToShortDateString(),//insp,
                   this,
-                  alg.SettingEighteenthMonth(alg.ConvertDateToString(home.InspectionDate))
+                  alg.DropDateMonth(home.InspectionDate.ToShortDateString(), false),
+                  true,
+                  home.RcsRegion,
+                  home.RcsUnit
                   )
                   );
 
@@ -581,6 +667,7 @@ namespace AFH_Scheduler
         public DataVM()
         {
             _providers = new ObservableCollection<ScheduleModel>();
+            _inActiveHomes = new ObservableCollection<ScheduleModel>();
             FilterItem = "";
             TextFieldEnabled = true;
             StartDatePicked = DateTime.Today;
@@ -638,7 +725,10 @@ namespace AFH_Scheduler
                                 recentDate,
                                 insp,
                                 this,
-                                alg.SettingEighteenthMonth(insp)
+                                alg.DropDateMonth(insp, false),
+                                true,
+                                "",
+                                ""
                             )
                         );
                     }

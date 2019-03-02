@@ -147,6 +147,14 @@
       <DependentUpon>ImportDataPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ImportDataPreviewVM.cs" />
+    <Compile Include="Dialogs\InactiveHomeList.xaml.cs">
+      <DependentUpon>InactiveHomeList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InactiveHomeListVM.cs" />
+    <Compile Include="Dialogs\Rescheduling\ReschedulingVM.cs" />
+    <Compile Include="Dialogs\Rescheduling\SettingUpAnInspection.xaml.cs">
+      <DependentUpon>SettingUpAnInspection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Excel\Excel.cs" />
     <Compile Include="HelperClasses\ICloseable.cs" />
     <Compile Include="Dialogs\NewHomeDialogVM.cs" />
@@ -200,6 +208,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\ImportDataPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\InactiveHomeList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\Rescheduling\SettingUpAnInspection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +444,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HomeInspection2.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\NoProviderWarning.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

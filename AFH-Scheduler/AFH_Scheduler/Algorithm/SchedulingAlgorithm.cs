@@ -74,7 +74,7 @@ namespace AFH_Scheduler.Algorithm
             /*table.Scheduled_Inspections.Add(new Scheduled_Inspections { SInspections_Id = 456789, SInspections_Date = ConvertDateToString(newInspection), FK_PHome_ID = pHome_ID });
             table.SaveChanges();*/
 
-            return ConvertDateToString(newInspection);
+            return newInspection.ToShortDateString();
         }
         #endregion
 
@@ -82,7 +82,7 @@ namespace AFH_Scheduler.Algorithm
         public bool CheckingForUniqueInspection(HomeInspectionEntities table, DateTime newInspection, int pHome_ID)
         {
             bool isUniqueDate = false;
-            string dateComparison = ConvertDateToString(newInspection);
+            string dateComparison = newInspection.ToShortDateString();
 
             long providerID = table.Provider_Homes.First(r => r.PHome_ID == pHome_ID).FK_Provider_ID.Value;
             try
@@ -162,20 +162,51 @@ namespace AFH_Scheduler.Algorithm
 
              followUp_list.Clear();*/
             DateTime followupDate = ExtractDateTime(last_correctionDate).AddDays(60);
-            string followUp = ConvertDateToString(followupDate);
+            string followUp = followupDate.ToShortDateString();
             return followUp;
         }
 
         #endregion
 
-        #region 18th Month Drop Date
-        public string SettingEighteenthMonth(string scheduled_Date)
+        #region Month Drop Date
+        public string DropDateMonth(string scheduled_Date, bool seventeenOrEighteen)
         {
             if (scheduled_Date == null || scheduled_Date.Length == 0)
                 return "";
 
-            DateTime eighteenthMonthDate = ExtractDateTime(scheduled_Date).AddDays(548);
-            return ConvertDateToString(eighteenthMonthDate);
+            //true = 17, false = 18
+            DateTime dropDateMonthDate;
+            if (seventeenOrEighteen)
+            {
+                dropDateMonthDate = ExtractDateTime(scheduled_Date).AddDays(517);
+            }
+            else
+            {
+                dropDateMonthDate = ExtractDateTime(scheduled_Date).AddDays(548);
+            }
+            return dropDateMonthDate.ToShortDateString();
+        }
+
+        public double InspectionInterval(string recentInspecion, string currentInspection, bool monthOrDays)
+        {
+            if (recentInspecion == null || recentInspecion.Length == 0 || currentInspection == null || currentInspection.Length == 0)
+                return 0;
+
+            //true = months, false = days
+            DateTime recent = ExtractDateTime(recentInspecion);
+            DateTime current = ExtractDateTime(currentInspection);
+            double resultTotal;
+            if (monthOrDays)
+            {
+                resultTotal = (current - recent).TotalDays;
+                resultTotal = resultTotal / 365;
+                resultTotal = Math.Round(resultTotal * 12, 2);
+            }
+            else
+            {
+                resultTotal = (current - recent).TotalDays;
+            }
+            return resultTotal;
         }
 
         #endregion
@@ -191,20 +222,7 @@ namespace AFH_Scheduler.Algorithm
             return new DateTime(year, month, day);
         }
         #endregion
-
-        #region Convert DateTime to Text
-        public string ConvertDateToString(DateTime inspection)
-        {
-            String date = "";
-            date += inspection.Month.ToString();
-            date += "/";
-            date += inspection.Day.ToString();
-            date += "/";
-            date += inspection.Year.ToString();
-
-            return date;
-        }
-        #endregion
+        
 
         #region Checking Month
         public int CheckingMonth(DateTime date)
