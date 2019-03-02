@@ -1,5 +1,4 @@
-﻿using AFH_Scheduler.Complete;
-using AFH_Scheduler.Data;
+﻿using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Helper_Classes;
 using MaterialDesignThemes.Wpf;

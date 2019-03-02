@@ -1,5 +1,4 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System;
 using AFH_Scheduler.Helper_Classes;
@@ -17,13 +16,15 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 using AFH_Scheduler.Dialogs.Confirmation;
 using System.Data.Entity;
-using System.Collections.Generic;
+using AFH_Scheduler.Database.LoginDB;
 
-namespace AFH_Scheduler
+namespace AFH_Scheduler.Schedules
 {
     public class DataVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
+        private User _usr;
 
         private ScheduleModel _selectedSchedule;
         private ScheduleModel SelectedSchedule {
@@ -57,20 +58,11 @@ namespace AFH_Scheduler
                 OnPropertyChanged("ExcelFileName");
             }
         }*/
-
-        private ScheduleModel _selectedHome;
-        public ScheduleModel SelectedHome {
-            get => _selectedHome;
-            set {
-                if ( _selectedHome != value )
-                {
-                    _selectedHome = value;
-                    OnPropertyChanged("SelectedHome");
-                }
-            }
+        public void ClearUser()
+        {
+            _usr = null;
         }
-
-
+        
         public bool _dialogHostSuccess;
         public bool DialogHostSuccess
         {
@@ -174,7 +166,7 @@ namespace AFH_Scheduler
 
         private void FilterTheTable(object obj)
         {
-            RefreshTable(obj);//Comment out if you want to test the license number/name filter
+            RefreshTable(obj);
             if (SelectedFilter is null)
             {
                 MessageService.ReleaseMessageBox("You have not specified what to filter out.");
@@ -186,7 +178,7 @@ namespace AFH_Scheduler
             }
 
             var temp = new ObservableCollection<ScheduleModel>();
-            /*if (SelectedFilter.ToString().Contains("Provider ID"))
+            if (SelectedFilter.ToString().Contains("Provider ID"))
             {
                 foreach(var item in Providers)
                 {
@@ -195,9 +187,9 @@ namespace AFH_Scheduler
                         temp.Add(item);                        
                     }
                 }
-            }*/
+            }
 
-            if(SelectedFilter.ToString().Contains("Provider Name"))
+            else if(SelectedFilter.ToString().Contains("Name"))
             {
                 foreach (var item in Providers)
                 {
@@ -213,28 +205,6 @@ namespace AFH_Scheduler
                 foreach (var item in Providers)
                 {
                     if (item.Address.Contains(FilterItem))
-                    {
-                        temp.Add(item);
-                    }
-                }
-            }
-
-            else if (SelectedFilter.ToString().Contains("License Number"))
-            {
-                foreach (var item in Providers)
-                {
-                    if (item.HomeLicenseNum.ToString().Contains(FilterItem))
-                    {
-                        temp.Add(item);
-                    }
-                }
-            }
-
-            else if (SelectedFilter.ToString().Contains("License Name"))
-            {
-                foreach (var item in Providers)
-                {
-                    if (item.HomeName.Contains(FilterItem))
                     {
                         temp.Add(item);
                     }
@@ -312,30 +282,6 @@ namespace AFH_Scheduler
             //SelectedSchedule.IsSelected = true;
         }
 
-        private RelayCommand _importTableCommand;
-        public ICommand ImportTableCommand
-        {
-            get
-            {
-                if (_importTableCommand == null)
-                    _importTableCommand = new RelayCommand(ImportExcelTable);
-                return _importTableCommand;
-            }
-        }
-        private async void ImportExcelTable(object obj)
-        {
-            var importData = new ImportDataPreviewVM();
-            var view = new ImportDataPreview(importData);
-            var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerNewHome);
-            if (result.Equals("IMPORT"))
-            {
-                foreach(var importedHome in importData.ImportedHomes)
-                {
-                    Providers.Add(importedHome);
-                }
-            }
-        }
-
         private RelayCommand _exportTable;
         public ICommand ExportTableCommand
         {
@@ -349,7 +295,6 @@ namespace AFH_Scheduler
 
         private void ExportTable(object obj)
         {
-            //Console.WriteLine("WWWWWWWWWWWWWWWW   " + obj.GetType() + "WWWWWWWWWWWWWWWWW");
             /*if (ExcelFileName.Equals("") || !(Directory.Exists(ExcelFileName)))
             {
                 MessageService.ReleaseMessageBox("Directory not found");
@@ -388,6 +333,7 @@ namespace AFH_Scheduler
                         xlWorksheet.Cells[1, 7] = "Next Inspection Date";
                         xlWorksheet.Cells[1, 8] = "18th Month Drop Dead";
 
+
                         int row = 2;
                         foreach (var provider in Providers)
                         {
@@ -402,6 +348,7 @@ namespace AFH_Scheduler
                             xlWorksheet.Cells[row, 7] = provider.NextInspection;
                             xlWorksheet.Cells[row, 8] = provider.EighteenthMonthDate;
 
+
                             row++;
                         }
 
@@ -409,13 +356,9 @@ namespace AFH_Scheduler
 
                         //xlApp.Visible = false;
                         //xlApp.UserControl = false;
-                        if(fileName.Contains(".xlsx"))
-                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlOpenXMLWorkbook);
-                        else if (fileName.Contains(".csv"))
-                        {
-                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlCSVWindows);
-                            xlWorkbook.Close(false);
-                        }
+                        xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlWorkbookDefault);
+                        //xlWorkbook.SaveAs(ExcelFileName + "\\TestSchedule.xlsx", FileFormat: XlFileFormat.xlWorkbookDefault);
+                        //xlWorkbook.SaveAs("C:\\excelLocationTest\\TestSchedule.xlsx", FileFormat: XlFileFormat.xlWorkbookDefault);
 
 
                     }
@@ -427,7 +370,6 @@ namespace AFH_Scheduler
                     finally
                     {
                         xlApp.Workbooks.Close();
-                        xlApp.Quit();
                     }
                 }
                 catch (Exception e)
@@ -457,9 +399,8 @@ namespace AFH_Scheduler
 
             if (DialogHostSuccess)
             {
-                string recentDate;
-                var home = createdHome.NewHomeCreated;
-
+               string recentDate;
+               var home = createdHome.NewHomeCreated;
                var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(home.HomeID));
                if (recentInspec == null)
                {
@@ -473,9 +414,6 @@ namespace AFH_Scheduler
                   Convert.ToInt64(home.ProviderID),
                   Convert.ToInt64(home.HomeID),
                   home.ProviderName,
-                  Convert.ToInt64(home.HomeLicenseNum), //License Number
-                  home.HomeLicensedName,//Home Name
-                  home.HomePhoneNumber,//Phone Number
                   home.Address,
                   home.City,
                   home.Zipcode,
@@ -487,11 +425,9 @@ namespace AFH_Scheduler
                   );
 
                 //Add to database
-                /*
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    db.Provider_Homes.Add(new Provider_Homes { 
-                        PHome_ID = Convert.ToInt64(home.HomeID),
+                    db.Provider_Homes.Add(new Provider_Homes { PHome_ID = Convert.ToInt64(home.HomeID),
                         PHome_Address = home.Address,
                         PHome_City = home.City,
                         PHome_Zipcode = home.Zipcode,
@@ -514,15 +450,14 @@ namespace AFH_Scheduler
                         }
                     }
 
-                    db.Scheduled_Inspections.Add(new Scheduled_Inspections { 
-                        SInspections_Id = id,
+                    db.Scheduled_Inspections.Add(new Scheduled_Inspections { SInspections_Id = id,
                         SInspections_Date = alg.ConvertDateToString(home.InspectionDate),
                         FK_PHome_ID = Convert.ToInt64(home.HomeID) }
                     );
                     db.SaveChanges();
 
                 }
-                */
+
                 MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
 
@@ -576,9 +511,10 @@ namespace AFH_Scheduler
                     }
                 }
             }
+            ClearSelected2(null);
         }
 
-        public DataVM()
+        public DataVM(User user)
         {
             _providers = new ObservableCollection<ScheduleModel>();
             FilterItem = "";
@@ -587,8 +523,6 @@ namespace AFH_Scheduler
             EndDatePicked = DateTime.Today;
 
             GenData();
-
-            
 
             foreach(var provider in Providers)
             {
@@ -600,6 +534,38 @@ namespace AFH_Scheduler
             get {
                 return "Schedules";
             }
+        }
+
+        public void ClearSelected2(ScheduleModel sm)
+        {
+            if (SelectedSchedule != null)
+                SelectedSchedule.IsSelected = false;
+            SelectedSchedule = sm;
+        }
+
+        //clear all selected items
+        public void ClearSelected()
+        {
+            //for (int i = 0; i < Providers.Count; i++)
+            //{
+                
+            var item = Providers.Where(X => X.IsSelected == true);
+            foreach (ScheduleModel p in item)
+            {
+                p.IsSelected = false;
+            }
+            //Providers.Wher
+            //while (item != null)
+            //{
+            //    if (item != null) item.IsSelected = false;
+            //    item = Providers.Where(X => X.IsSelected == true).FirstOrDefault();
+            //}
+            //}
+
+            //foreach(ScheduleModel sm in Providers)
+            //{
+            //    sm.IsSelected = false;
+            //}
         }
 
         public void GenData()
@@ -628,10 +594,7 @@ namespace AFH_Scheduler
                             (
                                 item.Provider_ID,
                                 house.PHome_ID,
-                                item.Provider_Name, //Provider Name
-                                -1, //License Number
-                                "",//Home Name
-                                house.PHome_Phonenumber,
+                                item.Provider_Name, //Phone Number
                                 house.PHome_Address,//Address
                                 house.PHome_City,
                                 house.PHome_Zipcode,
@@ -676,7 +639,7 @@ namespace AFH_Scheduler
 
         private async void ExecuteEditDialog(object o)
         {
-            if (SelectedHome == null)
+            if (SelectedSchedule == null)
             {
                 var view = new NoHomeSelectedErrorDialog();
 
@@ -686,7 +649,7 @@ namespace AFH_Scheduler
             {
                 var view = new EditDialog();
 
-                view.setDataContext(SelectedHome);
+                view.setDataContext(SelectedSchedule);
 
                 var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandler);
 
@@ -769,18 +732,13 @@ namespace AFH_Scheduler
                     var providerID = editedHomeData.ProviderID;
                     var address = editedHomeData.Address;
                     var city = editedHomeData.City;
+                    Console.WriteLine("OOOOOOOOOOOOOOO: " + city);
                     var zip = editedHomeData.ZIP;
                     var nextInspection = editedHomeData.NextInspection;
 
                     var foo = EditVM._homeIDSave;
 
-                    Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
-
-                    db.Provider_Homes.Remove(selectHome);
-
-                    //create new record here
-
-
+                    var selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
                     if (selectHome != null)
                     {
                         //selectHome.PHome_ID = homeID;

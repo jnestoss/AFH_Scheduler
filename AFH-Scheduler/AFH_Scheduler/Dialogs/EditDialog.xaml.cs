@@ -1,5 +1,4 @@
-﻿using AFH_Scheduler.HelperClasses;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using AFH_Scheduler.Data;
 
 namespace AFH_Scheduler.Dialogs
