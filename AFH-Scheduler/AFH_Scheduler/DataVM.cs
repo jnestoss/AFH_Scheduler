@@ -167,7 +167,7 @@ namespace AFH_Scheduler.Schedules
         private void FilterTheTable(object obj)
         {
             RefreshTable(obj);
-            if (SelectedFilter is null)
+            if (SelectedFilter == null)
             {
                 MessageService.ReleaseMessageBox("You have not specified what to filter out.");
                 return;

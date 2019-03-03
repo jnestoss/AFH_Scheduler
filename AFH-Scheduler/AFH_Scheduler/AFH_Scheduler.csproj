@@ -117,6 +117,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -141,8 +143,38 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ProviderConverter.cs" />
     <Compile Include="Converters\ProviderListConverter.cs" />
+    <Compile Include="Database\HomeInspection.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspection.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\HomeInspection.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\HomeInspection.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Home_History.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Inspection_Outcome.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\LoginDB\User.cs" />
     <Compile Include="Database\LoginDB\UserFactory.cs" />
+    <Compile Include="Database\Provider.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Provider_Homes.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Scheduled_Inspections.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataView.xaml.cs">
       <DependentUpon>DataView.xaml</DependentUpon>
     </Compile>
@@ -291,39 +323,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands.cs" />
-    <Compile Include="Database\HomeInspection.Context.cs" />
-    <Compile Include="Database\HomeInspection.cs" />
-    <Compile Include="Database\HomeInspection.Designer.cs">
-      <DependentUpon>HomeInspection.cs</DependentUpon>
-    </Compile>
     <Compile Include="Database\HomeInspection1.cs" />
     <Compile Include="Database\HomeInspection1.Designer.cs">
       <DependentUpon>HomeInspection1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Database\HomeInspection2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\HomeInspection2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HomeInspection.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Home_History.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Inspection_Outcome.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Provider.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Provider_Homes.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Scheduled_Inspections.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataReader.cs" />
     <Compile Include="Data\CompleteSchedule_Model.cs" />
@@ -367,7 +369,7 @@
     <None Include="Database\HomeInspection.db.sqbpro" />
     <EntityDeploy Include="Database\HomeInspection.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HomeInspection2.Designer.cs</LastGenOutput>
+      <LastGenOutput>HomeInspection.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Database\HomeInspection.edmx.diagram">
       <DependentUpon>HomeInspection.edmx</DependentUpon>
@@ -404,11 +406,13 @@
     </Content>
     <Content Include="Database\HomeInspection.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HomeInspection.Context2.cs</LastGenOutput>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+      <LastGenOutput>HomeInspection.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Database\HomeInspection.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HomeInspection2.cs</LastGenOutput>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+      <LastGenOutput>HomeInspection.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +449,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.WinFX.targets" />
