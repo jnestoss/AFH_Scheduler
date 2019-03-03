@@ -86,8 +86,9 @@
                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
                 <ComboBox FontSize="18" Grid.Column="2" SelectedItem="{Binding SelectedFilter}">
-                    <ComboBoxItem Content="Provider ID"/>
-                    <ComboBoxItem Content="Name"/>
+                    <ComboBoxItem Content="Provider Name"/>
+                    <ComboBoxItem Content="License Number"/>
+                    <ComboBoxItem Content="License Name"/>
                     <ComboBoxItem Content="Address"/>
                     <ComboBoxItem IsSelected="{Binding DatePickerEnabled}" Content="Next Inspection Date"/>
                 </ComboBox>
@@ -124,22 +125,26 @@
                 materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                 materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                 AutoGenerateColumns="False"
+                SelectedItem="{Binding SelectedHome}"
+                SelectionMode="Single"
+                SelectionUnit="FullRow"
                 CanUserAddRows="True"
                 CanUserSortColumns="True"
                 ItemsSource="{Binding Providers}">
 
                 <DataGrid.Columns>
 
+                    <!--
                     <DataGridCheckBoxColumn
                         Binding="{Binding IsSelected}"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
                         ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
-                        <!--<DataGridCheckBoxColumn.Header>
+                        <DataGridCheckBoxColumn.Header>
 
-            <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
-            <CheckBox HorizontalAlignment="Center" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}" IsChecked="{Binding IsAllItems3Selected}" />
-            </Border>
-        </DataGridCheckBoxColumn.Header>-->
+                        <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
+                        <CheckBox HorizontalAlignment="Center" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}" IsChecked="{Binding IsAllItems3Selected}" />
+                        </Border>
+                    </DataGridCheckBoxColumn.Header>
                     </DataGridCheckBoxColumn>
 
                     <DataGridTextColumn
@@ -147,13 +152,26 @@
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                         Header="Provider ID" />
-
+                    -->    
+                    
                     <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding ProviderName}"
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                         Header="Name" />
+                    
+                    <materialDesign:MaterialDataGridTextColumn
+                        Binding="{Binding HomeLicenseNum}"
+                        IsReadOnly="True"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="License Number" />
+
+                    <materialDesign:MaterialDataGridTextColumn
+                        Binding="{Binding HomeName}"
+                        IsReadOnly="True"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="Licensed Home's Name" />
 
                     <materialDesign:MaterialDataGridTextColumn
                         Width="120"
@@ -291,13 +309,13 @@
                     </Button>
                     <Button Command="{Binding Path=ExportTableCommand}" ToolTip="Export to Excel">
                         <materialDesign:PackIcon Kind="Export" />
-                    </Button>-->
+                    </Button>
                     <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a New Home">
                         <materialDesign:PackIcon Kind="Add" />
                     </Button>
                     <Button Command="{Binding Path=DeleteHomeCommand}" ToolTip="Remove Selected Home">
                         <materialDesign:PackIcon Kind="Remove" />
-                    </Button>
+                    </Button>-->
 
 
                 </StackPanel>
@@ -314,6 +332,22 @@
             Margin="0">
 
             <Button
+                Command="{Binding Path=AddNewHomeCommand}"
+                MaxWidth="255"
+                Margin="40 0 0 0"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Add a new home to database">
+                ADD NEW HOME
+            </Button>
+            <Button
+                Command="{Binding ImportTableCommand}"
+                MaxWidth="255"
+                Margin="40 0 0 0"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Import Table From Excel Spreadsheet">
+                IMPORT
+            </Button>
+            <Button
                 Command="{Binding Path=ExportTableCommand}"
                 MaxWidth="255"
                 Margin="40"
@@ -321,16 +355,6 @@
                 ToolTip="Export Table to Excel Spreadsheet">
                 EXPORT
             </Button>
-            <!--
-            <Button
-                MaxWidth="255"
-                Margin="10"
-                Command="{Binding Path=RefreshTableCommand}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton">
-                REFRESH TABLE
-            </Button>
-            -->
         </StackPanel>
             
     </DockPanel>

@@ -20,8 +20,32 @@ namespace AFH_Scheduler.Dialogs.Confirmation
             }
         }
 
-        public DeleteVM(string nameAssigned)
+        private string _deleteMessage;
+        public string DeleteMessage
         {
+            get { return _deleteMessage; }
+            set
+            {
+                _deleteMessage = value;
+                OnPropertyChanged("DeleteMessage");
+            }
+        }
+
+        private string _itemType;
+        public string ItemType
+        {
+            get { return _itemType; }
+            set
+            {
+                _itemType = value;
+                OnPropertyChanged("ItemType");
+            }
+        }
+
+        public DeleteVM(string msg, string item, string nameAssigned)
+        {
+            DeleteMessage = msg;
+            ItemType = item;
             SelectedName = nameAssigned;
         }
 
@@ -29,7 +53,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
         {
             get
             {
-                return "Delete Selected Provider";
+                return "Delete Selected Item";
             }
         }
     }

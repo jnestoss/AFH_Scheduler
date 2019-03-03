@@ -17,29 +17,20 @@ namespace AFH_Scheduler.Validations
                 CultureInfo.CurrentCulture,
                 out textEntry)) return new ValidationResult(false, "Invalid ID Entry");
          
-            if(textEntry == EditVM._homeIDSave)
-            {
-                return ValidationResult.ValidResult;
-            }
+            //if(textEntry == EditVM._homeIDSave)
+            //{
+            //    return ValidationResult.ValidResult;
+            //}
 
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                var provs = from p in db.Provider_Homes
-                            select p.PHome_ID;
+                var providers = db.Providers.Where(r => r.Provider_ID == textEntry).ToList();
 
-                //Console.WriteLine(provs);
-
-                foreach (long prov in provs)
+                if (providers.Count != 0)
                 {
-                    Console.WriteLine(prov);
-
-                    if(prov.Equals(textEntry))
-                    {
-                        return new ValidationResult(false, "This ID Exists, try a different one");
-                    }
+                    return new ValidationResult(false, "This ID Exists, try a different one");
                 }
             }
-
 
             return ValidationResult.ValidResult;
         }

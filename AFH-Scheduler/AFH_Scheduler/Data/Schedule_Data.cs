@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AFH_Scheduler.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using AFH_Scheduler.Schedules;
 using System.Collections.ObjectModel;
 using AFH_Scheduler.Helper_Classes;
 
@@ -19,6 +18,8 @@ namespace AFH_Scheduler.Data
         private long _providerID;
         private long _homeID;
         private string _providerName;
+        private long _homeLicense;
+        private string _homeName;
         private string _phone;
         private string _address;
         private string _city;
@@ -26,11 +27,13 @@ namespace AFH_Scheduler.Data
         private string _recentInspection;
         private string _nextInspection;
         private string _eighteenthMonthDate;
-        private readonly DataVM _schedulerVM;
 
         public ScheduleModel(long providerID,
             long homeID,
             string name,
+            long licenseNum,
+            string homeName,
+            string phone,
             string address,
             string homeCity,
             string homeZIP,
@@ -40,11 +43,12 @@ namespace AFH_Scheduler.Data
             string eighteenthMonthDate
             )
         {
-            _schedulerVM = schedulerVM;
-            IsSelected = false;
             ProviderID = providerID;
             HomeID = homeID;
             ProviderName = name;
+            HomeLicenseNum = licenseNum;
+            HomeName = homeName;
+            Phone = phone;
             Address = address;
             City = homeCity;
             ZIP = homeZIP;
@@ -64,16 +68,6 @@ namespace AFH_Scheduler.Data
                     _homeshistory = value;
                     OnPropertyChanged("HomesHistory");
                 }
-            }
-        }
-
-        public bool IsSelected {
-            get { return _isSelected; }
-            set {
-                //if (value == true) _schedulerVM.ClearSelected();
-                if (value == true) _schedulerVM.ClearSelected2(this);
-                else _isSelected = value;
-                OnPropertyChanged("IsSelected");
             }
         }
 
@@ -101,6 +95,28 @@ namespace AFH_Scheduler.Data
                 if (_providerName == value) return;
                 _providerName = value;
                 OnPropertyChanged("ProviderName");
+            }
+        }
+
+        public long HomeLicenseNum
+        {
+            get { return _homeLicense; }
+            set
+            {
+                if (_homeLicense == value) return;
+                _homeLicense = value;
+                OnPropertyChanged("HomeLicenseNum");
+            }
+        }
+
+        public string HomeName
+        {
+            get { return _homeName; }
+            set
+            {
+                if (_homeName == value) return;
+                _homeName = value;
+                OnPropertyChanged("HomeName");
             }
         }
 
