@@ -176,12 +176,6 @@
 
                     <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
                     <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding ProviderName}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Name" />
-                    
-                    <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding HomeLicenseNum}"
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"

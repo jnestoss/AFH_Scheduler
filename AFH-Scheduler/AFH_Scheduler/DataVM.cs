@@ -87,7 +87,10 @@ namespace AFH_Scheduler
 
         private ScheduleModel _selectedHome;
         public ScheduleModel SelectedHome {
-            get => _selectedHome;
+            get
+            {
+                return _selectedHome;
+            }
             set {
                 if ( _selectedHome != value )
                 {
@@ -814,7 +817,7 @@ namespace AFH_Scheduler
         private void FilterTheTable(object obj)
         {
             RefreshTable(obj);//Comment out if you want to test the license number/name filter
-            if (SelectedFilter is null)
+            if (SelectedFilter == null)
             {
                 MessageService.ReleaseMessageBox("You have not specified what to filter out.");
                 return;
