@@ -1,7 +1,6 @@
 ﻿using AFH_Scheduler.Helper_Classes;
 using AFH_Scheduler.Login;
 using AFH_Scheduler.Database.LoginDB;
-using AFH_Scheduler.Schedules;
 
 namespace AFH_Scheduler
 {
