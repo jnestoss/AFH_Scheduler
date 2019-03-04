@@ -36,18 +36,58 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="CryptSharp, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CryptSharpOfficial.2.1.0.0\lib\CryptSharp.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="JetEntityFrameworkProvider, Version=6.0.0.0, Culture=neutral, PublicKeyToken=756cf6beb8fe7b41, processorArchitecture=x86">
-      <HintPath>..\packages\JetEntityFrameworkProvider.6.1.4\lib\JetEntityFrameworkProvider.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -57,14 +97,6 @@
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="ShowMeTheXAML, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ShowMeTheXAML.1.0.10\lib\net45\ShowMeTheXAML.dll</HintPath>
@@ -85,6 +117,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -107,12 +141,46 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\OutcomeCodeConverter.cs" />
     <Compile Include="Converters\ProviderConverter.cs" />
     <Compile Include="Converters\ProviderListConverter.cs" />
+    <Compile Include="Database\HomeInspection.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspection.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\HomeInspection.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\HomeInspection.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Home_History.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Inspection_Outcome.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\LoginDB\User.cs" />
     <Compile Include="Database\LoginDB\UserFactory.cs" />
+    <Compile Include="Database\Provider.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Provider_Homes.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Scheduled_Inspections.cs">
+      <DependentUpon>HomeInspection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataView.xaml.cs">
+      <DependentUpon>DataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataVM.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
+    <Compile Include="Data\LoginModel.cs" />
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
@@ -131,7 +199,9 @@
     <Compile Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml.cs">
       <DependentUpon>TransferOrDeleteHomes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\EditDialog.xaml.cs" />
+    <Compile Include="Dialogs\EditDialog.xaml.cs">
+      <DependentUpon>EditDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\EditVM.cs" />
     <Compile Include="Dialogs\Errors\CanNotDeleteProviderError.xaml.cs">
       <DependentUpon>CanNotDeleteProviderError.xaml</DependentUpon>
@@ -143,104 +213,69 @@
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\HistVM.cs" />
-    <Compile Include="Dialogs\ImportDataPreview.xaml.cs">
-      <DependentUpon>ImportDataPreview.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\ImportDataPreviewVM.cs" />
-    <Compile Include="Dialogs\InactiveHomeList.xaml.cs">
-      <DependentUpon>InactiveHomeList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\InactiveHomeListVM.cs" />
-    <Compile Include="Dialogs\Rescheduling\ReschedulingVM.cs" />
-    <Compile Include="Dialogs\Rescheduling\SettingUpAnInspection.xaml.cs">
-      <DependentUpon>SettingUpAnInspection.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Excel\Excel.cs" />
-    <Compile Include="HelperClasses\ICloseable.cs" />
-    <Compile Include="Dialogs\NewHomeDialogVM.cs" />
     <Compile Include="Dialogs\NewHomeDialog.xaml.cs">
       <DependentUpon>NewHomeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\NewHomeDialogVM.cs" />
+    <Compile Include="Dialogs\SchedulesOpenDialog.cs" />
     <Compile Include="Dialogs\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SettingSubWindows\EditOutcome.xaml.cs">
-      <DependentUpon>EditOutcome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\EditProvider.xaml.cs">
       <DependentUpon>EditProvider.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\EditProviderVM.cs" />
-    <Compile Include="Dialogs\SettingSubWindows\NewOutcomeCreator.xaml.cs">
-      <DependentUpon>NewOutcomeCreator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SettingSubWindows\OutcomeDialogsVM.cs" />
-    <Compile Include="Dialogs\SettingSubWindows\NewProviderCreatorVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml.cs">
       <DependentUpon>NewProviderCreator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\NewProviderCreatorVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml.cs">
       <DependentUpon>NormalCurveAdjuster.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjusterVM.cs" />
-    <Compile Include="Dialogs\SettingSubWindows\OutcomeCodeListDialog.xaml.cs">
-      <DependentUpon>OutcomeCodeListDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SettingSubWindows\OutcomeCodeListVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\ProviderListDialog.xaml.cs">
       <DependentUpon>ProviderListDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\ProviderListVM.cs" />
     <Compile Include="Dialogs\SettingsVM.cs" />
-    <Compile Include="Dialogs\SchedulesOpenDialog.cs" />
+    <Compile Include="HelperClasses\ICloseable.cs" />
+    <Compile Include="Login\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\LoginViewVM.cs" />
     <Compile Include="Validations\FutureDateValidationRule.cs" />
     <Compile Include="Validations\NewHomeValidation.cs" />
     <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
     <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
-    <Compile Include="Validations\UniqueOutcomeCodeword.cs" />
     <Compile Include="Validations\UniqueProviderIDValidation.cs" />
+    <Page Include="DataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\CompleteDialog.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </Page>
-    <Page Include="Dialogs\EditDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\ImportDataPreview.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\InactiveHomeList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\Rescheduling\SettingUpAnInspection.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ObsoleteCode\Complete\CompleteInspectionView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </Page>
-    <Page Include="ObsoleteCode\Complete\Rescheduling_Follow_Up.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\Confirmation\DeleteConfirmationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Confirmation\DeleteProviderDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Confirmation\TransferOrDeleteHomes.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\EditDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Errors\CanNotDeleteProviderError.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -258,40 +293,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\SettingSubWindows\EditOutcome.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dialogs\SettingSubWindows\EditProvider.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SettingSubWindows\NewOutcomeCreator.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\NewProviderCreator.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SettingSubWindows\OutcomeCodeListDialog.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\ProviderListDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ObsoleteCode\History\HistoryDetailView.xaml">
+    <Page Include="Login\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ObsoleteCode\History\HistoryView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -303,63 +323,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands.cs" />
-    <Compile Include="ObsoleteCode\Complete\CompleteInspectionView.xaml.cs">
-      <DependentUpon>CompleteInspectionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ObsoleteCode\Complete\CompleteInspectionVM.cs" />
-    <Compile Include="ObsoleteCode\Complete\CompleteOpenMessageDialogs.cs" />
-    <Compile Include="ObsoleteCode\Complete\RescheduleVM.cs" />
-    <Compile Include="ObsoleteCode\Complete\Rescheduling_Follow_Up.xaml.cs">
-      <DependentUpon>Rescheduling_Follow_Up.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Database\HomeInspection.Context.cs" />
-    <Compile Include="Database\HomeInspection.cs" />
-    <Compile Include="Database\HomeInspection.Designer.cs">
-      <DependentUpon>HomeInspection.cs</DependentUpon>
-    </Compile>
     <Compile Include="Database\HomeInspection1.cs" />
     <Compile Include="Database\HomeInspection1.Designer.cs">
       <DependentUpon>HomeInspection1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Database\HomeInspection2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\HomeInspection2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HomeInspection.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Home_History.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Inspection_Outcome.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Provider.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Provider_Homes.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Scheduled_Inspections.cs">
-      <DependentUpon>HomeInspection.tt</DependentUpon>
-    </Compile>
+    <Compile Include="DataReader.cs" />
     <Compile Include="Data\CompleteSchedule_Model.cs" />
     <Compile Include="Data\HistoryDetailModel.cs" />
     <Compile Include="Data\HistoryModel.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\RelayCommand.cs" />
-    <Compile Include="ObsoleteCode\History\HistoryDetailView.xaml.cs">
-      <DependentUpon>HistoryDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ObsoleteCode\History\HistoryDetailViewVM.cs" />
-    <Compile Include="ObsoleteCode\History\HistoryView.xaml.cs">
-      <DependentUpon>HistoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ObsoleteCode\History\HistoryVM.cs" />
-    <Compile Include="ObsoleteCode\History\openHistoryDetailDialog.cs" />
     <Compile Include="HomeInspectionDbDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -368,19 +341,11 @@
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
-    <Compile Include="DataView.xaml.cs">
-      <DependentUpon>DataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataVM.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="DataView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -404,12 +369,13 @@
     <None Include="Database\HomeInspection.db.sqbpro" />
     <EntityDeploy Include="Database\HomeInspection.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HomeInspection2.Designer.cs</LastGenOutput>
+      <LastGenOutput>HomeInspection.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Database\HomeInspection.edmx.diagram">
       <DependentUpon>HomeInspection.edmx</DependentUpon>
     </None>
     <None Include="Database\LoginDB\LoginDB.db" />
+    <None Include="Database\LoginDB\UserLogin.db" />
     <None Include="HomeInspectionDbDataSet.xsc">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
@@ -421,7 +387,9 @@
     <None Include="HomeInspectionDbDataSet.xss">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -438,18 +406,21 @@
     </Content>
     <Content Include="Database\HomeInspection.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HomeInspection.Context2.cs</LastGenOutput>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+      <LastGenOutput>HomeInspection.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Database\HomeInspection.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HomeInspection2.cs</LastGenOutput>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+      <LastGenOutput>HomeInspection.cs</LastGenOutput>
     </Content>
-    <Resource Include="Images\NoProviderWarning.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
@@ -478,6 +449,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.WinFX.targets" />

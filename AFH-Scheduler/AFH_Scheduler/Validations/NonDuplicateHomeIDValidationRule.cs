@@ -11,11 +11,11 @@ namespace AFH_Scheduler.Validations
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-
+            long textEntry;
             if (!long.TryParse((value ?? "").ToString(),
                 NumberStyles.None,
                 CultureInfo.CurrentCulture,
-                out long textEntry)) return new ValidationResult(false, "Invalid ID Entry");
+                out textEntry)) return new ValidationResult(false, "Invalid ID Entry");
          
             //if(textEntry == EditVM._homeIDSave)
             //{

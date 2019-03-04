@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\jnestoss\source\repos\AFH-Scheduler\SeniorProjectWPF\Database\HomeInspection.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\Database\HomeInspection.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
