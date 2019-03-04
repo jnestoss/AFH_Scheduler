@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.Rescheduling.SettingUpAnInspection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.Rescheduling"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    
+    <StackPanel Margin="40">        
+        <TextBlock FontSize="16" TextWrapping="Wrap">
+            When will the home be inspected?
+        </TextBlock>
+
+        <StackPanel Margin="15">
+            <DatePicker 
+                    DisplayDateStart="{x:Static system:DateTime.Today}"
+                    SelectedDate="{Binding DatePicked, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static system:DateTime.Today}}"
+                    FontSize="16"
+                    Margin="10" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+        </StackPanel>
+
+
+        <StackPanel
+            Margin="0,10,0,0"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Button
+                Margin="10,0,10,0"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                IsCancel="True"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                <Button.CommandParameter>
+                    <system:String>SUBMIT</system:String>
+                </Button.CommandParameter>
+                SUBMIT
+            </Button>
+            <Button
+                Margin="10,0,10,0"
+                Command="materialDesign:DialogHost.CloseDialogCommand"
+                IsCancel="True"
+                Style="{StaticResource MaterialDesignFlatButton}">
+                <Button.CommandParameter>
+                    <system:String>CANCEL</system:String>
+                </Button.CommandParameter>
+                CANCEL
+            </Button>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

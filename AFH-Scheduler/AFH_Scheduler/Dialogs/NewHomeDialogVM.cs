@@ -30,13 +30,13 @@ namespace AFH_Scheduler.Dialogs
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var provs = db.Providers.ToList();
-                List<string> providers = new List<string>();
-                providers.Add("No Provider");
+                List<ProvidersModel> providers = new List<ProvidersModel>();
+                providers.Add(new ProvidersModel("-1", "No Provider"));
                 string listItem = "";
                 foreach (var item in provs)
                 {
                     listItem = item.Provider_ID + "-" + item.Provider_Name;
-                    providers.Add(listItem);
+                    providers.Add(new ProvidersModel(item.Provider_ID.ToString(), item.Provider_Name));
                 }
                 NewHomeCreated = new NewHomeModel(providers);
             }

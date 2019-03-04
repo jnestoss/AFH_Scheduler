@@ -131,7 +131,15 @@
                 CanUserAddRows="True"
                 CanUserSortColumns="True"
                 ItemsSource="{Binding Providers}">
-
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasNoProvider}" Value="True">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
 
                     <!--
@@ -152,8 +160,20 @@
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                         Header="Provider ID" />
-                    -->    
-                    
+                    -->
+                    <DataGridTemplateColumn IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image 
+                                    Name="NoProviderImage"
+                                    Width="20" 
+                                    Height="20"
+                                    Visibility="{Binding HasNoProvider, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                    Source="Images/NoProviderWarning.bmp"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
                     <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding ProviderName}"
@@ -219,6 +239,21 @@
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                         Header="18th Month Drop"
                         MaxLength="255" />
+
+
+                    <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RcsRegion}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="RCSRegion">
+                    </materialDesign:MaterialDataGridTextColumn>
+
+                    <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RcsUnit}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Unit">
+                    </materialDesign:MaterialDataGridTextColumn>
                     <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
                 </DataGrid.Columns>
@@ -312,10 +347,10 @@
                     </Button>
                     <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a New Home">
                         <materialDesign:PackIcon Kind="Add" />
-                    </Button>
+                    </Button>-->
                     <Button Command="{Binding Path=DeleteHomeCommand}" ToolTip="Remove Selected Home">
                         <materialDesign:PackIcon Kind="Remove" />
-                    </Button>-->
+                    </Button>
 
 
                 </StackPanel>
@@ -338,6 +373,14 @@
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Add a new home to database">
                 ADD NEW HOME
+            </Button>
+            <Button
+                Command="{Binding Path=InactiveListCommand}"
+                MaxWidth="255"
+                Margin="40 0 0 0"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="List all Inactive homes">
+                InActive Homes
             </Button>
             <Button
                 Command="{Binding ImportTableCommand}"

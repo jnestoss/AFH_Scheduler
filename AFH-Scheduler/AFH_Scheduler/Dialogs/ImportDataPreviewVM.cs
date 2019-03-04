@@ -208,6 +208,28 @@ namespace AFH_Scheduler.Dialogs
                                 ImportedLicenseInfo[7].Add(actualDate);
                             }
                         }
+                        else if (colCell[1, 1].IndexOf("RCSRegion", StringComparison.OrdinalIgnoreCase) > -1)
+                        {
+                            ImportedLicenseInfo.Add(new List<string>());
+                            foreach (var cel in col.Cells.Value)
+                            {
+                                if (cel == null)
+                                    ImportedLicenseInfo[8].Add("");
+                                else
+                                    ImportedLicenseInfo[8].Add(cel.ToString());
+                            }
+                        }
+                        else if (colCell[1, 1].IndexOf("Unit", StringComparison.OrdinalIgnoreCase) > -1)
+                        {
+                            ImportedLicenseInfo.Add(new List<string>());
+                            foreach (var cel in col.Cells.Value)
+                            {
+                                if (cel == null)
+                                    ImportedLicenseInfo[9].Add("");
+                                else
+                                    ImportedLicenseInfo[9].Add(cel.ToString());
+                            }
+                        }
                     }
                 }
                 catch (Exception e)
@@ -230,6 +252,11 @@ namespace AFH_Scheduler.Dialogs
 
         public void LoadInToTable()
         {
+            if(ImportedLicenseInfo.Count < 10)
+            {
+                //Missing Colomns
+                return;
+            }
             /*  ImportedLicenseInfo[0][0]; //Provider Name
                 ImportedLicenseInfo[1][0]; //LicenseNum
                 ImportedLicenseInfo[2][0]; //Home Name
@@ -237,7 +264,10 @@ namespace AFH_Scheduler.Dialogs
                 ImportedLicenseInfo[4][0]; //City
                 ImportedLicenseInfo[5][0]; //Zipcode
                 ImportedLicenseInfo[6][0]; //Telephone
-                ImportedLicenseInfo[7][0]; //NextInspection*/
+                ImportedLicenseInfo[7][0]; //NextInspection
+                ImportedLicenseInfo[8][0]; //RCSRegion
+                ImportedLicenseInfo[9][0]; //Unit
+                */
 
             int rows = ImportedLicenseInfo[0].Count;
             for (int rowItem = 1; rowItem < rows; rowItem++)
@@ -257,7 +287,10 @@ namespace AFH_Scheduler.Dialogs
                                     "",         //Recent
                                     ImportedLicenseInfo[7][rowItem],               //Next Inspection*
                                     null,               //DataVM
-                                    alg.SettingEighteenthMonth(ImportedLicenseInfo[7][rowItem])//18th Month Drop Date
+                                    alg.DropDateMonth(ImportedLicenseInfo[7][rowItem], false),//18th Month Drop Date
+                                    false,
+                                    ImportedLicenseInfo[8][rowItem], //RCSRegion
+                                    ImportedLicenseInfo[9][rowItem]  //Unit
                                 )
                             );
             }
