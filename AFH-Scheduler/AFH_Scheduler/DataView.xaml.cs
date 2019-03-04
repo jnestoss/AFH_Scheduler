@@ -54,5 +54,17 @@ namespace AFH_Scheduler
                 ToTextBlock.Visibility = Visibility.Visible;
             }
         }
+
+        /*private void NoProviderImage_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (NoProviderImage.IsEnabled)
+            {
+                NoProviderImage.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NoProviderImage.Visibility = Visibility.Hidden;
+            }
+        }*/
     }
 }

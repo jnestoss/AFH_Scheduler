@@ -97,6 +97,20 @@
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Next Inspection Date">
                 </materialDesign:MaterialDataGridTextColumn>
+                
+                <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RcsRegion}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="RCSRegion">
+                </materialDesign:MaterialDataGridTextColumn>
+                
+                <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RcsUnit}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Unit">
+                </materialDesign:MaterialDataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>

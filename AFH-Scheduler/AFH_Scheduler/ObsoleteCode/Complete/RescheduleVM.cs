@@ -33,7 +33,7 @@ namespace AFH_Scheduler.Complete
             set
             {
                 _datePicked = value;
-                RescheduledFollowUpDate = alg.ConvertDateToString(_datePicked);
+                RescheduledFollowUpDate = _datePicked.ToShortDateString();
 
                 OnPropertyChanged("DatePicked");
             }
