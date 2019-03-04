@@ -114,7 +114,7 @@ namespace AFH_Scheduler.Dialogs
                 Workbook xlWorkbook;
                 Worksheet xlWorksheet;
 
-                xlApp = new Microsoft.Office.Interop.Excel.Application
+                xlApp = new Application
                 {
                     //Visible = true
                 };
@@ -127,12 +127,13 @@ namespace AFH_Scheduler.Dialogs
                         return;
                     }
                     xlWorkbook = xlApp.Workbooks.Open(filename);
-                    xlWorksheet = xlWorkbook.Worksheets[1];
+                    xlWorksheet = (Worksheet) xlWorkbook.Worksheets[1];
                     var header = xlWorksheet.UsedRange.Columns;
 
                     foreach (Range col in header)
                     {
-                        var colCell = col.Cells.Value2;
+                        
+                        dynamic colCell = col.Cells.Value2;
 
                         if (colCell[1, 1].IndexOf("ProviderName", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
                         {
@@ -157,7 +158,7 @@ namespace AFH_Scheduler.Dialogs
                         else if (colCell[1, 1].IndexOf("FacilityName", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 ImportedLicenseInfo[2].Add(cel.ToString());
                             }
@@ -165,7 +166,7 @@ namespace AFH_Scheduler.Dialogs
                         else if (colCell[1, 1].IndexOf("LocationAddress", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 ImportedLicenseInfo[3].Add(cel.ToString());
                             }
@@ -173,7 +174,7 @@ namespace AFH_Scheduler.Dialogs
                         else if (colCell[1, 1].IndexOf("LocationCity", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 ImportedLicenseInfo[4].Add(cel.ToString());
                             }
@@ -181,7 +182,7 @@ namespace AFH_Scheduler.Dialogs
                         else if (colCell[1, 1].IndexOf("LocationZipCode", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 ImportedLicenseInfo[5].Add(cel.ToString());
                             }
@@ -189,7 +190,7 @@ namespace AFH_Scheduler.Dialogs
                         else if (colCell[1, 1].IndexOf("TelephoneNmbr", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 if(cel == null)
                                     ImportedLicenseInfo[6].Add("");
@@ -201,7 +202,7 @@ namespace AFH_Scheduler.Dialogs
                         {
                             ImportedLicenseInfo.Add(new List<string>());
                             String[] splitDate;
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 splitDate = cel.ToString().Split(' ');
                                 var actualDate = splitDate[0];
@@ -211,7 +212,7 @@ namespace AFH_Scheduler.Dialogs
                         else if (colCell[1, 1].IndexOf("RCSRegion", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 if (cel == null)
                                     ImportedLicenseInfo[8].Add("");
@@ -222,7 +223,7 @@ namespace AFH_Scheduler.Dialogs
                         else if (colCell[1, 1].IndexOf("Unit", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in col.Cells.Value)
+                            foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 if (cel == null)
                                     ImportedLicenseInfo[9].Add("");

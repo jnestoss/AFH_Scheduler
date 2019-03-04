@@ -29,6 +29,8 @@
           <ScalarProperty Name="PHome_Zipcode" ColumnName="PHome_Zipcode" />
           <ScalarProperty Name="PHome_Phonenumber" ColumnName="PHome_Phonenumber" />
           <ScalarProperty Name="FK_Provider_ID" ColumnName="FK_Provider_ID" />
+          <ScalarProperty Name="PHome_Name" ColumnName="PHome_Name" />
+          <ScalarProperty Name="PHome_LicenseNumber" ColumnName="PHome_LicenseNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
