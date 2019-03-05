@@ -373,7 +373,7 @@ namespace AFH_Scheduler
                         xlWorksheet.Cells[1, 9] = "Interval in Days";
                         xlWorksheet.Cells[1, 10] = "17th Month Drop Dead";
                         xlWorksheet.Cells[1, 11] = "18th Month Drop Dead";
-                        xlWorksheet.Cells[1, 12] = "Outcome"; //From current inspection
+                        xlWorksheet.Cells[1, 12] = "Current Outcome"; //From current inspection
                         xlWorksheet.Cells[1, 13] = "Forecasted Next Inspection";//forecasted next inspection date
                         xlWorksheet.Cells[1, 14] = "RCS Region";
                         xlWorksheet.Cells[1, 15] = "RCS Unit";
@@ -395,7 +395,7 @@ namespace AFH_Scheduler
                             xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
                             xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, true);//17th Month Drop Date
                             xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
-                            xlWorksheet.Cells[row, 12] = "";//Outcome from current inspection
+                            xlWorksheet.Cells[row, 12] = alg.ForecastingFutureInspection(provider.HomeID);//Outcome from current inspection
                             xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
                             xlWorksheet.Cells[row, 14] = provider.RcsRegion;//RCS Region
                             xlWorksheet.Cells[row, 15] = provider.RcsUnit;//RCS Unit
