@@ -11,10 +11,9 @@ using AFH_Scheduler.Helper_Classes;
 
 namespace AFH_Scheduler.Data
 {
-    public class ScheduleModel : INotifyPropertyChanged
+    public class HomeModel : INotifyPropertyChanged
     {
         private ObservableCollection<HistoryDetailModel> _homeshistory;
-        private bool _isSelected;
         private bool _hasNoProvider;
         private bool _isActive;
         private long _providerID;
@@ -32,25 +31,9 @@ namespace AFH_Scheduler.Data
         private string _rcsRegion;
         private string _rcsUnit;
 
-        public ScheduleModel(long providerID,
-            long homeID,
-            string name,
-            long licenseNum,
-            string homeName,
-            string phone,
-            string address,
-            string homeCity,
-            string homeZIP,
-            string recentDate,
-            string nextInspection,
-            DataVM schedulerVM,
-            string eighteenthMonthDate,
-            bool active,
-            string region,
-            string unit
-            )
+        public HomeModel()
         {
-            if (name.Equals("No Provider"))
+            if (ProviderName.Equals("No Provider"))
             {
                 HasNoProvider = true;
             }
@@ -58,22 +41,6 @@ namespace AFH_Scheduler.Data
             {
                 HasNoProvider = false;
             }
-            ProviderID = providerID;
-            HomeID = homeID;
-            ProviderName = name;
-            HomeLicenseNum = licenseNum;
-            HomeName = homeName;
-            Phone = phone;
-            Address = address;
-            City = homeCity;
-            ZIP = homeZIP;
-            RecentInspection = recentDate;
-            NextInspection = nextInspection;
-            EighteenthMonthDate = eighteenthMonthDate;
-            IsActive = active;
-            RcsRegion = region;
-            RcsUnit = unit;
-            HomesHistory = new ObservableCollection<HistoryDetailModel>();
         }
 
         public ObservableCollection<HistoryDetailModel> HomesHistory
@@ -219,10 +186,6 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public void SetSelectedToFalse()
-        {
-            _isSelected = false;
-        }
         public string EighteenthMonthDate
         {
             get { return _eighteenthMonthDate; }

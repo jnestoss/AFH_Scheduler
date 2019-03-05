@@ -36,8 +36,8 @@ namespace AFH_Scheduler
 
         private User _usr;
 
-        private ScheduleModel _selectedSchedule;
-        private ScheduleModel SelectedSchedule {
+        private HomeModel _selectedSchedule;
+        private HomeModel SelectedSchedule {
             get { return _selectedSchedule; }
             set {
                 if (_selectedSchedule == value) return;
@@ -46,8 +46,8 @@ namespace AFH_Scheduler
         }
 
         //Observable and bound to DataGrid
-        private static ObservableCollection<ScheduleModel> _providers;
-        public ObservableCollection<ScheduleModel> Providers {
+        private static ObservableCollection<HomeModel> _providers;
+        public ObservableCollection<HomeModel> Providers {
             get { return _providers; }
             set {
                 if (value != _providers)
@@ -58,8 +58,8 @@ namespace AFH_Scheduler
             }
         }
 
-        private static ObservableCollection<ScheduleModel> _inActiveHomes;
-        public ObservableCollection<ScheduleModel> InActiveHomes
+        private static ObservableCollection<HomeModel> _inActiveHomes;
+        public ObservableCollection<HomeModel> InActiveHomes
         {
             get { return _inActiveHomes; }
             set
@@ -85,8 +85,8 @@ namespace AFH_Scheduler
 
 
 
-        private ScheduleModel _selectedHome;
-        public ScheduleModel SelectedHome {
+        private HomeModel _selectedHome;
+        public HomeModel SelectedHome {
             get => _selectedHome;
             set {
                 if ( _selectedHome != value )
@@ -280,8 +280,8 @@ namespace AFH_Scheduler
         #region constructor
         public DataVM(User user)
         {
-            _providers = new ObservableCollection<ScheduleModel>();
-            _inActiveHomes = new ObservableCollection<ScheduleModel>();
+            _providers = new ObservableCollection<HomeModel>();
+            _inActiveHomes = new ObservableCollection<HomeModel>();
             FilterItem = "";
             TextFieldEnabled = true;
             StartDatePicked = DateTime.Today;
@@ -460,27 +460,27 @@ namespace AFH_Scheduler
                             recentDate = recentInspec.HHistory_Date;
 
                         var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
-                        
+
+
                         Providers.Add(
-                            new ScheduleModel
-                            (
-                                item.Provider_ID,
-                                house.PHome_ID,
-                                item.Provider_Name, //Provider Name
-                                -1, //License Number
-                                "",//Home Name
-                                house.PHome_Phonenumber,
-                                house.PHome_Address,//Address
-                                house.PHome_City,
-                                house.PHome_Zipcode,
-                                recentDate,
-                                insp,
-                                this,
-                                alg.DropDateMonth(insp, false),
-                                true,
-                                "",
-                                ""
-                            )
+                            new HomeModel
+                            {
+                                ProviderID = item.Provider_ID,
+                                HomeID = house.PHome_ID,
+                                ProviderName = item.Provider_Name,
+                                HomeLicenseNum = long.Parse(house.PHome_LicenseNumber),
+                                HomeName = house.PHome_Name,
+                                Phone = house.PHome_Phonenumber,
+                                Address = house.PHome_Address,
+                                City = house.PHome_City,
+                                ZIP = house.PHome_Zipcode,
+                                RecentInspection = recentDate,
+                                NextInspection = insp,
+                                EighteenthMonthDate = alg.DropDateMonth(insp, false),
+                                IsActive = true,
+                                RcsRegion = "",
+                                RcsUnit = ""
+                            }
                         );
                     }
                 }
@@ -488,7 +488,7 @@ namespace AFH_Scheduler
             }
         }
 
-        public void GenHistoryData(ScheduleModel house)
+        public void GenHistoryData(HomeModel house)
         {
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
@@ -533,26 +533,25 @@ namespace AFH_Scheduler
                 else
                     recentDate = recentInspec.HHistory_Date;
                 Providers.Add(
-                   new ScheduleModel
-                   (
-                   Convert.ToInt64(home.SelectedProviderName.ProviderID),
-                   home.HomeID,
-                   home.SelectedProviderName.ProviderName,
-                   Convert.ToInt64(home.HomeLicenseNum), //License Number
-                   home.HomeLicensedName,//Home Name
-                   home.HomePhoneNumber,//Phone Number
-                   home.Address,
-                   home.City,
-                   home.Zipcode,
-                   recentDate,
-                   home.InspectionDate.ToShortDateString(),//insp,
-                   this,
-                   alg.DropDateMonth(home.InspectionDate.ToShortDateString(), false),
-                   true,
-                   home.RcsRegion,
-                   home.RcsUnit
-                   )
-                   );
+                    new HomeModel
+                    {
+                        ProviderID = Convert.ToInt64(home.SelectedProviderName.ProviderID),
+                        HomeID = home.HomeID,
+                        ProviderName = home.SelectedProviderName.ProviderName,
+                        HomeLicenseNum = Convert.ToInt64(home.HomeLicenseNum),
+                        HomeName = home.HomeLicensedName,
+                        Phone = home.HomePhoneNumber,
+                        Address = home.Address,
+                        City = home.City,
+                        ZIP = home.Zipcode,
+                        RecentInspection = recentDate,
+                        NextInspection = home.InspectionDate.ToShortDateString(),
+                        EighteenthMonthDate = alg.DropDateMonth(home.InspectionDate.ToShortDateString(), false),
+                        IsActive = true,
+                        RcsRegion = home.RcsRegion,
+                        RcsUnit = home.RcsUnit
+                    }
+                );
 
                 //Add to database
                 /*
@@ -756,35 +755,32 @@ namespace AFH_Scheduler
 
             if ((String)eventArgs.Parameter == "SUBMIT")
             {
-                ScheduleModel editedHomeData = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule;
+                EditVM editDialogContext = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext);
+                HomeModel editedHomeData = editDialogContext.SelectedSchedule;
+                string editedProvider = editDialogContext.TextSearch;
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    var homeID = editedHomeData.HomeID;
-                    var providerID = editedHomeData.ProviderID;
+                    var licenseNum = editedHomeData.HomeLicenseNum;
+                    var homeName = editedHomeData.HomeName;
+                    var providerName = editedHomeData.ProviderName;
                     var address = editedHomeData.Address;
                     var city = editedHomeData.City;
                     var zip = editedHomeData.ZIP;
+                    var phone = editedHomeData.Phone;
                     var nextInspection = editedHomeData.NextInspection;
 
-                    var foo = EditVM._homeIDSave;
-
-                    Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == foo);
-
-                    db.Provider_Homes.Remove(selectHome);
-
-                    //create new record here
-
+                    Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == editedHomeData.HomeID);
 
                     if (selectHome != null)
                     {
-                        //selectHome.PHome_ID = homeID;
-                        selectHome.FK_Provider_ID = providerID;
+                        selectHome.PHome_LicenseNumber = licenseNum.ToString();
+                        selectHome.PHome_Name = homeName;
+                        selectHome.Provider = db.Providers.FirstOrDefault(r => r.Provider_Name == editedProvider);
                         selectHome.PHome_Address = address;
                         selectHome.PHome_City = city;
                         selectHome.PHome_Zipcode = zip;
-                        //selectHome.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == foo).SInspections_Date = nextInspection;
-
-                        //db.Entry(selectHome).State = selectHome.PHome_ID == EditVM.HomeIDSave ? EntityState.Added : EntityState.Modified;
+                        selectHome.PHome_Phonenumber = phone;
+                        SelectedHome.NextInspection = nextInspection;
 
                         db.SaveChanges();
                     }
@@ -824,7 +820,7 @@ namespace AFH_Scheduler
                 return;
             }
 
-            var temp = new ObservableCollection<ScheduleModel>();
+            var temp = new ObservableCollection<HomeModel>();
 
             /*if (SelectedFilter.ToString().Contains("Provider ID"))
             {

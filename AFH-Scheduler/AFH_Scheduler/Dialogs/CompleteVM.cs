@@ -17,8 +17,8 @@ namespace AFH_Scheduler.Dialogs
     {
         public string Name => "Complete Inspection Dialog";
 
-        public ScheduleModel _selectedSchedule;
-        public ScheduleModel SelectedSchedule {
+        public HomeModel _selectedSchedule;
+        public HomeModel SelectedSchedule {
             get { return _selectedSchedule; }
             set {
                 if (_selectedSchedule == value) return;
@@ -29,7 +29,7 @@ namespace AFH_Scheduler.Dialogs
 
         public static long _homeIDSave;
 
-        public CompleteVM(ScheduleModel scheduleData)
+        public CompleteVM(HomeModel scheduleData)
         {
             SelectedSchedule = scheduleData;
         }

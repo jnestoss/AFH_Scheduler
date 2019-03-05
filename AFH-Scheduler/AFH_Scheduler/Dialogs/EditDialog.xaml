@@ -19,6 +19,7 @@
         <conv:ProviderConverter x:Key="providerConverter" />
         <conv:ProviderListConverter x:Key="providerListConverter" />
         <conv:OutcomeCodeConverter x:Key="outcomeCodeConverter" />
+        <conv:DateConverter x:Key="dateConverter" />
     </UserControl.Resources>
 
 
@@ -38,10 +39,6 @@
                 <Grid Width="600" Margin="20">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -97,18 +94,18 @@
 
 
                     <TextBox
-                        x:Name="HomeIDNum"
+                        x:Name="LicenseNumber"
                         Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="0,10,0,0"
                         VerticalAlignment="Bottom"
                         materialDesign:HintAssist.FloatingScale="1.4"
-                        materialDesign:HintAssist.Hint="Licence ID"
+                        materialDesign:HintAssist.Hint="Licence Number"
                         materialDesign:HintAssist.HintOpacity="0.9"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
-                            <Binding Path="SelectedSchedule.HomeID" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="SelectedSchedule.HomeLicenseNum" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
@@ -121,16 +118,23 @@
                     </TextBox>
 
                     <TextBox
+                        x:Name="HomeName"
                         Grid.Row="1"
                         Grid.Column="3"
                         Grid.ColumnSpan="2"
                         Margin="0,10,0,0"
                         VerticalAlignment="Bottom"
                         materialDesign:HintAssist.FloatingScale="1.4"
-                        materialDesign:HintAssist.Hint="Licence ID"
+                        materialDesign:HintAssist.Hint="Home Name"
                         materialDesign:HintAssist.HintOpacity="0.9"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-
+                        <TextBox.Text>
+                            <Binding Path="SelectedSchedule.HomeName" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
 
                     </TextBox>
 
@@ -251,6 +255,7 @@
 
                     <DatePicker
                         x:Name="FutureDatePicker"
+                        SelectedDateFormat="Short"                      
                         Grid.Row="5"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
@@ -259,12 +264,13 @@
                         Margin="60,10,0,0"
                         materialDesign:HintAssist.Hint="Next Inspection Date">
                         <DatePicker.SelectedDate>
-                            <Binding Path="SelectedSchedule.NextInspection" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="SelectedSchedule.NextInspection" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource dateConverter}">
                                 <Binding.ValidationRules>
                                     <Behaviors:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </DatePicker.SelectedDate>
+                        
                     </DatePicker>
 
 
@@ -283,7 +289,8 @@
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeIDNum}" Value="False" />
+                                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LicenseNumber}" Value="False" />
+                                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeName}" Value="False"/>
                                                 <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderAddress}" Value="False" />
                                                 <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderCity}" Value="False" />
                                                 <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZIPCode}" Value="False" />

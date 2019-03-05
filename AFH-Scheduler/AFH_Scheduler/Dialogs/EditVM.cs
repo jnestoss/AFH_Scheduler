@@ -20,8 +20,8 @@ namespace AFH_Scheduler.Dialogs
     {
         public string Name => "Edit Page";
 
-        public ScheduleModel _selectedSchedule;
-        public ScheduleModel SelectedSchedule {
+        public HomeModel _selectedSchedule;
+        public HomeModel SelectedSchedule {
             get { return _selectedSchedule; }
             set {
                 if (_selectedSchedule == value) return;
@@ -103,7 +103,7 @@ namespace AFH_Scheduler.Dialogs
         //public event EventHandler<EventArgs> RequestClose;      
         //public RelayCommand CloseCommand { get; private set; }
 
-        public EditVM(ScheduleModel scheduleData)
+        public EditVM(HomeModel scheduleData)
         {
             SelectedSchedule = scheduleData;
             //CurrentProvider = new Tuple<int, string>((int) SelectedSchedule.ProviderID, SelectedSchedule.ProviderName);
@@ -119,6 +119,7 @@ namespace AFH_Scheduler.Dialogs
             GrabOutcomeCodes();
             SelectedCode = GetMostRecentOutcome();
 
+            TextSearch = SelectedSchedule.ProviderName;
         }
 
         private int ProviderSort(string x, string y)
@@ -167,7 +168,8 @@ namespace AFH_Scheduler.Dialogs
 
         private void CalcNextInspectionDate(object o)
         {
-            SelectedSchedule.NextInspection = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now).ToString();
+            DateTime date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now);
+            SelectedSchedule.NextInspection = $"{date.Month}/{date.Day}/{date.Year}";
         }
 
         private List<String> GrabProviderInformation()

@@ -38,10 +38,13 @@
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="360">
 
-                <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
+                <Button Background="{x:Null}" 
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
-                <Button  Background="{x:Null}" 
+                <Button Background="{x:Null}" 
                         BorderBrush="{x:Null}" 
                         Foreground="WhiteSmoke" 
                         VerticalAlignment="Center"

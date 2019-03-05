@@ -146,9 +146,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\DateConverter.cs" />
     <Compile Include="Converters\OutcomeCodeConverter.cs" />
     <Compile Include="Converters\ProviderConverter.cs" />
     <Compile Include="Converters\ProviderListConverter.cs" />
+    <Compile Include="Converters\StringToProviderConverter.cs" />
     <Compile Include="Database\HomeInspection.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -394,7 +396,7 @@
     </Compile>
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
-    <Compile Include="Data\Schedule_Data.cs" />
+    <Compile Include="Data\HomeModel.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

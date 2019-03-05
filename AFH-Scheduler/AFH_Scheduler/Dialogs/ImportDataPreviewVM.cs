@@ -16,8 +16,8 @@ namespace AFH_Scheduler.Dialogs
     public class ImportDataPreviewVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
-        private static ObservableCollection<ScheduleModel> _importedHomes;
-        public ObservableCollection<ScheduleModel> ImportedHomes
+        private static ObservableCollection<HomeModel> _importedHomes;
+        public ObservableCollection<HomeModel> ImportedHomes
         {
             get { return _importedHomes; }
             set
@@ -85,7 +85,7 @@ namespace AFH_Scheduler.Dialogs
 
         public ImportDataPreviewVM()
         {
-            _importedHomes = new ObservableCollection<ScheduleModel>();
+            _importedHomes = new ObservableCollection<HomeModel>();
             _importedLicenseInfo = new List<List<string>>();
             _uniqueProvIDs = new List<long>();
             _uniqueHomeIDs = new List<long>();
@@ -274,7 +274,7 @@ namespace AFH_Scheduler.Dialogs
             for (int rowItem = 1; rowItem < rows; rowItem++)
             {
                 ImportedHomes.Add(// * = From the Excel file
-                                new ScheduleModel
+                                new HomeModel
                                 (
                                     GenerateProviderID(),   //Provider ID
                                     GenerateHomeID(),     //Home Database ID
@@ -287,7 +287,6 @@ namespace AFH_Scheduler.Dialogs
                                     ImportedLicenseInfo[5][rowItem],     //Zip*
                                     "",         //Recent
                                     ImportedLicenseInfo[7][rowItem],               //Next Inspection*
-                                    null,               //DataVM
                                     alg.DropDateMonth(ImportedLicenseInfo[7][rowItem], false),//18th Month Drop Date
                                     false,
                                     ImportedLicenseInfo[8][rowItem], //RCSRegion
