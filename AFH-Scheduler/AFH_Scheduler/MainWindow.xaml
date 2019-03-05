@@ -35,19 +35,11 @@
                 Background="Transparent"
                 MouseDown="DragCommand"
                 Width="500"/>
-            
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="360">
 
                 <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
-                </Button>
-                <Button  Background="{x:Null}" 
-                        BorderBrush="{x:Null}" 
-                        Foreground="WhiteSmoke" 
-                        VerticalAlignment="Center"
-                        Command="{Binding Path=Logout}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
-                    <materialDesign:PackIcon Kind="Logout" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
                 <Button  Background="{x:Null}" 
                         BorderBrush="{x:Null}" 
@@ -69,12 +61,9 @@
 
             </StackPanel>
         </StackPanel>
-
         <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="WindowDialogs">
             <ContentControl Height="700" Content="{Binding CurrentPageViewModel}"/>
         </materialDesign:DialogHost>
-
-
     </StackPanel>
 
 </Window>
