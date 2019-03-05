@@ -122,7 +122,7 @@ namespace AFH_Scheduler.Dialogs
                 try
                 {//Excel work here
                     string filename = MessageService.ExcelOpenDialog();
-                    if(filename is null)
+                    if(filename == null)
                     {
                         return;
                     }
@@ -135,7 +135,7 @@ namespace AFH_Scheduler.Dialogs
                         
                         dynamic colCell = col.Cells.Value2;
 
-                        if (colCell[1, 1].IndexOf("ProviderName", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
+                        if (colCell[1, 1].IndexOf("FacilityPOC", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
                         {
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in colCell)

@@ -13,11 +13,11 @@ namespace AFH_Scheduler.Validations
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-
+            int id;
             if (!int.TryParse((value ?? "").ToString(),
                 NumberStyles.None,
                 CultureInfo.CurrentCulture,
-                out int id)) return new ValidationResult(false, "Invalid ID Entry");
+                out id)) return new ValidationResult(false, "Invalid ID Entry");
 
             //var test = (string)value;
             //var id = Convert.ToInt64(test);

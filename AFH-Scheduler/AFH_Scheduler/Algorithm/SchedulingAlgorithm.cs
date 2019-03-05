@@ -186,7 +186,9 @@ namespace AFH_Scheduler.Algorithm
             }
             return dropDateMonthDate.ToShortDateString();
         }
+        #endregion
 
+        #region Interval between Inspections
         public double InspectionInterval(string recentInspecion, string currentInspection, bool monthOrDays)
         {
             if (recentInspecion == null || recentInspecion.Length == 0 || currentInspection == null || currentInspection.Length == 0)
@@ -222,7 +224,6 @@ namespace AFH_Scheduler.Algorithm
             return new DateTime(year, month, day);
         }
         #endregion
-        
 
         #region Checking Month
         public int CheckingMonth(DateTime date)
@@ -271,6 +272,31 @@ namespace AFH_Scheduler.Algorithm
                     return 31;
             }
             return 0;
+        }
+        #endregion
+
+        #region Forecasting future inspections
+        public string ForecastingFutureInspection(long homeID)
+        {
+            HomeInspectionEntities table = new HomeInspectionEntities();
+            var history = table.Home_History.Where(r => r.FK_PHome_ID == homeID).ToList();
+
+            if (history.Count == 0)
+            {
+                return "";
+            }
+
+            string forecastedOutcome = "";
+            int mostOutcomes = 0;
+            foreach (var outcome in history)
+            {
+                int outCount = table.Home_History.Where(r => r.FK_PHome_ID == homeID && r.FK_IOutcome_Code == outcome.FK_IOutcome_Code).Count();
+                if (outCount > mostOutcomes)
+                {
+                    forecastedOutcome = outcome.FK_IOutcome_Code;
+                }
+            }
+            return forecastedOutcome;
         }
         #endregion
     }
