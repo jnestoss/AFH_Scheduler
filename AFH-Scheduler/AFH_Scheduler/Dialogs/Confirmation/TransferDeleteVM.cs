@@ -159,24 +159,24 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                     var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
 
                     RemainingHomes.Add(
-                            new HomeModel
-                            (
-                                id,
-                                house.PHome_ID,
-                                name,
-                                -1, //License Number
-                                "",//Home Name
-                                "",//Phone number
-                                house.PHome_Address,
-                                house.PHome_City,
-                                house.PHome_Zipcode,
-                                recentDate,
-                                insp,
-                                alg.DropDateMonth(insp, false),
-                                true,
-                                "",
-                                ""
-                            )
+                        new HomeModel
+                        {
+                            ProviderID = id,
+                            HomeID = house.PHome_ID,
+                            ProviderName = name,
+                            HomeLicenseNum = -1,
+                            HomeName = "",
+                            Phone = "",
+                            Address = house.PHome_Address,
+                            City = house.PHome_City,
+                            ZIP = house.PHome_Zipcode,
+                            RecentInspection = recentDate,
+                            NextInspection = insp,
+                            EighteenthMonthDate = alg.DropDateMonth(insp, false),
+                            IsActive = true,
+                            RcsRegion = "",
+                            RcsUnit = ""
+                        }
                     );
                 }
             }

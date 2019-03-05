@@ -33,6 +33,11 @@ namespace AFH_Scheduler.Data
 
         public HomeModel()
         {
+            HomesHistory = new ObservableCollection<HistoryDetailModel>();
+        }
+
+        public void HasProvider()
+        {
             if (ProviderName.Equals("No Provider"))
             {
                 HasNoProvider = true;

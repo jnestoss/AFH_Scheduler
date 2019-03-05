@@ -373,7 +373,7 @@ namespace AFH_Scheduler
                         xlWorksheet.Cells[1, 9] = "Interval in Days";
                         xlWorksheet.Cells[1, 10] = "17th Month Drop Dead";
                         xlWorksheet.Cells[1, 11] = "18th Month Drop Dead";
-                        xlWorksheet.Cells[1, 12] = "Outcome"; //From current inspection
+                        xlWorksheet.Cells[1, 12] = "Current Outcome"; //From current inspection
                         xlWorksheet.Cells[1, 13] = "Forecasted Next Inspection";//forecasted next inspection date
                         xlWorksheet.Cells[1, 14] = "RCS Region";
                         xlWorksheet.Cells[1, 15] = "RCS Unit";
@@ -395,7 +395,7 @@ namespace AFH_Scheduler
                             xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
                             xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, true);//17th Month Drop Date
                             xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
-                            xlWorksheet.Cells[row, 12] = "";//Outcome from current inspection
+                            xlWorksheet.Cells[row, 12] = alg.ForecastingFutureInspection(provider.HomeID); //Outcome from current inspection
                             xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
                             xlWorksheet.Cells[row, 14] = provider.RcsRegion;//RCS Region
                             xlWorksheet.Cells[row, 15] = provider.RcsUnit;//RCS Unit
@@ -461,30 +461,28 @@ namespace AFH_Scheduler
 
                         var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
 
+                        HomeModel newHome = new HomeModel
+                        {
+                            ProviderID = item.Provider_ID,
+                            HomeID = house.PHome_ID,
+                            ProviderName = item.Provider_Name,
+                            HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
+                            HomeName = house.PHome_Name,
+                            Phone = house.PHome_Phonenumber,
+                            Address = house.PHome_Address,
+                            City = house.PHome_City,
+                            ZIP = house.PHome_Zipcode,
+                            RecentInspection = recentDate,
+                            NextInspection = insp,
+                            EighteenthMonthDate = alg.DropDateMonth(insp, false),
+                            IsActive = true,
+                            RcsRegion = "",
+                            RcsUnit = "",
+                        };
 
-                        Providers.Add(
-                            new HomeModel
-                            {
-                                ProviderID = item.Provider_ID,
-                                HomeID = house.PHome_ID,
-                                ProviderName = item.Provider_Name,
-                                HomeLicenseNum = long.Parse(house.PHome_LicenseNumber),
-                                HomeName = house.PHome_Name,
-                                Phone = house.PHome_Phonenumber,
-                                Address = house.PHome_Address,
-                                City = house.PHome_City,
-                                ZIP = house.PHome_Zipcode,
-                                RecentInspection = recentDate,
-                                NextInspection = insp,
-                                EighteenthMonthDate = alg.DropDateMonth(insp, false),
-                                IsActive = true,
-                                RcsRegion = "",
-                                RcsUnit = ""
-                            }
-                        );
+                        Providers.Add(newHome);
                     }
                 }
-
             }
         }
 
@@ -810,7 +808,7 @@ namespace AFH_Scheduler
         private void FilterTheTable(object obj)
         {
             RefreshTable(obj);//Comment out if you want to test the license number/name filter
-            if (SelectedFilter is null)
+            if (SelectedFilter == null)
             {
                 MessageService.ReleaseMessageBox("You have not specified what to filter out.");
                 return;

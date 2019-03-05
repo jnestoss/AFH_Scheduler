@@ -273,26 +273,25 @@ namespace AFH_Scheduler.Dialogs
             int rows = ImportedLicenseInfo[0].Count;
             for (int rowItem = 1; rowItem < rows; rowItem++)
             {
-                ImportedHomes.Add(// * = From the Excel file
-                                new HomeModel
-                                (
-                                    GenerateProviderID(),   //Provider ID
-                                    GenerateHomeID(),     //Home Database ID
-                                    ImportedLicenseInfo[0][rowItem],                //Provider Name*
-                                    Convert.ToInt64(ImportedLicenseInfo[1][rowItem]),//License Number*
-                                    ImportedLicenseInfo[2][rowItem],     //Home Name*
-                                    ImportedLicenseInfo[6][rowItem],     //Phone Number*
-                                    ImportedLicenseInfo[3][rowItem],     //Address*
-                                    ImportedLicenseInfo[4][rowItem],     //City*
-                                    ImportedLicenseInfo[5][rowItem],     //Zip*
-                                    "",         //Recent
-                                    ImportedLicenseInfo[7][rowItem],               //Next Inspection*
-                                    alg.DropDateMonth(ImportedLicenseInfo[7][rowItem], false),//18th Month Drop Date
-                                    false,
-                                    ImportedLicenseInfo[8][rowItem], //RCSRegion
-                                    ImportedLicenseInfo[9][rowItem]  //Unit
-                                )
-                            );
+                ImportedHomes.Add(new HomeModel
+                    {
+                        ProviderID = GenerateProviderID(),   //Provider ID
+                        HomeID = GenerateHomeID(),     //Home Database ID
+                        ProviderName = ImportedLicenseInfo[0][rowItem],                //Provider Name*
+                        HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[1][rowItem]),//License Number*
+                        HomeName = ImportedLicenseInfo[2][rowItem],     //Home Name*
+                        Phone = ImportedLicenseInfo[6][rowItem],     //Phone Number*
+                        Address = ImportedLicenseInfo[3][rowItem],     //Address*
+                        City = ImportedLicenseInfo[4][rowItem],     //City*
+                        ZIP = ImportedLicenseInfo[5][rowItem],     //Zip*
+                        RecentInspection = "",         //Recent
+                        NextInspection = ImportedLicenseInfo[7][rowItem],               //Next Inspection*
+                        EighteenthMonthDate = alg.DropDateMonth(ImportedLicenseInfo[7][rowItem], false),//18th Month Drop Date
+                        IsActive = true,
+                        RcsRegion = ImportedLicenseInfo[8][rowItem], //RCSRegion
+                        RcsUnit = ImportedLicenseInfo[9][rowItem]  //Unit
+                    }
+                );
             }
         }
 
