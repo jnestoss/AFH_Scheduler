@@ -36,7 +36,7 @@
                             Binding="{Binding ProviderName}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="Provider Name" />
+                            Header="Facility POC" />
                 
                 <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding HomeLicenseNum}"
@@ -61,7 +61,7 @@
                 <materialDesign:MaterialDataGridTextColumn
                     Binding="{Binding HomeName}"
                     IsReadOnly="True" 
-                    Header="Home Name" 
+                    Header="Facility Name" 
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                 <materialDesign:MaterialDataGridTextColumn
@@ -97,19 +97,12 @@
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Next Inspection Date">
                 </materialDesign:MaterialDataGridTextColumn>
-                
+
                 <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsRegion}"
+                            Binding="{Binding RcsRegionUnit}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="RCSRegion">
-                </materialDesign:MaterialDataGridTextColumn>
-                
-                <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsUnit}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Unit">
+                            Header="RCS Region/Unit">
                 </materialDesign:MaterialDataGridTextColumn>
 
             </DataGrid.Columns>

@@ -35,9 +35,9 @@
                     FontSize="16"  
                     Grid.Column="1" 
                     Grid.Row="0" 
-                    ItemsSource="{Binding NewHomeCreated.Providers}" 
+                    ItemsSource="{Binding DataContext.Providers}" 
                     DisplayMemberPath="ProviderName"
-                    SelectedValue="{Binding NewHomeCreated.SelectedProviderName, UpdateSourceTrigger=PropertyChanged}">
+                    SelectedValue="{Binding DataContext.SelectedProviderName, UpdateSourceTrigger=PropertyChanged}">
             </ComboBox>
 
             <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="1">Home License Number:</TextBlock>
@@ -173,7 +173,7 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="4">RCS-Region:</TextBlock>
+            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="4">RCS-Region/Unit:</TextBlock>
             <TextBox
                 Name="RegionTextBox" 
                     Margin="10" 
@@ -189,7 +189,7 @@
                 </TextBox.Text>
             </TextBox>
 
-
+            <!--
             <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="4">RCS-Unit:</TextBlock>
             <TextBox
                 Name="UnitTextBox" 
@@ -205,13 +205,14 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-
+            -->
+                
             <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="5">Inspection Date:</TextBlock>
                 <DatePicker 
                     Grid.Column="1"
                     Grid.Row="5"
                     DisplayDateStart="{x:Static system:DateTime.Today}"
-                    SelectedDate="{Binding NewHomeCreated.InspectionDate, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedDate="{Binding NewHomeCreated.NextInspection, UpdateSourceTrigger=PropertyChanged}"
                     FontSize="16"
                     Margin="10" 
                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
@@ -238,7 +239,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=NewHomeCreated.IsProviderSelected}" 
+                                    <Condition Binding="{Binding Path=IsProviderSelected}" 
                                                Value="True"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeLicenseTextBox}" 
                                                Value="False"/>
@@ -251,8 +252,6 @@
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZipCodeTextBox}" 
                                                Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RegionTextBox}" 
-                                               Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=UnitTextBox}" 
                                                Value="False"/>
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True"/>

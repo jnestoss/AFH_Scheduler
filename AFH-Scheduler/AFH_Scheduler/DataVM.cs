@@ -378,15 +378,12 @@ namespace AFH_Scheduler
                         xlWorksheet.Cells[1, 11] = "18th Month Drop Dead";
                         xlWorksheet.Cells[1, 12] = "Current Outcome"; //From current inspection
                         xlWorksheet.Cells[1, 13] = "Forecasted Next Inspection";//forecasted next inspection date
-                        xlWorksheet.Cells[1, 14] = "RCS Region";
-                        xlWorksheet.Cells[1, 15] = "RCS Unit";
+                        xlWorksheet.Cells[1, 14] = "RCSRegionUnit";
 
 
                         int row = 2;
                         foreach (var provider in Providers)
-                        {
-                            //var home = db.Provider_Homes.Where(r => r.PHome_Address == provider.Address).First();                            
-
+                        {        
                             xlWorksheet.Cells[row, 1] = provider.ProviderID;
                             xlWorksheet.Cells[row, 2] = provider.ProviderName;
                             xlWorksheet.Cells[row, 3] = provider.Address;
@@ -400,8 +397,7 @@ namespace AFH_Scheduler
                             xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
                             xlWorksheet.Cells[row, 12] = alg.ForecastingFutureInspection(provider.HomeID);//Outcome from current inspection
                             xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
-                            xlWorksheet.Cells[row, 14] = provider.RcsRegion;//RCS Region
-                            xlWorksheet.Cells[row, 15] = provider.RcsUnit;//RCS Unit
+                            xlWorksheet.Cells[row, 14] = provider.RcsRegionUnit;//RCS Region
 
                             row++;
                         }
@@ -470,19 +466,17 @@ namespace AFH_Scheduler
                                 item.Provider_ID,
                                 house.PHome_ID,
                                 item.Provider_Name, //Provider Name
-                                -1, //License Number
-                                "",//Home Name
+                                Convert.ToInt64(house.PHome_LicenseNumber), //License Number
+                                house.PHome_Name,//Home Name
                                 house.PHome_Phonenumber,
                                 house.PHome_Address,//Address
                                 house.PHome_City,
                                 house.PHome_Zipcode,
                                 recentDate,
                                 insp,
-                                this,
                                 alg.DropDateMonth(insp, false),
                                 true,
-                                "",
-                                ""
+                                ""//RCSRegionUnit
                             )
                         );
                     }
@@ -538,36 +532,37 @@ namespace AFH_Scheduler
                 Providers.Add(
                    new ScheduleModel
                    (
-                   Convert.ToInt64(home.SelectedProviderName.ProviderID),
+                   Convert.ToInt64(createdHome.SelectedProviderName.ProviderID),
                    home.HomeID,
-                   home.SelectedProviderName.ProviderName,
+                   createdHome.SelectedProviderName.ProviderName,
                    Convert.ToInt64(home.HomeLicenseNum), //License Number
-                   home.HomeLicensedName,//Home Name
-                   home.HomePhoneNumber,//Phone Number
+                   home.HomeName,//Home Name
+                   home.Phone,//Phone Number
                    home.Address,
                    home.City,
-                   home.Zipcode,
+                   home.ZIP,
                    recentDate,
-                   home.InspectionDate.ToShortDateString(),//insp,
-                   this,
-                   alg.DropDateMonth(home.InspectionDate.ToShortDateString(), false),
+                   home.NextInspection,//insp,
+                   alg.DropDateMonth(home.NextInspection, false),
                    true,
-                   home.RcsRegion,
-                   home.RcsUnit
+                   home.RcsRegionUnit//RCSRegionUnit
                    )
                    );
 
                 //Add to database
-                /*
+                
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    db.Provider_Homes.Add(new Provider_Homes { 
+                    db.Provider_Homes.Add(new Provider_Homes {
                         PHome_ID = Convert.ToInt64(home.HomeID),
                         PHome_Address = home.Address,
                         PHome_City = home.City,
-                        PHome_Zipcode = home.Zipcode,
-                        PHome_Phonenumber = "don't call",
-                        FK_Provider_ID = Convert.ToInt64(home.ProviderID) });
+                        PHome_Zipcode = home.ZIP,
+                        PHome_Phonenumber = home.Phone,
+                        FK_Provider_ID = Convert.ToInt64(home.ProviderID),
+                        PHome_Name = home.HomeName,
+                        PHome_LicenseNumber = home.HomeLicenseNum.ToString()
+                    });
                     db.SaveChanges();
 
                     Random randomiz = new Random();
@@ -587,13 +582,13 @@ namespace AFH_Scheduler
 
                     db.Scheduled_Inspections.Add(new Scheduled_Inspections { 
                         SInspections_Id = id,
-                        SInspections_Date = alg.ConvertDateToString(home.InspectionDate),
+                        SInspections_Date = home.NextInspection,
                         FK_PHome_ID = Convert.ToInt64(home.HomeID) }
                     );
                     db.SaveChanges();
 
                 }
-                */
+                
                 MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
 

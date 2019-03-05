@@ -105,6 +105,8 @@ namespace AFH_Scheduler.Dialogs
 
         private void OpenExcelFileImport(object obj)
         {
+            int pocRow = 0, licenseRow = 0, nameRow = 0, addressRow = 0, cityRow = 0, zipRow = 0,
+                phoneRow = 0, inspRow = 0, rcsRow = 0;
             foreach (var listRow in ImportedLicenseInfo)
                 listRow.Clear();
             ImportedLicenseInfo.Clear();
@@ -130,6 +132,7 @@ namespace AFH_Scheduler.Dialogs
                     xlWorksheet = (Worksheet) xlWorkbook.Worksheets[1];
                     var header = xlWorksheet.UsedRange.Columns;
 
+                    int index = -1;
                     foreach (Range col in header)
                     {
                         
@@ -138,97 +141,104 @@ namespace AFH_Scheduler.Dialogs
                         if (colCell[1, 1].IndexOf("FacilityPOC", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                             index++;
+                            pocRow = index;
                             foreach (var cel in colCell)
                             {
                                 if (cel == null)
-                                    ImportedLicenseInfo[0].Add("No Provider");
+                                    ImportedLicenseInfo[index].Add("No Provider");
                                 else
-                                ImportedLicenseInfo[0].Add(cel.ToString());
+                                ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
 
                         if (colCell[1,1].IndexOf("LicenseNumber", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            licenseRow = index;
                             foreach (var cel in colCell)
                             {
-                                ImportedLicenseInfo[1].Add(cel.ToString());
+                                ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("FacilityName", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            nameRow = index;
                             foreach (var cel in (dynamic) col.Cells.Value)
                             {
-                                ImportedLicenseInfo[2].Add(cel.ToString());
+                                ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("LocationAddress", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            addressRow = index;
                             foreach (var cel in (dynamic) col.Cells.Value)
                             {
-                                ImportedLicenseInfo[3].Add(cel.ToString());
+                                ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("LocationCity", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            cityRow = index;
                             foreach (var cel in (dynamic) col.Cells.Value)
                             {
-                                ImportedLicenseInfo[4].Add(cel.ToString());
+                                ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("LocationZipCode", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            zipRow = index;
                             foreach (var cel in (dynamic) col.Cells.Value)
                             {
-                                ImportedLicenseInfo[5].Add(cel.ToString());
+                                ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("TelephoneNmbr", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            phoneRow = index;
                             foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 if(cel == null)
-                                    ImportedLicenseInfo[6].Add("");
+                                    ImportedLicenseInfo[index].Add("");
                                 else
-                                    ImportedLicenseInfo[6].Add(cel.ToString());
+                                    ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
                         else if (colCell[1, 1].IndexOf("NextInspection", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            inspRow = index;
                             String[] splitDate;
                             foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 splitDate = cel.ToString().Split(' ');
                                 var actualDate = splitDate[0];
-                                ImportedLicenseInfo[7].Add(actualDate);
+                                ImportedLicenseInfo[index].Add(actualDate);
                             }
                         }
-                        else if (colCell[1, 1].IndexOf("RCSRegion", StringComparison.OrdinalIgnoreCase) > -1)
+                        else if (colCell[1, 1].IndexOf("RCSRegionUnit", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
+                            index++;
+                            rcsRow = index;
                             foreach (var cel in (dynamic) col.Cells.Value)
                             {
                                 if (cel == null)
-                                    ImportedLicenseInfo[8].Add("");
+                                    ImportedLicenseInfo[index].Add("");
                                 else
-                                    ImportedLicenseInfo[8].Add(cel.ToString());
-                            }
-                        }
-                        else if (colCell[1, 1].IndexOf("Unit", StringComparison.OrdinalIgnoreCase) > -1)
-                        {
-                            ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in (dynamic) col.Cells.Value)
-                            {
-                                if (cel == null)
-                                    ImportedLicenseInfo[9].Add("");
-                                else
-                                    ImportedLicenseInfo[9].Add(cel.ToString());
+                                    ImportedLicenseInfo[index].Add(cel.ToString());
                             }
                         }
                     }
@@ -248,28 +258,12 @@ namespace AFH_Scheduler.Dialogs
             {
                 Console.WriteLine("Problem with Excel " + e.ToString());
             }
-            LoadInToTable();
+            LoadInToTable(pocRow, licenseRow, nameRow, addressRow, cityRow, zipRow, phoneRow, inspRow, rcsRow);
         }
 
-        public void LoadInToTable()
+        public void LoadInToTable(int pocRow, int licenseRow, int nameRow, int addressRow, int cityRow, 
+            int zipRow, int phoneRow, int inspRow, int rcsRow)
         {
-            if(ImportedLicenseInfo.Count < 10)
-            {
-                //Missing Colomns
-                return;
-            }
-            /*  ImportedLicenseInfo[0][0]; //Provider Name
-                ImportedLicenseInfo[1][0]; //LicenseNum
-                ImportedLicenseInfo[2][0]; //Home Name
-                ImportedLicenseInfo[3][0]; //Address
-                ImportedLicenseInfo[4][0]; //City
-                ImportedLicenseInfo[5][0]; //Zipcode
-                ImportedLicenseInfo[6][0]; //Telephone
-                ImportedLicenseInfo[7][0]; //NextInspection
-                ImportedLicenseInfo[8][0]; //RCSRegion
-                ImportedLicenseInfo[9][0]; //Unit
-                */
-
             int rows = ImportedLicenseInfo[0].Count;
             for (int rowItem = 1; rowItem < rows; rowItem++)
             {
@@ -278,20 +272,18 @@ namespace AFH_Scheduler.Dialogs
                                 (
                                     GenerateProviderID(),   //Provider ID
                                     GenerateHomeID(),     //Home Database ID
-                                    ImportedLicenseInfo[0][rowItem],                //Provider Name*
-                                    Convert.ToInt64(ImportedLicenseInfo[1][rowItem]),//License Number*
-                                    ImportedLicenseInfo[2][rowItem],     //Home Name*
-                                    ImportedLicenseInfo[6][rowItem],     //Phone Number*
-                                    ImportedLicenseInfo[3][rowItem],     //Address*
-                                    ImportedLicenseInfo[4][rowItem],     //City*
-                                    ImportedLicenseInfo[5][rowItem],     //Zip*
+                                    ImportedLicenseInfo[pocRow][rowItem],                //Provider Name*
+                                    Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
+                                    ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
+                                    ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
+                                    ImportedLicenseInfo[addressRow][rowItem],     //Address*
+                                    ImportedLicenseInfo[cityRow][rowItem],     //City*
+                                    ImportedLicenseInfo[zipRow][rowItem],     //Zip*
                                     "",         //Recent
-                                    ImportedLicenseInfo[7][rowItem],               //Next Inspection*
-                                    null,               //DataVM
-                                    alg.DropDateMonth(ImportedLicenseInfo[7][rowItem], false),//18th Month Drop Date
-                                    false,
-                                    ImportedLicenseInfo[8][rowItem], //RCSRegion
-                                    ImportedLicenseInfo[9][rowItem]  //Unit
+                                    ImportedLicenseInfo[inspRow][rowItem],               //Next Inspection*
+                                    alg.DropDateMonth(ImportedLicenseInfo[inspRow][rowItem], false),//18th Month Drop Date
+                                    true,
+                                    ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
                                 )
                             );
             }

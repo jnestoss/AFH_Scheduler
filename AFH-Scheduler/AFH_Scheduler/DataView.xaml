@@ -236,17 +236,10 @@
 
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsRegion}"
+                            Binding="{Binding RcsRegionUnit}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="RCSRegion">
-                    </materialDesign:MaterialDataGridTextColumn>
-
-                    <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsUnit}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Unit">
+                            Header="RCS Region/Unit">
                     </materialDesign:MaterialDataGridTextColumn>
                     <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
@@ -341,10 +334,10 @@
                     </Button>
                     <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a New Home">
                         <materialDesign:PackIcon Kind="Add" />
-                    </Button>-->
+                    </Button>
                     <Button Command="{Binding Path=DeleteHomeCommand}" ToolTip="Remove Selected Home">
                         <materialDesign:PackIcon Kind="Remove" />
-                    </Button>
+                    </Button>-->
 
 
                 </StackPanel>

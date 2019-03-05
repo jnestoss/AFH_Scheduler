@@ -55,17 +55,10 @@
                         Header="Zipcode" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsRegion}"
+                            Binding="{Binding RcsRegionUnit}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="RCSRegion">
-                    </materialDesign:MaterialDataGridTextColumn>
-
-                    <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsUnit}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Unit">
+                            Header="RCS Region/Unit">
                     </materialDesign:MaterialDataGridTextColumn>
 
                     <DataGridTemplateColumn>
