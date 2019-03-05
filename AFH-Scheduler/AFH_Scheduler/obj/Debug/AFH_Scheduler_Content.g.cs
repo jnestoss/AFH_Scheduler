@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("accessdatabase/homeinspectiondb.accdb")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/homeinspection.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/homeinspection.tt")]
 

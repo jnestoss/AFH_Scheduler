@@ -122,7 +122,7 @@ namespace AFH_Scheduler.Dialogs
                 try
                 {//Excel work here
                     string filename = MessageService.ExcelOpenDialog();
-                    if(filename is null)
+                    if(filename == null)
                     {
                         return;
                     }

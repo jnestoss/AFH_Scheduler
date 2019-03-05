@@ -35,7 +35,10 @@ namespace AFH_Scheduler.Dialogs
 
         private string _TextSearch;
         public string TextSearch {
-            get => _TextSearch;
+            get
+            {
+                return _TextSearch;
+            }
             set {
                 if (_TextSearch != value)
                 {
@@ -48,7 +51,10 @@ namespace AFH_Scheduler.Dialogs
 
         private List<String> _outcomeCodes;
         public List<String> OutcomeCodes {
-            get => _outcomeCodes;
+            get
+            {
+                return _outcomeCodes;
+            }
             set {
                 if (!(_outcomeCodes == value)) _outcomeCodes = value;
             }
@@ -65,7 +71,10 @@ namespace AFH_Scheduler.Dialogs
 
         private DateTime _nextInspection;
         public DateTime NextInspection {
-            get => _nextInspection;
+            get
+            {
+                return _nextInspection;
+            }
             set {
                 if (_nextInspection == value) return;
                 _nextInspection = value;
