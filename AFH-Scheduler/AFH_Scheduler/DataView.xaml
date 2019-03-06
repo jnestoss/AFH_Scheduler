@@ -250,6 +250,7 @@
                     <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
                 </DataGrid.Columns>
+                <!--
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <DataGrid
@@ -305,15 +306,13 @@
                         </DataGrid>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
-
+                -->
             </DataGrid>
 
 
             <materialDesign:PopupBox
                 Canvas.Left="972"
                 Canvas.Top="472"
-                Closed="PopupBox_OnClosed"
-                Opened="PopupBox_OnOpened"
                 PlacementMode="TopAndAlignCentres"
                 Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                 ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
@@ -323,7 +322,9 @@
                             ToolTip="Complete Inspection">
                         <materialDesign:PackIcon Kind="Archive" />
                     </Button>
-                    <Button ToolTip="Home History">
+                    <Button Command="{Binding RunHistoryDialogCommand}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                            ToolTip="Home History">
                         <materialDesign:PackIcon Kind="HomeVariant" />
                     </Button>
                     <Button Command="{Binding RunEditDialogCommand}" 
@@ -340,10 +341,10 @@
                     </Button>
                     <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a New Home">
                         <materialDesign:PackIcon Kind="Add" />
-                    </Button>-->
+                    </Button>
                     <Button Command="{Binding Path=DeleteHomeCommand}" ToolTip="Remove Selected Home">
                         <materialDesign:PackIcon Kind="Remove" />
-                    </Button>
+                    </Button>-->
 
 
                 </StackPanel>

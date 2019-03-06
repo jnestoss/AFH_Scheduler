@@ -36,15 +36,6 @@ namespace AFH_Scheduler
 
         private User _usr;
 
-        private HomeModel _selectedSchedule;
-        private HomeModel SelectedSchedule {
-            get { return _selectedSchedule; }
-            set {
-                if (_selectedSchedule == value) return;
-                _selectedSchedule = value;
-            }
-        }
-
         //Observable and bound to DataGrid
         private static ObservableCollection<HomeModel> _providers;
         public ObservableCollection<HomeModel> Providers {
@@ -262,16 +253,18 @@ namespace AFH_Scheduler
             }
         }
 
-        private RelayCommand _deleteHomeCommand;
-        public ICommand DeleteHomeCommand {
-            get {
-                if (_deleteHomeCommand == null)
-                    _deleteHomeCommand = new RelayCommand(DeleteHome);
-                return _deleteHomeCommand;
-            }
-        }
+        //private RelayCommand _deleteHomeCommand;
+        //public ICommand DeleteHomeCommand {
+        //    get {
+        //        if (_deleteHomeCommand == null)
+        //            _deleteHomeCommand = new RelayCommand(DeleteHome);
+        //        return _deleteHomeCommand;
+        //    }
+        //}
 
         public RelayCommand RunEditDialogCommand => new RelayCommand(ExecuteEditDialog);
+
+        public RelayCommand RunHistoryDialogCommand => new RelayCommand(ExecuteHistoryDialog);
 
         public RelayCommand RunCompleteDialogCommand => new RelayCommand(ExecuteCompleteDialog);
 
@@ -286,15 +279,9 @@ namespace AFH_Scheduler
             TextFieldEnabled = true;
             StartDatePicked = DateTime.Today;
             EndDatePicked = DateTime.Today;
+            _usr = user;
 
             GenData();
-
-
-
-            foreach (var provider in Providers)
-            {
-                GenHistoryData(provider);
-            }
         }
         #endregion
 
@@ -485,29 +472,6 @@ namespace AFH_Scheduler
                 }
             }
         }
-
-        public void GenHistoryData(HomeModel house)
-        {
-            using (HomeInspectionEntities db = new HomeInspectionEntities())
-            {
-                long providerID;
-                var provs = db.Home_History.Where(x => x.FK_PHome_ID == house.HomeID).ToList();
-                foreach (var item in provs)
-                {
-                    providerID = db.Provider_Homes.First(r => r.PHome_ID == item.FK_PHome_ID.Value).FK_Provider_ID.Value;//providerID;
-                    
-                    house.HomesHistory.Add(
-                        new HistoryDetailModel
-                        (
-                            providerID,//providerID
-                            item.FK_PHome_ID.Value,//Home_ID
-                            item.HHistory_Date,//InspectionDate
-                            item.Inspection_Outcome.IOutcome_Code
-                        )
-                    );
-                }
-            }
-        }
         #endregion
 
         #region Dialogs
@@ -590,12 +554,30 @@ namespace AFH_Scheduler
                 */
                 MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
-
-
         }
+
+        private async void ExecuteHistoryDialog(object o)
+        {
+            if (SelectedHome == null)
+            {
+                var view = new NoHomeSelectedErrorDialog();
+
+                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+            }
+            else
+            {
+                var view = new HistoryDialog
+                {
+                    DataContext = new HistVM(SelectedHome)
+                };
+
+                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+            }
+        }
+
         private async void ExecuteCompleteDialog(object o)
         {
-            if (SelectedSchedule == null)
+            if (SelectedHome == null)
             {
                 var view = new NoHomeSelectedErrorDialog();
 
@@ -605,7 +587,7 @@ namespace AFH_Scheduler
             {
                 var view = new CompleteDialog
                 {
-                    DataContext = new CompleteVM(SelectedSchedule)
+                    DataContext = new CompleteVM(SelectedHome)
                 };
 
                 var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandler);
@@ -637,43 +619,43 @@ namespace AFH_Scheduler
             }
         }
 
-        private void DeleteHome(object obj)
-        {
-            if (SelectedSchedule == null)
-            {
-                MessageService.ReleaseMessageBox("Please select a home to delete.");
-                return;
-            }
-            if (MessageService.MessageConfirmation("Are you sure you want to delete " + SelectedSchedule.Address + "?" +
-                " It will be removed from the database.", "Deleting Home"))
-            {
-                if (MessageService.MessageConfirmation("Are you TRULY sure you want to delete " + SelectedSchedule.Address + "?"
-                    , "Deleting Home"))
-                {
-                    using (HomeInspectionEntities db = new HomeInspectionEntities())
-                    {
-                        try
-                        {
-                            Provider_Homes deletingHome = db.Provider_Homes.First(r => r.PHome_ID == SelectedSchedule.HomeID);
-                            db.Provider_Homes.Remove(deletingHome);
-                            db.SaveChanges();
+        //private void DeleteHome(object obj)
+        //{
+        //    if (SelectedSchedule == null)
+        //    {
+        //        MessageService.ReleaseMessageBox("Please select a home to delete.");
+        //        return;
+        //    }
+        //    if (MessageService.MessageConfirmation("Are you sure you want to delete " + SelectedSchedule.Address + "?" +
+        //        " It will be removed from the database.", "Deleting Home"))
+        //    {
+        //        if (MessageService.MessageConfirmation("Are you TRULY sure you want to delete " + SelectedSchedule.Address + "?"
+        //            , "Deleting Home"))
+        //        {
+        //            using (HomeInspectionEntities db = new HomeInspectionEntities())
+        //            {
+        //                try
+        //                {
+        //                    Provider_Homes deletingHome = db.Provider_Homes.First(r => r.PHome_ID == SelectedSchedule.HomeID);
+        //                    db.Provider_Homes.Remove(deletingHome);
+        //                    db.SaveChanges();
 
-                            Scheduled_Inspections deletingSchedule = db.Scheduled_Inspections.First(r => r.FK_PHome_ID == SelectedSchedule.HomeID
-                            && r.SInspections_Date == SelectedSchedule.NextInspection);
-                            db.Scheduled_Inspections.Remove(deletingSchedule);
-                            db.SaveChanges();
-                            Providers.Remove(SelectedSchedule);
-                            MessageService.ReleaseMessageBox("Selected Home has been removed from the table.");
-                            RefreshTable("");
-                        }
-                        catch (InvalidOperationException e)
-                        {
-                            MessageService.ReleaseMessageBox("Selected Home removal failed.");
-                        }
-                    }
-                }
-            }
-        }
+        //                    Scheduled_Inspections deletingSchedule = db.Scheduled_Inspections.First(r => r.FK_PHome_ID == SelectedSchedule.HomeID
+        //                    && r.SInspections_Date == SelectedSchedule.NextInspection);
+        //                    db.Scheduled_Inspections.Remove(deletingSchedule);
+        //                    db.SaveChanges();
+        //                    Providers.Remove(SelectedSchedule);
+        //                    MessageService.ReleaseMessageBox("Selected Home has been removed from the table.");
+        //                    RefreshTable("");
+        //                }
+        //                catch (InvalidOperationException e)
+        //                {
+        //                    MessageService.ReleaseMessageBox("Selected Home removal failed.");
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
 
 
@@ -691,7 +673,7 @@ namespace AFH_Scheduler
 
                 view.setDataContext(SelectedHome);
 
-                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandler);
+                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
 
                 //if (result.Equals("DELETE"))
                 //{
@@ -797,12 +779,6 @@ namespace AFH_Scheduler
         {
             Providers.Clear();
             GenData();
-            foreach (var provider in Providers)
-            {
-                GenHistoryData(provider);
-            }
-            //SelectedSchedule = Providers.First();
-            //SelectedSchedule.IsSelected = true;
         }
 
         private void FilterTheTable(object obj)
