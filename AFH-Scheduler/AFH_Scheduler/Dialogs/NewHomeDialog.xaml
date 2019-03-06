@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:AFH_Scheduler.Dialogs"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Behaviors="clr-namespace:AFH_Scheduler.Validations"
              mc:Ignorable="d" >
@@ -30,15 +31,23 @@
             </Grid.RowDefinitions>
 
             <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="0">Provider:</TextBlock>
-            <ComboBox 
-                    Name="ProviderComboBox"
-                    FontSize="16"  
-                    Grid.Column="1" 
-                    Grid.Row="0" 
-                    ItemsSource="{Binding DataContext.Providers}" 
-                    DisplayMemberPath="ProviderName"
-                    SelectedValue="{Binding DataContext.SelectedProviderName, UpdateSourceTrigger=PropertyChanged}">
-            </ComboBox>
+            <ComboBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="20,10,0,10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        IsEditable="True"    
+                        IsTextSearchEnabled="True"
+                        StaysOpenOnEdit="True"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        materialDesign:HintAssist.Hint="Search"
+                        materialDesign:HintAssist.HintOpacity=".26"
+                        ItemsSource="{Binding ComboBoxProviderItems}"
+                        DisplayMemberPath="ProviderName"
+                        Text="{Binding TextSearch, Delay=250}"
+                        SelectedValue="{Binding SelectedProviderName}"/>
 
             <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="1">Home License Number:</TextBlock>
             <TextBox
@@ -70,7 +79,7 @@
                     Grid.Row="1"
                     FontSize="16">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.HomeLicensedName" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.HomeName" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -145,7 +154,7 @@
                     Grid.Column="1" 
                     Grid.Row="3">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.Zipcode" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.ZIP" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
 
@@ -181,7 +190,7 @@
                     Grid.Column="1" 
                     Grid.Row="4">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.RcsRegion" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -212,12 +221,12 @@
                     Grid.Column="1"
                     Grid.Row="5"
                     DisplayDateStart="{x:Static system:DateTime.Today}"
-                    SelectedDate="{Binding NewHomeCreated.NextInspection, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedDate="{Binding DatePicked, UpdateSourceTrigger=PropertyChanged}"
                     FontSize="16"
                     Margin="10" 
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" /> 
 
-            </Grid>
+        </Grid>
 
         <Grid Margin="30" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>

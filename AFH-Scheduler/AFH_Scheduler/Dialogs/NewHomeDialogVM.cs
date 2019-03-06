@@ -5,10 +5,12 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace AFH_Scheduler.Dialogs
@@ -24,6 +26,25 @@ namespace AFH_Scheduler.Dialogs
                 if (_providers == value) return;
                 _providers = value;
                 OnPropertyChanged("Providers");
+            }
+        }
+        public ICollectionView ComboBoxProviderItems { get; }
+
+        private string _TextSearch;
+        public string TextSearch
+        {
+            get
+            {
+                return _TextSearch;
+            }
+            set
+            {
+                if (_TextSearch != value)
+                {
+                    _TextSearch = value;
+                    ComboBoxProviderItems.Refresh();
+                    OnPropertyChanged("TextSearch");
+                }
             }
         }
 
@@ -68,7 +89,14 @@ namespace AFH_Scheduler.Dialogs
             {
                 if (_selectedProviderName == value) return;
                 _selectedProviderName = value;
-                IsProviderSelected = true;
+                if (_selectedProviderName == null || _selectedProviderName.ProviderName.Equals(""))
+                {
+                    IsProviderSelected = false;
+                }
+                else
+                {
+                    IsProviderSelected = true;
+                }
                 OnPropertyChanged("SelectedProviderName");
             }
         }
@@ -87,8 +115,89 @@ namespace AFH_Scheduler.Dialogs
                     listItem = item.Provider_ID + "-" + item.Provider_Name;
                     Providers.Add(new ProvidersModel(item.Provider_ID.ToString(), item.Provider_Name));
                 }
+                var lv = (ListCollectionView)CollectionViewSource.GetDefaultView(Providers);
+
+                ComboBoxProviderItems = lv;
+                lv.CustomSort = Comparer<ProvidersModel>.Create(ProviderSort);
+
                 NewHomeCreated = new ScheduleModel();
+                DatePicked = DateTime.Today;
             }
+        }
+        private int ProviderSort(ProvidersModel x, ProvidersModel y)
+        {
+            return GetDistance(x.ProviderName).CompareTo(GetDistance(y.ProviderName));
+        }
+        private int GetDistance(string provider)
+        {
+            if (string.IsNullOrWhiteSpace(TextSearch))
+            {
+                return 0;
+            }
+
+            string[] splitName = provider.Split(' ');
+
+            string first = splitName[0];
+            string last = splitName[splitName.Length - 1];
+
+            first = first.Substring(0, Math.Min(first.Length, TextSearch.Length));
+            last = last.Substring(0, Math.Min(last.Length, TextSearch.Length));
+
+            return Math.Min(GetDistance(first, TextSearch), GetDistance(last, TextSearch));
+        }
+
+        //Taken from: https://github.com/dotnet/command-line-api/blob/master/src/System.CommandLine/Invocation/TypoCorrection.cs
+        private static int GetDistance(string first, string second)
+        {
+
+            if (first == null)
+            {
+                throw new ArgumentNullException(nameof(first));
+            }
+            if (second == null)
+            {
+                throw new ArgumentNullException(nameof(second));
+            }
+
+            int n = first.Length;
+            int m = second.Length;
+            if (n == 0) return m;
+            if (m == 0) return n;
+
+            int curRow = 0, nextRow = 1;
+            int[][] rows = { new int[m + 1], new int[m + 1] };
+
+            for (int j = 0; j <= m; ++j)
+            {
+                rows[curRow][j] = j;
+            }
+
+            for (int i = 1; i <= n; ++i)
+            {
+                rows[nextRow][0] = i;
+                for (int j = 1; j <= m; ++j)
+                {
+                    int dist1 = rows[curRow][j] + 1;
+                    int dist2 = rows[nextRow][j - 1] + 1;
+                    int dist3 = rows[curRow][j - 1] + (first[i - 1].Equals(second[j - 1]) ? 0 : 1);
+
+                    rows[nextRow][j] = Math.Min(dist1, Math.Min(dist2, dist3));
+                }
+
+                // Swap the current and next rows
+                if (curRow == 0)
+                {
+                    curRow = 1;
+                    nextRow = 0;
+                }
+                else
+                {
+                    curRow = 0;
+                    nextRow = 1;
+                }
+            }
+
+            return rows[curRow][m];
         }
 
         public string Name

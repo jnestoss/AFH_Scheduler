@@ -131,15 +131,6 @@
                 CanUserAddRows="True"
                 CanUserSortColumns="True"
                 ItemsSource="{Binding Providers}">
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding HasNoProvider}" Value="True">
-                                <Setter Property="Foreground" Value="Red"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
                 <DataGrid.Columns>
 
                     <!--
