@@ -10,12 +10,13 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d">
 
-
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="highlightColor" Color="LightBlue" />
+    </UserControl.Resources>
 
     <Grid Width="800" Height="600" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -23,7 +24,9 @@
 
         <materialDesign:ColorZone
             Grid.Row="0"
-            Mode="PrimaryDark"
+            Mode="Accent"
+            materialDesign:ShadowAssist.Darken="True"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
             Padding="16">
             <TextBlock 
                 HorizontalAlignment="Center" 
@@ -33,55 +36,54 @@
 
         </materialDesign:ColorZone>
 
-        <ScrollViewer Grid.Row="1" MaxHeight="470">
-            <DataGrid 
-                MinHeight="470"
-                Width="360"
-                HorizontalAlignment="Center"
-                Margin="36 0 36 0"
-                ItemsSource="{Binding HomeHistory}"
-                CanUserSortColumns="True"
-                CanUserAddRows="True"
-                AutoGenerateColumns="False"
-                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-                DockPanel.Dock="Top"
-                IsReadOnly="True">
-
-                <DataGrid.Columns>
-
-                    <materialDesign:MaterialDataGridTextColumn 
-                                    Binding="{Binding InspectionDate}"
-                                    IsReadOnly="True" 
-                                    Header="Inspection Date" 
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-
-                    <materialDesign:MaterialDataGridTextColumn 
-                                    Binding="{Binding InspectionOutcome}"
-                                    IsReadOnly="True" 
-                                    Header="Inspection Outcome" 
-                                    MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-
-                </DataGrid.Columns>
-
-            </DataGrid>
-        </ScrollViewer>
-        
-        <Separator
-            Grid.Row="2"
-            Style="{StaticResource MaterialDesignDarkSeparator}"
-            Margin="8 0 8 0" />
-
-        <Button
-            Grid.Row="3"
-            Margin="0,0,0,6"
-            VerticalAlignment="Center"
+        <DataGrid 
+            Grid.Row="1"
+            MinHeight="460"
+            Width="360"
             HorizontalAlignment="Center"
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-            IsCancel="True"
-            Style="{DynamicResource MaterialDesignFlatButton}">
-            CLOSE
-        </Button>
+            Margin="0,10,0,0"
+            VerticalScrollBarVisibility="Auto"
+            ItemsSource="{Binding HomeHistory}"
+            CanUserSortColumns="True"
+            CanUserAddRows="True"
+            AutoGenerateColumns="False"
+            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+            materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+            DockPanel.Dock="Top"
+            IsReadOnly="True">
+            <DataGrid.Columns>
+
+                <materialDesign:MaterialDataGridTextColumn 
+                                Binding="{Binding InspectionDate}"
+                                IsReadOnly="True" 
+                                Header="Inspection Date" 
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                <materialDesign:MaterialDataGridTextColumn 
+                                Binding="{Binding InspectionOutcome}"
+                                IsReadOnly="True" 
+                                Header="Inspection Outcome" 
+                                MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <materialDesign:ColorZone
+            Grid.Row="2"
+            Mode="Accent"
+            VerticalAlignment="Stretch"
+            Padding="0">
+            <Button
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                IsCancel="True"
+                Foreground="White"
+                Style="{StaticResource MaterialDesignFlatButton}">
+                CLOSE              
+            </Button>
+        </materialDesign:ColorZone>
 
     </Grid>
 
