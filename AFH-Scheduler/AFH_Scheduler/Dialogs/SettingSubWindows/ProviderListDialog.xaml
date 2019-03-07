@@ -16,7 +16,7 @@
             Margin="36 0 36 0"
             ItemsSource="{Binding ProvidersList}"
             CanUserSortColumns="True"
-            CanUserAddRows="True"
+            CanUserAddRows="False"
             AutoGenerateColumns="False"
             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
             materialDesign:DataGridAssist.ColumnHeaderPadding="8"

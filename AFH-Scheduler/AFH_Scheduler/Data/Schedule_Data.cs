@@ -85,7 +85,7 @@ namespace AFH_Scheduler.Data
             RecentInspection = "";
             NextInspection = "";
             EighteenthMonthDate = "";
-            IsActive = false;
+            IsActive = true;
             RcsRegionUnit = "";
         }
         public long GenerateHomeID()
@@ -288,7 +288,7 @@ namespace AFH_Scheduler.Data
             {
                 if (_rcsRegionUnit == value) return;
                 _rcsRegionUnit = value;
-                OnPropertyChanged("RcsRegion");
+                OnPropertyChanged("RcsRegionUnit");
             }
         }
 

@@ -22,7 +22,7 @@
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                     AutoGenerateColumns="False"
-                    CanUserAddRows="True"
+                    CanUserAddRows="False"
                     CanUserSortColumns="True"
                     ItemsSource="{Binding RemainingHomes}">
 
