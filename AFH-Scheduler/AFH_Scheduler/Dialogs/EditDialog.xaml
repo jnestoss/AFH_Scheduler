@@ -275,10 +275,10 @@
 
 
                     <StackPanel
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Grid.Column="0"
                         Grid.ColumnSpan="6"
-                        Margin="0,50,60,0"
+                        Margin="0,10,60,0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
 
@@ -327,6 +327,17 @@
                             TextBlock.Foreground="Black"
                             ToolTip="Delete this Provider">
                             Delete
+                        </Button>
+
+                        <Button
+                            Margin="8,0,0,0"
+                            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                            IsCancel="True"
+                            Style="{DynamicResource MaterialDesignFlatButton}">
+                            <Button.CommandParameter>
+                                <system:String>DEACTIVATE</system:String>
+                            </Button.CommandParameter>
+                            Deactivate
                         </Button>
 
                     </StackPanel>

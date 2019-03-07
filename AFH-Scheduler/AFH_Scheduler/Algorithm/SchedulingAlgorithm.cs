@@ -79,7 +79,7 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region Checking For Unique Inspection
-        public bool CheckingForUniqueInspection(HomeInspectionEntities table, DateTime newInspection, int pHome_ID)
+        public bool CheckingForUniqueInspection(HomeInspectionEntities table, DateTime newInspection, long pHome_ID)
         {
             bool isUniqueDate = false;
             string dateComparison = newInspection.ToShortDateString();
@@ -276,14 +276,14 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region Forecasting future inspections
-        public string ForecastingFutureInspection(long homeID)
+        public Inspection_Outcome ForecastingFutureInspection(long homeID)
         {
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = table.Home_History.Where(r => r.FK_PHome_ID == homeID).ToList();
 
             if (history.Count == 0)
             {
-                return "";
+                return null;
             }
 
             string forecastedOutcome = "";
@@ -296,7 +296,8 @@ namespace AFH_Scheduler.Algorithm
                     forecastedOutcome = outcome.FK_IOutcome_Code;
                 }
             }
-            return forecastedOutcome;
+            var resultedOutcome = table.Inspection_Outcome.Where(r => r.IOutcome_Code == forecastedOutcome).FirstOrDefault();
+            return resultedOutcome;
         }
         #endregion
     }
