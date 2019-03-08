@@ -135,7 +135,7 @@ namespace AFH_Scheduler.Dialogs
                         
                         dynamic colCell = col.Cells.Value2;
 
-                        if (colCell[1, 1].IndexOf("ProviderName", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
+                        if (colCell[1, 1].IndexOf("FacilityPOC", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
                         {
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in colCell)
@@ -209,7 +209,7 @@ namespace AFH_Scheduler.Dialogs
                                 ImportedLicenseInfo[7].Add(actualDate);
                             }
                         }
-                        else if (colCell[1, 1].IndexOf("RCSRegion", StringComparison.OrdinalIgnoreCase) > -1)
+                        else if (colCell[1, 1].IndexOf("RCSRegionUnit", StringComparison.OrdinalIgnoreCase) > -1)
                         {
                             ImportedLicenseInfo.Add(new List<string>());
                             foreach (var cel in (dynamic) col.Cells.Value)
@@ -218,17 +218,6 @@ namespace AFH_Scheduler.Dialogs
                                     ImportedLicenseInfo[8].Add("");
                                 else
                                     ImportedLicenseInfo[8].Add(cel.ToString());
-                            }
-                        }
-                        else if (colCell[1, 1].IndexOf("Unit", StringComparison.OrdinalIgnoreCase) > -1)
-                        {
-                            ImportedLicenseInfo.Add(new List<string>());
-                            foreach (var cel in (dynamic) col.Cells.Value)
-                            {
-                                if (cel == null)
-                                    ImportedLicenseInfo[9].Add("");
-                                else
-                                    ImportedLicenseInfo[9].Add(cel.ToString());
                             }
                         }
                     }
