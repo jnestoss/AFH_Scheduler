@@ -16,8 +16,8 @@ namespace AFH_Scheduler.Dialogs
     public class ImportDataPreviewVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
-        private static ObservableCollection<ScheduleModel> _importedHomes;
-        public ObservableCollection<ScheduleModel> ImportedHomes
+        private static ObservableCollection<HomeModel> _importedHomes;
+        public ObservableCollection<HomeModel> ImportedHomes
         {
             get { return _importedHomes; }
             set
@@ -85,7 +85,7 @@ namespace AFH_Scheduler.Dialogs
 
         public ImportDataPreviewVM()
         {
-            _importedHomes = new ObservableCollection<ScheduleModel>();
+            _importedHomes = new ObservableCollection<HomeModel>();
             _importedLicenseInfo = new List<List<string>>();
             _uniqueProvIDs = new List<long>();
             _uniqueHomeIDs = new List<long>();
@@ -304,23 +304,23 @@ namespace AFH_Scheduler.Dialogs
                     }
                 }
                 ImportedHomes.Add(// * = From the Excel file
-                                new ScheduleModel
-                                (
-                                    provID,   //Provider ID
-                                    GenerateHomeID(),     //Home Database ID
-                                    provName,                //Provider Name*
-                                    Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
-                                    ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
-                                    ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
-                                    ImportedLicenseInfo[addressRow][rowItem],     //Address*
-                                    ImportedLicenseInfo[cityRow][rowItem],     //City*
-                                    ImportedLicenseInfo[zipRow][rowItem],     //Zip*
-                                    "",         //Recent
-                                    ImportedLicenseInfo[inspRow][rowItem],               //Next Inspection*
-                                    alg.DropDateMonth(ImportedLicenseInfo[inspRow][rowItem], false),//18th Month Drop Date
-                                    true,
-                                    ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
-                                )
+                                new HomeModel
+                                {
+                                    ProviderID = provID,
+                                    HomeID = GenerateHomeID(),     //Home Database ID
+                                    ProviderName = provName,                //Provider Name*
+                                    HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
+                                    HomeName = ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
+                                    Phone = ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
+                                    Address = ImportedLicenseInfo[addressRow][rowItem],     //Address*
+                                    City = ImportedLicenseInfo[cityRow][rowItem],     //City*
+                                    ZIP = ImportedLicenseInfo[zipRow][rowItem],     //Zip*
+                                    RecentInspection = "",         //Recent
+                                    NextInspection = ImportedLicenseInfo[inspRow][rowItem],               //Next Inspection*
+                                    EighteenthMonthDate = alg.DropDateMonth(ImportedLicenseInfo[inspRow][rowItem], false),//18th Month Drop Date
+                                    HasNoProvider = true,
+                                    RcsRegion = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
+                                }
                             );
             }
         }

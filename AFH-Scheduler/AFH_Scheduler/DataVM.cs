@@ -290,7 +290,7 @@ namespace AFH_Scheduler
         {
             var importData = new ImportDataPreviewVM();
             var view = new ImportDataPreview(importData);
-            var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerNewHome);
+            var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
             if (result.Equals("IMPORT"))
             {
                 foreach (var importedHome in importData.ImportedHomes)
@@ -480,7 +480,7 @@ namespace AFH_Scheduler
         {
             var createdHome = new NewHomeDialogVM();
             var view = new NewHomeDialog(createdHome);
-            var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerNewHome);
+            var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
 
             if (DialogHostSuccess)
             {
@@ -497,18 +497,18 @@ namespace AFH_Scheduler
                 Providers.Add(
                     new HomeModel
                     {
-                        ProviderID = Convert.ToInt64(home.SelectedProviderName.ProviderID),
+                        ProviderID = Convert.ToInt64(home.ProviderID),
                         HomeID = home.HomeID,
-                        ProviderName = home.SelectedProviderName.ProviderName,
+                        ProviderName = home.ProviderName,
                         HomeLicenseNum = Convert.ToInt64(home.HomeLicenseNum),
-                        HomeName = home.HomeLicensedName,
-                        Phone = home.HomePhoneNumber,
+                        HomeName = home.HomeName,
+                        Phone = home.Phone,
                         Address = home.Address,
                         City = home.City,
-                        ZIP = home.Zipcode,
+                        ZIP = home.ZIP,
                         RecentInspection = recentDate,
-                        NextInspection = home.InspectionDate.ToShortDateString(),
-                        EighteenthMonthDate = alg.DropDateMonth(home.InspectionDate.ToShortDateString(), false),
+                        NextInspection = home.NextInspection,
+                        EighteenthMonthDate = alg.DropDateMonth(home.NextInspection, false),
                         IsActive = true,
                         RcsRegion = home.RcsRegion,
                         RcsUnit = home.RcsUnit
@@ -590,7 +590,7 @@ namespace AFH_Scheduler
                     DataContext = new CompleteVM(SelectedHome)
                 };
 
-                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandler);
+                var result = await DialogHost.Show(view, "WindowDialogs", CompleteInspectionClosingEventHandler);
             }
         }
 
@@ -598,7 +598,7 @@ namespace AFH_Scheduler
         {
             var vm = new InactiveHomeListVM(InActiveHomes);
             var view = new InactiveHomeList(vm);
-            var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerNewHome);
+            var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
             if (result.Equals("Submit"))
             {
 
@@ -673,7 +673,7 @@ namespace AFH_Scheduler
 
                 view.setDataContext(SelectedHome);
 
-                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+                var result = await DialogHost.Show(view, "WindowDialogs", EditClosingEventHandler);
 
                 //if (result.Equals("DELETE"))
                 //{
@@ -716,8 +716,7 @@ namespace AFH_Scheduler
         #endregion
 
         #region Closing Event Handlers
-        private void ClosingEventHandlerNewHome(object sender, DialogClosingEventArgs eventArgs)
-
+        private void NewHomeClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("Dialog closed successfully");
             if ((String)eventArgs.Parameter == "Cancel")
@@ -728,7 +727,32 @@ namespace AFH_Scheduler
             DialogHostSuccess = true;
         }
 
-        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        private void CompleteInspectionClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            Console.WriteLine("Dialog closed successfully");
+            if ((String)eventArgs.Parameter == "Cancel")
+            {
+                if((String)eventArgs.Parameter == "SUBMIT")
+                {
+                    CompleteVM completeDialogContext = ((CompleteVM)((EditDialog)eventArgs.Session.Content).DataContext);
+                    HomeModel updatedHomeValues = completeDialogContext.SelectedHome;
+
+                    using(HomeInspectionEntities db = new HomeInspectionEntities())
+                    {
+                        string nextInspection = updatedHomeValues.NextInspection;
+
+                        Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == updatedHomeValues.HomeID);
+
+                        if(selectHome != null)
+                        {
+                            selectHome.Scheduled_Inspections.First(r => r.SInspections_Date == completeDialogContext.PreviousInspection).SInspections_Date = nextInspection;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void EditClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("Dialog closed successfully");
             if ((String)eventArgs.Parameter == "Cancel") return;
@@ -760,7 +784,8 @@ namespace AFH_Scheduler
                         selectHome.PHome_City = city;
                         selectHome.PHome_Zipcode = zip;
                         selectHome.PHome_Phonenumber = phone;
-                        SelectedHome.NextInspection = nextInspection;
+                        selectHome.Scheduled_Inspections.First(r => r.SInspections_Date == editDialogContext.PreviousInspection).SInspections_Date = nextInspection;
+                        //SelectedHome.NextInspection = nextInspection;
 
                         db.SaveChanges();
                     }

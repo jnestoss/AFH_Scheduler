@@ -13,6 +13,7 @@ using MaterialDesignThemes.Wpf;
 using AFH_Scheduler.Algorithm;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows;
 
 namespace AFH_Scheduler.Dialogs
 {
@@ -81,6 +82,23 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private string _previousInspection;
+        public string PreviousInspection {
+            get => _previousInspection;
+            set {
+                if (_previousInspection == value) return;
+                _previousInspection = value;
+            }
+        }
+
+        //private RelayCommand _saveAndClose;
+        //public RelayCommand SaveAndClose {
+        //    get {
+        //        if (_saveAndClose == null) _saveAndClose = new RelayCommand<Window>(SaveAndCloseCommand);
+        //        return _saveAndClose;
+        //    }
+        //}
+
         private RelayCommand _calcDate;
         public RelayCommand CalcDate {
             get {
@@ -129,6 +147,9 @@ namespace AFH_Scheduler.Dialogs
             SelectedCode = GetMostRecentOutcome();
 
             TextSearch = SelectedSchedule.ProviderName;
+
+            //saving the previous date
+            PreviousInspection = SelectedSchedule.NextInspection;
         }
 
         private int ProviderSort(string x, string y)
@@ -194,6 +215,11 @@ namespace AFH_Scheduler.Dialogs
                 }
             }
             return providerNames;
+        }
+
+        private void SaveAndCloseCommand(Window window)
+        {
+
         }
 
         private int GetDistance(string provider)

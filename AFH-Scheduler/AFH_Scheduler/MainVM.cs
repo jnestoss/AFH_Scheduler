@@ -11,7 +11,6 @@ namespace AFH_Scheduler
         public MainVM()
         {
             CurrentPageViewModel = new LoginViewVM(this);
-
         }
 
 

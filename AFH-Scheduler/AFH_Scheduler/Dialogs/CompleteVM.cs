@@ -18,7 +18,7 @@ namespace AFH_Scheduler.Dialogs
         public string Name => "Complete Inspection Dialog";
 
         public HomeModel _selectedSchedule;
-        public HomeModel SelectedSchedule {
+        public HomeModel SelectedHome {
             get { return _selectedSchedule; }
             set {
                 if (_selectedSchedule == value) return;
@@ -27,11 +27,21 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private string _previousInspection;
+        public string PreviousInspection {
+            get => _previousInspection;
+            set {
+                if (_previousInspection == value) return;
+                _previousInspection = value;
+            }
+        }
+
         public static long _homeIDSave;
 
         public CompleteVM(HomeModel scheduleData)
         {
-            SelectedSchedule = scheduleData;
+            SelectedHome = scheduleData;
+            PreviousInspection = SelectedHome.NextInspection;
         }
     }
 }
