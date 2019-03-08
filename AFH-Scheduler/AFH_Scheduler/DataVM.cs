@@ -311,13 +311,89 @@ namespace AFH_Scheduler
             {
                 foreach (var importedHome in importData.ImportedHomes)
                 {
-                    if (importedHome.IsActive)
+                    using (HomeInspectionEntities db = new HomeInspectionEntities())
                     {
-                        Providers.Add(importedHome);
-                    }
-                    else
-                    {
-                        InActiveHomes.Add(importedHome);
+                        Nullable<long> provID;
+                        if (importedHome.ProviderID == -1)
+                        {
+                            provID = null;
+                        }
+                        else
+                        {
+                            provID = importedHome.ProviderID;
+                        }
+                        var uniqueLicense = db.Provider_Homes.Where(r => r.PHome_LicenseNumber.Equals(importedHome.HomeLicenseNum.ToString())).ToList();
+                        if(uniqueLicense.Count == 0)
+                        {
+                            if (provID != null)
+                            {
+                                var prov = db.Providers.Where(r => r.Provider_ID == provID).ToList();
+                                if (prov.Count == 0) //New Provider
+                                {
+                                    db.Providers.Add(new Provider
+                                    {
+                                        Provider_ID = importedHome.ProviderID,
+                                        Provider_Name = importedHome.ProviderName
+                                    });
+                                    db.SaveChanges();
+                                }
+                            }
+
+                            db.Provider_Homes.Add(new Provider_Homes
+                            {
+                                PHome_ID = importedHome.HomeID,
+                                PHome_Address = importedHome.Address,
+                                PHome_City = importedHome.City,
+                                PHome_Zipcode = importedHome.ZIP,
+                                PHome_Phonenumber = importedHome.Phone,
+                                FK_Provider_ID = provID,
+                                PHome_Name = importedHome.HomeName,
+                                PHome_LicenseNumber = importedHome.HomeLicenseNum.ToString()
+                            });
+                            db.SaveChanges();
+
+
+                            long newID;
+                            try
+                            {
+                                var recentHomeID = db.Scheduled_Inspections.OrderByDescending(r => r.SInspections_Id).FirstOrDefault();
+                                if (recentHomeID.SInspections_Id == Int64.MaxValue)
+                                {
+                                    newID = 0;
+                                    while (true)
+                                    {
+                                        var isUniqueID = db.Scheduled_Inspections.Where(r => r.SInspections_Id == newID).ToList();
+                                        if (isUniqueID.Count == 0)
+                                        {
+                                            break;
+                                        }
+                                        newID++;
+                                    }
+                                }
+                                else
+                                    newID = recentHomeID.SInspections_Id + 1;
+                            }
+                            catch (Exception e)
+                            {
+                                newID = 0;
+                            }
+                            db.Scheduled_Inspections.Add(new Scheduled_Inspections
+                            {
+                                SInspections_Id = newID,
+                                SInspections_Date = importedHome.NextInspection,
+                                FK_PHome_ID = importedHome.HomeID
+                            });
+                            db.SaveChanges();
+
+                            if (importedHome.IsActive)
+                            {
+                                Providers.Add(importedHome);
+                            }
+                            else
+                            {
+                                InActiveHomes.Add(importedHome);
+                            }
+                        }
                     }
                 }
             }
@@ -353,68 +429,106 @@ namespace AFH_Scheduler
                     try
                     {//Excel work here
                         xlWorkbook = xlApp.Workbooks.Add("");
-                        xlWorksheet = (Worksheet)xlWorkbook.ActiveSheet;
-                        /*"Please include:  
-                         * Region/unit; Checked
-                         * last inspection; Checked
-                         * current inspection; Checked
-                         * how many months and days those are apart; Checked
-                         *** code (result) from current inspection (we have shared codes to use based performance); 
-                         *** forecasted next inspection date; 
-                         * 17 month drop dead date; Checked
-                         * 18 month drop dead date (for forecasted inspection). Checked"
-                         */
+                        try {
+                            xlWorksheet = (Worksheet)xlWorkbook.ActiveSheet;
+                            /*"Please include:  
+                             * Region/unit; Checked
+                             * last inspection; Checked
+                             * current inspection; Checked
+                             * how many months and days those are apart; Checked
+                             *** code (result) from current inspection (we have shared codes to use based performance); 
+                             *** forecasted next inspection date; 
+                             * 17 month drop dead date; Checked
+                             * 18 month drop dead date (for forecasted inspection). Checked"
+                             */
 
-                        xlWorksheet.Cells[1, 1] = "License Number";
-                        xlWorksheet.Cells[1, 2] = "Provider";
-                        xlWorksheet.Cells[1, 3] = "Address";
-                        xlWorksheet.Cells[1, 4] = "City";
-                        xlWorksheet.Cells[1, 5] = "Zipcode";
-                        xlWorksheet.Cells[1, 6] = "Recent Inspection Date";
-                        xlWorksheet.Cells[1, 7] = "Next Inspection Date";
-                        xlWorksheet.Cells[1, 8] = "Interval in Months";
-                        xlWorksheet.Cells[1, 9] = "Interval in Days";
-                        xlWorksheet.Cells[1, 10] = "17th Month Drop Dead";
-                        xlWorksheet.Cells[1, 11] = "18th Month Drop Dead";
-                        xlWorksheet.Cells[1, 12] = "Outcome"; //From current inspection
-                        xlWorksheet.Cells[1, 13] = "Forecasted Next Inspection";//forecasted next inspection date
-                        xlWorksheet.Cells[1, 14] = "RCS Region";
-                        xlWorksheet.Cells[1, 15] = "RCS Unit";
+                            xlWorksheet.Cells[1, 1] = "License Number";
+                            xlWorksheet.Cells[1, 2] = "Provider";
+                            xlWorksheet.Cells[1, 3] = "Address";
+                            xlWorksheet.Cells[1, 4] = "City";
+                            xlWorksheet.Cells[1, 5] = "Zipcode";
+                            xlWorksheet.Cells[1, 6] = "Recent Inspection Date";
+                            xlWorksheet.Cells[1, 7] = "Next Inspection Date";
+                            xlWorksheet.Cells[1, 8] = "Interval in Months";
+                            xlWorksheet.Cells[1, 9] = "Interval in Days";
+                            xlWorksheet.Cells[1, 10] = "17th Month Drop Dead";
+                            xlWorksheet.Cells[1, 11] = "18th Month Drop Dead";
+                            xlWorksheet.Cells[1, 12] = "Current Outcome"; //From current inspection
+                            xlWorksheet.Cells[1, 13] = "Forecasted Next Inspection";//forecasted next inspection date
+                            xlWorksheet.Cells[1, 14] = "RCSRegionUnit";
 
 
-                        int row = 2;
-                        foreach (var provider in Providers)
-                        {
-                            //var home = db.Provider_Homes.Where(r => r.PHome_Address == provider.Address).First();                            
+                            int row = 2;
+                            foreach (var provider in Providers)
+                            {
+                                var forecastedOutcome = alg.ForecastingFutureInspection(provider.HomeID);
+                                xlWorksheet.Cells[row, 1] = provider.ProviderID;
+                                xlWorksheet.Cells[row, 2] = provider.ProviderName;
+                                xlWorksheet.Cells[row, 3] = provider.Address;
+                                xlWorksheet.Cells[row, 4] = provider.City;
+                                xlWorksheet.Cells[row, 5] = provider.ZIP;
+                                xlWorksheet.Cells[row, 6] = provider.RecentInspection;
+                                xlWorksheet.Cells[row, 7] = provider.NextInspection;
+                                xlWorksheet.Cells[row, 8] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, true);//Interval in Months
+                                xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
+                                xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, true);//17th Month Drop Date
+                                xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
 
-                            xlWorksheet.Cells[row, 1] = provider.ProviderID;
-                            xlWorksheet.Cells[row, 2] = provider.ProviderName;
-                            xlWorksheet.Cells[row, 3] = provider.Address;
-                            xlWorksheet.Cells[row, 4] = provider.City;
-                            xlWorksheet.Cells[row, 5] = provider.ZIP;
-                            xlWorksheet.Cells[row, 6] = provider.RecentInspection;
-                            xlWorksheet.Cells[row, 7] = provider.NextInspection;
-                            xlWorksheet.Cells[row, 8] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, true);//Interval in Months
-                            xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
-                            xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, true);//17th Month Drop Date
-                            xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
-                            xlWorksheet.Cells[row, 12] = "";//Outcome from current inspection
-                            xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
-                            xlWorksheet.Cells[row, 14] = provider.RcsRegion;//RCS Region
-                            xlWorksheet.Cells[row, 15] = provider.RcsUnit;//RCS Unit
+                                if (forecastedOutcome == null)
+                                {
+                                    xlWorksheet.Cells[row, 12] = "";//Outcome from current inspection
+                                    xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
+                                }
+                                else
+                                {
+                                    xlWorksheet.Cells[row, 12] = forecastedOutcome.IOutcome_Code;//Outcome from current inspection
 
-                            row++;
+                                    var insp = SchedulingAlgorithm.NextScheduledDate(forecastedOutcome,
+                                        alg.ExtractDateTime(provider.NextInspection));
+
+                                    if (alg.CheckingForUniqueInspection(db, insp, provider.HomeID))
+                                    {
+                                        xlWorksheet.Cells[row, 13] = insp;//forecasted next inspection date
+                                    }
+                                    else
+                                    {
+                                        bool dateCleared = false;
+                                        do
+                                        {
+                                            insp.AddDays(1);
+                                            SchedulingAlgorithm.CheckDay(insp);
+                                            if (alg.CheckingForUniqueInspection(db, insp, provider.HomeID))
+                                            {
+                                                xlWorksheet.Cells[row, 13] = insp;//forecasted next inspection date
+                                                dateCleared = true;
+                                            }
+                                        } while (!dateCleared);
+                                    }
+                                }
+
+                                xlWorksheet.Cells[row, 14] = provider.RcsRegionUnit;//RCS Region
+
+                                row++;
+                            }
+
+                            xlWorksheet.get_Range("A1", "N1").EntireColumn.AutoFit();
+
+                            //xlApp.Visible = false;
+                            //xlApp.UserControl = false;
+                            if (fileName.Contains(".xlsx"))
+                                xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlOpenXMLWorkbook);
+                            else if (fileName.Contains(".csv"))
+                            {
+                                xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlCSVWindows);
+                            }
                         }
-
-                        xlWorksheet.get_Range("A1", "N1").EntireColumn.AutoFit();
-
-                        //xlApp.Visible = false;
-                        //xlApp.UserControl = false;
-                        if (fileName.Contains(".xlsx"))
-                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlOpenXMLWorkbook);
-                        else if (fileName.Contains(".csv"))
+                        catch (Exception e)
                         {
-                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlCSVWindows);
+                            Console.WriteLine("Problem with Excel " + e.ToString());
+
+                        }
+                        finally
+                        {
                             xlWorkbook.Close(false);
                         }
 
@@ -427,7 +541,6 @@ namespace AFH_Scheduler
                     }
                     finally
                     {
-                        xlApp.Workbooks.Close();
                         xlApp.Quit();
                     }
                 }
@@ -446,13 +559,19 @@ namespace AFH_Scheduler
         {
             using(HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                var provs = db.Providers.ToList();
-                
-                foreach (var item in provs)
+                //For fixing imported data
+                /*var removeHome = db.Providers.Where(r => r.Provider_Name.Equals("No Provider")).ToList();
+                foreach (var remover in removeHome)
                 {
-                    var homes = db.Provider_Homes.Where(r=> r.FK_Provider_ID == item.Provider_ID).ToList();
-                    foreach (var house in homes)
-                    {
+                    db.Providers.Remove(remover);
+                    db.SaveChanges();
+                }*/
+
+                long provID;
+                string provName;
+                var homes = db.Provider_Homes.ToList();
+                foreach (var house in homes)
+                {
                         string recentDate;
                         var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID));
                         if (recentInspec == null)
@@ -463,30 +582,42 @@ namespace AFH_Scheduler
                             recentDate = recentInspec.HHistory_Date;
 
                         var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
-                        
-                        Providers.Add(
+
+                    if(house.FK_Provider_ID == null)
+                    {
+                        provID = -1;
+                        provName = "No Provider";
+                    }
+                    else
+                    {
+                        var provs = db.Providers.Where(r => r.Provider_ID == house.FK_Provider_ID).First();
+
+                        provID = provs.Provider_ID;
+                        provName = provs.Provider_Name;
+                    }
+
+
+                    Providers.Add(
                             new ScheduleModel
                             (
-                                item.Provider_ID,
+                                provID,
                                 house.PHome_ID,
-                                item.Provider_Name, //Provider Name
-                                -1, //License Number
-                                "",//Home Name
+                                provName, //Provider Name
+                                Convert.ToInt64(house.PHome_LicenseNumber), //License Number
+                                house.PHome_Name,//Home Name
                                 house.PHome_Phonenumber,
                                 house.PHome_Address,//Address
                                 house.PHome_City,
                                 house.PHome_Zipcode,
                                 recentDate,
                                 insp,
-                                this,
                                 alg.DropDateMonth(insp, false),
                                 true,
-                                "",
-                                ""
+                                ""//RCSRegionUnit
                             )
                         );
                     }
-                }
+                
 
             }
         }
@@ -525,75 +656,88 @@ namespace AFH_Scheduler
 
             if (DialogHostSuccess)
             {
-                string recentDate;
                 var home = createdHome.NewHomeCreated;
 
-                var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(home.HomeID));
-                if (recentInspec == null)
-                {
-                    recentDate = "";
-                }
-                else
-                    recentDate = recentInspec.HHistory_Date;
                 Providers.Add(
                    new ScheduleModel
                    (
-                   Convert.ToInt64(home.SelectedProviderName.ProviderID),
+                   Convert.ToInt64(createdHome.SelectedProviderName.ProviderID),
                    home.HomeID,
-                   home.SelectedProviderName.ProviderName,
+                   createdHome.SelectedProviderName.ProviderName,
                    Convert.ToInt64(home.HomeLicenseNum), //License Number
-                   home.HomeLicensedName,//Home Name
-                   home.HomePhoneNumber,//Phone Number
+                   home.HomeName,//Home Name
+                   home.Phone,//Phone Number
                    home.Address,
                    home.City,
-                   home.Zipcode,
-                   recentDate,
-                   home.InspectionDate.ToShortDateString(),//insp,
-                   this,
-                   alg.DropDateMonth(home.InspectionDate.ToShortDateString(), false),
+                   home.ZIP,
+                   "",
+                   home.NextInspection,//insp,
+                   alg.DropDateMonth(home.NextInspection, false),
                    true,
-                   home.RcsRegion,
-                   home.RcsUnit
+                   home.RcsRegionUnit//RCSRegionUnit
                    )
                    );
 
                 //Add to database
-                /*
+
+                Nullable<long> provID;
+                if (Convert.ToInt64(createdHome.SelectedProviderName.ProviderID) == -1)
+                {
+                    provID = null;
+                }
+                else
+                {
+                    provID = Convert.ToInt64(createdHome.SelectedProviderName.ProviderID);
+                }
+
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    db.Provider_Homes.Add(new Provider_Homes { 
+                    db.Provider_Homes.Add(new Provider_Homes {
                         PHome_ID = Convert.ToInt64(home.HomeID),
                         PHome_Address = home.Address,
                         PHome_City = home.City,
-                        PHome_Zipcode = home.Zipcode,
-                        PHome_Phonenumber = "don't call",
-                        FK_Provider_ID = Convert.ToInt64(home.ProviderID) });
+                        PHome_Zipcode = home.ZIP,
+                        PHome_Phonenumber = home.Phone,
+                        FK_Provider_ID = provID,
+                        PHome_Name = home.HomeName,
+                        PHome_LicenseNumber = home.HomeLicenseNum.ToString()
+                    });
                     db.SaveChanges();
 
-                    Random randomiz = new Random();
-                    int id = randomiz.Next(111, 8000 + 1);
-                    while (true)
+                    long newID;
+                    try
                     {
-                        var scheduled = db.Scheduled_Inspections.Where(r => r.SInspections_Id == id).ToList();
-                        if (scheduled.Count != 0)
+                        var recentHomeID = db.Scheduled_Inspections.OrderByDescending(r => r.SInspections_Id).FirstOrDefault();
+                        if (recentHomeID.SInspections_Id == Int64.MaxValue)
                         {
-                            id = randomiz.Next(111, 8000 + 1);//456789
+                            newID = 0;
+                            while (true)
+                            {
+                                var isUniqueID = db.Scheduled_Inspections.Where(r => r.SInspections_Id == newID).ToList();
+                                if (isUniqueID.Count == 0)
+                                {
+                                    break;
+                                }
+                                newID++;
+                            }
                         }
                         else
-                        {
-                            break;
-                        }
+                            newID = recentHomeID.SInspections_Id + 1;
+                    }
+                    catch (Exception e)
+                    {
+                        newID = 0;
                     }
 
                     db.Scheduled_Inspections.Add(new Scheduled_Inspections { 
-                        SInspections_Id = id,
-                        SInspections_Date = alg.ConvertDateToString(home.InspectionDate),
-                        FK_PHome_ID = Convert.ToInt64(home.HomeID) }
+                        SInspections_Id = newID,
+                        SInspections_Date = home.NextInspection,
+                        FK_PHome_ID = home.HomeID }
                     );
                     db.SaveChanges();
 
                 }
-                */
+                
                 MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
 
@@ -698,36 +842,41 @@ namespace AFH_Scheduler
                 view.setDataContext(SelectedHome);
 
                 var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandler);
+                if (result.Equals("DEACTIVATE"))
+                {
+                    InActiveHomes.Add(SelectedHome);
+                    Providers.Remove(SelectedHome);
+                }
 
-                //if (result.Equals("DELETE"))
-                //{
-                //    DeleteProviderConfirmationDialog(view);
-                //}
+                if (result.Equals("DELETE"))
+                {
+                    DeleteProviderConfirmationDialog(view);
+                }
             }
         }
 
 
-        //private async void DeleteProviderConfirmationDialog(object view)
-        //{
-        //    var deleteView = new DeleteConfirmationDialog();
+        private async void DeleteProviderConfirmationDialog(object view)
+        {
+            var deleteView = new DeleteConfirmationDialog();
 
-        //    var deleteResult = await DialogHost.Show(deleteView, "DeleteConfirmationDialog", GenericClosingEventHandler);
+            var deleteResult = await DialogHost.Show(deleteView, "DeleteConfirmationDialog", GenericClosingEventHandler);
 
-        //    if (deleteResult.Equals("Yes"))
-        //    {
-        //        using (HomeInspectionEntities db = new HomeInspectionEntities())
-        //        {
-        //            //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
-        //            var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == ((EditVM)((EditDialog)view).DataContext).SelectedSchedule.HomeID);
+            if (deleteResult.Equals("Yes"))
+            {
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
+                    var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == ((EditVM)((EditDialog)view).DataContext).SelectedSchedule.HomeID);
 
-        //            if (home != null)
-        //            {
-        //                db.Provider_Homes.Remove(home);
-        //                db.SaveChanges();
-        //            }
-        //        }
-        //    }
-        //}
+                    if (home != null)
+                    {
+                        db.Provider_Homes.Remove(home);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
 
         private void EditHistoryDialogOpen(object obj)
         {
@@ -828,17 +977,6 @@ namespace AFH_Scheduler
             }
 
             var temp = new ObservableCollection<ScheduleModel>();
-
-            /*if (SelectedFilter.ToString().Contains("Provider ID"))
-            {
-                foreach(var item in Providers)
-                {
-                    if (item.ProviderID.ToString().Equals(FilterItem))
-                    {
-                        temp.Add(item);                        
-                    }
-                }
-            }*/
 
             if (SelectedFilter.ToString().Contains("Provider Name"))
             {

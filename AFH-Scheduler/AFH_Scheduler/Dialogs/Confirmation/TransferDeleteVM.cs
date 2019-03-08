@@ -164,19 +164,17 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                                 id,
                                 house.PHome_ID,
                                 name,
-                                -1, //License Number
-                                "",//Home Name
-                                "",//Phone number
+                                Convert.ToInt64(house.PHome_LicenseNumber), //License Number
+                                house.PHome_Name,//Home Name
+                                house.PHome_Phonenumber,//Phone number
                                 house.PHome_Address,
                                 house.PHome_City,
                                 house.PHome_Zipcode,
                                 recentDate,
                                 insp,
-                                null,
                                 alg.DropDateMonth(insp, false),
                                 true,
-                                "",
-                                ""
+                                ""//RCSRegionUnit
                             )
                     );
                 }
