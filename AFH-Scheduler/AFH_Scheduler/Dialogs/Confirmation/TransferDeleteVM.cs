@@ -16,8 +16,8 @@ namespace AFH_Scheduler.Dialogs.Confirmation
     public class TransferDeleteVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
-        private static ObservableCollection<ScheduleModel> _remainingHomes;
-        public ObservableCollection<ScheduleModel> RemainingHomes
+        private static ObservableCollection<HomeModel> _remainingHomes;
+        public ObservableCollection<HomeModel> RemainingHomes
         {
             get { return _remainingHomes; }
             set
@@ -29,8 +29,8 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                 }
             }
         }
-        private static ObservableCollection<ScheduleModel> _chowedHomes;
-        public ObservableCollection<ScheduleModel> ChowedHomes
+        private static ObservableCollection<HomeModel> _chowedHomes;
+        public ObservableCollection<HomeModel> ChowedHomes
         {
             get { return _chowedHomes; }
             set
@@ -43,8 +43,8 @@ namespace AFH_Scheduler.Dialogs.Confirmation
             }
         }
 
-        private static ObservableCollection<ScheduleModel> _removedHomes;
-        public ObservableCollection<ScheduleModel> RemovedHomes
+        private static ObservableCollection<HomeModel> _removedHomes;
+        public ObservableCollection<HomeModel> RemovedHomes
         {
             get { return _removedHomes; }
             set
@@ -92,7 +92,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
 
         private async void EditHomeLicense(object obj)
         {
-            var selectItem = (ScheduleModel)obj;
+            var selectItem = (HomeModel)obj;
             var view = new EditDialog();
 
             view.setDataContext(selectItem);
@@ -138,9 +138,9 @@ namespace AFH_Scheduler.Dialogs.Confirmation
         public TransferDeleteVM(long id, string name)
         {
             AllHomesCleared = false;
-            _chowedHomes = new ObservableCollection<ScheduleModel>();
-            _remainingHomes = new ObservableCollection<ScheduleModel>();
-            _removedHomes = new ObservableCollection<ScheduleModel>();
+            _chowedHomes = new ObservableCollection<HomeModel>();
+            _remainingHomes = new ObservableCollection<HomeModel>();
+            _removedHomes = new ObservableCollection<HomeModel>();
 
             ProvName = id + "-" + name;
             using (HomeInspectionEntities db = new HomeInspectionEntities())
@@ -159,23 +159,24 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                     var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
 
                     RemainingHomes.Add(
-                            new ScheduleModel
-                            (
-                                id,
-                                house.PHome_ID,
-                                name,
-                                Convert.ToInt64(house.PHome_LicenseNumber), //License Number
-                                house.PHome_Name,//Home Name
-                                house.PHome_Phonenumber,//Phone number
-                                house.PHome_Address,
-                                house.PHome_City,
-                                house.PHome_Zipcode,
-                                recentDate,
-                                insp,
-                                alg.DropDateMonth(insp, false),
-                                true,
-                                ""//RCSRegionUnit
-                            )
+                        new HomeModel
+                        {
+                            ProviderID = id,
+                            HomeID = house.PHome_ID,
+                            ProviderName = name,
+                            HomeLicenseNum = -1,
+                            HomeName = "",
+                            Phone = "",
+                            Address = house.PHome_Address,
+                            City = house.PHome_City,
+                            ZIP = house.PHome_Zipcode,
+                            RecentInspection = recentDate,
+                            NextInspection = insp,
+                            EighteenthMonthDate = alg.DropDateMonth(insp, false),
+                            IsActive = true,
+                            RcsRegion = "",
+                            RcsUnit = ""
+                        }
                     );
                 }
             }

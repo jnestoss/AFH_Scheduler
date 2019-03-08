@@ -11,16 +11,14 @@ namespace AFH_Scheduler.Data
     public class HistoryDetailModel: INotifyPropertyChanged
     {
         private bool _isSelected;
-        private long _providerID;
-        private long _homeID;
+        private string _homeName;
         private string _inspectiondate;
         private string _inspectionoutcome;
 
-        public HistoryDetailModel(long proID, long phomeID, string inspectiondate, string inspectionoutcome)
+        public HistoryDetailModel(string name, string inspectiondate, string inspectionoutcome)
         {
             IsSelected = false;
-            ProviderID = proID;
-            HomeID = phomeID;
+            HomeName = name;
             _inspectiondate = inspectiondate;
             _inspectionoutcome = inspectionoutcome;
         }
@@ -36,25 +34,14 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public long ProviderID
+        public string HomeName
         {
-            get { return _providerID; }
+            get { return _homeName; }
             set
             {
-                if (_providerID == value) return;
-                _providerID = value;
+                if (_homeName == value) return;
+                _homeName = value;
                 OnPropertyChanged("ProviderID");
-            }
-        }
-
-        public long HomeID
-        {
-            get { return _homeID; }
-            set
-            {
-                if (_homeID == value) return;
-                _homeID = value;
-                OnPropertyChanged("HomeID");
             }
         }
 

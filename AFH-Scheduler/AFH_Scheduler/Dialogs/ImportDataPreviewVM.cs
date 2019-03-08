@@ -16,8 +16,8 @@ namespace AFH_Scheduler.Dialogs
     public class ImportDataPreviewVM : ObservableObject, IPageViewModel
     {
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
-        private static ObservableCollection<ScheduleModel> _importedHomes;
-        public ObservableCollection<ScheduleModel> ImportedHomes
+        private static ObservableCollection<HomeModel> _importedHomes;
+        public ObservableCollection<HomeModel> ImportedHomes
         {
             get { return _importedHomes; }
             set
@@ -85,7 +85,7 @@ namespace AFH_Scheduler.Dialogs
 
         public ImportDataPreviewVM()
         {
-            _importedHomes = new ObservableCollection<ScheduleModel>();
+            _importedHomes = new ObservableCollection<HomeModel>();
             _importedLicenseInfo = new List<List<string>>();
             _uniqueProvIDs = new List<long>();
             _uniqueHomeIDs = new List<long>();
@@ -263,25 +263,23 @@ namespace AFH_Scheduler.Dialogs
             for (int rowItem = 1; rowItem < rows; rowItem++)
             {
                 ImportedHomes.Add(// * = From the Excel file
-                                new ScheduleModel
-                                (
-                                    GenerateProviderID(),   //Provider ID
-                                    GenerateHomeID(),     //Home Database ID
-                                    ImportedLicenseInfo[0][rowItem],                //Provider Name*
-                                    Convert.ToInt64(ImportedLicenseInfo[1][rowItem]),//License Number*
-                                    ImportedLicenseInfo[2][rowItem],     //Home Name*
-                                    ImportedLicenseInfo[6][rowItem],     //Phone Number*
-                                    ImportedLicenseInfo[3][rowItem],     //Address*
-                                    ImportedLicenseInfo[4][rowItem],     //City*
-                                    ImportedLicenseInfo[5][rowItem],     //Zip*
-                                    "",         //Recent
-                                    ImportedLicenseInfo[7][rowItem],               //Next Inspection*
-                                    null,               //DataVM
-                                    alg.DropDateMonth(ImportedLicenseInfo[7][rowItem], false),//18th Month Drop Date
-                                    false,
-                                    ImportedLicenseInfo[8][rowItem], //RCSRegion
-                                    ImportedLicenseInfo[9][rowItem]  //Unit
-                                )
+                                new HomeModel
+                                {
+                                    ProviderID = provID,
+                                    HomeID = GenerateHomeID(),     //Home Database ID
+                                    ProviderName = provName,                //Provider Name*
+                                    HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
+                                    HomeName = ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
+                                    Phone = ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
+                                    Address = ImportedLicenseInfo[addressRow][rowItem],     //Address*
+                                    City = ImportedLicenseInfo[cityRow][rowItem],     //City*
+                                    ZIP = ImportedLicenseInfo[zipRow][rowItem],     //Zip*
+                                    RecentInspection = "",         //Recent
+                                    NextInspection = ImportedLicenseInfo[inspRow][rowItem],               //Next Inspection*
+                                    EighteenthMonthDate = alg.DropDateMonth(ImportedLicenseInfo[inspRow][rowItem], false),//18th Month Drop Date
+                                    HasNoProvider = true,
+                                    RcsRegion = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
+                                }
                             );
             }
         }
