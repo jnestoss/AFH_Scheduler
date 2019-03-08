@@ -65,7 +65,7 @@ namespace AFH_Scheduler.Database.LoginDB
         }
         private static SQLiteConnection GetConnection()
         {
-            string folder = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\..\..\..\Database\LoginDB\";
+            string folder = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"..\..\..\Database\LoginDB\";
             string filter = "UserLogin.db";
             string[] files = Directory.GetFiles(folder, filter);
             return new SQLiteConnection(("Data Source=" + files[0] + ";Version=3;FailIfMissing=True"));

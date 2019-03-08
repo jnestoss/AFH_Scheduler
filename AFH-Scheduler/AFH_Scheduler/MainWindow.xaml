@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:AFH_Scheduler"
-        xmlns:schedules="clr-namespace:AFH_Scheduler.Schedules"
         xmlns:login="clr-namespace:AFH_Scheduler.Login"    
         WindowStyle="None"
         mc:Ignorable="d" Height="720" Width="1080" ResizeMode="NoResize" Visibility="Visible"
@@ -18,7 +17,7 @@
         <DataTemplate DataType="{x:Type login:LoginViewVM}">
             <login:LoginView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type schedules:DataVM}">
+        <DataTemplate DataType="{x:Type local:DataVM}">
             <local:DataView />
         </DataTemplate>
     </Window.Resources>
@@ -28,15 +27,16 @@
 
 
         <StackPanel Height="40" Background="#FF2196F3" Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="left" VerticalAlignment="Center" Margin="10,0,0,0">
+                <Label FontSize="18" Width="250" Foreground="WhiteSmoke">Adult Family Home Scheduler</Label>
+            </StackPanel>
             <Grid
                 x:Name="DragableArea"
                 Background="Transparent"
                 MouseDown="DragCommand"
-                Width="635"/>
-            <StackPanel HorizontalAlignment="left">
-                <Label FontSize="18" Width="125" Foreground="WhiteSmoke">AFH Scheduler</Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="180">
+                Width="500"/>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="360">
 
                 <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
