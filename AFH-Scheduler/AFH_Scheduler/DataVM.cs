@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System;
+using System.IO;
 using AFH_Scheduler.Helper_Classes;
 using AFH_Scheduler.Database;
 using System.Collections.ObjectModel;
@@ -33,6 +34,43 @@ namespace AFH_Scheduler
         }
 
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
+        private string _normalCurveValue;
+        public string NormalCurve
+        {
+            get { return _normalCurveValue; }
+            set
+            {
+                if (_normalCurveValue == value) return;
+                _normalCurveValue = value;
+                OnPropertyChanged("NormalCurve");
+                CheckNormalCurveState();
+            }
+        }
+
+        private string _normalCurveResultMsg;
+        public string NormalCurveResultMsg
+        {
+            get { return _normalCurveResultMsg; }
+            set
+            {
+                if (_normalCurveResultMsg == value) return;
+                _normalCurveResultMsg = value;
+                OnPropertyChanged("NormalCurveResultMsg");
+            }
+        }
+
+        private System.Windows.Media.Brush _normalCurveState;
+        public System.Windows.Media.Brush NormalCurveState
+        {
+            get { return _normalCurveState; }
+            set
+            {
+                if (_normalCurveState == value) return;
+                _normalCurveState = value;
+                OnPropertyChanged("NormalCurveState");
+            }
+        }
 
         private User _usr;
 
@@ -290,6 +328,16 @@ namespace AFH_Scheduler
             StartDatePicked = DateTime.Today;
             EndDatePicked = DateTime.Today;
 
+            string text = File.ReadAllText(@"..\..\NormalCurve\NormalCurveValue.txt");
+            double testCase;
+            if (!Double.TryParse(text, out testCase))
+            {
+                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
+                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
+                text = "15.99";
+            }
+            NormalCurve = text;
+
             GenData();
 
 
@@ -471,7 +519,7 @@ namespace AFH_Scheduler
                                 xlWorksheet.Cells[row, 7] = provider.NextInspection;
                                 xlWorksheet.Cells[row, 8] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, true);//Interval in Months
                                 xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
-                                xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, true);//17th Month Drop Date
+                                xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.RecentInspection, true);//17th Month Drop Date
                                 xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
 
                                 if (forecastedOutcome == null)
@@ -611,7 +659,7 @@ namespace AFH_Scheduler
                                 house.PHome_Zipcode,
                                 recentDate,
                                 insp,
-                                alg.DropDateMonth(insp, false),
+                                alg.DropDateMonth(recentDate, false),
                                 true,
                                 ""//RCSRegionUnit
                             )
@@ -670,7 +718,7 @@ namespace AFH_Scheduler
                    home.Address,
                    home.City,
                    home.ZIP,
-                   "",
+                   "",//Recent inspection
                    home.NextInspection,//insp,
                    alg.DropDateMonth(home.NextInspection, false),
                    true,
@@ -778,7 +826,7 @@ namespace AFH_Scheduler
                         {
                             String[] inspect = update.Split('-');
                             reactive.NextInspection = inspect[1];
-                            reactive.EighteenthMonthDate = alg.DropDateMonth(reactive.NextInspection, false);
+                            //reactive.EighteenthMonthDate = alg.DropDateMonth(reactive.RecentInspection, false);
                         }
                     }
                     Providers.Add(reactive);
@@ -1051,6 +1099,26 @@ namespace AFH_Scheduler
                 return true;
             }
             return false;
+        }
+
+        private void CheckNormalCurveState()
+        {
+            double curveValue = Convert.ToDouble(NormalCurve);
+            if(curveValue < 15.99)
+            {
+                NormalCurveState = System.Windows.Media.Brushes.SkyBlue;
+                NormalCurveResultMsg = "The list of inspections average out below the normal curve.";
+            }
+            else if(curveValue > 15.99)
+            {
+                NormalCurveState = System.Windows.Media.Brushes.OrangeRed;
+                NormalCurveResultMsg = "The list of inspections average out above the normal curve.";
+            }
+            else
+            {
+                NormalCurveState = System.Windows.Media.Brushes.LightGreen;
+                NormalCurveResultMsg = "The list of inspections average out approximatly at the normal curve.";
+            }
         }
         #endregion
 

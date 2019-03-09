@@ -46,7 +46,7 @@
                         Foreground="WhiteSmoke" 
                         VerticalAlignment="Center"
                         Command="{x:Static local:Commands.OpenSettingsCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                        CommandParameter="{Binding CurrentPageViewModel}">
                     <materialDesign:PackIcon Kind="Cog" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
                 <Button  Background="{x:Null}" 

@@ -172,7 +172,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                                 house.PHome_Zipcode,
                                 recentDate,
                                 insp,
-                                alg.DropDateMonth(insp, false),
+                                alg.DropDateMonth(recentDate, false),
                                 true,
                                 ""//RCSRegionUnit
                             )

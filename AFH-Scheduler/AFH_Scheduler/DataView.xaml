@@ -24,6 +24,16 @@
 
     <DockPanel LastChildFill="False">
 
+        <StackPanel
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0 15 0 0">
+            <TextBlock Margin="0 0 10 0" FontSize="16">Normal Curve: </TextBlock>
+            <TextBlock Text="{Binding NormalCurve}" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <TextBlock Margin="20 0 0 0" FontSize="16" Background="{Binding NormalCurveState}" Text="{Binding NormalCurveResultMsg}"/>
+        </StackPanel>
         <StackPanel 
             VerticalAlignment="Bottom" 
             DockPanel.Dock="Top" 
@@ -349,7 +359,7 @@
             <Button
                 Command="{Binding Path=AddNewHomeCommand}"
                 MaxWidth="255"
-                Margin="40 0 0 0"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Add a new home to database">
                 ADD NEW HOME
@@ -357,7 +367,7 @@
             <Button
                 Command="{Binding Path=InactiveListCommand}"
                 MaxWidth="255"
-                Margin="40 0 0 0"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="List all Inactive homes">
                 InActive Homes
@@ -365,7 +375,7 @@
             <Button
                 Command="{Binding ImportTableCommand}"
                 MaxWidth="255"
-                Margin="40 0 0 0"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Import Table From Excel Spreadsheet">
                 IMPORT
@@ -373,7 +383,7 @@
             <Button
                 Command="{Binding Path=ExportTableCommand}"
                 MaxWidth="255"
-                Margin="40"
+                Margin="30"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Export Table to Excel Spreadsheet">
                 EXPORT
