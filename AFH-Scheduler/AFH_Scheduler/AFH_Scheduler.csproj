@@ -212,6 +212,7 @@
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
+    <Compile Include="Data\Schedule_Data.cs" />
     <Compile Include="Dialogs\CompleteDialog.xaml.cs">
       <DependentUpon>CompleteDialog.xaml</DependentUpon>
     </Compile>
@@ -417,7 +418,6 @@
     </Compile>
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="Data\OutcomeModel.cs" />
-    <Compile Include="Data\HomeModel.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

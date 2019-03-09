@@ -26,10 +26,10 @@ namespace AFH_Scheduler.Database
         public string PHome_City { get; set; }
         public string PHome_Zipcode { get; set; }
         public string PHome_Phonenumber { get; set; }
+        public Nullable<long> FK_Provider_ID { get; set; }
         public string PHome_Name { get; set; }
         public string PHome_LicenseNumber { get; set; }
         public string PHome_RCSUnit { get; set; }
-        public Nullable<long> FK_Provider_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Home_History> Home_History { get; set; }
