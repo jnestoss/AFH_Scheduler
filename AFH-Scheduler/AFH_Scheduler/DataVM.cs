@@ -784,6 +784,9 @@ namespace AFH_Scheduler
                         selectHome.PHome_City = city;
                         selectHome.PHome_Zipcode = zip;
                         selectHome.PHome_Phonenumber = phone;
+                        Scheduled_Inspections homeDates = selectHome.Scheduled_Inspections.First();
+                        homeDates.SInspections_Date = nextInspection;
+                        
                         selectHome.Scheduled_Inspections.First(r => r.SInspections_Date == editDialogContext.PreviousInspection).SInspections_Date = nextInspection;
                         //SelectedHome.NextInspection = nextInspection;
 

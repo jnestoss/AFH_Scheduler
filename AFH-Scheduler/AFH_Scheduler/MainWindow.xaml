@@ -17,7 +17,6 @@
     WindowStyle="None"
     mc:Ignorable="d">
 
-
     <Window.Resources>
         <DataTemplate DataType="{x:Type login:LoginViewVM}">
             <login:LoginView />
