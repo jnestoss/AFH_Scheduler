@@ -16,6 +16,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -101,7 +116,7 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
@@ -117,9 +132,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.110.0\lib\net46\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.SQLite.EF6, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.EF6.1.0.110.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.110.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
@@ -192,6 +209,7 @@
     <Compile Include="DataVM.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
     <Compile Include="Data\LoginModel.cs" />
+    <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
     <Compile Include="Dialogs\CompleteDialog.xaml.cs">
@@ -272,6 +290,11 @@
     <Compile Include="Dialogs\SettingSubWindows\ProviderListVM.cs" />
     <Compile Include="Dialogs\SettingsVM.cs" />
     <Compile Include="HelperClasses\ICloseable.cs" />
+    <Compile Include="HomeInspectionDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeInspectionDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Login\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -381,10 +404,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands.cs" />
-    <Compile Include="Database\HomeInspection1.cs" />
-    <Compile Include="Database\HomeInspection1.Designer.cs">
-      <DependentUpon>HomeInspection1.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataReader.cs" />
     <Compile Include="Data\CompleteSchedule_Model.cs" />
     <Compile Include="Data\HistoryDetailModel.cs" />
@@ -439,6 +458,17 @@
     <None Include="Database\LoginDB\LoginDB.db" />
     <None Include="Database\LoginDB\LoginDB.db&amp;quot" />
     <None Include="Database\LoginDB\UserLogin.db" />
+    <None Include="HomeInspectionDataSet.xsc">
+      <DependentUpon>HomeInspectionDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="HomeInspectionDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>HomeInspectionDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="HomeInspectionDataSet.xss">
+      <DependentUpon>HomeInspectionDataSet.xsd</DependentUpon>
+    </None>
     <None Include="HomeInspectionDbDataSet.xsc">
       <DependentUpon>HomeInspectionDbDataSet.xsd</DependentUpon>
     </None>
@@ -462,19 +492,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Database\HomeInspection.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HomeInspection.edmx</DependentUpon>
-      <LastGenOutput>HomeInspection.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Database\HomeInspection.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HomeInspection.edmx</DependentUpon>
-      <LastGenOutput>HomeInspection.cs</LastGenOutput>
-    </Content>
-    <Resource Include="Images\NoProviderWarning.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -513,6 +530,30 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Database\HomeInspection.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+      <LastGenOutput>HomeInspection.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\HomeInspection.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HomeInspection.edmx</DependentUpon>
+      <LastGenOutput>HomeInspection.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.WinFX.targets" />

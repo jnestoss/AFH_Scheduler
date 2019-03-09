@@ -77,6 +77,17 @@
                         Height="25"
                         Foreground="WhiteSmoke"
                         Kind="Cog" />
+                <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                </Button>
+                <Button  Background="{x:Null}" 
+                        BorderBrush="{x:Null}" 
+                        Foreground="WhiteSmoke" 
+                        VerticalAlignment="Center"
+                        IsEnabled="{Binding SettingsEnabled}"
+                        Command="{x:Static local:Commands.OpenSettingsCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
+                    <materialDesign:PackIcon Kind="Cog" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
                 <Button
                     VerticalAlignment="Center"

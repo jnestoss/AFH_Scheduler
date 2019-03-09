@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\jnestoss\source\repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Home_History">
           <Key>
             <PropertyRef Name="HHistory_ID" />
@@ -31,9 +31,10 @@
           <Property Name="PHome_City" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="PHome_Zipcode" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="PHome_Phonenumber" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="FK_Provider_ID" Type="integer" />
           <Property Name="PHome_Name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="PHome_LicenseNumber" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="PHome_RCSUnit" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="FK_Provider_ID" Type="integer" />
         </EntityType>
         <EntityType Name="Providers">
           <Key>
@@ -48,6 +49,9 @@
           </Key>
           <Property Name="SInspections_Id" Type="integer" Nullable="false" />
           <Property Name="SInspections_Date" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="SInspections_SeventeenMonth" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="SInspections_EighteenMonth" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="SInspection_ForecastedDate" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="FK_PHome_ID" Type="integer" />
         </EntityType>
         <Association Name="FK_Home_History_0_0">
@@ -155,9 +159,10 @@
           <Property Name="PHome_City" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="PHome_Zipcode" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="PHome_Phonenumber" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="FK_Provider_ID" Type="Int64" />
           <Property Name="PHome_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="PHome_LicenseNumber" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="PHome_RCSUnit" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="FK_Provider_ID" Type="Int64" />
           <NavigationProperty Name="Home_History" Relationship="Self.FK_Home_History_1_0" FromRole="Provider_Homes" ToRole="Home_History" />
           <NavigationProperty Name="Provider" Relationship="Self.FK_Provider_Homes_0_0" FromRole="Provider_Homes" ToRole="Providers" />
           <NavigationProperty Name="Scheduled_Inspections" Relationship="Self.FK_Scheduled_Inspections_0_0" FromRole="Provider_Homes" ToRole="Scheduled_Inspections" />
@@ -176,6 +181,9 @@
           </Key>
           <Property Name="SInspections_Id" Type="Int64" Nullable="false" />
           <Property Name="SInspections_Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="SInspections_SeventeenMonth" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="SInspections_EighteenMonth" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="SInspection_ForecastedDate" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="FK_PHome_ID" Type="Int64" />
           <NavigationProperty Name="Provider_Homes" Relationship="Self.FK_Scheduled_Inspections_0_0" FromRole="Scheduled_Inspections" ToRole="Provider_Homes" />
         </EntityType>
@@ -283,9 +291,10 @@
                 <ScalarProperty Name="PHome_City" ColumnName="PHome_City" />
                 <ScalarProperty Name="PHome_Zipcode" ColumnName="PHome_Zipcode" />
                 <ScalarProperty Name="PHome_Phonenumber" ColumnName="PHome_Phonenumber" />
-                <ScalarProperty Name="FK_Provider_ID" ColumnName="FK_Provider_ID" />
                 <ScalarProperty Name="PHome_Name" ColumnName="PHome_Name" />
                 <ScalarProperty Name="PHome_LicenseNumber" ColumnName="PHome_LicenseNumber" />
+                <ScalarProperty Name="PHome_RCSUnit" ColumnName="PHome_RCSUnit" />
+                <ScalarProperty Name="FK_Provider_ID" ColumnName="FK_Provider_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -302,6 +311,9 @@
               <MappingFragment StoreEntitySet="Scheduled_Inspections">
                 <ScalarProperty Name="SInspections_Id" ColumnName="SInspections_Id" />
                 <ScalarProperty Name="SInspections_Date" ColumnName="SInspections_Date" />
+                <ScalarProperty Name="SInspections_SeventeenMonth" ColumnName="SInspections_SeventeenMonth" />
+                <ScalarProperty Name="SInspections_EighteenMonth" ColumnName="SInspections_EighteenMonth" />
+                <ScalarProperty Name="SInspection_ForecastedDate" ColumnName="SInspection_ForecastedDate" />
                 <ScalarProperty Name="FK_PHome_ID" ColumnName="FK_PHome_ID" />
               </MappingFragment>
             </EntityTypeMapping>

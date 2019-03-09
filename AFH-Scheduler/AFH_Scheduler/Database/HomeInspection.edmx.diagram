@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a82255a0eb5449d79f203171bbf62383" Name="Diagram1">
-        <EntityTypeShape EntityType="HomeInspectionModel.Home_History" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeInspectionModel.Inspection_Outcome" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeInspectionModel.Provider_Homes" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeInspectionModel.Provider" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+      <Diagram DiagramId="e723be9f92644503bebf936976a8175e" Name="Diagram1">
+        <EntityTypeShape EntityType="HomeInspectionModel.Home_History" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeInspectionModel.Inspection_Outcome" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeInspectionModel.Provider_Homes" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeInspectionModel.Provider" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HomeInspectionModel.Scheduled_Inspections" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
         <AssociationConnector Association="HomeInspectionModel.FK_Home_History_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="HomeInspectionModel.FK_Home_History_1_0" ManuallyRouted="false" />
