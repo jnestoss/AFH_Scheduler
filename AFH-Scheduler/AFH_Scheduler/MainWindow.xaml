@@ -77,17 +77,31 @@
                         Height="25"
                         Foreground="WhiteSmoke"
                         Kind="Cog" />
-                <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" VerticalAlignment="Center">
-                    <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
                 </Button>
-                <Button  Background="{x:Null}" 
-                        BorderBrush="{x:Null}" 
-                        Foreground="WhiteSmoke" 
-                        VerticalAlignment="Center"
-                        IsEnabled="{Binding SettingsEnabled}"
-                        Command="{x:Static local:Commands.OpenSettingsCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
-                    <materialDesign:PackIcon Kind="Cog" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="WhiteSmoke">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="HelpCircleOutline" />
+                </Button>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Command="{x:Static local:Commands.OpenSettingsCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                    Foreground="WhiteSmoke"
+                    IsEnabled="{Binding SettingsEnabled}">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="Cog" />
                 </Button>
                 <Button
                     VerticalAlignment="Center"

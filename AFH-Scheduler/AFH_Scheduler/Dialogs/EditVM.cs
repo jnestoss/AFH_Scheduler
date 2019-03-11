@@ -198,8 +198,8 @@ namespace AFH_Scheduler.Dialogs
 
         private void CalcNextInspectionDate(object o)
         {
-            DateTime date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now);
-            SelectedSchedule.NextInspection = $"{date.Month}/{date.Day}/{date.Year}";
+            string date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
+            SelectedSchedule.NextInspection = date;
         }
 
         private List<String> GrabProviderInformation()

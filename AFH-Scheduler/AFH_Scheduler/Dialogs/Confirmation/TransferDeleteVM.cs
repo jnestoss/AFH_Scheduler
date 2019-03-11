@@ -172,7 +172,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                             ZIP = house.PHome_Zipcode,
                             RecentInspection = recentDate,
                             NextInspection = insp,
-                            EighteenthMonthDate = alg.DropDateMonth(insp, false),
+                            EighteenthMonthDate = alg.DropDateMonth(insp, Drop.EIGHTEEN_MONTH),
                             IsActive = true,
                             RcsRegion = "",
                             RcsUnit = ""
