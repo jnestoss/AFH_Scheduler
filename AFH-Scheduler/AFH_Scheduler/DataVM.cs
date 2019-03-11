@@ -588,8 +588,7 @@ namespace AFH_Scheduler
                             NextInspection = home.NextInspection,
                             EighteenthMonthDate = alg.DropDateMonth(recentDate, Drop.SEVENTEEN_MONTH),
                             IsActive = true,
-                            RcsRegion = home.RcsRegion,
-                            RcsUnit = home.RcsUnit
+                            RcsRegionUnit = home.RcsRegionUnit
                         }
                     );
 
@@ -630,7 +629,7 @@ namespace AFH_Scheduler
 
                 }
                 */
-                MessageService.ReleaseMessageBox("New Home has been added to the database");
+                //MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
         }
 

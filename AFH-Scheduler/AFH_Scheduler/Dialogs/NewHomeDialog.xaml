@@ -339,9 +339,8 @@
 
         <StackPanel
             Grid.Row="3"
-            Grid.ColumnSpan="2"
             Margin="0,0,0,0"
-            HorizontalAlignment="Stretch"
+            HorizontalAlignment="Center"
             Orientation="Horizontal">
 
             <Button
@@ -352,7 +351,7 @@
                 Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
                 FontSize="16"
                 IsDefault="True"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                ToolTip="Create Home">
                 <Button.Style>
                     <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
                         <Setter Property="IsEnabled" Value="False" />
@@ -390,7 +389,7 @@
                 FontSize="16"
                 IsCancel="True"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                ToolTip="Cancel">
                 <Button.CommandParameter>
 
                     <system:String>Cancel</system:String>
