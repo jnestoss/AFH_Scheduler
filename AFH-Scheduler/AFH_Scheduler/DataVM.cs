@@ -19,6 +19,7 @@ using AFH_Scheduler.Dialogs.Confirmation;
 using System.Data.Entity;
 using System.Collections.Generic;
 using AFH_Scheduler.Database.LoginDB;
+using System.IO;
 
 namespace AFH_Scheduler
 {
@@ -33,6 +34,43 @@ namespace AFH_Scheduler
         }
 
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
+        private string _normalCurveValue;
+        public string NormalCurve
+        {
+            get { return _normalCurveValue; }
+            set
+            {
+                if (_normalCurveValue == value) return;
+                _normalCurveValue = value;
+                OnPropertyChanged("NormalCurve");
+                CheckNormalCurveState();
+            }
+        }
+
+        private string _normalCurveResultMsg;
+        public string NormalCurveResultMsg
+        {
+            get { return _normalCurveResultMsg; }
+            set
+            {
+                if (_normalCurveResultMsg == value) return;
+                _normalCurveResultMsg = value;
+                OnPropertyChanged("NormalCurveResultMsg");
+            }
+        }
+
+        private System.Windows.Media.Brush _normalCurveState;
+        public System.Windows.Media.Brush NormalCurveState
+        {
+            get { return _normalCurveState; }
+            set
+            {
+                if (_normalCurveState == value) return;
+                _normalCurveState = value;
+                OnPropertyChanged("NormalCurveState");
+            }
+        }
 
         private User _usr;
 
@@ -282,6 +320,16 @@ namespace AFH_Scheduler
             _usr = user;
 
             GenData();
+
+            string text = File.ReadAllText(@"..\..\NormalCurve\NormalCurveValue.txt");
+            double testCase;
+            if (!Double.TryParse(text, out testCase))
+            {
+                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
+                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
+                text = "15.99";
+            }
+            NormalCurve = text;
         }
         #endregion
 
@@ -380,7 +428,7 @@ namespace AFH_Scheduler
                             xlWorksheet.Cells[row, 7] = provider.NextInspection;
                             xlWorksheet.Cells[row, 8] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, true);//Interval in Months
                             xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
-                            xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, true);//17th Month Drop Date
+                            xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, Drop.SEVENTEEN_MONTH);//17th Month Drop Date
                             xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
                             xlWorksheet.Cells[row, 12] = alg.ForecastingFutureInspection(provider.HomeID); //Outcome from current inspection
                             xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
@@ -428,48 +476,78 @@ namespace AFH_Scheduler
 
         public void GenData()
         {
-            using(HomeInspectionEntities db = new HomeInspectionEntities())
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                var provs = db.Providers.ToList();
-                
-                foreach (var item in provs)
+                var homes = db.Provider_Homes.ToList();
+
+                foreach(Provider_Homes house in homes)
                 {
-                    var homes = db.Provider_Homes.Where(r=> r.FK_Provider_ID == item.Provider_ID).ToList();
-                    foreach (var house in homes)
+                    Provider homeProvider = db.Providers.FirstOrDefault(x => x.Provider_ID == house.FK_Provider_ID);
+
+                    var nextInspection = db.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == house.PHome_ID).SInspections_Date;
+
+                    var homeHistory = db.Home_History.FirstOrDefault(x => x.HHistory_ID == house.Home_History.First().HHistory_ID);
+
+                    HomeModel newHome = new HomeModel
                     {
-                        string recentDate;
-                        var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID));
-                        if (recentInspec == null)
-                        {
-                            recentDate = "";
-                        }
-                        else
-                            recentDate = recentInspec.HHistory_Date;
+                        ProviderID = homeProvider.Provider_ID,
+                        HomeID = house.PHome_ID,
+                        ProviderName = homeProvider.Provider_Name,
+                        HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
+                        HomeName = house.PHome_Name,
+                        Phone = house.PHome_Phonenumber,
+                        Address = house.PHome_Address,
+                        City = house.PHome_City,
+                        ZIP = house.PHome_Zipcode,
+                        RecentInspection = homeHistory.HHistory_Date,
+                        NextInspection = nextInspection,
+                        EighteenthMonthDate = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.EIGHTEEN_MONTH),
+                        SeventeenMonthDate = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.SEVENTEEN_MONTH),
+                        ForecastedDate = SchedulingAlgorithm.NextScheduledDate(homeHistory.Inspection_Outcome, nextInspection),
+                        IsActive = true,
+                        RcsUnit = "",
+                    };
+                    Providers.Add(newHome);
+                }               
+                
+                //foreach (var item in provs)
+                //{
+                //    var homes = db.Provider_Homes.Where(r=> r.FK_Provider_ID == item.Provider_ID).ToList();
+                //    foreach (var house in homes)
+                //    {
+                //        string recentDate;
+                //        var recentInspec = alg.GrabbingRecentInspection(Convert.ToInt32(house.PHome_ID));
+                //        if (recentInspec == null)
+                //        {
+                //            recentDate = "";
+                //        }
+                //        else
+                //            recentDate = recentInspec.HHistory_Date;
 
-                        var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
+                //        var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
 
-                        HomeModel newHome = new HomeModel
-                        {
-                            ProviderID = item.Provider_ID,
-                            HomeID = house.PHome_ID,
-                            ProviderName = item.Provider_Name,
-                            HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
-                            HomeName = house.PHome_Name,
-                            Phone = house.PHome_Phonenumber,
-                            Address = house.PHome_Address,
-                            City = house.PHome_City,
-                            ZIP = house.PHome_Zipcode,
-                            RecentInspection = recentDate,
-                            NextInspection = insp,
-                            EighteenthMonthDate = alg.DropDateMonth(insp, false),
-                            IsActive = true,
-                            RcsRegion = "",
-                            RcsUnit = "",
-                        };
+                //        HomeModel newHome = new HomeModel
+                //        {
+                //            ProviderID = item.Provider_ID,
+                //            HomeID = house.PHome_ID,
+                //            ProviderName = item.Provider_Name,
+                //            HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
+                //            HomeName = house.PHome_Name,
+                //            Phone = house.PHome_Phonenumber,
+                //            Address = house.PHome_Address,
+                //            City = house.PHome_City,
+                //            ZIP = house.PHome_Zipcode,
+                //            RecentInspection = recentDate,
+                //            NextInspection = insp,
+                //            EighteenthMonthDate = alg.DropDateMonth(insp, Drop.EIGHTEEN_MONTH),
+                //            IsActive = true,
+                //            RcsRegion = "",
+                //            RcsUnit = "",
+                //        };
 
-                        Providers.Add(newHome);
-                    }
-                }
+                //        Providers.Add(newHome);
+                //    }
+                //}
             }
         }
         #endregion
@@ -494,26 +572,25 @@ namespace AFH_Scheduler
                 }
                 else
                     recentDate = recentInspec.HHistory_Date;
-                Providers.Add(
-                    new HomeModel
-                    {
-                        ProviderID = Convert.ToInt64(home.ProviderID),
-                        HomeID = home.HomeID,
-                        ProviderName = home.ProviderName,
-                        HomeLicenseNum = Convert.ToInt64(home.HomeLicenseNum),
-                        HomeName = home.HomeName,
-                        Phone = home.Phone,
-                        Address = home.Address,
-                        City = home.City,
-                        ZIP = home.ZIP,
-                        RecentInspection = recentDate,
-                        NextInspection = home.NextInspection,
-                        EighteenthMonthDate = alg.DropDateMonth(home.NextInspection, false),
-                        IsActive = true,
-                        RcsRegion = home.RcsRegion,
-                        RcsUnit = home.RcsUnit
-                    }
-                );
+                    Providers.Add(
+                        new HomeModel
+                        {
+                            ProviderID = Convert.ToInt64(home.ProviderID),
+                            HomeID = home.HomeID,
+                            ProviderName = home.ProviderName,
+                            HomeLicenseNum = Convert.ToInt64(home.HomeLicenseNum),
+                            HomeName = home.HomeName,
+                            Phone = home.Phone,
+                            Address = home.Address,
+                            City = home.City,
+                            ZIP = home.ZIP,
+                            RecentInspection = recentDate,
+                            NextInspection = home.NextInspection,
+                            EighteenthMonthDate = alg.DropDateMonth(recentDate, Drop.SEVENTEEN_MONTH),
+                            IsActive = true,
+                            RcsRegionUnit = home.RcsRegionUnit
+                        }
+                    );
 
                 //Add to database
                 /*
@@ -552,7 +629,7 @@ namespace AFH_Scheduler
 
                 }
                 */
-                MessageService.ReleaseMessageBox("New Home has been added to the database");
+                //MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
         }
 
@@ -610,7 +687,7 @@ namespace AFH_Scheduler
                         {
                             String[] inspect = update.Split('-');
                             reactive.NextInspection = inspect[1];
-                            reactive.EighteenthMonthDate = alg.DropDateMonth(reactive.NextInspection, false);
+                            reactive.EighteenthMonthDate = alg.DropDateMonth(reactive.RecentInspection, Drop.EIGHTEEN_MONTH);
                         }
                     }
                     Providers.Add(reactive);
@@ -736,6 +813,7 @@ namespace AFH_Scheduler
                 {
                     CompleteVM completeDialogContext = ((CompleteVM)((EditDialog)eventArgs.Session.Content).DataContext);
                     HomeModel updatedHomeValues = completeDialogContext.SelectedHome;
+                    string newNextInspectionDate = completeDialogContext.SelectedCode.IOutcome_Code;
 
                     using(HomeInspectionEntities db = new HomeInspectionEntities())
                     {
@@ -743,9 +821,28 @@ namespace AFH_Scheduler
 
                         Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == updatedHomeValues.HomeID);
 
-                        if(selectHome != null)
+                        
+
+                        db.Home_History.Add(new Home_History {
+                            FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code.Equals(newNextInspectionDate)).IOutcome_Code,
+                            FK_PHome_ID = updatedHomeValues.HomeID,
+                            HHistory_Date = newNextInspectionDate,
+                            HHistory_ID = new Random().Next(1,1000000),
+                            
+                        });
+
+                        if (selectHome != null)
                         {
-                            selectHome.Scheduled_Inspections.First(r => r.SInspections_Date == completeDialogContext.PreviousInspection).SInspections_Date = nextInspection;
+                            Scheduled_Inspections homeDates = selectHome.Scheduled_Inspections.First();
+
+
+
+                            homeDates.SInspections_Date = nextInspection;
+                            homeDates.SInspections_EighteenMonth  = alg.DropDateMonth(homeDates.SInspections_Date, Drop.EIGHTEEN_MONTH);
+                            homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeDates.SInspections_Date, Drop.SEVENTEEN_MONTH);
+                            homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(completeDialogContext.SelectedCode, nextInspection);
+
+                            db.SaveChanges();
                         }
                     }
                 }
@@ -784,7 +881,16 @@ namespace AFH_Scheduler
                         selectHome.PHome_City = city;
                         selectHome.PHome_Zipcode = zip;
                         selectHome.PHome_Phonenumber = phone;
-                        selectHome.Scheduled_Inspections.First(r => r.SInspections_Date == editDialogContext.PreviousInspection).SInspections_Date = nextInspection;
+                        Scheduled_Inspections homeDates = selectHome.Scheduled_Inspections.First();
+
+                        Home_History homeHistory = selectHome.Home_History.FirstOrDefault(x => x.FK_PHome_ID == editedHomeData.HomeID);
+
+                        homeDates.SInspections_Date = nextInspection;
+                        //homeDates.SInspections_EighteenMonth  = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.EIGHTEEN_MONTH);
+                        //homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.SEVENTEEN_MONTH);
+                        homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(homeHistory.Inspection_Outcome, nextInspection);
+
+                        //selectHome.Scheduled_Inspections.First(r => r.SInspections_Date == editDialogContext.PreviousInspection).SInspections_Date = nextInspection;
                         //SelectedHome.NextInspection = nextInspection;
 
                         db.SaveChanges();
@@ -899,12 +1005,31 @@ namespace AFH_Scheduler
         #region Helper Methdos
         private bool IsInspectionWithinDateRange(string nextInspection)
         {
-            var inspectDate = alg.ExtractDateTime(nextInspection);
+            var inspectDate = SchedulingAlgorithm.ExtractDateTime(nextInspection);
             if ((DateTime.Compare(inspectDate, StartDatePicked) >= 0) && (DateTime.Compare(inspectDate, EndDatePicked) <= 0))
             {
                 return true;
             }
             return false;
+        }
+        private void CheckNormalCurveState()
+        {
+            double curveValue = Convert.ToDouble(NormalCurve);
+            if (curveValue < 15.99)
+            {
+                NormalCurveState = System.Windows.Media.Brushes.SkyBlue;
+                NormalCurveResultMsg = "The list of inspections average out below the normal curve.";
+            }
+            else if (curveValue > 15.99)
+            {
+                NormalCurveState = System.Windows.Media.Brushes.OrangeRed;
+                NormalCurveResultMsg = "The list of inspections average out above the normal curve.";
+            }
+            else
+            {
+                NormalCurveState = System.Windows.Media.Brushes.LightGreen;
+                NormalCurveResultMsg = "The list of inspections average out approximatly at the normal curve.";
+            }
         }
         #endregion
 

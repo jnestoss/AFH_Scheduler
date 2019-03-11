@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AFH_Scheduler.Database;
-//Team 6: Scott Allen, Gabriel Evans, Josh Nestoss, George Polyak 
+using AFH_Scheduler.Data;
+
 namespace AFH_Scheduler.Algorithm
 {
     public class SchedulingAlgorithm
@@ -34,12 +35,13 @@ namespace AFH_Scheduler.Algorithm
                 }//otherwise, recentDate >= temp
 
             }
+            
             return historyReturn;
         }
         #endregion
 
         #region Scheduling Next Inspection
-        public string SchedulingNextDate(int pHome_ID)//This will probably be a class somewhere in Main
+        public string SchedulingNextDate(int pHome_ID) //This will probably be a class somewhere in Main
         {
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = GrabbingRecentInspection(pHome_ID);
@@ -48,21 +50,22 @@ namespace AFH_Scheduler.Algorithm
                 return "";
             }
 
-            Inspection_Outcome outcome = table.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_IOutcome_Code);
+            Inspection_Outcome outcome = table.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_Outcome_Code);
 
-            DateTime newInspection = NextScheduledDate(outcome, ExtractDateTime(history.HHistory_Date));
+            string newInspection = NextScheduledDate(outcome,  history.HHistory_Date);
+            DateTime newDateObject = ExtractDateTime(newInspection);
 
             bool dateCleared = false;
             Random randomiz = new Random();
             int min = 1, max, added_days;
             do
             {
-                if (!CheckingForUniqueInspection(table, newInspection, pHome_ID))
+                if (!CheckingForUniqueInspection(table, newDateObject, pHome_ID))
                 {//If the newly calculated date is shared with another home, it must be adjusted.
 
-                    max = CheckingMonth(newInspection);
+                    max = CheckingMonth(newDateObject);
                     added_days = randomiz.Next(min, max + 1);
-                    newInspection = newInspection.AddDays(1);
+                    newDateObject = newDateObject.AddDays(1);
                 }
                 else
                 {
@@ -74,7 +77,7 @@ namespace AFH_Scheduler.Algorithm
             /*table.Scheduled_Inspections.Add(new Scheduled_Inspections { SInspections_Id = 456789, SInspections_Date = ConvertDateToString(newInspection), FK_PHome_ID = pHome_ID });
             table.SaveChanges();*/
 
-            return newInspection.ToShortDateString();
+            return newDateObject.ToShortDateString();
         }
         #endregion
 
@@ -107,8 +110,10 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region SCHEDULING ALGORITHM
-        public static DateTime NextScheduledDate(Inspection_Outcome outcome, DateTime recent_inspection)
+        public static string NextScheduledDate(Inspection_Outcome outcome, string recent_inspection)
         {
+            DateTime date = ExtractDateTime(recent_inspection);
+
             Random randomiz = new Random();
             string minTime = outcome.IOutcome_Mintime;
             string maxTime = outcome.IOutcome_Maxtime;
@@ -118,17 +123,17 @@ namespace AFH_Scheduler.Algorithm
 
             int added_months = randomiz.Next(min, max + 1);
 
-            DateTime new_scheduled_inspection = recent_inspection.AddMonths(added_months);
+            DateTime new_scheduled_inspection = date.AddMonths(added_months);
 
-            while (recent_inspection.Month == new_scheduled_inspection.Month)
+            while (date.Month == new_scheduled_inspection.Month)
             {
                 added_months = randomiz.Next(min, max + 1);
-                new_scheduled_inspection = recent_inspection.AddMonths(added_months);
+                new_scheduled_inspection = date.AddMonths(added_months);
             }
 
             new_scheduled_inspection = CheckDay(new_scheduled_inspection);
 
-            return new_scheduled_inspection;
+            return new_scheduled_inspection.ToString("MM/dd/yyyy");
         }
         #endregion
 
@@ -169,16 +174,19 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region Month Drop Date
-        public string DropDateMonth(string scheduled_Date, bool seventeenOrEighteen)
+        public string DropDateMonth(string scheduled_Date, Drop dropPeriod)
         {
             if (scheduled_Date == null || scheduled_Date.Length == 0)
                 return "";
 
-            //true = 17, false = 18
             DateTime dropDateMonthDate;
-            if (seventeenOrEighteen)
+            if (dropPeriod == Drop.SEVENTEEN_MONTH)
             {
                 dropDateMonthDate = ExtractDateTime(scheduled_Date).AddDays(517);
+            }
+            else if(dropPeriod == Drop.EIGHTEEN_MONTH)
+            {
+                dropDateMonthDate = ExtractDateTime(scheduled_Date).AddDays(548);
             }
             else
             {
@@ -214,7 +222,7 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region ExtractDateTime(string)
-        public DateTime ExtractDateTime(string date)//Date format: mm/dd/yy
+        public static DateTime ExtractDateTime(string date)//Date format: mm/dd/yy
         {
             String[] schedule = date.Split('/', ' ');
             int month = Convert.ToInt32(schedule[0]);
@@ -290,10 +298,10 @@ namespace AFH_Scheduler.Algorithm
             int mostOutcomes = 0;
             foreach (var outcome in history)
             {
-                int outCount = table.Home_History.Where(r => r.FK_PHome_ID == homeID && r.FK_IOutcome_Code == outcome.FK_IOutcome_Code).Count();
+                int outCount = table.Home_History.Where(r => r.FK_PHome_ID == homeID && r.FK_Outcome_Code == outcome.FK_Outcome_Code).Count();
                 if (outCount > mostOutcomes)
                 {
-                    forecastedOutcome = outcome.FK_IOutcome_Code;
+                    forecastedOutcome = outcome.FK_Outcome_Code;
                 }
             }
             var resultedOutcome = table.Inspection_Outcome.Where(r => r.IOutcome_Code == forecastedOutcome).FirstOrDefault();
@@ -301,4 +309,6 @@ namespace AFH_Scheduler.Algorithm
         }
         #endregion
     }
+
+
 }

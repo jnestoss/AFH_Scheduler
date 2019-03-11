@@ -12,22 +12,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using AFH_Scheduler.Algorithm;
 
 namespace AFH_Scheduler.Dialogs
 {
     public class NewHomeDialogVM : ObservableObject, IPageViewModel
     {
-        private List<ProvidersModel> _providers;
-        public List<ProvidersModel> Providers
-        {
-            get { return _providers; }
-            set
-            {
-                if (_providers == value) return;
-                _providers = value;
-                OnPropertyChanged("Providers");
-            }
-        }
+        private readonly ObservableCollection<String> Providers;
         public ICollectionView ComboBoxProviderItems { get; }
 
         private string _TextSearch;
@@ -70,6 +61,15 @@ namespace AFH_Scheduler.Dialogs
                 OnPropertyChanged("DatePicked");
             }
         }
+
+        private List<String> _outcomeCodes;
+        public List<String> OutcomeCodes {
+            get => _outcomeCodes;
+            set {
+                if (!(_outcomeCodes == value)) _outcomeCodes = value;
+            }
+        }
+
         private bool _isProviderSelected;
         public bool IsProviderSelected
         {
@@ -101,33 +101,83 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private Inspection_Outcome _selectedCode;
+        public Inspection_Outcome SelectedCode {
+            get { return _selectedCode; }
+            set {
+                if (_selectedCode == value) return;
+                _selectedCode = value;
+            }
+        }
+
+        private RelayCommand _calcDate;
+        public RelayCommand CalcDate {
+            get {
+                if (_calcDate == null) _calcDate = new RelayCommand(CalcNextInspectionDate);
+                return _calcDate;
+            }
+        }
+
         public NewHomeDialogVM()
         {
             IsProviderSelected = false;
+            Providers = new ObservableCollection<string>(GrabProviderInformation());
+
+            var lv = (ListCollectionView)CollectionViewSource.GetDefaultView(Providers);
+
+            ComboBoxProviderItems = lv;
+            lv.CustomSort = Comparer<string>.Create(ProviderSort);
+
+            NewHomeCreated = new HomeModel();
+            DatePicked = DateTime.Today;
+            GrabOutcomeCodes();
+            SelectedCode = GrabStartingOutcomeCode();
+            
+        }
+
+        private int ProviderSort(string x, string y)
+        {
+            return GetDistance(x).CompareTo(GetDistance(y));
+        }
+
+        private List<String> GrabProviderInformation()
+        {
+            List<string> providerNames = new List<string>();
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var provs = db.Providers.ToList();
-                Providers = new List<ProvidersModel>();
-                Providers.Add(new ProvidersModel("-1", "No Provider"));
-                string listItem = "";
-                foreach (var item in provs)
+
+                foreach (Provider prov in provs)
                 {
-                    listItem = item.Provider_ID + "-" + item.Provider_Name;
-                    Providers.Add(new ProvidersModel(item.Provider_ID.ToString(), item.Provider_Name));
+                    providerNames.Add(prov.Provider_Name);
                 }
-                var lv = (ListCollectionView)CollectionViewSource.GetDefaultView(Providers);
+            }
+            return providerNames;
+        }
 
-                ComboBoxProviderItems = lv;
-                lv.CustomSort = Comparer<ProvidersModel>.Create(ProviderSort);
-
-                NewHomeCreated = new HomeModel();
-                DatePicked = DateTime.Today;
+        private Inspection_Outcome GrabStartingOutcomeCode()
+        {
+            using(HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                return db.Inspection_Outcome.First();
             }
         }
-        private int ProviderSort(ProvidersModel x, ProvidersModel y)
+
+        private void GrabOutcomeCodes()
         {
-            return GetDistance(x.ProviderName).CompareTo(GetDistance(y.ProviderName));
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                List<Inspection_Outcome> outcomes = db.Inspection_Outcome.ToList();
+                OutcomeCodes = outcomes.Select(x => x.IOutcome_Code).ToList();
+            }
         }
+
+        private void CalcNextInspectionDate(object o)
+        {
+            string date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
+            NewHomeCreated.NextInspection = date;
+        }
+
         private int GetDistance(string provider)
         {
             if (string.IsNullOrWhiteSpace(TextSearch))

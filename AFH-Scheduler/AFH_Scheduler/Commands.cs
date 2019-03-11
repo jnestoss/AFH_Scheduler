@@ -34,6 +34,12 @@ namespace AFH_Scheduler
                 var settings = new SettingsVM();
                 var view = new SettingsDialog(settings);
                 var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
+                var viewVM = (IPageViewModel)w;
+                if (viewVM.Name.Equals("Schedules"))
+                {
+                    DataVM data = (DataVM)w;
+                    data.NormalCurve = settings.NormalCurve;
+                }
                 DialogAlreadyOpen = false;
             }
         });

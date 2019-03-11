@@ -208,6 +208,8 @@
     </Compile>
     <Compile Include="DataVM.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
+    <Compile Include="Data\DropPeriodEnum.cs" />
+    <Compile Include="Data\HomeModel.cs" />
     <Compile Include="Data\LoginModel.cs" />
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
@@ -235,6 +237,11 @@
     <Compile Include="Dialogs\Errors\CanNotDeleteProviderError.xaml.cs">
       <DependentUpon>CanNotDeleteProviderError.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Errors\ImportErrorList.xaml.cs">
+      <DependentUpon>ImportErrorList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Errors\ImportErrorListVM.cs" />
+    <Compile Include="Dialogs\Errors\ImportErrorModel.cs" />
     <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
       <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -332,6 +339,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Errors\CanNotDeleteProviderError.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\ImportErrorList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -554,6 +565,8 @@
       <DependentUpon>HomeInspection.edmx</DependentUpon>
       <LastGenOutput>HomeInspection.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\NoProviderWarning.bmp" />
+    <Resource Include="NormalCurve\NormalCurveValue.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.WinFX.targets" />
