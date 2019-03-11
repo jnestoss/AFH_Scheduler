@@ -17,7 +17,6 @@
     WindowStyle="None"
     mc:Ignorable="d">
 
-
     <Window.Resources>
         <DataTemplate DataType="{x:Type login:LoginViewVM}">
             <login:LoginView />
@@ -66,14 +65,43 @@
                         Foreground="WhiteSmoke"
                         Kind="HelpCircleOutline" />
                 </Button>
-                <Button  Background="{x:Null}" 
-                        BorderBrush="{x:Null}" 
-                        Foreground="WhiteSmoke" 
-                        VerticalAlignment="Center"
-                        IsEnabled="{Binding SettingsEnabled}"
-                        Command="{x:Static local:Commands.OpenSettingsCommand}"
-                        CommandParameter="{Binding CurrentPageViewModel}">
-                    <materialDesign:PackIcon Kind="Cog" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Command="{x:Static local:Commands.OpenSettingsCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                    Foreground="WhiteSmoke">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="Cog" />
+                </Button>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="WhiteSmoke">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="HelpCircleOutline" />
+                </Button>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Command="{x:Static local:Commands.OpenSettingsCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                    Foreground="WhiteSmoke"
+                    IsEnabled="{Binding SettingsEnabled}">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="Cog" />
                 </Button>
                 <Button
                     VerticalAlignment="Center"

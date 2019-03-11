@@ -208,6 +208,8 @@
     </Compile>
     <Compile Include="DataVM.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
+    <Compile Include="Data\DropPeriodEnum.cs" />
+    <Compile Include="Data\HomeModel.cs" />
     <Compile Include="Data\LoginModel.cs" />
     <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
