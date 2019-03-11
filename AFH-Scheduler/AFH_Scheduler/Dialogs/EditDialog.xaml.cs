@@ -12,7 +12,7 @@ namespace AFH_Scheduler.Dialogs
             InitializeComponent();   
         }
 
-        public void setDataContext(ScheduleModel schedule)
+        public void setDataContext(HomeModel schedule)
         {
             this.DataContext = new EditVM(schedule);
 

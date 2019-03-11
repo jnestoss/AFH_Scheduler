@@ -31,8 +31,8 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
-        private static ObservableCollection<ScheduleModel> _inActiveHomes;
-        public ObservableCollection<ScheduleModel> InActiveHomes
+        private static ObservableCollection<HomeModel> _inActiveHomes;
+        public ObservableCollection<HomeModel> InActiveHomes
         {
             get { return _inActiveHomes; }
             set
@@ -45,8 +45,8 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
-        private static ObservableCollection<ScheduleModel> _reActiveHomes;
-        public ObservableCollection<ScheduleModel> ReActiveHomes
+        private static ObservableCollection<HomeModel> _reActiveHomes;
+        public ObservableCollection<HomeModel> ReActiveHomes
         {
             get { return _reActiveHomes; }
             set
@@ -72,7 +72,7 @@ namespace AFH_Scheduler.Dialogs
 
         private async void ReactivateHomeAsync(object obj)
         {
-            ScheduleModel item = (ScheduleModel)obj;
+            HomeModel item = (HomeModel)obj;
             var vm = new DeleteVM("Are you sure you want to reactivate this home?", "Address:",
                 item.Address);
             var rescheduleView = new DeleteProviderDialog(vm);
@@ -108,10 +108,10 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
-        public InactiveHomeListVM(ObservableCollection<ScheduleModel> homesList)
+        public InactiveHomeListVM(ObservableCollection<HomeModel> homesList)
         {
-            InActiveHomes = new ObservableCollection<ScheduleModel>();
-            ReActiveHomes = new ObservableCollection<ScheduleModel>();
+            InActiveHomes = new ObservableCollection<HomeModel>();
+            ReActiveHomes = new ObservableCollection<HomeModel>();
             UpdateHomeSchedules = new List<string>();
 
             foreach (var home in homesList)

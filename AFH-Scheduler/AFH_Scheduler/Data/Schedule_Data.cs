@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.Database;
 
 namespace AFH_Scheduler.Data
 {
@@ -29,8 +30,7 @@ namespace AFH_Scheduler.Data
         private string _recentInspection;
         private string _nextInspection;
         private string _eighteenthMonthDate;
-        private string _rcsRegion;
-        private string _rcsUnit;
+        private string _rcsRegionUnit;
 
         public ScheduleModel(long providerID,
             long homeID,
@@ -43,11 +43,9 @@ namespace AFH_Scheduler.Data
             string homeZIP,
             string recentDate,
             string nextInspection,
-            DataVM schedulerVM,
             string eighteenthMonthDate,
             bool active,
-            string region,
-            string unit
+            string regionUnit
             )
         {
             if (name.Equals("No Provider"))
@@ -71,9 +69,55 @@ namespace AFH_Scheduler.Data
             NextInspection = nextInspection;
             EighteenthMonthDate = eighteenthMonthDate;
             IsActive = active;
-            RcsRegion = region;
-            RcsUnit = unit;
+            RcsRegionUnit = regionUnit;
             HomesHistory = new ObservableCollection<HistoryDetailModel>();
+        }
+
+        public ScheduleModel()
+        {
+            HomeID = GenerateHomeID();
+            ProviderName = "";
+            HomeName = "";
+            Phone = "";
+            Address = "";
+            City = "";
+            ZIP = "";
+            RecentInspection = "";
+            NextInspection = "";
+            EighteenthMonthDate = "";
+            IsActive = true;
+            RcsRegionUnit = "";
+        }
+        public long GenerateHomeID()
+        {
+            long newID;
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                try
+                {
+                    var recentHomeID = db.Provider_Homes.OrderByDescending(r => r.PHome_ID).FirstOrDefault();
+                    if (recentHomeID.PHome_ID == Int64.MaxValue)
+                    {
+                        newID = 0;
+                        while (true)
+                        {
+                            var isUniqueID = db.Provider_Homes.Where(r => r.PHome_ID == newID).ToList();
+                            if (isUniqueID.Count == 0)
+                            {
+                                return newID;
+                            }
+                            newID++;
+                        }
+                    }
+                    else
+                        newID = recentHomeID.PHome_ID + 1;
+                    return newID;
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
+            }
         }
 
         public ObservableCollection<HistoryDetailModel> HomesHistory
@@ -111,29 +155,40 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public long ProviderID {
+        public long ProviderID
+        {
             get { return _providerID; }
-            set {
+            set
+            {
                 if (_providerID == value) return;
                 _providerID = value;
                 OnPropertyChanged("ProviderID");
             }
         }
 
-        public long HomeID {
+        public long HomeID
+        {
             get { return _homeID; }
-            set {
+            set
+            {
                 if (_homeID == value) return;
                 _homeID = value;
                 OnPropertyChanged("HomeID");
             }
         }
 
-        public string ProviderName {
+        public string ProviderName
+        {
             get { return _providerName; }
-            set {
+            set
+            {
                 if (_providerName == value) return;
                 _providerName = value;
+
+                if (_providerName.Equals("No Provider"))
+                {
+                    HasNoProvider = true;
+                }
                 OnPropertyChanged("ProviderName");
             }
         }
@@ -161,36 +216,44 @@ namespace AFH_Scheduler.Data
         }
 
 
-        public string Phone {
+        public string Phone
+        {
             get { return _phone; }
-            set {
+            set
+            {
                 if (_phone == value) return;
                 _phone = value;
                 OnPropertyChanged("Phone");
             }
         }
 
-        public string Address {
+        public string Address
+        {
             get { return _address; }
-            set {
+            set
+            {
                 if (_address == value) return;
                 _address = value;
                 OnPropertyChanged("Address");
             }
         }
 
-        public string City {
+        public string City
+        {
             get { return _city; }
-            set {
+            set
+            {
                 if (_city == value) return;
                 _city = value;
                 OnPropertyChanged("City");
             }
         }
 
-        public string ZIP {
+        public string ZIP
+        {
             get { return _ZIP; }
-            set {
+            set
+            {
                 if (_ZIP == value) return;
                 _ZIP = value;
                 OnPropertyChanged("ZIP");
@@ -226,30 +289,21 @@ namespace AFH_Scheduler.Data
         public string EighteenthMonthDate
         {
             get { return _eighteenthMonthDate; }
-            set {
+            set
+            {
                 if (_eighteenthMonthDate == value) return;
                 _eighteenthMonthDate = value;
                 OnPropertyChanged("EighteenthMonthDate");
             }
         }
-        public string RcsRegion
+        public string RcsRegionUnit
         {
-            get { return _rcsRegion; }
+            get { return _rcsRegionUnit; }
             set
             {
-                if (_rcsRegion == value) return;
-                _rcsRegion = value;
-                OnPropertyChanged("RcsRegion");
-            }
-        }
-        public string RcsUnit
-        {
-            get { return _rcsUnit; }
-            set
-            {
-                if (_rcsUnit == value) return;
-                _rcsUnit = value;
-                OnPropertyChanged("RcsUnit");
+                if (_rcsRegionUnit == value) return;
+                _rcsRegionUnit = value;
+                OnPropertyChanged("RcsRegionUnit");
             }
         }
 

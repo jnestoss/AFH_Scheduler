@@ -128,18 +128,11 @@
                 SelectedItem="{Binding SelectedHome}"
                 SelectionMode="Single"
                 SelectionUnit="FullRow"
-                CanUserAddRows="True"
+                CanUserAddRows="False"
                 CanUserSortColumns="True"
-                ItemsSource="{Binding Providers}">
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding HasNoProvider}" Value="True">
-                                <Setter Property="Foreground" Value="Red"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
+                ItemsSource="{Binding Providers}"
+                VerticalScrollBarVisibility="Auto"
+                MaxHeight="450">
                 <DataGrid.Columns>
 
                     <!--
@@ -174,13 +167,6 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
-                    <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding ProviderName}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Name" />
-                    
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding HomeLicenseNum}"
                         IsReadOnly="True"
@@ -194,7 +180,6 @@
                         Header="Licensed Home's Name" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                        Width="120"
                         Binding="{Binding Address}"
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
@@ -220,6 +205,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </materialDesign:MaterialDataGridTextColumn>
+                    
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding RecentInspection}"
                         IsReadOnly="True"
@@ -242,21 +228,15 @@
 
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsRegion}"
+                            Binding="{Binding RcsRegionUnit}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="RCSRegion">
-                    </materialDesign:MaterialDataGridTextColumn>
-
-                    <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsUnit}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Unit">
+                            Header="RCS Region/Unit">
                     </materialDesign:MaterialDataGridTextColumn>
                     <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
                 </DataGrid.Columns>
+                <!--
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <DataGrid
@@ -264,7 +244,7 @@
                     Margin="36 0 36 0"
                     ItemsSource="{Binding HomesHistory}"
                     CanUserSortColumns="True"
-                    CanUserAddRows="True"
+                    CanUserAddRows="False"
                     AutoGenerateColumns="False"
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8"
@@ -312,15 +292,13 @@
                         </DataGrid>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
-
+                -->
             </DataGrid>
 
 
             <materialDesign:PopupBox
                 Canvas.Left="972"
                 Canvas.Top="472"
-                Closed="PopupBox_OnClosed"
-                Opened="PopupBox_OnOpened"
                 PlacementMode="TopAndAlignCentres"
                 Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                 ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
@@ -330,7 +308,9 @@
                             ToolTip="Complete Inspection">
                         <materialDesign:PackIcon Kind="Archive" />
                     </Button>
-                    <Button ToolTip="Home History">
+                    <Button Command="{Binding RunHistoryDialogCommand}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                            ToolTip="Home History">
                         <materialDesign:PackIcon Kind="HomeVariant" />
                     </Button>
                     <Button Command="{Binding RunEditDialogCommand}" 
@@ -347,10 +327,10 @@
                     </Button>
                     <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a New Home">
                         <materialDesign:PackIcon Kind="Add" />
-                    </Button>-->
+                    </Button>
                     <Button Command="{Binding Path=DeleteHomeCommand}" ToolTip="Remove Selected Home">
                         <materialDesign:PackIcon Kind="Remove" />
-                    </Button>
+                    </Button>-->
 
 
                 </StackPanel>

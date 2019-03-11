@@ -13,6 +13,7 @@ using MaterialDesignThemes.Wpf;
 using AFH_Scheduler.Algorithm;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows;
 
 namespace AFH_Scheduler.Dialogs
 {
@@ -20,8 +21,8 @@ namespace AFH_Scheduler.Dialogs
     {
         public string Name => "Edit Page";
 
-        public ScheduleModel _selectedSchedule;
-        public ScheduleModel SelectedSchedule {
+        public HomeModel _selectedSchedule;
+        public HomeModel SelectedSchedule {
             get { return _selectedSchedule; }
             set {
                 if (_selectedSchedule == value) return;
@@ -35,7 +36,10 @@ namespace AFH_Scheduler.Dialogs
 
         private string _TextSearch;
         public string TextSearch {
-            get => _TextSearch;
+            get
+            {
+                return _TextSearch;
+            }
             set {
                 if (_TextSearch != value)
                 {
@@ -48,7 +52,10 @@ namespace AFH_Scheduler.Dialogs
 
         private List<String> _outcomeCodes;
         public List<String> OutcomeCodes {
-            get => _outcomeCodes;
+            get
+            {
+                return _outcomeCodes;
+            }
             set {
                 if (!(_outcomeCodes == value)) _outcomeCodes = value;
             }
@@ -65,12 +72,32 @@ namespace AFH_Scheduler.Dialogs
 
         private DateTime _nextInspection;
         public DateTime NextInspection {
-            get => _nextInspection;
+            get
+            {
+                return _nextInspection;
+            }
             set {
                 if (_nextInspection == value) return;
                 _nextInspection = value;
             }
         }
+
+        private string _previousInspection;
+        public string PreviousInspection {
+            get => _previousInspection;
+            set {
+                if (_previousInspection == value) return;
+                _previousInspection = value;
+            }
+        }
+
+        //private RelayCommand _saveAndClose;
+        //public RelayCommand SaveAndClose {
+        //    get {
+        //        if (_saveAndClose == null) _saveAndClose = new RelayCommand<Window>(SaveAndCloseCommand);
+        //        return _saveAndClose;
+        //    }
+        //}
 
         private RelayCommand _calcDate;
         public RelayCommand CalcDate {
@@ -103,7 +130,7 @@ namespace AFH_Scheduler.Dialogs
         //public event EventHandler<EventArgs> RequestClose;      
         //public RelayCommand CloseCommand { get; private set; }
 
-        public EditVM(ScheduleModel scheduleData)
+        public EditVM(HomeModel scheduleData)
         {
             SelectedSchedule = scheduleData;
             //CurrentProvider = new Tuple<int, string>((int) SelectedSchedule.ProviderID, SelectedSchedule.ProviderName);
@@ -119,6 +146,10 @@ namespace AFH_Scheduler.Dialogs
             GrabOutcomeCodes();
             SelectedCode = GetMostRecentOutcome();
 
+            TextSearch = SelectedSchedule.ProviderName;
+
+            //saving the previous date
+            PreviousInspection = SelectedSchedule.NextInspection;
         }
 
         private int ProviderSort(string x, string y)
@@ -167,7 +198,8 @@ namespace AFH_Scheduler.Dialogs
 
         private void CalcNextInspectionDate(object o)
         {
-            SelectedSchedule.NextInspection = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now).ToString();
+            DateTime date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now);
+            SelectedSchedule.NextInspection = $"{date.Month}/{date.Day}/{date.Year}";
         }
 
         private List<String> GrabProviderInformation()
@@ -183,6 +215,11 @@ namespace AFH_Scheduler.Dialogs
                 }
             }
             return providerNames;
+        }
+
+        private void SaveAndCloseCommand(Window window)
+        {
+
         }
 
         private int GetDistance(string provider)
