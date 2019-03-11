@@ -214,6 +214,11 @@
     <Compile Include="Dialogs\Errors\CanNotDeleteProviderError.xaml.cs">
       <DependentUpon>CanNotDeleteProviderError.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Errors\ImportErrorList.xaml.cs">
+      <DependentUpon>ImportErrorList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Errors\ImportErrorListVM.cs" />
+    <Compile Include="Dialogs\Errors\ImportErrorModel.cs" />
     <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
       <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -308,6 +313,10 @@
     <Page Include="Dialogs\Errors\CanNotDeleteProviderError.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\ImportErrorList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -472,6 +481,7 @@
       <DependentUpon>HomeInspection.edmx</DependentUpon>
       <LastGenOutput>HomeInspection.cs</LastGenOutput>
     </Content>
+    <Resource Include="NormalCurve\NormalCurveValue.txt" />
     <Resource Include="Images\NoProviderWarning.bmp" />
   </ItemGroup>
   <ItemGroup>
