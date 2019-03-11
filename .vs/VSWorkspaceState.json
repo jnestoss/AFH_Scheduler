@@ -2,10 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\AFH-Scheduler",
-    "\\AFH-Scheduler\\AFH_Scheduler",
     "\\AFH-Scheduler\\AFH_Scheduler\\Dialogs",
     "\\AFH-Scheduler\\AFH_Scheduler\\ObsoleteCode",
     "\\AFH-Scheduler\\AFH_Scheduler\\ObsoleteCode\\Complete"
   ],
+  "SelectedNode": "\\AFH-Scheduler\\AFH_Scheduler.sln",
   "PreviewInSolutionExplorer": false
 }
