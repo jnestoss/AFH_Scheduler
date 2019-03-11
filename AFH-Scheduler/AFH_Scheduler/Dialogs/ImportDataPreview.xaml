@@ -8,20 +8,22 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:AFH_Scheduler.Dialogs"
              mc:Ignorable="d">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock FontSize="18" Margin="10" HorizontalAlignment="Center">Data Preview:</TextBlock>
 
-            <Button  
+    <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="ImportErrorDialog">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock FontSize="18" Margin="10" HorizontalAlignment="Center">Data Preview:</TextBlock>
+
+                <Button  
                 Margin="10"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 Command="{Binding ImportDataCommand}"
                 ToolTip="Resource name: MaterialDesignRaisedLightButton">
-                _LOAD FILE
-            </Button>
-        </StackPanel>
+                    _LOAD FILE
+                </Button>
+            </StackPanel>
 
-        <DataGrid
+            <DataGrid
            VerticalScrollBarVisibility="Auto"
            MaxHeight="200"
            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
@@ -31,20 +33,20 @@
            CanUserSortColumns="True"
            ItemsSource="{Binding ImportedHomes}">
 
-            <DataGrid.Columns>
-                <materialDesign:MaterialDataGridTextColumn
+                <DataGrid.Columns>
+                    <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding ProviderName}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="Facility POC" />
-                
-                <materialDesign:MaterialDataGridTextColumn
+
+                    <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding HomeLicenseNum}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="License Number" />
 
-                <!--
+                    <!--
                 <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding ProviderID}"
                             IsReadOnly="True"
@@ -58,58 +60,72 @@
                             Header="Home ID" />
                 -->
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
                     Binding="{Binding HomeName}"
                     IsReadOnly="True" 
                     Header="Facility Name" 
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding Address}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Address">
-                </materialDesign:MaterialDataGridTextColumn>
+                    </materialDesign:MaterialDataGridTextColumn>
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding City}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="City"
                             MaxLength="255" />
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding ZIP}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="ZipCode"
                             MaxLength="255" />
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
                     IsReadOnly="True"
                     Binding="{Binding Phone}" 
                     Header="Telephone" 
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RecentInspection}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Recent Inspection Date">
+                    </materialDesign:MaterialDataGridTextColumn>
+
+                    <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding NextInspection}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="Next Inspection Date">
-                </materialDesign:MaterialDataGridTextColumn>
+                    </materialDesign:MaterialDataGridTextColumn>
 
-                <materialDesign:MaterialDataGridTextColumn
+                    <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding EighteenthMonthDate}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="18th Month Date">
+                    </materialDesign:MaterialDataGridTextColumn>
+
+                    <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding RcsRegionUnit}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                             Header="RCS Region/Unit">
-                </materialDesign:MaterialDataGridTextColumn>
+                    </materialDesign:MaterialDataGridTextColumn>
 
-            </DataGrid.Columns>
-        </DataGrid>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <StackPanel Margin="30" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button 
+            <StackPanel Margin="30" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button 
             IsDefault="True"
             Margin="10,0,10,1" 
             FontSize="18" 
@@ -117,30 +133,31 @@
             MinWidth="100"
             Style="{StaticResource MaterialDesignRaisedLightButton}"        
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
-                <Button.CommandParameter>
+                    <Button.CommandParameter>
 
-                    <system:String>IMPORT</system:String>
+                        <system:String>IMPORT</system:String>
 
-                </Button.CommandParameter>
+                    </Button.CommandParameter>
 
-                _ADD HOMES?
-            </Button>
+                    _ADD HOMES?
+                </Button>
 
-            <Button 
+                <Button 
                     IsCancel="True"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
             MinWidth="100" Margin="10,0,11,0" 
             ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             FontSize="18">
-                <Button.CommandParameter>
+                    <Button.CommandParameter>
 
-                    <system:String>Cancel</system:String>
+                        <system:String>Cancel</system:String>
 
-                </Button.CommandParameter>
+                    </Button.CommandParameter>
 
-                _CANCEL
-            </Button>
+                    _CANCEL
+                </Button>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </materialDesign:DialogHost>
 </UserControl>

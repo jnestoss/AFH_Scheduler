@@ -25,102 +25,100 @@
     <DockPanel LastChildFill="False">
 
         <StackPanel
-            Margin="0,15"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            DockPanel.Dock="Top"
-            Orientation="Horizontal">
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0 15 0 0">
+            <TextBlock Margin="0 0 10 0" FontSize="16">Normal Curve: </TextBlock>
+            <TextBlock Text="{Binding NormalCurve}" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <TextBlock Margin="20 0 0 0" FontSize="16" Background="{Binding NormalCurveState}" Text="{Binding NormalCurveResultMsg}"/>
+        </StackPanel>
+        <StackPanel 
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0 15">
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
-                    <ColumnDefinition Width="Auto" MinWidth="320" />
-                    <ColumnDefinition Width="Auto" MinWidth="133" />
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
-                    <ColumnDefinition Width="Auto" MinWidth="133" />
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="320"/>
+                    <ColumnDefinition Width="Auto" MinWidth="133"/>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto" MinWidth="133"/>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    HorizontalAlignment="Right"
-                    FontSize="18">
-                    Filter By:
-                </TextBlock>
-                <TextBox
-                    Name="FilterTextBox"
-                    Grid.Column="1"
-                    Margin="20,0"
-                    FontSize="18"
-                    IsEnabled="{Binding TextFieldEnabled}"
-                    IsEnabledChanged="FilterTextBox_IsEnabledChanged"
-                    Text="{Binding FilterItem}" />
+                <TextBlock 
+                    FontSize="18" 
+                    Grid.Column="0" 
+                    HorizontalAlignment="Right">Filter By:</TextBlock>
+                <TextBox 
+                    Name="FilterTextBox" 
+                    IsEnabledChanged="FilterTextBox_IsEnabledChanged"  
+                    IsEnabled="{Binding TextFieldEnabled}" 
+                    Text="{Binding FilterItem}" FontSize="18" Grid.Column="1" Margin="20 0"/>
 
-                <DatePicker
-                    Name="DatePickerStart"
-                    Grid.Column="1"
-                    MinWidth="100"
-                    Margin="10,0"
-                    HorizontalAlignment="Left"
-                    FlowDirection="LeftToRight"
-                    FontSize="18"
-                    IsEnabled="true"
+                <DatePicker 
                     SelectedDate="{Binding StartDatePicked}"
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                    Visibility="Hidden" />
+                    Name="DatePickerStart" 
+                    Visibility="Hidden" 
+                    IsEnabled="true"  
+                    Grid.Column="1" 
+                    FlowDirection="LeftToRight" 
+                    FontSize="18" 
+                    HorizontalAlignment="Left" 
+                    Margin="10 0" 
+                    MinWidth="100" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
-                <TextBlock
-                    Name="ToTextBlock"
-                    Grid.Column="1"
-                    Margin="10,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FlowDirection="LeftToRight"
-                    FontSize="18"
-                    Visibility="Hidden">
-                    To
-                </TextBlock>
+                <TextBlock 
+                    Name="ToTextBlock" 
+                    FontSize="18" 
+                    Visibility="Hidden" 
+                    Grid.Column="1" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"  
+                    Margin="10 0" FlowDirection="LeftToRight">To</TextBlock>
 
-                <DatePicker
-                    Name="DatePickerEnd"
-                    Grid.Column="1"
-                    MinWidth="100"
-                    Margin="10,0"
-                    HorizontalAlignment="Right"
-                    FlowDirection="LeftToRight"
-                    FontSize="18"
-                    IsEnabled="true"
+                <DatePicker 
                     SelectedDate="{Binding EndDatePicked}"
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                    Visibility="Hidden" />
+                    Name="DatePickerEnd" 
+                    Visibility="Hidden" 
+                    IsEnabled="true" 
+                    Grid.Column="1" 
+                    FlowDirection="LeftToRight" 
+                    FontSize="18" 
+                    HorizontalAlignment="Right" 
+                    Margin="10 0" 
+                    MinWidth="100" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
-                <ComboBox
-                    Grid.Column="2"
-                    FontSize="18"
-                    SelectedItem="{Binding SelectedFilter}">
-                    <ComboBoxItem Content="Provider Name" />
-                    <ComboBoxItem Content="License Number" />
-                    <ComboBoxItem Content="License Name" />
-                    <ComboBoxItem Content="Address" />
-                    <ComboBoxItem Content="Next Inspection Date" IsSelected="{Binding DatePickerEnabled}" />
+                <ComboBox FontSize="18" Grid.Column="2" SelectedItem="{Binding SelectedFilter}">
+                    <ComboBoxItem Content="Provider Name"/>
+                    <ComboBoxItem Content="License Number"/>
+                    <ComboBoxItem Content="License Name"/>
+                    <ComboBoxItem Content="Address"/>
+                    <ComboBoxItem IsSelected="{Binding DatePickerEnabled}" Content="Next Inspection Date"/>
                 </ComboBox>
-                <Button
-                    Grid.Column="3"
-                    Width="100"
-                    Margin="10,0"
-                    Command="{Binding Path=FilterTableCommand}"
-                    FontSize="14"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                <Button 
+                    Grid.Column="3" 
+                    Command="{Binding Path=FilterTableCommand}" 
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    Margin="10 0" FontSize="14" 
+                    Width="100" 
                     ToolTip="Resource name: MaterialDesignRaisedLightButton">
                     _FILTER
                 </Button>
 
                 <Button
-                    Grid.Column="4"
-                    MaxWidth="255"
-                    Margin="10"
-                    Command="{Binding Path=RefreshTableCommand}"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
-                    ToolTip="Refresh the Table">
+                Grid.Column="4"
+                MaxWidth="255"
+                Margin="10"
+                Command="{Binding Path=RefreshTableCommand}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Refresh the Table">
                     REFRESH TABLE
                 </Button>
             </Grid>
@@ -134,17 +132,17 @@
             DockPanel.Dock="Top">
             <DataGrid
                 Width="1000"
-                MaxHeight="450"
                 materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                 materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                 AutoGenerateColumns="False"
-                CanUserAddRows="False"
-                CanUserSortColumns="True"
-                ItemsSource="{Binding Providers}"
                 SelectedItem="{Binding SelectedHome}"
                 SelectionMode="Single"
                 SelectionUnit="FullRow"
-                VerticalScrollBarVisibility="Auto">
+                CanUserAddRows="False"
+                CanUserSortColumns="True"
+                ItemsSource="{Binding Providers}"
+                VerticalScrollBarVisibility="Auto"
+                MaxHeight="450">
                 <DataGrid.Columns>
 
                     <!--
@@ -169,33 +167,33 @@
                     <DataGridTemplateColumn IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image
+                                <Image 
                                     Name="NoProviderImage"
-                                    Width="20"
+                                    Width="20" 
                                     Height="20"
-                                    Source="Images/NoProviderWarning.bmp"
-                                    Visibility="{Binding HasNoProvider, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    Visibility="{Binding HasNoProvider, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                    Source="Images/NoProviderWarning.bmp"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding HomeLicenseNum}"
+                        IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="License Number"
-                        IsReadOnly="True" />
+                        Header="License Number" />
 
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding HomeName}"
+                        IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Home Name"
-                        IsReadOnly="True" />
+                        Header="Licensed Home's Name" />
 
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding Address}"
+                        IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Address"
-                        IsReadOnly="True">
+                        Header="Address">
                         <DataGridTextColumn.HeaderStyle>
                             <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="HorizontalAlignment" Value="Right" />
@@ -217,33 +215,34 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </materialDesign:MaterialDataGridTextColumn>
-
+                    
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding RecentInspection}"
+                        IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                         Header="Recent Inspection"
-                        IsReadOnly="True"
                         MaxLength="255" />
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding NextInspection}"
+                        IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                         Header="Next Inspection"
-                        IsReadOnly="True"
                         MaxLength="255" />
 
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding EighteenthMonthDate}"
+                        IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                         Header="18th Month Drop"
-                        IsReadOnly="True"
                         MaxLength="255" />
 
 
                     <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding RcsRegionUnit}"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="RCS Region/Unit"
-                        IsReadOnly="True" />
+                            Binding="{Binding RcsRegionUnit}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="RCS Region/Unit">
+                    </materialDesign:MaterialDataGridTextColumn>
                     <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
                 </DataGrid.Columns>
@@ -251,7 +250,7 @@
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <DataGrid
-
+                        
                     Margin="36 0 36 0"
                     ItemsSource="{Binding HomesHistory}"
                     CanUserSortColumns="True"
@@ -264,28 +263,28 @@
 
                             <DataGrid.Columns>
 
-                                <materialDesign:MaterialDataGridTextColumn
+                                <materialDesign:MaterialDataGridTextColumn 
                                     Binding="{Binding ProviderID}"
-                                    IsReadOnly="True"
-                                    Header="Provider ID"
+                                    IsReadOnly="True" 
+                                    Header="Provider ID" 
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
-                                <materialDesign:MaterialDataGridTextColumn
+                                <materialDesign:MaterialDataGridTextColumn 
                                     Binding="{Binding HomeID}"
-                                    IsReadOnly="True"
-                                    Header="Home ID"
+                                    IsReadOnly="True" 
+                                    Header="Home ID" 
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                                <materialDesign:MaterialDataGridTextColumn
+                                <materialDesign:MaterialDataGridTextColumn 
                                     Binding="{Binding InspectionDate}"
-                                    IsReadOnly="True"
-                                    Header="Previous Inspection Date"
+                                    IsReadOnly="True" 
+                                    Header="Previous Inspection Date" 
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                                <materialDesign:MaterialDataGridTextColumn
+                                <materialDesign:MaterialDataGridTextColumn 
                                     Binding="{Binding InspectionOutcome}"
-                                    IsReadOnly="True"
-                                    Header="Inspection Outcome"
+                                    IsReadOnly="True" 
+                                    Header="Inspection Outcome" 
                                     MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                                 <DataGridTemplateColumn>
@@ -315,19 +314,18 @@
                 ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
                 ToolTipService.Placement="Right">
                 <StackPanel>
-                    <Button Command="{Binding RunCompleteDialogCommand}" ToolTip="Complete Inspection">
+                    <Button Command="{Binding RunCompleteDialogCommand}" 
+                            ToolTip="Complete Inspection">
                         <materialDesign:PackIcon Kind="Archive" />
                     </Button>
-                    <Button
-                        Command="{Binding RunHistoryDialogCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
-                        ToolTip="Home History">
+                    <Button Command="{Binding RunHistoryDialogCommand}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                            ToolTip="Home History">
                         <materialDesign:PackIcon Kind="HomeVariant" />
                     </Button>
-                    <Button
-                        Command="{Binding RunEditDialogCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
-                        ToolTip="Edit">
+                    <Button Command="{Binding RunEditDialogCommand}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}" 
+                            ToolTip="Edit">
                         <materialDesign:PackIcon Kind="Edit" />
                     </Button>
                     <!--
@@ -351,47 +349,47 @@
         </Canvas>
 
 
-
-        <StackPanel
-            Margin="0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Orientation="Horizontal">
+        
+        <StackPanel        
+            VerticalAlignment="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Left"                            
+            Margin="0">
 
             <Button
-                MaxWidth="255"
-                Margin="40,0,0,0"
                 Command="{Binding Path=AddNewHomeCommand}"
+                MaxWidth="255"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Add a new home to database">
                 ADD NEW HOME
             </Button>
             <Button
-                MaxWidth="255"
-                Margin="40,0,0,0"
                 Command="{Binding Path=InactiveListCommand}"
+                MaxWidth="255"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="List all Inactive homes">
                 InActive Homes
             </Button>
             <Button
-                MaxWidth="255"
-                Margin="40,0,0,0"
                 Command="{Binding ImportTableCommand}"
+                MaxWidth="255"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Import Table From Excel Spreadsheet">
                 IMPORT
             </Button>
             <Button
-                MaxWidth="255"
-                Margin="40"
                 Command="{Binding Path=ExportTableCommand}"
+                MaxWidth="255"
+                Margin="30"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Export Table to Excel Spreadsheet">
                 EXPORT
             </Button>
         </StackPanel>
-
+            
     </DockPanel>
 
     <!--
