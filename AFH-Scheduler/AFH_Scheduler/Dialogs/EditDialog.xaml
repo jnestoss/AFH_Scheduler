@@ -252,8 +252,29 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBlock
+                <TextBox
+                    x:Name="Region"
                     Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="0,10,0,10"
+                    materialDesign:HintAssist.FloatingScale="1.4"
+                    materialDesign:HintAssist.Hint="Unit/Region"
+                    materialDesign:HintAssist.HintOpacity="0.9"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="SelectedSchedule.RcsRegionUnit" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <i:Interaction.Behaviors>
+                        <Behaviors:TextBoxInputMaskBehavior InputMask="0A" PromptChar=" " />
+                    </i:Interaction.Behaviors>
+                </TextBox>
+
+                <TextBlock
+                    Grid.Row="5"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="0,10,0,10"
@@ -266,13 +287,13 @@
                 </TextBlock>
 
                 <ComboBox
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="2"
                     ItemsSource="{Binding OutcomeCodes}"
                     SelectedItem="{Binding SelectedCode, Converter={StaticResource outcomeCodeConverter}}" />
 
                 <Button
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="3"
                     Margin="0,10,0,10"
                     Command="{Binding CalcDate}"
@@ -281,7 +302,7 @@
                 </Button>
 
                 <TextBlock
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="0,10,0,10"
@@ -295,7 +316,7 @@
 
                 <DatePicker
                     x:Name="FutureDatePicker"
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="2"
                     Width="100"
                     Margin="0,10,0,10"
@@ -370,6 +391,7 @@
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderAddress}" Value="False" />
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderCity}" Value="False" />
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZIPCode}" Value="False" />
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Region}" Value="False" />
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=FutureDatePicker}" Value="False" />
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True" />

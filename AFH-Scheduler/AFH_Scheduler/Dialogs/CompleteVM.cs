@@ -10,6 +10,7 @@ using AFH_Scheduler.Database;
 using AFH_Scheduler.Dialogs.Errors;
 using AFH_Scheduler.Dialogs.Confirmation;
 using MaterialDesignThemes.Wpf;
+using AFH_Scheduler.Algorithm;
 
 namespace AFH_Scheduler.Dialogs
 {
@@ -17,13 +18,13 @@ namespace AFH_Scheduler.Dialogs
     {
         public string Name => "Complete Inspection Dialog";
 
-        public HomeModel _selectedSchedule;
+        public HomeModel _selectedHome;
         public HomeModel SelectedHome {
-            get { return _selectedSchedule; }
+            get { return _selectedHome; }
             set {
-                if (_selectedSchedule == value) return;
-                _selectedSchedule = value;
-                OnPropertyChanged("SelectedSchedule");
+                if (_selectedHome == value) return;
+                _selectedHome = value;
+                OnPropertyChanged("SelectedHome");
             }
         }
 
@@ -52,6 +53,14 @@ namespace AFH_Scheduler.Dialogs
             set {
                 if (_selectedCode == value) return;
                 _selectedCode = value;
+            }
+        }
+
+        private RelayCommand _calcDate;
+        public RelayCommand CalcDate {
+            get {
+                if (_calcDate == null) _calcDate = new RelayCommand(CalcNextInspectionDate);
+                return _calcDate;
             }
         }
 
@@ -93,6 +102,12 @@ namespace AFH_Scheduler.Dialogs
                     return outcomes.FirstOrDefault();
                 }
             }
+        }
+
+        private void CalcNextInspectionDate(object o)
+        {
+            string date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, SelectedHome.NextInspection);
+            SelectedHome.NextInspection = date;
         }
 
         private void GrabOutcomeCodes()
