@@ -7,7 +7,7 @@
           <ScalarProperty Name="HHistory_ID" ColumnName="HHistory_ID" />
           <ScalarProperty Name="HHistory_Date" ColumnName="HHistory_Date" />
           <ScalarProperty Name="FK_PHome_ID" ColumnName="FK_PHome_ID" />
-          <ScalarProperty Name="FK_IOutcome_Code" ColumnName="FK_IOutcome_Code" />
+          <ScalarProperty Name="FK_Outcome_Code" ColumnName="FK_Outcome_Code" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -31,6 +31,7 @@
           <ScalarProperty Name="FK_Provider_ID" ColumnName="FK_Provider_ID" />
           <ScalarProperty Name="PHome_Name" ColumnName="PHome_Name" />
           <ScalarProperty Name="PHome_LicenseNumber" ColumnName="PHome_LicenseNumber" />
+          <ScalarProperty Name="PHome_RCSUnit" ColumnName="PHome_RCSUnit" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -48,6 +49,9 @@
           <ScalarProperty Name="SInspections_Id" ColumnName="SInspections_Id" />
           <ScalarProperty Name="SInspections_Date" ColumnName="SInspections_Date" />
           <ScalarProperty Name="FK_PHome_ID" ColumnName="FK_PHome_ID" />
+          <ScalarProperty Name="SInspections_SeventeenMonth" ColumnName="SInspections_SeventeenMonth" />
+          <ScalarProperty Name="SInspections_EighteenMonth" ColumnName="SInspections_EighteenMonth" />
+          <ScalarProperty Name="SInspection_ForecastedDate" ColumnName="SInspection_ForecastedDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

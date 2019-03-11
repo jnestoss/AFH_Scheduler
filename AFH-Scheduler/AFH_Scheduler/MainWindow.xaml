@@ -1,17 +1,21 @@
-﻿<Window x:Class="AFH_Scheduler.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:AFH_Scheduler"
-        xmlns:login="clr-namespace:AFH_Scheduler.Login"    
-        WindowStyle="None"
-        mc:Ignorable="d" Height="720" Width="1080" ResizeMode="NoResize" Visibility="Visible"
-        Background="{DynamicResource MaterialDesignPaper}"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Title="AFH Scheduler">
-
+﻿<Window
+    x:Class="AFH_Scheduler.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AFH_Scheduler"
+    xmlns:login="clr-namespace:AFH_Scheduler.Login"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="AFH Scheduler"
+    Width="1080"
+    Height="720"
+    Background="{DynamicResource MaterialDesignPaper}"
+    ResizeMode="NoResize"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    Visibility="Visible"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type login:LoginViewVM}">
@@ -24,59 +28,94 @@
 
     <StackPanel Background="WhiteSmoke">
 
-
-
-        <StackPanel Height="40" Background="#FF2196F3" Orientation="Horizontal">
-            <StackPanel HorizontalAlignment="left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <Label FontSize="18" Width="250" Foreground="WhiteSmoke">Adult Family Home Scheduler</Label>
+        <StackPanel
+            Height="40"
+            Background="#2962FF"
+            Orientation="Horizontal">
+            <StackPanel
+                Margin="10,0,0,0"
+                HorizontalAlignment="left"
+                VerticalAlignment="Center">
+                <Label
+                    Width="250"
+                    FontSize="18"
+                    Foreground="WhiteSmoke">
+                    Adult Family Home Scheduler
+                </Label>
             </StackPanel>
             <Grid
                 x:Name="DragableArea"
+                Width="584"
                 Background="Transparent"
-                MouseDown="DragCommand"
-                Width="536"/>
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="360">
+                MouseDown="DragCommand" />
 
-                <Button Background="{x:Null}" 
-                        BorderBrush="{x:Null}" 
-                        Foreground="WhiteSmoke" 
-                        VerticalAlignment="Center">
-                    <materialDesign:PackIcon Kind="HelpCircleOutline" Foreground="WhiteSmoke" Width="25" Height="25"/>
+            <StackPanel
+                Width="360"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="WhiteSmoke">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="HelpCircleOutline" />
                 </Button>
-                <Button Background="{x:Null}" 
-                        BorderBrush="{x:Null}" 
-                        Foreground="WhiteSmoke" 
-                        VerticalAlignment="Center"
-                        Command="{x:Static local:Commands.OpenSettingsCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
-                    <materialDesign:PackIcon Kind="Cog" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Command="{x:Static local:Commands.OpenSettingsCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                    Foreground="WhiteSmoke"
+                    IsEnabled="{Binding SettingsEnabled}">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="Cog" />
                 </Button>
-                <Button  Background="{x:Null}" 
-                        BorderBrush="{x:Null}" 
-                        Foreground="WhiteSmoke" 
-                        VerticalAlignment="Center"
-                        Command="{x:Static local:Commands.MinimizeCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
-                    <materialDesign:PackIcon Kind="ChevronDown" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Command="{x:Static local:Commands.MinimizeCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                    Foreground="WhiteSmoke">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="ChevronDown" />
                 </Button>
 
-                <Button  Background="{x:Null}" 
-                        BorderBrush="{x:Null}" 
-                        Foreground="WhiteSmoke" 
-                        VerticalAlignment="Center" 
-                        Command="{x:Static local:Commands.CloseCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}">
-                    <materialDesign:PackIcon Kind="Close" Foreground="WhiteSmoke" Width="25" Height="25"/>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Command="{x:Static local:Commands.CloseCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
+                    Foreground="WhiteSmoke">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="Close" />
                 </Button>
 
             </StackPanel>
         </StackPanel>
 
-        <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="WindowDialogs">
-            <ContentControl Height="700" Content="{Binding CurrentPageViewModel}"/>
+        <materialDesign:DialogHost
+            Height="Auto"
+            DockPanel.Dock="Top"
+            Identifier="WindowDialogs">
+            <ContentControl Height="700" Content="{Binding CurrentPageViewModel}" />
         </materialDesign:DialogHost>
-
 
     </StackPanel>
 

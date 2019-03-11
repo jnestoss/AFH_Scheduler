@@ -7,7 +7,7 @@
     <Property Name="HHistory_ID" Type="Int64" Nullable="false" />
     <Property Name="HHistory_Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
     <Property Name="FK_PHome_ID" Type="Int64" />
-    <Property Name="FK_IOutcome_Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="FK_Outcome_Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Inspection_Outcome" Relationship="Self.FK_Home_History_0_0" FromRole="Home_History" ToRole="Inspection_Outcome" />
     <NavigationProperty Name="Provider_Homes" Relationship="Self.FK_Home_History_1_0" FromRole="Home_History" ToRole="Provider_Homes" />
   </EntityType>
@@ -32,6 +32,7 @@
     <Property Name="FK_Provider_ID" Type="Int64" />
     <Property Name="PHome_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
     <Property Name="PHome_LicenseNumber" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="PHome_RCSUnit" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Home_History" Relationship="Self.FK_Home_History_1_0" FromRole="Provider_Homes" ToRole="Home_History" />
     <NavigationProperty Name="Provider" Relationship="Self.FK_Provider_Homes_0_0" FromRole="Provider_Homes" ToRole="Providers" />
     <NavigationProperty Name="Scheduled_Inspections" Relationship="Self.FK_Scheduled_Inspections_0_0" FromRole="Provider_Homes" ToRole="Scheduled_Inspections" />
@@ -51,6 +52,9 @@
     <Property Name="SInspections_Id" Type="Int64" Nullable="false" />
     <Property Name="SInspections_Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
     <Property Name="FK_PHome_ID" Type="Int64" />
+    <Property Name="SInspections_SeventeenMonth" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="SInspections_EighteenMonth" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="SInspection_ForecastedDate" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Provider_Homes" Relationship="Self.FK_Scheduled_Inspections_0_0" FromRole="Scheduled_Inspections" ToRole="Provider_Homes" />
   </EntityType>
   <Association Name="FK_Home_History_0_0">
@@ -61,7 +65,7 @@
         <PropertyRef Name="IOutcome_Code" />
       </Principal>
       <Dependent Role="Home_History">
-        <PropertyRef Name="FK_IOutcome_Code" />
+        <PropertyRef Name="FK_Outcome_Code" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

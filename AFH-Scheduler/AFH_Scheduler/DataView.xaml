@@ -24,6 +24,16 @@
 
     <DockPanel LastChildFill="False">
 
+        <StackPanel
+            VerticalAlignment="Bottom" 
+            DockPanel.Dock="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0 15 0 0">
+            <TextBlock Margin="0 0 10 0" FontSize="16">Normal Curve: </TextBlock>
+            <TextBlock Text="{Binding NormalCurve}" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <TextBlock Margin="20 0 0 0" FontSize="16" Background="{Binding NormalCurveState}" Text="{Binding NormalCurveResultMsg}"/>
+        </StackPanel>
         <StackPanel 
             VerticalAlignment="Bottom" 
             DockPanel.Dock="Top" 
@@ -128,18 +138,11 @@
                 SelectedItem="{Binding SelectedHome}"
                 SelectionMode="Single"
                 SelectionUnit="FullRow"
-                CanUserAddRows="True"
+                CanUserAddRows="False"
                 CanUserSortColumns="True"
-                ItemsSource="{Binding Providers}">
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding HasNoProvider}" Value="True">
-                                <Setter Property="Foreground" Value="Red"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
+                ItemsSource="{Binding Providers}"
+                VerticalScrollBarVisibility="Auto"
+                MaxHeight="450">
                 <DataGrid.Columns>
 
                     <!--
@@ -187,7 +190,6 @@
                         Header="Licensed Home's Name" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                        Width="120"
                         Binding="{Binding Address}"
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
@@ -213,6 +215,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </materialDesign:MaterialDataGridTextColumn>
+                    
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding RecentInspection}"
                         IsReadOnly="True"
@@ -235,17 +238,10 @@
 
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsRegion}"
+                            Binding="{Binding RcsRegionUnit}"
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="RCSRegion">
-                    </materialDesign:MaterialDataGridTextColumn>
-
-                    <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsUnit}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Unit">
+                            Header="RCS Region/Unit">
                     </materialDesign:MaterialDataGridTextColumn>
                     <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
 
@@ -258,7 +254,7 @@
                     Margin="36 0 36 0"
                     ItemsSource="{Binding HomesHistory}"
                     CanUserSortColumns="True"
-                    CanUserAddRows="True"
+                    CanUserAddRows="False"
                     AutoGenerateColumns="False"
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8"
@@ -363,7 +359,7 @@
             <Button
                 Command="{Binding Path=AddNewHomeCommand}"
                 MaxWidth="255"
-                Margin="40 0 0 0"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Add a new home to database">
                 ADD NEW HOME
@@ -371,7 +367,7 @@
             <Button
                 Command="{Binding Path=InactiveListCommand}"
                 MaxWidth="255"
-                Margin="40 0 0 0"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="List all Inactive homes">
                 InActive Homes
@@ -379,7 +375,7 @@
             <Button
                 Command="{Binding ImportTableCommand}"
                 MaxWidth="255"
-                Margin="40 0 0 0"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Import Table From Excel Spreadsheet">
                 IMPORT
@@ -387,7 +383,7 @@
             <Button
                 Command="{Binding Path=ExportTableCommand}"
                 MaxWidth="255"
-                Margin="40"
+                Margin="30"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Export Table to Excel Spreadsheet">
                 EXPORT
