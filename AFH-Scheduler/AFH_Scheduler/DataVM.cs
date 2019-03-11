@@ -430,7 +430,7 @@ namespace AFH_Scheduler
         {
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                List<Provider_Homes> homes = db.Provider_Homes.ToList();
+                var homes = db.Provider_Homes.ToList();
 
                 foreach(Provider_Homes house in homes)
                 {
@@ -457,7 +457,6 @@ namespace AFH_Scheduler
                         SeventeenMonthDate = alg.DropDateMonth(nextInspection, Drop.SEVENTEEN_MONTH),
                         ForecastedDate = SchedulingAlgorithm.NextScheduledDate(homeHistory.Inspection_Outcome, nextInspection),
                         IsActive = true,
-                        RcsRegion = "",
                         RcsUnit = "",
                     };
                     Providers.Add(newHome);
@@ -778,7 +777,7 @@ namespace AFH_Scheduler
                         
 
                         db.Home_History.Add(new Home_History {
-                            FK_IOutcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code.Equals(newNextInspectionDate)).IOutcome_Code,
+                            FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code.Equals(newNextInspectionDate)).IOutcome_Code,
                             FK_PHome_ID = updatedHomeValues.HomeID,
                             HHistory_Date = newNextInspectionDate,
                             HHistory_ID = new Random().Next(1,1000000),

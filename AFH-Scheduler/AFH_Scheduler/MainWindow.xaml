@@ -30,7 +30,7 @@
 
         <StackPanel
             Height="40"
-            Background="#FF2196"
+            Background="#2962FF"
             Orientation="Horizontal">
             <StackPanel
                 Margin="10,0,0,0"
@@ -54,30 +54,6 @@
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
 
-                <Button
-                    VerticalAlignment="Center"
-                    Background="{x:Null}"
-                    BorderBrush="{x:Null}"
-                    Foreground="WhiteSmoke">
-                    <materialDesign:PackIcon
-                        Width="25"
-                        Height="25"
-                        Foreground="WhiteSmoke"
-                        Kind="HelpCircleOutline" />
-                </Button>
-                <Button
-                    VerticalAlignment="Center"
-                    Background="{x:Null}"
-                    BorderBrush="{x:Null}"
-                    Command="{x:Static local:Commands.OpenSettingsCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
-                    Foreground="WhiteSmoke">
-                    <materialDesign:PackIcon
-                        Width="25"
-                        Height="25"
-                        Foreground="WhiteSmoke"
-                        Kind="Cog" />
-                </Button>
                 <Button
                     VerticalAlignment="Center"
                     Background="{x:Null}"
