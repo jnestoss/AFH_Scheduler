@@ -50,7 +50,7 @@ namespace AFH_Scheduler.Algorithm
                 return "";
             }
 
-            Inspection_Outcome outcome = table.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_IOutcome_Code);
+            Inspection_Outcome outcome = table.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_Outcome_Code);
 
             string newInspection = NextScheduledDate(outcome,  history.HHistory_Date);
             DateTime newDateObject = ExtractDateTime(newInspection);
@@ -298,10 +298,10 @@ namespace AFH_Scheduler.Algorithm
             int mostOutcomes = 0;
             foreach (var outcome in history)
             {
-                int outCount = table.Home_History.Where(r => r.FK_PHome_ID == homeID && r.FK_IOutcome_Code == outcome.FK_IOutcome_Code).Count();
+                int outCount = table.Home_History.Where(r => r.FK_PHome_ID == homeID && r.FK_Outcome_Code == outcome.FK_Outcome_Code).Count();
                 if (outCount > mostOutcomes)
                 {
-                    forecastedOutcome = outcome.FK_IOutcome_Code;
+                    forecastedOutcome = outcome.FK_Outcome_Code;
                 }
             }
             var resultedOutcome = table.Inspection_Outcome.Where(r => r.IOutcome_Code == forecastedOutcome).FirstOrDefault();
