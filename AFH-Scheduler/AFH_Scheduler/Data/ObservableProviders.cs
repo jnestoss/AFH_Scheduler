@@ -10,8 +10,8 @@ namespace AFH_Scheduler.Data
 {
     public class ObservableProviders : ObservableObject
     {
-        private ObservableCollection<ScheduleModel> _providers;
-        public ObservableCollection<ScheduleModel> Providers {
+        private ObservableCollection<HomeModel> _providers;
+        public ObservableCollection<HomeModel> Providers {
             get { return _providers; }
             set {
                 if (value != _providers)
@@ -47,14 +47,14 @@ namespace AFH_Scheduler.Data
 
         public ObservableProviders()
         {
-            _providers = new ObservableCollection<ScheduleModel>();
+            _providers = new ObservableCollection<HomeModel>();
             _selected = new bool[12];
         }
 
         /**
         public static void ClearSelected()
         {
-            foreach (ScheduleModel Provider in Providers)
+            foreach (HomeModel Provider in Providers)
             {
                 Providers.IsSelected = false;
             }

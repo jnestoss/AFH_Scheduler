@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\jnestoss\source\repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Home_History">
     <Key>
       <PropertyRef Name="HHistory_ID" />
@@ -26,9 +26,10 @@
     <Property Name="PHome_City" Type="nvarchar" MaxLength="2147483647" />
     <Property Name="PHome_Zipcode" Type="nvarchar" MaxLength="2147483647" />
     <Property Name="PHome_Phonenumber" Type="nvarchar" MaxLength="2147483647" />
-    <Property Name="FK_Provider_ID" Type="integer" />
     <Property Name="PHome_Name" Type="nvarchar" MaxLength="2147483647" />
     <Property Name="PHome_LicenseNumber" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="PHome_RCSUnit" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="FK_Provider_ID" Type="integer" />
   </EntityType>
   <EntityType Name="Providers">
     <Key>
@@ -43,6 +44,9 @@
     </Key>
     <Property Name="SInspections_Id" Type="integer" Nullable="false" />
     <Property Name="SInspections_Date" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="SInspections_SeventeenMonth" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="SInspections_EighteenMonth" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="SInspection_ForecastedDate" Type="nvarchar" MaxLength="2147483647" />
     <Property Name="FK_PHome_ID" Type="integer" />
   </EntityType>
   <Association Name="FK_Home_History_0_0">

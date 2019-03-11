@@ -155,27 +155,33 @@ namespace AFH_Scheduler.Data
             }
         }
 
-        public long ProviderID {
+        public long ProviderID
+        {
             get { return _providerID; }
-            set {
+            set
+            {
                 if (_providerID == value) return;
                 _providerID = value;
                 OnPropertyChanged("ProviderID");
             }
         }
 
-        public long HomeID {
+        public long HomeID
+        {
             get { return _homeID; }
-            set {
+            set
+            {
                 if (_homeID == value) return;
                 _homeID = value;
                 OnPropertyChanged("HomeID");
             }
         }
 
-        public string ProviderName {
+        public string ProviderName
+        {
             get { return _providerName; }
-            set {
+            set
+            {
                 if (_providerName == value) return;
                 _providerName = value;
 
@@ -210,36 +216,44 @@ namespace AFH_Scheduler.Data
         }
 
 
-        public string Phone {
+        public string Phone
+        {
             get { return _phone; }
-            set {
+            set
+            {
                 if (_phone == value) return;
                 _phone = value;
                 OnPropertyChanged("Phone");
             }
         }
 
-        public string Address {
+        public string Address
+        {
             get { return _address; }
-            set {
+            set
+            {
                 if (_address == value) return;
                 _address = value;
                 OnPropertyChanged("Address");
             }
         }
 
-        public string City {
+        public string City
+        {
             get { return _city; }
-            set {
+            set
+            {
                 if (_city == value) return;
                 _city = value;
                 OnPropertyChanged("City");
             }
         }
 
-        public string ZIP {
+        public string ZIP
+        {
             get { return _ZIP; }
-            set {
+            set
+            {
                 if (_ZIP == value) return;
                 _ZIP = value;
                 OnPropertyChanged("ZIP");
@@ -275,7 +289,8 @@ namespace AFH_Scheduler.Data
         public string EighteenthMonthDate
         {
             get { return _eighteenthMonthDate; }
-            set {
+            set
+            {
                 if (_eighteenthMonthDate == value) return;
                 _eighteenthMonthDate = value;
                 OnPropertyChanged("EighteenthMonthDate");

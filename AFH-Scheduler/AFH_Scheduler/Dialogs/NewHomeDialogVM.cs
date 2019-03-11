@@ -48,8 +48,8 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
-        private ScheduleModel _newHomeCreated;
-        public ScheduleModel NewHomeCreated
+        private HomeModel _newHomeCreated;
+        public HomeModel NewHomeCreated
         {
             get { return _newHomeCreated; }
             set
@@ -120,7 +120,7 @@ namespace AFH_Scheduler.Dialogs
                 ComboBoxProviderItems = lv;
                 lv.CustomSort = Comparer<ProvidersModel>.Create(ProviderSort);
 
-                NewHomeCreated = new ScheduleModel();
+                NewHomeCreated = new HomeModel();
                 DatePicked = DateTime.Today;
             }
         }

@@ -17,6 +17,9 @@ namespace AFH_Scheduler.Database
         public long SInspections_Id { get; set; }
         public string SInspections_Date { get; set; }
         public Nullable<long> FK_PHome_ID { get; set; }
+        public string SInspections_SeventeenMonth { get; set; }
+        public string SInspections_EighteenMonth { get; set; }
+        public string SInspection_ForecastedDate { get; set; }
     
         public virtual Provider_Homes Provider_Homes { get; set; }
     }
