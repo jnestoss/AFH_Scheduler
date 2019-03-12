@@ -21,6 +21,16 @@ namespace AFH_Scheduler.Dialogs
         private readonly ObservableCollection<String> Providers;
         public ICollectionView ComboBoxProviderItems { get; }
 
+        private Boolean _recentInspectionVisibility;
+        public Boolean RecentInspectionVisibility {
+            get => _recentInspectionVisibility;
+            set {
+                if (_recentInspectionVisibility == value) return;
+                _recentInspectionVisibility = value;
+                OnPropertyChanged("RecentInspectionVisibility");
+            }
+        }
+
         private string _TextSearch;
         public string TextSearch
         {
@@ -58,6 +68,7 @@ namespace AFH_Scheduler.Dialogs
             {
                 _datePicked = value;
                 NewHomeCreated.NextInspection = _datePicked.ToShortDateString();
+                NewHomeCreated.RecentInspection = _datePicked.ToShortDateString();
                 OnPropertyChanged("DatePicked");
             }
         }
@@ -107,6 +118,15 @@ namespace AFH_Scheduler.Dialogs
             set {
                 if (_selectedCode == value) return;
                 _selectedCode = value;
+                if (_selectedCode.IOutcome_Code == "NEW")
+                {
+                    RecentInspectionVisibility = false;
+                }
+                else
+                {
+                    RecentInspectionVisibility = true;
+                }
+                OnPropertyChanged("SelectedCode");
             }
         }
 
@@ -128,11 +148,11 @@ namespace AFH_Scheduler.Dialogs
             ComboBoxProviderItems = lv;
             lv.CustomSort = Comparer<string>.Create(ProviderSort);
 
-            NewHomeCreated = new HomeModel();
+            RecentInspectionVisibility = false;
+            NewHomeCreated = new HomeModel();          
             DatePicked = DateTime.Today;
             GrabOutcomeCodes();
-            SelectedCode = GrabStartingOutcomeCode();
-            
+            SelectedCode = GrabStartingOutcomeCode();           
         }
 
         private int ProviderSort(string x, string y)
@@ -159,7 +179,7 @@ namespace AFH_Scheduler.Dialogs
         {
             using(HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                return db.Inspection_Outcome.First();
+                return db.Inspection_Outcome.First(r => r.IOutcome_Code == "NEW");
             }
         }
 

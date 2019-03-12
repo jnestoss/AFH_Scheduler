@@ -476,6 +476,7 @@ namespace AFH_Scheduler
 
         public void GenData()
         {
+            Providers = new ObservableCollection<HomeModel>();
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var homes = db.Provider_Homes.ToList();
@@ -486,7 +487,7 @@ namespace AFH_Scheduler
 
                     var nextInspection = db.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == house.PHome_ID).SInspections_Date;
 
-                    var homeHistory = db.Home_History.FirstOrDefault(x => x.HHistory_ID == house.Home_History.First().HHistory_ID);
+                    //var homeHistory = db.Home_History.FirstOrDefault(x => x.HHistory_ID == house.Home_History.First().HHistory_ID);
 
                     HomeModel newHome = new HomeModel
                     {
@@ -499,11 +500,11 @@ namespace AFH_Scheduler
                         Address = house.PHome_Address,
                         City = house.PHome_City,
                         ZIP = house.PHome_Zipcode,
-                        RecentInspection = homeHistory.HHistory_Date,
+                        RecentInspection = null,//homeHistory.HHistory_Date,
                         NextInspection = nextInspection,
-                        EighteenthMonthDate = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.EIGHTEEN_MONTH),
-                        SeventeenMonthDate = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.SEVENTEEN_MONTH),
-                        ForecastedDate = SchedulingAlgorithm.NextScheduledDate(homeHistory.Inspection_Outcome, nextInspection),
+                        EighteenthMonthDate = null,//alg.DropDateMonth(homeHistory.HHistory_Date, Drop.EIGHTEEN_MONTH),
+                        SeventeenMonthDate = null,//alg.DropDateMonth(homeHistory.HHistory_Date, Drop.SEVENTEEN_MONTH),
+                        ForecastedDate = null,//SchedulingAlgorithm.NextScheduledDate(homeHistory.Inspection_Outcome, nextInspection),
                         IsActive = true,
                         RcsUnit = "",
                     };
@@ -573,59 +574,83 @@ namespace AFH_Scheduler
                 else
                     recentDate = recentInspec.HHistory_Date;
 
-                HomeModel newHome = new HomeModel
-                {
-                    ProviderID = Convert.ToInt64(home.ProviderID),
-                    HomeID = home.HomeID,
-                    ProviderName = home.ProviderName,
-                    HomeLicenseNum = Convert.ToInt64(home.HomeLicenseNum),
-                    HomeName = home.HomeName,
-                    Phone = home.Phone,
-                    Address = home.Address,
-                    City = home.City,
-                    ZIP = home.ZIP,
-                    RecentInspection = recentDate,
-                    NextInspection = home.NextInspection,
-                    EighteenthMonthDate = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
-                    IsActive = true,
-                    RcsRegionUnit = home.RcsRegionUnit
-                };
-
-                Providers.Add(newHome);
-
-                //using (HomeInspectionEntities db = new HomeInspectionEntities())
+                //HomeModel newHome = new HomeModel
                 //{
-                //    Scheduled_Inspections dates = new Scheduled_Inspections
-                //    {
-                //        FK_PHome_ID = home.HomeID,
-                //        SInspections_Date = home.NextInspection,
-                //        SInspections_EighteenMonth = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
-                //        SInspections_SeventeenMonth = alg.DropDateMonth(recentDate, Drop.SEVENTEEN_MONTH),
-                //        SInspections_Id = new Random().Next(1, 1000000),
-                //        SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(db.Inspection_Outcome.First(), home.NextInspection)
-                //    };
+                //    ProviderID = Convert.ToInt64(home.ProviderID),
+                //    HomeID = home.HomeID,
+                //    ProviderName = home.ProviderName,
+                //    HomeLicenseNum = Convert.ToInt64(home.HomeLicenseNum),
+                //    HomeName = home.HomeName,
+                //    Phone = home.Phone,
+                //    Address = home.Address,
+                //    City = home.City,
+                //    ZIP = home.ZIP,
+                //    RecentInspection = recentDate,
+                //    NextInspection = home.NextInspection,
+                //    EighteenthMonthDate = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
+                //    IsActive = true,
+                //    RcsRegionUnit = home.RcsRegionUnit
+                //};
 
-                //    List<Scheduled_Inspections> inspections = new List<Scheduled_Inspections>();
-                //    inspections.Add(dates);
+                //Providers.Add(newHome);
 
-                //    db.Provider_Homes.Add(new Provider_Homes
-                //    {
-                //        FK_Provider_ID = home.ProviderID,
-                //        Home_History = null,
-                //        PHome_Address = home.Address,
-                //        PHome_City = home.City,
-                //        PHome_ID = home.HomeID,
-                //        PHome_LicenseNumber = $"{home.HomeLicenseNum}",
-                //        PHome_Name = home.HomeName,
-                //        PHome_Phonenumber = home.Phone,
-                //        PHome_RCSUnit = home.RcsRegionUnit,
-                //        PHome_Zipcode = home.ZIP,
-                //        Provider = db.Providers.First(r => r.Provider_ID == home.ProviderID),
-                //        Scheduled_Inspections = inspections
-                //    });
-                //}
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    Scheduled_Inspections dates = new Scheduled_Inspections
+                    {
+                        FK_PHome_ID = home.HomeID,
+                        SInspections_Date = home.NextInspection,
+                        SInspections_EighteenMonth = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
+                        SInspections_SeventeenMonth = alg.DropDateMonth(recentDate, Drop.SEVENTEEN_MONTH),
+                        SInspections_Id = new Random().Next(1, 1000000),
+                        SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(db.Inspection_Outcome.First(), home.NextInspection)
+                    };
 
-                //GenData();
+                    List<Scheduled_Inspections> inspections = new List<Scheduled_Inspections>();
+                    inspections.Add(dates);
+
+                    db.Provider_Homes.Add(new Provider_Homes
+                    {
+                        FK_Provider_ID = home.ProviderID,
+                        Home_History = null,
+                        PHome_Address = home.Address,
+                        PHome_City = home.City,
+                        PHome_ID = home.HomeID,
+                        PHome_LicenseNumber = $"{home.HomeLicenseNum}",
+                        PHome_Name = home.HomeName,
+                        PHome_Phonenumber = home.Phone,
+                        PHome_RCSUnit = home.RcsRegionUnit,
+                        PHome_Zipcode = home.ZIP,
+                        Provider = db.Providers.First(r => r.Provider_Name == createdHome.TextSearch),
+                        Scheduled_Inspections = inspections
+                    });
+
+                    if(createdHome.SelectedCode.IOutcome_Code == "NEW")
+                    {
+                        db.Home_History.Add(new Home_History
+                        {
+                            FK_PHome_ID = home.HomeID,
+                            FK_Outcome_Code = "NEW",
+                            HHistory_Date = DateTime.Today.ToString("MM/dd/yyyy"),
+                            HHistory_ID = new Random().Next(1, 1000000),
+                            Inspection_Outcome = createdHome.SelectedCode
+                        });
+                    } else
+                    {
+                        db.Home_History.Add(new Home_History
+                        {
+                            FK_PHome_ID = home.HomeID,
+                            FK_Outcome_Code = createdHome.SelectedCode.IOutcome_Code,
+                            HHistory_Date = home.RecentInspection,
+                            HHistory_ID = new Random().Next(1, 1000000),
+                            Inspection_Outcome = createdHome.SelectedCode
+                        });
+                    }
+
+                    db.SaveChanges();
+                }
+
+                GenData();
 
                 //Add to database
                 /*
