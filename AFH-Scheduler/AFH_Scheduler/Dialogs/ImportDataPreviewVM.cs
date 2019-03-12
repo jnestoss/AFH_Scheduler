@@ -316,6 +316,11 @@ namespace AFH_Scheduler.Dialogs
         public void LoadInToTable(int pocRow, int licenseRow, int nameRow, int addressRow, int cityRow,
             int zipRow, int phoneRow, int inspRow, int recentRow, int rcsRow)
         {
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                var outcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code.Equals("NEW")).First();
+            
+            bool noProvider;
             int errorCount = 0;
             if (licenseRow == -1 || nameRow == -1 || addressRow == -1 || cityRow == -1 || zipRow == -1 || recentRow == -1 || rcsRow == -1)
             {
@@ -374,6 +379,8 @@ namespace AFH_Scheduler.Dialogs
             string provName, nextInspect;
             for (int rowItem = 1; rowItem < rows; rowItem++)
             {
+
+                    long homeID = GenerateHomeID();
                 try
                 {
                     if (ImportedLicenseInfo[licenseRow][rowItem].Equals("")
@@ -440,50 +447,46 @@ namespace AFH_Scheduler.Dialogs
                         {
                             provID = -1;
                             provName = "No Provider";
+                            noProvider = true;
                         }
                         else
                         {
+                            noProvider = false;
                             provName = ImportedLicenseInfo[pocRow][rowItem];
-                            using (HomeInspectionEntities db = new HomeInspectionEntities())
+                            var prov = db.Providers.Where(r => r.Provider_Name.Equals(provName)).ToList();
+                            if (prov.Count != 0) //New Provider
                             {
-                                var prov = db.Providers.Where(r => r.Provider_Name.Equals(provName)).ToList();
-                                if (prov.Count != 0) //New Provider
-                                {
-                                    provID = prov[0].Provider_ID;
-                                }
-                                else
-                                {
-                                    provID = GenerateProviderID();
-                                }
+                               provID = prov[0].Provider_ID;
                             }
+                            else
+                            {
+                               provID = GenerateProviderID();
+                            }
+                            
                         }
 
                         if (inspRow == -1 || ImportedLicenseInfo[inspRow][rowItem].Equals(""))
                         {
-                            using (HomeInspectionEntities db = new HomeInspectionEntities())
+                            string inspectDate = SchedulingAlgorithm.NextScheduledDate(outcome,
+                                       ImportedLicenseInfo[recentRow][rowItem]);
+
+                            DateTime scheduleInspect = SchedulingAlgorithm.ExtractDateTime(inspectDate);
+
+                            if (!alg.CheckingForUniqueInspection(db, scheduleInspect, homeID))
                             {
-                                var outcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code.Equals("NEW")).First();
-
-                                string inspectDate = SchedulingAlgorithm.NextScheduledDate(outcome,
-                                           ImportedLicenseInfo[recentRow][rowItem]);
-
-                                DateTime scheduleInspect = SchedulingAlgorithm.ExtractDateTime(inspectDate);
-
-                                if (!alg.CheckingForUniqueInspection(db, scheduleInspect, GenerateHomeID()))
+                                bool dateCleared = false;
+                                do
                                 {
-                                    bool dateCleared = false;
-                                    do
+                                    scheduleInspect.AddDays(1);
+                                    SchedulingAlgorithm.CheckDay(scheduleInspect);
+                                    if (alg.CheckingForUniqueInspection(db, scheduleInspect, homeID))
                                     {
-                                        scheduleInspect.AddDays(1);
-                                        SchedulingAlgorithm.CheckDay(scheduleInspect);
-                                        if (alg.CheckingForUniqueInspection(db, scheduleInspect, GenerateHomeID()))
-                                        {
-                                            dateCleared = true;
-                                        }
-                                    } while (!dateCleared);
-                                }
-                                nextInspect = scheduleInspect.ToShortDateString();
+                                        dateCleared = true;
+                                    }
+                                } while (!dateCleared);
                             }
+                            nextInspect = scheduleInspect.ToShortDateString();
+
                         }
                         else
                         {
@@ -493,7 +496,7 @@ namespace AFH_Scheduler.Dialogs
                             new HomeModel
                             {
                                 ProviderID = provID,
-                                HomeID = GenerateHomeID(),     //Home Database ID
+                                HomeID = homeID,     //Home Database ID
                                 ProviderName = provName,                //Provider Name*
                                 HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
                                 HomeName = ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
@@ -501,11 +504,14 @@ namespace AFH_Scheduler.Dialogs
                                 Address = ImportedLicenseInfo[addressRow][rowItem],     //Address*
                                 City = ImportedLicenseInfo[cityRow][rowItem],     //City*
                                 ZIP = ImportedLicenseInfo[zipRow][rowItem],     //Zip*
-                                RecentInspection = "",         //Recent
-                                NextInspection = ImportedLicenseInfo[inspRow][rowItem],               //Next Inspection*
-                                EighteenthMonthDate = alg.DropDateMonth(ImportedLicenseInfo[inspRow][rowItem], Drop.EIGHTEEN_MONTH),//18th Month Drop Date
-                                HasNoProvider = true,
-                                RcsRegion = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
+                                RecentInspection = ImportedLicenseInfo[recentRow][rowItem],         //Recent
+                                NextInspection = nextInspect,               //Next Inspection*
+                                EighteenthMonthDate = alg.DropDateMonth(ImportedLicenseInfo[recentRow][rowItem], Drop.EIGHTEEN_MONTH),//18th Month Drop Date
+                                SeventeenMonthDate = alg.DropDateMonth(ImportedLicenseInfo[recentRow][rowItem], Drop.SEVENTEEN_MONTH),
+                                ForecastedDate = SchedulingAlgorithm.NextScheduledDate(outcome, ImportedLicenseInfo[recentRow][rowItem]),
+                                HasNoProvider = noProvider,
+                                IsActive = true,
+                                RcsRegionUnit = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
                             }
                         );
                     }
@@ -524,6 +530,7 @@ namespace AFH_Scheduler.Dialogs
                     "LicenseNumber, FacilityName, LocationAddress, LocationCity, LocationZipCode, NextInspection, RCSRegionUnit.";*/
                 //MessageService.ReleaseMessageBox(message);
                 LoadErrorListAsync(errorlist);
+            }
             }
         }
 
@@ -574,7 +581,7 @@ namespace AFH_Scheduler.Dialogs
 
         public long GenerateHomeID()
         {
-            long newID;
+            long newID = 0;
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 try
@@ -596,17 +603,16 @@ namespace AFH_Scheduler.Dialogs
                     }
                     else
                         newID = recentHomeID.PHome_ID + 1;
-                    while (UniqueHomeIDs.Contains(newID))
-                    {
-                        newID++;
-                    }
-                    UniqueHomeIDs.Add(newID);
-                    return newID;
                 }
                 catch (Exception e)
                 {
-                    return 0;
                 }
+                while (UniqueHomeIDs.Contains(newID))
+                {
+                    newID++;
+                }
+                UniqueHomeIDs.Add(newID);
+                return newID;
             }
         }
 

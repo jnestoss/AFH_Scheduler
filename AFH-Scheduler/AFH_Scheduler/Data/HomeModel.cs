@@ -30,8 +30,7 @@ namespace AFH_Scheduler.Data
         private string _eighteenthMonthDate;
         private string _seventeenMonthDate;
         private string _forecastedDate;
-        private string _rcsRegion;
-        private string _rcsUnit;
+        private string _rcsRegionUnit;
 
         public HomeModel()
         {
@@ -207,21 +206,14 @@ namespace AFH_Scheduler.Data
                 }
             }
         }
-
-        public string RcsRegion {
-            get { return _rcsRegion; }
-            set {
-                if (_rcsRegion == value) return;
-                _rcsRegion = value;
-                OnPropertyChanged("RcsRegion");
-            }
-        }
-        public string RcsUnit {
-            get { return _rcsUnit; }
-            set {
-                if (_rcsUnit == value) return;
-                _rcsUnit = value;
-                OnPropertyChanged("RcsUnit");
+        public string RcsRegionUnit
+        {
+            get { return _rcsRegionUnit; }
+            set
+            {
+                if (_rcsRegionUnit == value) return;
+                _rcsRegionUnit = value;
+                OnPropertyChanged("RcsRegionUnit");
             }
         }
 
