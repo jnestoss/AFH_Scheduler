@@ -194,7 +194,16 @@ namespace AFH_Scheduler.Dialogs
 
         private void CalcNextInspectionDate(object o)
         {
-            string date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
+            string date;
+            if(RecentInspectionVisibility == true)
+            {
+                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, NewHomeCreated.RecentInspection);
+            }
+            else
+            {
+                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
+            }
+            
             NewHomeCreated.NextInspection = date;
         }
 

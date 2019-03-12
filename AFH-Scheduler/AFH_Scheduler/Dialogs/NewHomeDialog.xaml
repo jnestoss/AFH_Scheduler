@@ -294,10 +294,10 @@
                 Margin="0,10,0,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter} }"
                 FontSize="16"
                 Opacity="0.9"
-                Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter}}">
                 Last Inspection
             </TextBlock>
 
@@ -305,21 +305,17 @@
                 x:Name="RecentDatePicker"
                 Grid.Row="5"
                 Grid.Column="5"
-                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter} }"
                 Width="100"
                 Margin="20,10,0,10"
                 materialDesign:HintAssist.Hint="Recent Inspection"
-                SelectedDateFormat="Short">
+                SelectedDateFormat="Short"
+                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter}}">
                 <DatePicker.SelectedDate>
                     <Binding
                         Converter="{StaticResource dateConverter}"
                         Mode="TwoWay"
                         Path="NewHomeCreated.RecentInspection"
-                        UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Behaviors:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
+                        UpdateSourceTrigger="PropertyChanged" />
                 </DatePicker.SelectedDate>
             </DatePicker>
 
