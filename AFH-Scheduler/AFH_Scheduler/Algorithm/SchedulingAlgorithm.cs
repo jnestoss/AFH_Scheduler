@@ -152,7 +152,7 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region FOLLOW-UPS
-        public string SettingFollowUps(string last_correctionDate)
+        public static string SettingFollowUps(string last_correctionDate)
         {
             //int min = 50; int max = 60;
             //for now I set up the follow-up to be as soon as possible and let the user manually edit it
@@ -166,7 +166,8 @@ namespace AFH_Scheduler.Algorithm
              }
 
              followUp_list.Clear();*/
-            DateTime followupDate = ExtractDateTime(last_correctionDate).AddDays(60);
+            DateTime followupDate = ExtractDateTime(last_correctionDate).AddDays(30);
+            followupDate = CheckDay(followupDate);
             string followUp = followupDate.ToShortDateString();
             return followUp;
         }

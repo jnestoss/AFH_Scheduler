@@ -14,6 +14,7 @@ namespace AFH_Scheduler.Database
     
     public partial class Home_History
     {
+        
         public long HHistory_ID { get; set; }
         public string HHistory_Date { get; set; }
         public Nullable<long> FK_PHome_ID { get; set; }

@@ -1,125 +1,198 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-    <UserControl x:Class="AFH_Scheduler.Dialogs.NewHomeDialog"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:Behaviors="clr-namespace:AFH_Scheduler.Validations"
-             mc:Ignorable="d" >
-               
-        <StackPanel Orientation="Vertical">
-            <TextBlock Margin="10" FontSize="22" HorizontalAlignment="Center">Create A New Home</TextBlock>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="200"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="200"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+<UserControl
+    x:Class="AFH_Scheduler.Dialogs.NewHomeDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Behaviors="clr-namespace:AFH_Scheduler.Validations"
+    xmlns:conv="clr-namespace:AFH_Scheduler.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:AFH_Scheduler.Dialogs"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <conv:ProviderConverter x:Key="providerConverter" />
+        <conv:ProviderListConverter x:Key="providerListConverter" />
+        <conv:OutcomeCodeConverter x:Key="outcomeCodeConverter" />
+        <conv:DateConverter x:Key="dateConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </UserControl.Resources>
+
+    <Grid
+        Width="800"
+        Height="600"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <materialDesign:ColorZone
+            Grid.Row="0"
+            Padding="16"
+            materialDesign:ShadowAssist.Darken="True"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Mode="Accent">
+            <TextBlock
+                Margin="0,0,0,0"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                Create New Home
+            </TextBlock>
+        </materialDesign:ColorZone>
+
+
+
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="6"
+            Width="720"
+            MinHeight="460"
+            HorizontalAlignment="Center">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="0">Provider:</TextBlock>
-            <ComboBox
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                        Margin="20,10,0,10"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
-                        IsEditable="True"    
-                        IsTextSearchEnabled="True"
-                        StaysOpenOnEdit="True"
-                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                        materialDesign:HintAssist.Hint="Search"
-                        materialDesign:HintAssist.HintOpacity=".26"
-                        ItemsSource="{Binding ComboBoxProviderItems}"
-                        DisplayMemberPath="ProviderName"
-                        Text="{Binding TextSearch, Delay=250}"
-                        SelectedValue="{Binding SelectedProviderName}"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="1">Home License Number:</TextBlock>
-            <TextBox
-                Name="HomeLicenseTextBox"
-                    Margin="10" 
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,10,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Opacity="0.9"
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                Provider
+            </TextBlock>
+
+            <ComboBox
+                Grid.Row="0"
                 Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Margin="20,10,0,10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                materialDesign:HintAssist.Hint="Search"
+                materialDesign:HintAssist.HintOpacity=".26"
+                IsEditable="True"
+                IsTextSearchEnabled="True"
+                ItemsSource="{Binding ComboBoxProviderItems}"
+                StaysOpenOnEdit="True"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Text="{Binding TextSearch, Delay=250}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBox
+                x:Name="LicenseNumber"
                 Grid.Row="1"
-                    FontSize="16" 
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                VerticalAlignment="Bottom"
+                materialDesign:HintAssist.FloatingScale="1.4"
+                materialDesign:HintAssist.Hint="Licence Number"
+                materialDesign:HintAssist.HintOpacity="0.9"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.HomeLicenseNum" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:NewHomeValidation Message="Please use only whole numbers." 
-                                                     Regex="^[0-9]+$"
-                                                     ValidatesOnTargetUpdated="True"/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-
-            </TextBox>
-
-
-            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="1">Licensed Home Name:</TextBlock>
-            <TextBox 
-                Name="HomeNameTextBox"
-                    Margin="10" 
-                    Grid.Column="3"
-                    Grid.Row="1"
-                    FontSize="16">
-                <TextBox.Text>
-                    <Binding Path="NewHomeCreated.HomeName" UpdateSourceTrigger="LostFocus">
-                        <Binding.ValidationRules>
-                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-
-            <!--    
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="2">Home ID:</TextBlock>
-            <TextBox
-                Name="HomeIDTextBox"
-                    Margin="10" 
-                    FontSize="16" 
-                    Grid.Column="1" 
-                    Grid.Row="2" 
-                    IsReadOnly="True"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                <TextBox.Text>
-                    <Binding Path="NewHomeCreated.HomeID" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
                             <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:NewHomeValidation Message="Please use only whole numbers." 
-                                                     Regex="^[0-9]+$"
-                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+
+                <i:Interaction.Behaviors>
+                    <Behaviors:TextBoxInputMaskBehavior InputMask="000000" />
+                </i:Interaction.Behaviors>
+            </TextBox>
+
+            <TextBox
+                x:Name="HomeName"
+                Grid.Row="1"
+                Grid.Column="3"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                VerticalAlignment="Bottom"
+                materialDesign:HintAssist.FloatingScale="1.4"
+                materialDesign:HintAssist.Hint="Home Name"
+                materialDesign:HintAssist.HintOpacity="0.9"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
 
             </TextBox>
-            -->
 
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="2">Address:</TextBlock>
-            <TextBox 
-                Name="AddressTextBox"
-                    Margin="10" 
-                    FontSize="16" 
-                    Grid.Column="1" 
-                    Grid.Row="2" >
+            <TextBox
+                x:Name="PhoneNumber"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                VerticalAlignment="Bottom"
+                materialDesign:HintAssist.FloatingScale="1.4"
+                materialDesign:HintAssist.Hint="Provider Phone Number"
+                materialDesign:HintAssist.HintOpacity="0.9"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding NewHomeCreated.Phone, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <Behaviors:TextBoxInputMaskBehavior InputMask="( 999 ) 000 0000" PromptChar="_" />
+                </i:Interaction.Behaviors>
+            </TextBox>
+
+            <TextBox
+                x:Name="ProviderAddress"
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="0,10,5,10"
+                VerticalAlignment="Bottom"
+                materialDesign:HintAssist.FloatingScale="1.4"
+                materialDesign:HintAssist.Hint="Address"
+                materialDesign:HintAssist.HintOpacity="0.9"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -127,68 +200,62 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="2">City:</TextBlock>
             <TextBox
-                Name="CityTextBox" 
-                    Margin="10" 
-                    FontSize="16" 
-                    Grid.Column="3" 
-                    Grid.Row="2">
+                x:Name="ProviderCity"
+                Grid.Row="3"
+                Grid.Column="3"
+                Grid.ColumnSpan="1"
+                Margin="5,10,5,10"
+                VerticalAlignment="Bottom"
+                materialDesign:HintAssist.FloatingScale="1.4"
+                materialDesign:HintAssist.Hint="City"
+                materialDesign:HintAssist.HintOpacity="0.9"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.City" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.City" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:NewHomeValidation Message="City isn't in correct format." 
-                                                     Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
-                                                     ValidatesOnTargetUpdated="True"/>
+                            <Behaviors:NewHomeValidation
+                                Message="City isn't in correct format."
+                                Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
+                                ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
 
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="3">Zipcode:</TextBlock>
             <TextBox
-                Name="ZipCodeTextBox" 
-                    Margin="10" 
-                    FontSize="16" 
-                    Grid.Column="1" 
-                    Grid.Row="3">
+                x:Name="ZIPCode"
+                Grid.Row="3"
+                Grid.Column="4"
+                Grid.ColumnSpan="1"
+                Margin="5,10,0,10"
+                VerticalAlignment="Bottom"
+                materialDesign:HintAssist.FloatingScale="1.4"
+                materialDesign:HintAssist.Hint="ZIP Code"
+                materialDesign:HintAssist.HintOpacity="0.9"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.ZIP" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.ZIP" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-
-                            <Behaviors:NewHomeValidation Message="Zipcode isn't in correct format." 
-                                                         Regex="^[0-9]{5}(-[0-9]{4})?$"
-                                                         ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
+                <i:Interaction.Behaviors>
+                    <Behaviors:TextBoxInputMaskBehavior InputMask="00000" PromptChar=" " />
+                </i:Interaction.Behaviors>
             </TextBox>
 
-
-            <TextBlock VerticalAlignment="Center" Margin="10" FontSize="16" Grid.Column="2" Grid.Row="3">Phone Number(Optional):</TextBlock>
             <TextBox
-                    Name="PhoneTextBox" 
-                    Margin="10" 
-                    Grid.Column="3"
-                    Grid.Row="3"
-                    FontSize="16">
-                <TextBox.Text>
-                    <Binding Path="NewHomeCreated.HomePhoneNumber" UpdateSourceTrigger="LostFocus">
-                        <Binding.ValidationRules>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="4">RCS-Region/Unit:</TextBlock>
-            <TextBox
-                Name="RegionTextBox" 
-                    Margin="10" 
-                    FontSize="16" 
-                    Grid.Column="1" 
-                    Grid.Row="4">
+                x:Name="Region"
+                Grid.Row="4"
+                Grid.Column="0"
+                Margin="0,10,0,10"
+                materialDesign:HintAssist.FloatingScale="1.4"
+                materialDesign:HintAssist.Hint="Unit/Region"
+                materialDesign:HintAssist.HintOpacity="0.9"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
@@ -196,74 +263,143 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
+                <i:Interaction.Behaviors>
+                    <Behaviors:TextBoxInputMaskBehavior InputMask="0A" PromptChar=" " />
+                </i:Interaction.Behaviors>
             </TextBox>
 
-            <!--
-            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="4">RCS-Unit:</TextBlock>
-            <TextBox
-                Name="UnitTextBox" 
-                    Margin="10" 
-                    FontSize="16" 
-                    Grid.Column="3" 
-                    Grid.Row="4">
-                <TextBox.Text>
-                    <Binding Path="NewHomeCreated.RcsUnit" UpdateSourceTrigger="LostFocus">
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Opacity="0.9"
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                Outcome Code
+            </TextBlock>
+
+            <ComboBox
+                Grid.Row="5"
+                Grid.Column="2"
+                ItemsSource="{Binding OutcomeCodes}"
+                SelectedItem="{Binding SelectedCode, Converter={StaticResource outcomeCodeConverter}}" />
+
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="4"
+                Grid.ColumnSpan="1"
+                Margin="0,10,0,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Opacity="0.9"
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter}}">
+                Last Inspection
+            </TextBlock>
+
+            <DatePicker
+                x:Name="RecentDatePicker"
+                Grid.Row="5"
+                Grid.Column="5"
+                Width="100"
+                Margin="20,10,0,10"
+                materialDesign:HintAssist.Hint="Recent Inspection"
+                SelectedDateFormat="Short"
+                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter}}">
+                <DatePicker.SelectedDate>
+                    <Binding
+                        Converter="{StaticResource dateConverter}"
+                        Mode="TwoWay"
+                        Path="NewHomeCreated.RecentInspection"
+                        UpdateSourceTrigger="PropertyChanged" />
+                </DatePicker.SelectedDate>
+            </DatePicker>
+
+            <Button
+                Grid.Row="5"
+                Grid.Column="3"
+                Margin="0,10,0,10"
+                Command="{Binding CalcDate}"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                Update
+            </Button>
+
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Opacity="0.9"
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                Next Inspection Date
+            </TextBlock>
+
+            <DatePicker
+                x:Name="FutureDatePicker"
+                Grid.Row="6"
+                Grid.Column="2"
+                Width="100"
+                Margin="0,10,0,10"
+                materialDesign:HintAssist.Hint="Next Inspection Date"
+                SelectedDateFormat="Short">
+                <DatePicker.SelectedDate>
+                    <Binding
+                        Converter="{StaticResource dateConverter}"
+                        Mode="TwoWay"
+                        Path="NewHomeCreated.NextInspection"
+                        UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
-                </TextBox.Text>
-            </TextBox>
-            -->
-                
-            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="5">Inspection Date:</TextBlock>
-                <DatePicker 
-                    Grid.Column="1"
-                    Grid.Row="5"
-                    DisplayDateStart="{x:Static system:DateTime.Today}"
-                    SelectedDate="{Binding DatePicked, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="16"
-                    Margin="10" 
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" /> 
-
+                </DatePicker.SelectedDate>
+            </DatePicker>
         </Grid>
 
-        <Grid Margin="30" HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                </Grid.ColumnDefinitions>
-                <Button 
-            Grid.Column="0"
-            Name="SubmitButton" 
-            IsDefault="True"
-            Margin="10,0,10,1" 
-            FontSize="16" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-            Width="100"
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
+
+        <Separator
+            Grid.Row="2"
+            Margin="8,0,8,0"
+            Style="{StaticResource MaterialDesignDarkSeparator}" />
+
+        <StackPanel
+            Grid.Row="3"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+
+            <Button
+                Name="SubmitButton"
+                Grid.Column="0"
+                Width="100"
+                Margin="10,0,10,1"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                FontSize="16"
+                IsDefault="True"
+                ToolTip="Create Home">
                 <Button.Style>
                     <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
-                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=IsProviderSelected}" 
-                                               Value="True"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeLicenseTextBox}" 
-                                               Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeNameTextBox}" 
-                                               Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddressTextBox}" 
-                                               Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CityTextBox}" 
-                                               Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZipCodeTextBox}" 
-                                               Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RegionTextBox}" 
-                                               Value="False"/>
+                                    <!--<Condition Binding="{Binding Path=IsProviderSelected}" Value="True" />-->
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LicenseNumber}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeName}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderAddress}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderCity}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZIPCode}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Region}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=FutureDatePicker}" Value="False" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="IsEnabled" Value="True" />
                             </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -273,28 +409,370 @@
                     <system:String>Submit</system:String>
 
                 </Button.CommandParameter>
-                    
                 _SUBMIT
-                </Button>
+            </Button>
 
-                <Button 
-                    IsCancel="True"
-            Grid.Column="1"
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-            Name="CancelNewHome" 
-            Style="{StaticResource MaterialDesignRaisedLightButton}" 
-            MaxWidth="100" Margin="10,0,11,0" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-            FontSize="16">
+            <Button
+                Name="CancelNewHome"
+                Grid.Column="1"
+                MaxWidth="100"
+                Margin="10,0,11,0"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                FontSize="16"
+                IsCancel="True"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Cancel">
                 <Button.CommandParameter>
 
                     <system:String>Cancel</system:String>
 
                 </Button.CommandParameter>
-                    
-                    _CANCEL
-                </Button>
-            </Grid>
+                _CANCEL
+            </Button>
+
         </StackPanel>
 
+    </Grid>
+
+
+    <!--
+    <StackPanel Orientation="Vertical">
+        <TextBlock
+            Margin="10"
+            HorizontalAlignment="Center"
+            FontSize="22">
+            Create A New Home
+        </TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+                <ColumnDefinition Width="Auto" MinWidth="200" />
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+                <ColumnDefinition Width="Auto" MinWidth="200" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Provider:
+            </TextBlock>
+            <ComboBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="20,10,0,10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                materialDesign:HintAssist.Hint="Search"
+                materialDesign:HintAssist.HintOpacity=".26"
+                DisplayMemberPath="ProviderName"
+                IsEditable="True"
+                IsTextSearchEnabled="True"
+                ItemsSource="{Binding ComboBoxProviderItems}"
+                SelectedValue="{Binding SelectedProviderName}"
+                StaysOpenOnEdit="True"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Text="{Binding TextSearch, Delay=250}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Home License Number:
+            </TextBlock>
+            <TextBox
+                Name="HomeLicenseTextBox"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeLicenseNum" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation
+                                Message="Please use only whole numbers."
+                                Regex="^[0-9]+$"
+                                ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+
+            </TextBox>
+
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="10"
+                FontSize="16">
+                Licensed Home Name:
+            </TextBlock>
+            <TextBox
+                Name="HomeNameTextBox"
+                Grid.Row="1"
+                Grid.Column="3"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeName" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+    -->
+    <!--
+            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="2">Home ID:</TextBlock>
+            <TextBox
+                Name="HomeIDTextBox"
+                    Margin="10"
+                    FontSize="16"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    IsReadOnly="True"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeID" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation Message="Please use only whole numbers."
+                                                     Regex="^[0-9]+$"
+                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+
+            </TextBox>
+    -->
+    <!--
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Address:
+            </TextBlock>
+            <TextBox
+                Name="AddressTextBox"
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="2"
+                Margin="10"
+                FontSize="16">
+                City:
+            </TextBlock>
+            <TextBox
+                Name="CityTextBox"
+                Grid.Row="2"
+                Grid.Column="3"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.City" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation
+                                Message="City isn't in correct format."
+                                Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
+                                ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Zipcode:
+            </TextBlock>
+            <TextBox
+                Name="ZipCodeTextBox"
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.ZIP" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+
+                            <Behaviors:NewHomeValidation
+                                Message="Zipcode isn't in correct format."
+                                Regex="^[0-9]{5}(-[0-9]{4})?$"
+                                ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="2"
+                Margin="10"
+                VerticalAlignment="Center"
+                FontSize="16">
+                Phone Number(Optional):
+            </TextBlock>
+            <TextBox
+                Name="PhoneTextBox"
+                Grid.Row="3"
+                Grid.Column="3"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomePhoneNumber" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules />
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                RCS-Region/Unit:
+            </TextBlock>
+            <TextBox
+                Name="RegionTextBox"
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+    -->
+    <!--
+            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="4">RCS-Unit:</TextBlock>
+            <TextBox
+                Name="UnitTextBox"
+                    Margin="10"
+                    FontSize="16"
+                    Grid.Column="3"
+                    Grid.Row="4">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.RcsUnit" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+    -->
+    <!--
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Inspection Date:
+            </TextBlock>
+            <DatePicker
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="10"
+                DisplayDateStart="{x:Static system:DateTime.Today}"
+                FontSize="16"
+                SelectedDate="{Binding DatePicked, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+        </Grid>
+
+        <Grid Margin="30" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Name="SubmitButton"
+                Grid.Column="0"
+                Width="100"
+                Margin="10,0,10,1"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                FontSize="16"
+                IsDefault="True"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=IsProviderSelected}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeLicenseTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeNameTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddressTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CityTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZipCodeTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RegionTextBox}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.CommandParameter>
+
+                    <system:String>Submit</system:String>
+
+                </Button.CommandParameter>
+                _SUBMIT
+            </Button>
+
+            <Button
+                Name="CancelNewHome"
+                Grid.Column="1"
+                MaxWidth="100"
+                Margin="10,0,11,0"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                FontSize="16"
+                IsCancel="True"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                <Button.CommandParameter>
+
+                    <system:String>Cancel</system:String>
+
+                </Button.CommandParameter>
+                _CANCEL
+            </Button>
+        </Grid>
+    </StackPanel>
+    -->
 </UserControl>

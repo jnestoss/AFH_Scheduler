@@ -10,6 +10,7 @@ using AFH_Scheduler.Database;
 using AFH_Scheduler.Dialogs.Errors;
 using AFH_Scheduler.Dialogs.Confirmation;
 using MaterialDesignThemes.Wpf;
+using AFH_Scheduler.Algorithm;
 
 namespace AFH_Scheduler.Dialogs
 {
@@ -17,13 +18,23 @@ namespace AFH_Scheduler.Dialogs
     {
         public string Name => "Complete Inspection Dialog";
 
-        public HomeModel _selectedSchedule;
+        public HomeModel _selectedHome;
         public HomeModel SelectedHome {
-            get { return _selectedSchedule; }
+            get { return _selectedHome; }
             set {
-                if (_selectedSchedule == value) return;
-                _selectedSchedule = value;
-                OnPropertyChanged("SelectedSchedule");
+                if (_selectedHome == value) return;
+                _selectedHome = value;
+                OnPropertyChanged("SelectedHome");
+            }
+        }
+
+        private string _nextInspection;
+        public String NextInspection {
+            get => _nextInspection;
+            set {
+                if (_nextInspection == value) return;
+                _nextInspection = value;
+                OnPropertyChanged("NextInspection");
             }
         }
 
@@ -46,6 +57,16 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private Boolean _followUpSelected;
+        public Boolean FollowUpSelected {
+            get => _followUpSelected;
+            set {
+                if (_followUpSelected == value) return;
+                _followUpSelected = value;
+                OnPropertyChanged("FollowUpSelected");
+            }
+        }
+
         private Inspection_Outcome _selectedCode;
         public Inspection_Outcome SelectedCode {
             get { return _selectedCode; }
@@ -55,14 +76,24 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private RelayCommand _calcDate;
+        public RelayCommand CalcDate {
+            get {
+                if (_calcDate == null) _calcDate = new RelayCommand(CalcNextInspectionDate);
+                return _calcDate;
+            }
+        }
+
         public static long _homeIDSave;
 
         public CompleteVM(HomeModel scheduleData)
         {
             SelectedHome = scheduleData;
+            NextInspection = SelectedHome.NextInspection;
             PreviousInspection = SelectedHome.NextInspection;
             GrabOutcomeCodes();
             SelectedCode = GetMostRecentOutcome();
+            FollowUpSelected = false;
         }
 
         private Inspection_Outcome GetMostRecentOutcome()
@@ -93,6 +124,21 @@ namespace AFH_Scheduler.Dialogs
                     return outcomes.FirstOrDefault();
                 }
             }
+        }
+
+        private void CalcNextInspectionDate(object o)
+        {
+            string date;
+            if(FollowUpSelected == true)
+            {
+                date = SchedulingAlgorithm.SettingFollowUps(SelectedHome.NextInspection);
+            }
+            else
+            {
+                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, SelectedHome.NextInspection);
+            }
+
+            NextInspection = date;
         }
 
         private void GrabOutcomeCodes()
