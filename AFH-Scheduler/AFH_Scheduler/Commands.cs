@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using AFH_Scheduler.Dialogs;
+using AFH_Scheduler.Dialogs.Help;
 using AFH_Scheduler.Helper_Classes;
 using MaterialDesignThemes.Wpf;
 
@@ -23,6 +24,19 @@ namespace AFH_Scheduler
             if (win.WindowState == WindowState.Normal)
             {
                 win.WindowState = WindowState.Minimized;
+            }
+        });
+
+        public static readonly RelayCommand OpenHelpPageCommand = new RelayCommand(async w =>
+        {
+            if (!DialogAlreadyOpen)
+            {
+                DialogAlreadyOpen = true;
+                var helpPage = new HelpBoxVM();
+                var view = new HelpBox(helpPage);
+                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
+
+                DialogAlreadyOpen = false;
             }
         });
 

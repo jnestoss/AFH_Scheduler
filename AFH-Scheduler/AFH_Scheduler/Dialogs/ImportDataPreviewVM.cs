@@ -10,6 +10,7 @@ using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Dialogs.Errors;
 using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.HelperClasses;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 
@@ -60,6 +61,20 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private List<UniqueDateImportItem> _uniqueInspectionDates;
+        public List<UniqueDateImportItem> UniqueInspectionDates
+        {
+            get { return _uniqueInspectionDates; }
+            set
+            {
+                if (value != _uniqueInspectionDates)
+                {
+                    _uniqueInspectionDates = value;
+                    OnPropertyChanged("UniqueInspectionDates");
+                }
+            }
+        }
+
         private List<List<string>> _importedLicenseInfo;
         public List<List<string>> ImportedLicenseInfo
         {
@@ -91,6 +106,7 @@ namespace AFH_Scheduler.Dialogs
             _importedLicenseInfo = new List<List<string>>();
             _uniqueProvIDs = new List<long>();
             _uniqueHomeIDs = new List<long>();
+            _uniqueInspectionDates = new List<UniqueDateImportItem>();
         }
 
 
@@ -107,6 +123,11 @@ namespace AFH_Scheduler.Dialogs
 
         private void OpenExcelFileImport(object obj)
         {
+            ImportedHomes.Clear();
+            UniqueProvIDs.Clear();
+            UniqueHomeIDs.Clear();
+            UniqueInspectionDates.Clear();
+
             int pocRow = -1, licenseRow = -1, nameRow = -1, addressRow = -1, cityRow = -1, zipRow = -1,
                 phoneRow = -1, inspRow = -1, rcsRow = -1, recentRow = -1;
             foreach (var listRow in ImportedLicenseInfo)
@@ -472,21 +493,15 @@ namespace AFH_Scheduler.Dialogs
 
                                 DateTime scheduleInspect = SchedulingAlgorithm.ExtractDateTime(inspectDate);
 
-                                if (!alg.CheckingForUniqueInspection(db, scheduleInspect, homeID))
+
+                                while (!provName.Equals("No Provider") &&
+                                    UniqueInspectionDates.Contains(new UniqueDateImportItem(provName, scheduleInspect)))
                                 {
-                                    bool dateCleared = false;
-                                    do
-                                    {
-                                        scheduleInspect.AddDays(1);
-                                        SchedulingAlgorithm.CheckDay(scheduleInspect);
-                                        if (alg.CheckingForUniqueInspection(db, scheduleInspect, homeID))
-                                        {
-                                            dateCleared = true;
-                                        }
-                                    } while (!dateCleared);
+                                    scheduleInspect.AddDays(1);
+                                    SchedulingAlgorithm.CheckDay(scheduleInspect);
                                 }
                                 nextInspect = scheduleInspect.ToShortDateString();
-
+                                UniqueInspectionDates.Add(new UniqueDateImportItem(provName, scheduleInspect));
                             }
                             else
                             {

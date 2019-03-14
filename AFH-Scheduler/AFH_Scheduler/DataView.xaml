@@ -383,7 +383,7 @@
             <Button
                 Command="{Binding Path=ExportTableCommand}"
                 MaxWidth="255"
-                Margin="30"
+                Margin="30 0 0 0"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Export Table to Excel Spreadsheet">
                 EXPORT

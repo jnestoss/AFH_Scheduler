@@ -58,6 +58,7 @@
                     VerticalAlignment="Center"
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
+                    Command="{x:Static local:Commands.OpenHelpPageCommand}"
                     Foreground="WhiteSmoke">
                     <materialDesign:PackIcon
                         Width="25"

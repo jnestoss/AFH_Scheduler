@@ -76,6 +76,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -302,7 +303,7 @@
                 </Button>
 
                 <TextBlock
-                    Grid.Row="6"
+                    Grid.Row="7"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="0,10,0,10"
@@ -316,7 +317,7 @@
 
                 <DatePicker
                     x:Name="FutureDatePicker"
-                    Grid.Row="6"
+                    Grid.Row="7"
                     Grid.Column="2"
                     Width="100"
                     Margin="0,10,0,10"

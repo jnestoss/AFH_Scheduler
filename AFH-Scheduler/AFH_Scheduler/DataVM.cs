@@ -371,35 +371,55 @@ namespace AFH_Scheduler
                     Home_History homeHistory = allHomeHistory.Last();
 
                     HomeModel newHome;
-                    if(homeHistory.Inspection_Outcome.IOutcome_Code == "NEW")
+
+                    string provName;
+                    long provID;
+                    bool hasNoProv;
+                    if (homeProvider is null)
                     {
-                        newHome = new HomeModel
-                        {
-                            ProviderID = homeProvider.Provider_ID,
-                            HomeID = house.PHome_ID,
-                            ProviderName = homeProvider.Provider_Name,
-                            HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
-                            HomeName = house.PHome_Name,
-                            Phone = house.PHome_Phonenumber,
-                            Address = house.PHome_Address,
-                            City = house.PHome_City,
-                            ZIP = house.PHome_Zipcode,
-                            RecentInspection = "No History",
-                            NextInspection = inspections.SInspections_Date,
-                            EighteenthMonthDate = inspections.SInspections_EighteenMonth,
-                            SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
-                            ForecastedDate = inspections.SInspection_ForecastedDate,
-                            IsActive = true,
-                            RcsUnit = house.PHome_RCSUnit
-                        };
+                        provName = "No Provider";
+                        provID = -1;
+                        hasNoProv = true;
+                    }
+                    else
+                    {
+                        provName = homeProvider.Provider_Name;
+                        provID = homeProvider.Provider_ID;
+                        hasNoProv = false;
+                    }
+
+                    if (homeHistory.Inspection_Outcome.IOutcome_Code == "NEW")
+                    {                        
+                            newHome = new HomeModel
+                            {
+                                ProviderID = provID,
+                                HomeID = house.PHome_ID,
+                                ProviderName = provName,
+                                HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
+                                HomeName = house.PHome_Name,
+                                Phone = house.PHome_Phonenumber,
+                                Address = house.PHome_Address,
+                                City = house.PHome_City,
+                                ZIP = house.PHome_Zipcode,
+                                RecentInspection = homeHistory.HHistory_Date,
+                                NextInspection = inspections.SInspections_Date,
+                                EighteenthMonthDate = inspections.SInspections_EighteenMonth,
+                                SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
+                                ForecastedDate = inspections.SInspection_ForecastedDate,
+                                HasNoProvider = hasNoProv,
+                                IsActive = true,
+                                RcsUnit = house.PHome_RCSUnit
+                            };
+
+                        
                     }
                     else
                     {
                         newHome = new HomeModel
                         {
-                            ProviderID = homeProvider.Provider_ID,
+                            ProviderID = provID,
                             HomeID = house.PHome_ID,
-                            ProviderName = homeProvider.Provider_Name,
+                            ProviderName = provName,
                             HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
                             HomeName = house.PHome_Name,
                             Phone = house.PHome_Phonenumber,
@@ -411,6 +431,7 @@ namespace AFH_Scheduler
                             EighteenthMonthDate = inspections.SInspections_EighteenMonth,
                             SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
                             ForecastedDate = inspections.SInspection_ForecastedDate,
+                            HasNoProvider = hasNoProv,
                             IsActive = true,
                             RcsUnit = "",
                         };
@@ -442,6 +463,8 @@ namespace AFH_Scheduler
                 }
                 else
                     recentDate = recentInspec.HHistory_Date;
+
+                Providers.Add(home);
 
                 //HomeModel newHome = new HomeModel
                 //{
@@ -509,7 +532,7 @@ namespace AFH_Scheduler
                     db.Provider_Homes.Add(new Provider_Homes
                     {
                         FK_Provider_ID = home.ProviderID,
-                        Home_History = db.Home_History.Where(r => r.FK_PHome_ID == home.HomeID).ToList(),
+                        //Home_History = db.Home_History.Where(r => r.FK_PHome_ID == home.HomeID).ToList(),
                         PHome_Address = home.Address,
                         PHome_City = home.City,
                         PHome_ID = newHomeID,
@@ -518,7 +541,7 @@ namespace AFH_Scheduler
                         PHome_Phonenumber = home.Phone,
                         PHome_RCSUnit = home.RcsRegionUnit,
                         PHome_Zipcode = home.ZIP,
-                        Provider = db.Providers.First(r => r.Provider_Name == createdHome.TextSearch)
+                        //Provider = db.Providers.First(r => r.Provider_Name == createdHome.TextSearch)
                     });
 
                     db.SaveChanges();

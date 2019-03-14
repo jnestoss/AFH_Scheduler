@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.Help.HelpBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.Help"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </UserControl.Resources>
+    
+    <StackPanel Orientation="Horizontal" Width="800" Height="400">
+        <StackPanel Margin="10 10 10 10" Orientation="Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="0"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Main"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Main Table Explaination">Main Table</Button>
+
+                <Button  Visibility="{Binding SubButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="0"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Complete Inspection"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Complete Inspection Explaination">Complete Inspection</Button>
+
+                <Button  Visibility="{Binding SubButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="1"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Home History"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Home History Explaination">Home History</Button>
+
+                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="1"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Add"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Adding Homes Explaination">Adding new Homes</Button>
+
+                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="2"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Edit"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Editing Homes Explaination">Editing Homes</Button>
+
+                <Button 
+                    Visibility="Hidden"
+                    Grid.Row="2"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Deactivate"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Deactivate Homes Explaination">Deactivate Homes</Button>
+
+                <Button 
+                    Visibility="Hidden"
+                    Grid.Row="2"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Delete"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Delete Homes Explaination">Delete Homes</Button>
+
+                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="3"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Settings"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Setting Explaination">Setting</Button>
+
+                <Button 
+                    Visibility="Hidden"
+                    Grid.Row="3"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Provider List"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Provider List Explaination">Provider List</Button>
+
+                <Button 
+                    Visibility="Hidden"
+                    Grid.Row="3"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Normal Curve"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Normal Curve Explaination">Normal Curve</Button>
+
+                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="4"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Import_Export"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Import/Export Explaination">Import/Export</Button>
+
+                <Button 
+                    Visibility="Hidden"
+                    Grid.Row="4"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Import"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Import Explaination">Import</Button>
+
+                <Button 
+                    Visibility="Hidden"
+                    Grid.Row="4"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="Export"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Load Export Explaination">Export</Button>
+
+                <Button Visibility="{Binding BackButtonOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="5"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainKeyCommand}"
+                    CommandParameter="BackButton"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    ToolTip="Back To Main Menu">Back</Button>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Margin="40 10 10 10">
+            <TextBlock ScrollViewer.VerticalScrollBarVisibility="Auto" Width="550" Height="320" FontSize="16" Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+
+            <Button 
+                    IsCancel="True"
+                    HorizontalAlignment="Right"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}" 
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    MaxWidth="100" Margin="10" 
+                    ToolTip="Close Help Page" 
+                    FontSize="14">
+                <Button.CommandParameter>
+
+                    <system:String>Cancel</system:String>
+
+                </Button.CommandParameter>
+
+                _CLOSE
+            </Button>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

@@ -33,9 +33,9 @@ namespace AFH_Scheduler.Excel
             {
                    using (HomeInspectionEntities db = new HomeInspectionEntities())
                    {
-                        var removeHome = db.Provider_Homes.Where(r => r.PHome_LicenseNumber.Equals(importedHome.HomeLicenseNum.ToString())).First();
-                        var removeSched = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID.Equals(removeHome.PHome_ID)).First();
-                        var removehistory = db.Home_History.Where(r => r.FK_PHome_ID.Equals(removeHome.PHome_ID)).First();
+                        /*var removeHome = db.Provider_Homes.Where(r => r.PHome_LicenseNumber.Equals(importedHome.HomeLicenseNum.ToString())).First();
+                        var removeSched = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == removeHome.PHome_ID).First();
+                        var removehistory = db.Home_History.Where(r => r.FK_PHome_ID == removeHome.PHome_ID).First();
 
                     db.Home_History.Remove(removehistory);
                     db.SaveChanges();
@@ -44,7 +44,7 @@ namespace AFH_Scheduler.Excel
                     db.SaveChanges();
 
                     db.Provider_Homes.Remove(removeHome);
-                    db.SaveChanges();
+                    db.SaveChanges();*/
 
                     Nullable<long> provID;
                        if (importedHome.ProviderID == -1)
@@ -124,13 +124,39 @@ namespace AFH_Scheduler.Excel
                         });
                            db.SaveChanges();
 
-                           db.Home_History.Add(new Home_History
-                           {
-                               FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code.Equals("NEW")).IOutcome_Code,
-                               FK_PHome_ID = importedHome.HomeID,
-                               HHistory_Date = importedHome.RecentInspection,
-                               HHistory_ID = new Random().Next(1, 1000000),         //how to generate history ID
-                           });
+                        long newHistoryID;
+                        try
+                        {
+                            var recentHomeID = db.Home_History.OrderByDescending(r => r.HHistory_ID).FirstOrDefault();
+                            if (recentHomeID.HHistory_ID == Int64.MaxValue)
+                            {
+                                newHistoryID = 0;
+                            }
+                            else
+                                newHistoryID = recentHomeID.HHistory_ID + 1;
+                        }
+                        catch (Exception e)
+                        {
+                            newHistoryID = 0;
+                        }
+
+                        var isUniqueHistoryID = db.Home_History.Where(r => r.HHistory_ID == newHistoryID).ToList();
+                        if (isUniqueHistoryID.Count != 0)
+                        {
+                            do
+                            {
+                                newHistoryID++;
+                                isUniqueHistoryID = db.Home_History.Where(r => r.HHistory_ID == newHistoryID).ToList();
+                            } while (isUniqueHistoryID.Count != 0);
+                        }
+
+                        db.Home_History.Add(new Home_History
+                        {
+                           HHistory_ID = newHistoryID,
+                           HHistory_Date = importedHome.RecentInspection,
+                           FK_PHome_ID = importedHome.HomeID,
+                           FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code.Equals("NEW")).IOutcome_Code
+                        });
                            db.SaveChanges();
                        }
                    }
