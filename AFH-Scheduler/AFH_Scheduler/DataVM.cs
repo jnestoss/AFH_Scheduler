@@ -20,10 +20,12 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using AFH_Scheduler.Database.LoginDB;
 using System.IO;
+using System.Windows.Data;
+using System.Windows.Controls;
 
 namespace AFH_Scheduler
 {
-    public class DataVM : ObservableObject, IPageViewModel
+    public class DataVM : ObservableObject, IPageViewModel, INotifyPropertyChanged
     {
         #region variables
 
@@ -34,6 +36,16 @@ namespace AFH_Scheduler
         }
 
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
+        private SnackbarMessageQueue _messageQueue;
+        public SnackbarMessageQueue MessageQueue {
+            get => _messageQueue;
+            set {
+                if (_messageQueue == value) return;
+                _messageQueue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
 
         private string _normalCurveValue;
         public string NormalCurve
@@ -74,7 +86,28 @@ namespace AFH_Scheduler
 
         private User _usr;
 
-        //Observable and bound to DataGrid
+        private string _snackBarContent;
+        public string SnackBarContent {
+            get => _snackBarContent;
+            set {
+                if (_snackBarContent == value) return;
+                _snackBarContent = value;
+                OnPropertyChanged("SnackBarContent");
+            }
+        }
+
+        private static ObservableCollection<HomeModel> _selectedProviders;
+        public ObservableCollection<HomeModel> SelectedProviders {
+            get { return _selectedProviders; }
+            set {
+                if (value != _selectedProviders)
+                {
+                    _selectedProviders = value;
+                    OnPropertyChanged("SelectedProviders");
+                }
+            }
+        }
+
         private static ObservableCollection<HomeModel> _providers;
         public ObservableCollection<HomeModel> Providers {
             get { return _providers; }
@@ -83,6 +116,54 @@ namespace AFH_Scheduler
                 {
                     _providers = value;
                     OnPropertyChanged("Providers");
+                }
+            }
+        }
+
+        private static ObservableCollection<string> _providerNames;
+        public ObservableCollection<string> ProviderNames {
+            get { return _providerNames; }
+            set {
+                if (value != _providerNames)
+                {
+                    _providerNames = value;
+                    OnPropertyChanged("ProviderNames");
+                }
+            }
+        }
+
+        private static ObservableCollection<string> _licenseNums;
+        public ObservableCollection<string> LicenseNums {
+            get { return _licenseNums; }
+            set {
+                if (value != _licenseNums)
+                {
+                    _licenseNums = value;
+                    OnPropertyChanged("LicenseNums");
+                }
+            }
+        }
+
+        private static ObservableCollection<string> _homeNames;
+        public ObservableCollection<string> HomeNames {
+            get { return _homeNames; }
+            set {
+                if (value != _homeNames)
+                {
+                    _homeNames = value;
+                    OnPropertyChanged("HomeNames");
+                }
+            }
+        }
+
+        private static ObservableCollection<string> _homeAddresses;
+        public ObservableCollection<string> HomeAddresses {
+            get { return _homeAddresses; }
+            set {
+                if (value != _homeAddresses)
+                {
+                    _homeAddresses = value;
+                    OnPropertyChanged("HomeAddresses");
                 }
             }
         }
@@ -161,26 +242,57 @@ namespace AFH_Scheduler
             }
         }
 
-        public object _selectedFilter;
-        public object SelectedFilter
+        public string _selectedFilter;
+        public string SelectedFilter
         {
             get { return _selectedFilter; }
             set
             {
                 _selectedFilter = value;
+
+                if(_selectedFilter == "Next Inspection Date")
+                {
+                    TextFieldEnabled = false;
+                    DatePickerEnabled = true;
+                } else
+                {
+                    TextFieldEnabled = false;
+                    DatePickerEnabled = false;
+                }
+
+                switch(_selectedFilter)
+                {
+                    case "Provider Name":
+                        UpdateSearchBoxSuggestions(ProviderNames);
+                        break;
+                    case "License Number":
+                        UpdateSearchBoxSuggestions(LicenseNums);
+                        break;
+                    case "Home Name":
+                        UpdateSearchBoxSuggestions(HomeNames);
+                        break;
+                    case "Address":
+                        UpdateSearchBoxSuggestions(HomeAddresses);
+                        break;
+                    default:
+                        UpdateSearchBoxSuggestions(ProviderNames);
+                        break;
+                }
+
                 OnPropertyChanged("SelectedFilter");
             }
         }
-        public string _filterItem;
-        public string FilterItem
-        {
-            get { return _filterItem; }
-            set
-            {
-                _filterItem = value;
-                OnPropertyChanged("FilterItem");
-            }
-        }
+
+        //public string _filterItem;
+        //public string FilterItem
+        //{
+        //    get { return _filterItem; }
+        //    set
+        //    {
+        //        _filterItem = value;
+        //        OnPropertyChanged("FilterItem");
+        //    }
+        //}
 
         private DateTime _startDatePicked;
         public DateTime StartDatePicked
@@ -214,6 +326,33 @@ namespace AFH_Scheduler
                 if (_messageService == null)
                     _messageService = new SchedulesOpenDialog();
                 return _messageService;
+            }
+        }
+
+        private  ICollectionView _comboBoxProviderItems;
+        public ICollectionView ComboBoxProviderItems {
+            get => _comboBoxProviderItems;
+            set {
+                _comboBoxProviderItems = value;
+                OnPropertyChanged("ComboBoxProviderItems");
+            }
+        }
+
+        private string _TextSearch;
+        public string TextSearch {
+            get {
+                return _TextSearch;
+            }
+            set {
+                if (_TextSearch != value)
+                {
+                    _TextSearch = value;
+                    if (_TextSearch != "")
+                    {
+                        ComboBoxProviderItems.Refresh();
+                    }
+                    OnPropertyChanged("TextSearch");
+                }
             }
         }
 
@@ -311,15 +450,37 @@ namespace AFH_Scheduler
         #region constructor
         public DataVM(User user)
         {
-            _providers = new ObservableCollection<HomeModel>();
-            _inActiveHomes = new ObservableCollection<HomeModel>();
-            FilterItem = "";
+            MessageQueue = new SnackbarMessageQueue();
+            Providers = new ObservableCollection<HomeModel>();
+            SelectedProviders = new ObservableCollection<HomeModel>();
+            InActiveHomes = new ObservableCollection<HomeModel>();
             TextFieldEnabled = true;
             StartDatePicked = DateTime.Today;
             EndDatePicked = DateTime.Today;
             _usr = user;
 
-            GenData();
+            TextSearch = "";
+
+            ReadHomeData();
+            FilterTheTable(null);
+
+            HomeAddresses = new ObservableCollection<string>();
+            HomeNames = new ObservableCollection<string>();
+            LicenseNums = new ObservableCollection<string>();
+            ProviderNames = new ObservableCollection<string>();
+
+            foreach (var home in Providers)
+            {
+                HomeAddresses.Add(home.Address);
+                HomeNames.Add(home.HomeName);
+                LicenseNums.Add(home.HomeLicenseNum.ToString());
+                ProviderNames.Add(home.ProviderName);
+            }
+
+            SelectedFilter = "Select Filter";
+
+            //UpdateSearchBoxSuggestions(ProviderNames);
+            //FilterByProviderName = true;
 
             string text = File.ReadAllText(@"..\..\NormalCurve\NormalCurveValue.txt");
             double testCase;
@@ -331,9 +492,11 @@ namespace AFH_Scheduler
             }
             NormalCurve = text;
         }
+
         #endregion
 
         #region excelstuff
+
         private async void ImportExcelTable(object obj)
         {
             var importData = new ImportDataPreviewVM();
@@ -366,7 +529,7 @@ namespace AFH_Scheduler
             string fileName = MessageService.ExcelSaveDialog();
             if (fileName == null)
             {
-                MessageService.ReleaseMessageBox("Excel File was not saved.");
+                MessageQueue.Enqueue("File not saved");
                 return;
             }
             using (HomeInspectionEntities db = new HomeInspectionEntities())
@@ -474,9 +637,9 @@ namespace AFH_Scheduler
 
         #region Generators
 
-        public void GenData()
+        public void ReadHomeData()
         {
-            Providers = new ObservableCollection<HomeModel>();
+            //Providers = new ObservableCollection<HomeModel>();
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var homes = db.Provider_Homes.ToList();
@@ -540,6 +703,7 @@ namespace AFH_Scheduler
                     Providers.Add(newHome);
                 }               
             }
+            //FilterTheTable(null);
         }
         #endregion
 
@@ -563,26 +727,6 @@ namespace AFH_Scheduler
                 }
                 else
                     recentDate = recentInspec.HHistory_Date;
-
-                //HomeModel newHome = new HomeModel
-                //{
-                //    ProviderID = Convert.ToInt64(home.ProviderID),
-                //    HomeID = home.HomeID,
-                //    ProviderName = home.ProviderName,
-                //    HomeLicenseNum = Convert.ToInt64(home.HomeLicenseNum),
-                //    HomeName = home.HomeName,
-                //    Phone = home.Phone,
-                //    Address = home.Address,
-                //    City = home.City,
-                //    ZIP = home.ZIP,
-                //    RecentInspection = recentDate,
-                //    NextInspection = home.NextInspection,
-                //    EighteenthMonthDate = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
-                //    IsActive = true,
-                //    RcsRegionUnit = home.RcsRegionUnit
-                //};
-
-                //Providers.Add(newHome);
 
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
@@ -646,7 +790,7 @@ namespace AFH_Scheduler
 
                 }
 
-                GenData();
+                ReadHomeData();
 
                 //Add to database
                 /*
@@ -693,9 +837,7 @@ namespace AFH_Scheduler
         {
             if (SelectedHome == null)
             {
-                var view = new NoHomeSelectedErrorDialog();
-
-                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+                MessageQueue.Enqueue("No home Selected");
             }
             else
             {
@@ -712,9 +854,7 @@ namespace AFH_Scheduler
         {
             if (SelectedHome == null)
             {
-                var view = new NoHomeSelectedErrorDialog();
-
-                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+                MessageQueue.Enqueue("No home Selected");
             }
             else
             {
@@ -796,9 +936,7 @@ namespace AFH_Scheduler
         {
             if (SelectedHome == null)
             {
-                var view = new NoHomeSelectedErrorDialog();
-
-                var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+                MessageQueue.Enqueue("No home Selected");
             }
             else
             {
@@ -898,7 +1036,7 @@ namespace AFH_Scheduler
                 }
             }
 
-            GenData();
+            ReadHomeData();
         }
 
         private void EditClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
@@ -961,100 +1099,101 @@ namespace AFH_Scheduler
         private void RefreshTable(object obj)
         {
             Providers.Clear();
-            GenData();
+            ReadHomeData();
         }
 
         private void FilterTheTable(object obj)
         {
-            RefreshTable(obj);//Comment out if you want to test the license number/name filter
-            if (SelectedFilter == null)
-            {
-                MessageService.ReleaseMessageBox("You have not specified what to filter out.");
-                return;
-            }
-            if (FilterItem.Equals("") && !DatePickerEnabled)
-            {
-                return;
-            }
+            //RefreshTable(obj);//Comment out if you want to test the license number/name filter
+            //if (SelectedFilter == null)
+            //{
+            //    MessageService.ReleaseMessageBox("You have not specified what to filter out.");
+            //    return;
+            //}
+            SelectedProviders.Clear();
 
-            var temp = new ObservableCollection<HomeModel>();
-
-            /*if (SelectedFilter.ToString().Contains("Provider ID"))
+            if (TextSearch.Equals("") && !DatePickerEnabled)
             {
-                foreach(var item in Providers)
+                foreach (var prov in Providers)
                 {
-                    if (item.ProviderID.ToString().Equals(FilterItem))
-                    {
-                        temp.Add(item);                        
-                    }
-                }
-            }*/
-
-            if (SelectedFilter.ToString().Contains("Provider Name"))
-            {
-                foreach (var item in Providers)
-                {
-                    if (item.ProviderName.Contains(FilterItem))
-                    {
-                        temp.Add(item);
-                    }
+                    SelectedProviders.Add(prov);
                 }
             }
-
-            else if (SelectedFilter.ToString().Contains("Address"))
+            else
             {
-                foreach (var item in Providers)
+                if (SelectedFilter.ToString().Contains("Provider Name"))
                 {
-                    if (item.Address.Contains(FilterItem))
+                    foreach (var item in Providers)
                     {
-                        temp.Add(item);
+                        if (item.ProviderName.Contains(TextSearch))
+                        {
+                            SelectedProviders.Add(item);
+                        }
                     }
                 }
-            }
 
-            else if (SelectedFilter.ToString().Contains("License Number"))
-            {
-                foreach (var item in Providers)
+                else if (SelectedFilter.ToString().Contains("Address"))
                 {
-                    if (item.HomeLicenseNum.ToString().Contains(FilterItem))
+                    foreach (var item in Providers)
                     {
-                        temp.Add(item);
+                        if (item.Address.Contains(TextSearch))
+                        {
+                            SelectedProviders.Add(item);
+                        }
                     }
                 }
-            }
 
-            else if (SelectedFilter.ToString().Contains("License Name"))
-            {
-                foreach (var item in Providers)
+                else if (SelectedFilter.ToString().Contains("License Number"))
                 {
-                    if (item.HomeName.Contains(FilterItem))
+                    foreach (var item in Providers)
                     {
-                        temp.Add(item);
+                        if (item.HomeLicenseNum.ToString().Contains(TextSearch))
+                        {
+                            SelectedProviders.Add(item);
+                        }
                     }
                 }
-            }
 
-            else if (SelectedFilter.ToString().Contains("Next Inspection Date"))
-            {
-                foreach (var item in Providers)
+                else if (SelectedFilter.ToString().Contains("Home Name"))
                 {
-                    if (IsInspectionWithinDateRange(item.NextInspection))
+                    foreach (var item in Providers)
                     {
-                        temp.Add(item);
+                        if (item.HomeName.Contains(TextSearch))
+                        {
+                            SelectedProviders.Add(item);
+                        }
                     }
                 }
-            }
 
-            Providers.Clear();
-            foreach (var returnItem in temp)
-            {
-                Providers.Add(returnItem);
-            }
+                else if (SelectedFilter.ToString().Contains("Next Inspection Date"))
+                {
+                    foreach (var item in Providers)
+                    {
+                        if (IsInspectionWithinDateRange(item.NextInspection))
+                        {
+                            SelectedProviders.Add(item);
+                        }
+                    }
+                }
 
+                //Providers.Clear();
+                //foreach (var returnItem in SelectedProviders)
+                //{
+                //    Providers.Add(returnItem);
+                //}
+            }
         }
         #endregion
 
         #region Helper Methdos
+
+        private void UpdateSearchBoxSuggestions(ObservableCollection<string> items)
+        {
+            var lv = (ListCollectionView)CollectionViewSource.GetDefaultView(items);
+            lv.CustomSort = Comparer<String>.Create(StringSort);
+            ComboBoxProviderItems = lv;
+        }
+
         private bool IsInspectionWithinDateRange(string nextInspection)
         {
             var inspectDate = SchedulingAlgorithm.ExtractDateTime(nextInspection);
@@ -1083,6 +1222,92 @@ namespace AFH_Scheduler
                 NormalCurveResultMsg = "The list of inspections average out approximatly at the normal curve.";
             }
         }
+
+        private int StringSort(string x, string y)
+        {
+            return GetDistance(x).CompareTo(GetDistance(y));
+        }
+
+        private int GetDistance(string provider)
+        {
+            if (string.IsNullOrWhiteSpace(TextSearch))
+            {
+                return 0;
+            }
+
+            if(SelectedFilter.Equals("Provider Name"))
+            {
+                string[] splitName = provider.Split(' ');
+
+                string first = splitName[0];
+                string last = splitName[splitName.Length - 1];
+
+                first = first.Substring(0, Math.Min(first.Length, TextSearch.Length));
+                last = last.Substring(0, Math.Min(last.Length, TextSearch.Length));
+
+                return Math.Min(GetDistance(first, TextSearch), GetDistance(last, TextSearch));
+            }
+            else
+            {
+                provider = provider.Substring(0, Math.Min(provider.Length, TextSearch.Length));
+
+                return GetDistance(provider, TextSearch);
+            }
+        }
+
+        //Taken from: https://github.com/dotnet/command-line-api/blob/master/src/System.CommandLine/Invocation/TypoCorrection.cs
+        private static int GetDistance(string first, string second)
+        {
+            if (first == null)
+            {
+                throw new ArgumentNullException(nameof(first));
+            }
+            if (second == null)
+            {
+                throw new ArgumentNullException(nameof(second));
+            }
+
+            int n = first.Length;
+            int m = second.Length;
+            if (n == 0) return m;
+            if (m == 0) return n;
+
+            int curRow = 0, nextRow = 1;
+            int[][] rows = { new int[m + 1], new int[m + 1] };
+
+            for (int j = 0; j <= m; ++j)
+            {
+                rows[curRow][j] = j;
+            }
+
+            for (int i = 1; i <= n; ++i)
+            {
+                rows[nextRow][0] = i;
+                for (int j = 1; j <= m; ++j)
+                {
+                    int dist1 = rows[curRow][j] + 1;
+                    int dist2 = rows[nextRow][j - 1] + 1;
+                    int dist3 = rows[curRow][j - 1] + (first[i - 1].Equals(second[j - 1]) ? 0 : 1);
+
+                    rows[nextRow][j] = Math.Min(dist1, Math.Min(dist2, dist3));
+                }
+
+                // Swap the current and next rows
+                if (curRow == 0)
+                {
+                    curRow = 1;
+                    nextRow = 0;
+                }
+                else
+                {
+                    curRow = 0;
+                    nextRow = 1;
+                }
+            }
+
+            return rows[curRow][m];
+        }
+
         #endregion
 
         #region User Methods

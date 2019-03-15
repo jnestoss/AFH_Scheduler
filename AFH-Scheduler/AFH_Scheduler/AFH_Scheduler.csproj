@@ -167,6 +167,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\OutcomeCodeConverter.cs" />
     <Compile Include="Converters\ProviderConverter.cs" />
     <Compile Include="Converters\ProviderListConverter.cs" />
