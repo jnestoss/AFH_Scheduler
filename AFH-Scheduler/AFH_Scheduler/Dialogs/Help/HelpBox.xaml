@@ -13,8 +13,8 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
     
-    <StackPanel Orientation="Horizontal" Width="800" Height="400">
-        <StackPanel Margin="10 10 10 10" Orientation="Vertical">
+    <StackPanel Orientation="Horizontal" Width="800" Height="500">
+        <StackPanel Margin="10 10 10 10" Width="200" Orientation="Vertical">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -23,133 +23,228 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                <Button
                     Grid.Row="0"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
                     Command="{Binding ExplainKeyCommand}"
                     CommandParameter="Main"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
-                    ToolTip="Load Main Table Explaination">Main Table</Button>
+                    ToolTip="Load Main Table Explaination">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=HomeButtonsOn}" Value="false"/>
+                                        <Condition Binding="{Binding Path=SubButtonsMainOn}" Value="false"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>                        
+                    </Button.Style>Main Table</Button>
 
-                <Button  Visibility="{Binding SubButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                    Grid.Row="0"
+                <Button  Visibility="{Binding SubButtonsMainOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="1"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
+                    Command="{Binding ExplainSubKeyCommand}"
                     CommandParameter="Complete Inspection"
                     Style="{StaticResource MaterialDesignRaisedLightButton}" 
                     ToolTip="Load Complete Inspection Explaination">Complete Inspection</Button>
 
-                <Button  Visibility="{Binding SubButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                    Grid.Row="1"
+                <Button  Visibility="{Binding SubButtonsMainOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Grid.Row="2"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
+                    Command="{Binding ExplainSubKeyCommand}"
                     CommandParameter="Home History"
                     Style="{StaticResource MaterialDesignRaisedLightButton}" 
                     ToolTip="Load Home History Explaination">Home History</Button>
 
-                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                    Grid.Row="1"
+                <Button
                     Margin="0 0 0 20" 
                     FontSize="16"                    
                     Command="{Binding ExplainKeyCommand}"
                     CommandParameter="Add"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
-                    ToolTip="Load Adding Homes Explaination">Adding new Homes</Button>
+                    ToolTip="Load Adding Homes Explaination">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Grid.Row" Value="1"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=HomeButtonsOn}" Value="false"/>
+                                        <Condition Binding="{Binding Path=SubButtonsAddOn}" Value="false"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </MultiDataTrigger>
 
-                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                    Grid.Row="2"
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=SubButtonsAddOn}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Grid.Row" Value="0"/>
+                                </MultiDataTrigger>
+
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style> Adding new Homes</Button>
+
+                <Button
                     Margin="0 0 0 20" 
                     FontSize="16"                    
                     Command="{Binding ExplainKeyCommand}"
                     CommandParameter="Edit"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
-                    ToolTip="Load Editing Homes Explaination">Editing Homes</Button>
+                    ToolTip="Load Editing Homes Explaination">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Grid.Row" Value="2"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=HomeButtonsOn}" Value="false"/>
+                                        <Condition Binding="{Binding Path=SubButtonsEditOn}" Value="false"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </MultiDataTrigger>
 
-                <Button 
-                    Visibility="Hidden"
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=SubButtonsEditOn}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Grid.Row" Value="0"/>
+                                </MultiDataTrigger>
+                                
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style> Editing Homes</Button>
+
+                <Button Visibility="{Binding SubButtonsEditOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="1"
+                    Margin="0 0 0 20" 
+                    FontSize="16"                    
+                    Command="{Binding ExplainSubKeyCommand}"
+                    CommandParameter="Active Homes"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}"                    
+                    ToolTip="Load Deactivate Homes Explaination">(In-)Active Homes</Button>
+
+                <Button Visibility="{Binding SubButtonsEditOn, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Grid.Row="2"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
-                    CommandParameter="Deactivate"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
-                    ToolTip="Load Deactivate Homes Explaination">Deactivate Homes</Button>
-
-                <Button 
-                    Visibility="Hidden"
-                    Grid.Row="2"
-                    Margin="0 0 0 20" 
-                    FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
+                    Command="{Binding ExplainSubKeyCommand}"
                     CommandParameter="Delete"
                     Style="{StaticResource MaterialDesignRaisedLightButton}" 
                     ToolTip="Load Delete Homes Explaination">Delete Homes</Button>
 
-                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Grid.Row="3"
+                <Button
                     Margin="0 0 0 20" 
                     FontSize="16"                    
                     Command="{Binding ExplainKeyCommand}"
                     CommandParameter="Settings"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
-                    ToolTip="Load Setting Explaination">Setting</Button>
+                    ToolTip="Load Setting Explaination">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Grid.Row" Value="3"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=HomeButtonsOn}" Value="false"/>
+                                        <Condition Binding="{Binding Path=SubButtonsSettingOn}" Value="false"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </MultiDataTrigger>
 
-                <Button 
-                    Visibility="Hidden"
-                    Grid.Row="3"
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=SubButtonsSettingOn}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Grid.Row" Value="0"/>
+                                </MultiDataTrigger>
+
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style> Setting</Button>
+
+                <Button Visibility="{Binding SubButtonsSettingOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="1"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
+                    Command="{Binding ExplainSubKeyCommand}"
                     CommandParameter="Provider List"
                     Style="{StaticResource MaterialDesignRaisedLightButton}" 
                     ToolTip="Load Provider List Explaination">Provider List</Button>
 
-                <Button 
-                    Visibility="Hidden"
-                    Grid.Row="3"
+                <Button Visibility="{Binding SubButtonsSettingOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="2"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
+                    Command="{Binding ExplainSubKeyCommand}"
                     CommandParameter="Normal Curve"
                     Style="{StaticResource MaterialDesignRaisedLightButton}" 
                     ToolTip="Load Normal Curve Explaination">Normal Curve</Button>
 
-                <Button Visibility="{Binding HomeButtonsOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                    Grid.Row="4"
+                <Button
                     Margin="0 0 0 20" 
                     FontSize="16"                    
                     Command="{Binding ExplainKeyCommand}"
                     CommandParameter="Import_Export"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
-                    ToolTip="Load Import/Export Explaination">Import/Export</Button>
-
-                <Button 
-                    Visibility="Hidden"
-                    Grid.Row="4"
+                    ToolTip="Load Import/Export Explaination">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Grid.Row" Value="4"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=HomeButtonsOn}" Value="false"/>
+                                        <Condition Binding="{Binding Path=SubButtonsImportOn}" Value="false"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </MultiDataTrigger>
+                                
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=SubButtonsImportOn}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Grid.Row" Value="0"/>
+                                </MultiDataTrigger>
+                                
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style> Import/Export</Button>
+                
+                <!--
+                <Button Visibility="{Binding SubButtonsImportOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="5"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
+                    Command="{Binding ExplainSubKeyCommand}"
                     CommandParameter="Import"
                     Style="{StaticResource MaterialDesignRaisedLightButton}" 
                     ToolTip="Load Import Explaination">Import</Button>
 
-                <Button 
-                    Visibility="Hidden"
-                    Grid.Row="4"
+                <Button Visibility="{Binding SubButtonsImportOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="6"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
-                    Command="{Binding ExplainKeyCommand}"
+                    Command="{Binding ExplainSubKeyCommand}"
                     CommandParameter="Export"
                     Style="{StaticResource MaterialDesignRaisedLightButton}" 
                     ToolTip="Load Export Explaination">Export</Button>
 
+                -->
                 <Button Visibility="{Binding BackButtonOn, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                    Grid.Row="5"
+                    Grid.Row="7"
                     Margin="0 0 0 20" 
                     FontSize="16"                    
                     Command="{Binding ExplainKeyCommand}"
@@ -160,7 +255,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="40 10 10 10">
-            <TextBlock ScrollViewer.VerticalScrollBarVisibility="Auto" Width="550" Height="320" FontSize="16" Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+            <TextBlock ScrollViewer.VerticalScrollBarVisibility="Auto" Width="520" Height="400" FontSize="16" Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
 
             <Button 
                     IsCancel="True"

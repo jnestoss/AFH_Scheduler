@@ -32,14 +32,59 @@ namespace AFH_Scheduler.Dialogs.Help
             }
         }
 
-        public bool _subButtonsOn;
-        public bool SubButtonsOn
+        public bool _subButtonsMainOn;
+        public bool SubButtonsMainOn
         {
-            get { return _subButtonsOn; }
+            get { return _subButtonsMainOn; }
             set
             {
-                _subButtonsOn = value;
-                OnPropertyChanged("SubButtonsOn");
+                _subButtonsMainOn = value;
+                OnPropertyChanged("SubButtonsMainOn");
+            }
+        }
+
+
+        public bool _subButtonsAddOn;
+        public bool SubButtonsAddOn
+        {
+            get { return _subButtonsAddOn; }
+            set
+            {
+                _subButtonsAddOn = value;
+                OnPropertyChanged("SubButtonsAddOn");
+            }
+        }
+
+        public bool _subButtonsEditOn;
+        public bool SubButtonsEditOn
+        {
+            get { return _subButtonsEditOn; }
+            set
+            {
+                _subButtonsEditOn = value;
+                OnPropertyChanged("SubButtonsEditOn");
+            }
+        }
+
+        public bool _subButtonsSettingOn;
+        public bool SubButtonsSettingOn
+        {
+            get { return _subButtonsSettingOn; }
+            set
+            {
+                _subButtonsSettingOn = value;
+                OnPropertyChanged("SubButtonsSettingOn");
+            }
+        }
+
+        public bool _subButtonsImportOn;
+        public bool SubButtonsImportOn
+        {
+            get { return _subButtonsImportOn; }
+            set
+            {
+                _subButtonsImportOn = value;
+                OnPropertyChanged("SubButtonsImportOn");
             }
         }
 
@@ -59,7 +104,11 @@ namespace AFH_Scheduler.Dialogs.Help
             DialogMessage = "You have reached the help page, select one of the buttons on the side to obtain a description of said functionality";
             HomeButtonsOn = true;
             BackButtonOn = false;
-            SubButtonsOn = false;
+            SubButtonsMainOn = false;
+            SubButtonsAddOn = false;
+            SubButtonsEditOn = false;
+            SubButtonsSettingOn = false;
+            SubButtonsImportOn = false;
         }
 
         #region commands
@@ -83,9 +132,65 @@ namespace AFH_Scheduler.Dialogs.Help
                     "Each item represents an home from the database that is scheduled ";
                 HomeButtonsOn = false;
                 BackButtonOn = true;
-                SubButtonsOn = true;
+                SubButtonsMainOn = true;
             }
-            else if (keyword.Equals("Complete Inspection"))
+            else if (keyword.Equals("Add"))
+            {
+                DialogMessage = "Add New Home button";
+                HomeButtonsOn = false;
+                BackButtonOn = true;
+                SubButtonsAddOn = true;
+            }
+            else if (keyword.Equals("Edit"))
+            {
+                DialogMessage = "Edit Home Button button";
+                HomeButtonsOn = false;
+                BackButtonOn = true;
+                SubButtonsEditOn = true;
+            }
+            else if (keyword.Equals("Settings"))
+            {
+                DialogMessage = "Settings button";
+                HomeButtonsOn = false;
+                BackButtonOn = true;
+                SubButtonsSettingOn = true;
+            }
+            else if (keyword.Equals("Import_Export"))
+            {
+                DialogMessage = "Import/Export button";
+                HomeButtonsOn = false;
+                BackButtonOn = true;
+                SubButtonsImportOn = true;
+            }
+            else if (keyword.Equals("BackButton"))
+            {
+                DialogMessage = "You have reached the help page, select one of the buttons on the side to obtain a description of said functionality";
+                HomeButtonsOn = true;
+                BackButtonOn = false;
+                SubButtonsMainOn = false;
+                SubButtonsAddOn = false;
+                SubButtonsEditOn = false;
+                SubButtonsSettingOn = false;
+                SubButtonsImportOn = false;
+            }
+        }
+
+        private RelayCommand _explainSubKeyCommand;
+        public ICommand ExplainSubKeyCommand
+        {
+            get
+            {
+                if (_explainSubKeyCommand == null)
+                    _explainSubKeyCommand = new RelayCommand(ExplainSubKeyFunction);
+                return _explainSubKeyCommand;
+            }
+        }
+
+        private void ExplainSubKeyFunction(object obj)
+        {
+            string keyword = (string)obj;
+            //Main Table
+            if (keyword.Equals("Complete Inspection"))
             {
                 DialogMessage = "Complete Inspection button";
             }
@@ -93,36 +198,32 @@ namespace AFH_Scheduler.Dialogs.Help
             {
                 DialogMessage = "Home History button";
             }
-            else if (keyword.Equals("Add"))
+            //Edit Page
+            else if (keyword.Equals("Active Homes"))
             {
-                DialogMessage = "Add New Home button";
-                HomeButtonsOn = false;
-                BackButtonOn = true;
+                DialogMessage = "Active Homes button";
             }
-            else if (keyword.Equals("Edit"))
+            else if (keyword.Equals("Delete"))
             {
-                DialogMessage = "Edit Home Button button";
-                HomeButtonsOn = false;
-                BackButtonOn = true;
+                DialogMessage = "Delete button";
             }
-            else if (keyword.Equals("Settings"))
+            //Settings
+            else if (keyword.Equals("Provider List"))
             {
-                DialogMessage = "Settings button";
-                HomeButtonsOn = false;
-                BackButtonOn = true;
+                DialogMessage = "Provider List button";
             }
-            else if (keyword.Equals("Import_Export"))
+            else if (keyword.Equals("Normal Curve"))
             {
-                DialogMessage = "Import/Export button";
-                HomeButtonsOn = false;
-                BackButtonOn = true;
+                DialogMessage = "Normal Curve button";
             }
-            else if (keyword.Equals("BackButton"))
+            //Import_Export
+            else if (keyword.Equals("Import"))
             {
-                DialogMessage = "You have reached the help page, select one of the buttons on the side to obtain a description of said functionality";
-                HomeButtonsOn = true;
-                BackButtonOn = false;
-                SubButtonsOn = false;
+                DialogMessage = "Import button";
+            }
+            else if (keyword.Equals("Export"))
+            {
+                DialogMessage = "Export button";
             }
         }
 
