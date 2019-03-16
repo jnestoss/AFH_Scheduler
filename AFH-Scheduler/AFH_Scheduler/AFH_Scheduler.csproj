@@ -251,6 +251,10 @@
     <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
       <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Help\HelpBox.xaml.cs">
+      <DependentUpon>HelpBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Help\HelpBoxVM.cs" />
     <Compile Include="Dialogs\HistoryDialog.xaml.cs">
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
@@ -303,7 +307,9 @@
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\ProviderListVM.cs" />
     <Compile Include="Dialogs\SettingsVM.cs" />
+    <Compile Include="Excel\ExcelClass.cs" />
     <Compile Include="HelperClasses\ICloseable.cs" />
+    <Compile Include="HelperClasses\UniqueDateImportItem.cs" />
     <Compile Include="HomeInspectionDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -355,6 +361,10 @@
     <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Help\HelpBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\HistoryDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -26,6 +26,7 @@
             <DataGrid
            VerticalScrollBarVisibility="Auto"
            MaxHeight="200"
+            MaxWidth="1080"
            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
            materialDesign:DataGridAssist.ColumnHeaderPadding="8"
            AutoGenerateColumns="False"

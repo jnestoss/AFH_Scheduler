@@ -196,8 +196,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                             NextInspection = insp,
                             EighteenthMonthDate = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
                             IsActive = true,
-                            RcsRegion = "",
-                            RcsUnit = ""
+                            RcsRegionUnit = house.PHome_RCSUnit
                         }
                     );
                 }

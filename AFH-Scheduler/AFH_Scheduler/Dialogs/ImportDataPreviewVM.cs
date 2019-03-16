@@ -10,6 +10,7 @@ using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Dialogs.Errors;
 using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.HelperClasses;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Office.Interop.Excel;
 
@@ -60,6 +61,20 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private List<UniqueDateImportItem> _uniqueInspectionDates;
+        public List<UniqueDateImportItem> UniqueInspectionDates
+        {
+            get { return _uniqueInspectionDates; }
+            set
+            {
+                if (value != _uniqueInspectionDates)
+                {
+                    _uniqueInspectionDates = value;
+                    OnPropertyChanged("UniqueInspectionDates");
+                }
+            }
+        }
+
         private List<List<string>> _importedLicenseInfo;
         public List<List<string>> ImportedLicenseInfo
         {
@@ -91,6 +106,7 @@ namespace AFH_Scheduler.Dialogs
             _importedLicenseInfo = new List<List<string>>();
             _uniqueProvIDs = new List<long>();
             _uniqueHomeIDs = new List<long>();
+            _uniqueInspectionDates = new List<UniqueDateImportItem>();
         }
 
 
@@ -107,6 +123,11 @@ namespace AFH_Scheduler.Dialogs
 
         private void OpenExcelFileImport(object obj)
         {
+            ImportedHomes.Clear();
+            UniqueProvIDs.Clear();
+            UniqueHomeIDs.Clear();
+            UniqueInspectionDates.Clear();
+
             int pocRow = -1, licenseRow = -1, nameRow = -1, addressRow = -1, cityRow = -1, zipRow = -1,
                 phoneRow = -1, inspRow = -1, rcsRow = -1, recentRow = -1;
             foreach (var listRow in ImportedLicenseInfo)
@@ -141,7 +162,7 @@ namespace AFH_Scheduler.Dialogs
                         foreach (Range col in header)
                         {
 
-                            dynamic colCell = col.Cells.Value2;
+                            dynamic colCell = col.Cells.Value;
 
                             if (colCell[1, 1].IndexOf("FacilityPOC", StringComparison.OrdinalIgnoreCase) > -1)//Provider name
                             {
@@ -316,215 +337,223 @@ namespace AFH_Scheduler.Dialogs
         public void LoadInToTable(int pocRow, int licenseRow, int nameRow, int addressRow, int cityRow,
             int zipRow, int phoneRow, int inspRow, int recentRow, int rcsRow)
         {
-            int errorCount = 0;
-            if (licenseRow == -1 || nameRow == -1 || addressRow == -1 || cityRow == -1 || zipRow == -1 || recentRow == -1 || rcsRow == -1)
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                string message = "Value(s):";
-                if (licenseRow == -1)
+                var outcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code.Equals("NEW")).First();
+            
+                bool noProvider;
+                int errorCount = 0;
+                if (licenseRow == -1 || nameRow == -1 || addressRow == -1 || cityRow == -1 || zipRow == -1 || rcsRow == -1)
                 {
-                    message += " LicenseNumber,";
-                    errorCount++;
-                }
-                if (nameRow == -1)
-                {
-                    message += " FacilityName,";
-                    errorCount++;
-                }
-                if (addressRow == -1)
-                {
-                    message += " LocationAddress,";
-                    errorCount++;
-                }
-                if (cityRow == -1)
-                {
-                    message += " LocationCity,";
-                    errorCount++;
-                }
-                if (zipRow == -1)
-                {
-                    message += " LocationZipCode,";
-                    errorCount++;
-                }
-                if (recentRow == -1)
-                {
-                    message += " RecentInspection,";
-                }
-                if (rcsRow == -1)
-                {
-                    message += " RCSRegionUnit,";
-                    errorCount++;
-                }
-                message = message.Remove(message.Count() - 1, 1);
-                if (errorCount == 1)
-                {
-                    message += " is missing. Please include it in the excel sheet.";
-                }
-                else
-                {
-                    message += " are missing. Please include them in the excel sheet.";
-                }
-                MessageService.ReleaseMessageBox(message);
-                return;
-            }
-
-            var errorlist = new List<ImportErrorModel>();
-            int rows = ImportedLicenseInfo[0].Count;
-
-            long provID;
-            string provName, nextInspect;
-            for (int rowItem = 1; rowItem < rows; rowItem++)
-            {
-                try
-                {
-                    if (ImportedLicenseInfo[licenseRow][rowItem].Equals("")
-                        || ImportedLicenseInfo[nameRow][rowItem].Equals("")
-                        || ImportedLicenseInfo[addressRow][rowItem].Equals("")
-                        || ImportedLicenseInfo[cityRow][rowItem].Equals("")
-                        || ImportedLicenseInfo[zipRow][rowItem].Equals("")
-                        || ImportedLicenseInfo[recentRow][rowItem].Equals("")
-                        || ImportedLicenseInfo[rcsRow][rowItem].Equals(""))
+                    string message = "Value(s):";
+                    if (licenseRow == -1)
                     {
-                        string message = "Value(s):";
-                        if (ImportedLicenseInfo[licenseRow][rowItem].Equals(""))
-                        {
-                            message += " LicenseNumber,";
-                            errorCount++;
-                        }
-                        if (ImportedLicenseInfo[nameRow][rowItem].Equals(""))
-                        {
-                            message += " FacilityName,";
-                            errorCount++;
-                        }
-                        if (ImportedLicenseInfo[addressRow][rowItem].Equals(""))
-                        {
-                            message += " LocationAddress,";
-                            errorCount++;
-                        }
-                        if (ImportedLicenseInfo[cityRow][rowItem].Equals(""))
-                        {
-                            message += " LocationCity,";
-                            errorCount++;
-                        }
-                        if (ImportedLicenseInfo[zipRow][rowItem].Equals(""))
-                        {
-                            message += " LocationZipCode,";
-                            errorCount++;
-                        }
-                        if (ImportedLicenseInfo[recentRow][rowItem].Equals(""))
-                        {
-                            message += " RecentInspection,";
-                            errorCount++;
-                        }
-                        if (ImportedLicenseInfo[rcsRow][rowItem].Equals(""))
-                        {
-                            message += " RCSRegionUnit,";
-                            errorCount++;
-                        }
-                        message = message.Remove(message.Count() - 1, 1);
-                        if (errorCount == 1)
-                        {
-                            message += " is missing.";
-                        }
-                        else
-                        {
-                            message += " are missing.";
-                        }
-                        errorlist.Add(new ImportErrorModel(rowItem + 1, message));
-                        errorCount = 0;
+                        message += " LicenseNumber,";
+                        errorCount++;
+                    }
+                    if (nameRow == -1)
+                    {
+                        message += " FacilityName,";
+                        errorCount++;
+                    }
+                    if (addressRow == -1)
+                    {
+                        message += " LocationAddress,";
+                        errorCount++;
+                    }
+                    if (cityRow == -1)
+                    {
+                        message += " LocationCity,";
+                        errorCount++;
+                    }
+                    if (zipRow == -1)
+                    {
+                        message += " LocationZipCode,";
+                        errorCount++;
+                    }
+                    if (rcsRow == -1)
+                    {
+                        message += " RCSRegionUnit,";
+                        errorCount++;
+                    }
+                    message = message.Remove(message.Count() - 1, 1);
+                    if (errorCount == 1)
+                    {
+                        message += " is missing. Please include it in the excel sheet.";
                     }
                     else
                     {
-                        if (pocRow == -1 || ImportedLicenseInfo[pocRow][rowItem] == null || ImportedLicenseInfo[pocRow][rowItem].Length == 0
-                            || ImportedLicenseInfo[pocRow][rowItem].Equals("") ||
-                            ImportedLicenseInfo[pocRow][rowItem].Equals("No Provider"))
+                        message += " are missing. Please include them in the excel sheet.";
+                    }
+                    MessageService.ReleaseMessageBox(message);
+                    return;
+                }
+
+                var errorlist = new List<ImportErrorModel>();
+                int rows = ImportedLicenseInfo[0].Count;
+
+                long provID;
+                string provName, nextInspect, recentInspect;
+                for (int rowItem = 1; rowItem < rows; rowItem++)
+                {
+
+                        long homeID = GenerateHomeID();
+                    try
+                    {
+                        if (ImportedLicenseInfo[licenseRow][rowItem].Equals("")
+                            || ImportedLicenseInfo[nameRow][rowItem].Equals("")
+                            || ImportedLicenseInfo[addressRow][rowItem].Equals("")
+                            || ImportedLicenseInfo[cityRow][rowItem].Equals("")
+                            || ImportedLicenseInfo[zipRow][rowItem].Equals("")
+                            || ImportedLicenseInfo[rcsRow][rowItem].Equals(""))
                         {
-                            provID = -1;
-                            provName = "No Provider";
+                            string message = "Value(s):";
+                            if (ImportedLicenseInfo[licenseRow][rowItem].Equals(""))
+                            {
+                                message += " LicenseNumber,";
+                                errorCount++;
+                            }
+                            if (ImportedLicenseInfo[nameRow][rowItem].Equals(""))
+                            {
+                                message += " FacilityName,";
+                                errorCount++;
+                            }
+                            if (ImportedLicenseInfo[addressRow][rowItem].Equals(""))
+                            {
+                                message += " LocationAddress,";
+                                errorCount++;
+                            }
+                            if (ImportedLicenseInfo[cityRow][rowItem].Equals(""))
+                            {
+                                message += " LocationCity,";
+                                errorCount++;
+                            }
+                            if (ImportedLicenseInfo[zipRow][rowItem].Equals(""))
+                            {
+                                message += " LocationZipCode,";
+                                errorCount++;
+                            }
+                            if (ImportedLicenseInfo[rcsRow][rowItem].Equals(""))
+                            {
+                                message += " RCSRegionUnit,";
+                                errorCount++;
+                            }
+                            message = message.Remove(message.Count() - 1, 1);
+                            if (errorCount == 1)
+                            {
+                                message += " is missing.";
+                            }
+                            else
+                            {
+                                message += " are missing.";
+                            }
+                            errorlist.Add(new ImportErrorModel(rowItem + 1, message));
+                            errorCount = 0;
                         }
                         else
                         {
-                            provName = ImportedLicenseInfo[pocRow][rowItem];
-                            using (HomeInspectionEntities db = new HomeInspectionEntities())
+                            if (pocRow == -1 || ImportedLicenseInfo[pocRow][rowItem] == null || ImportedLicenseInfo[pocRow][rowItem].Length == 0
+                                || ImportedLicenseInfo[pocRow][rowItem].Equals("") ||
+                                ImportedLicenseInfo[pocRow][rowItem].Equals("No Provider"))
                             {
+                                provID = -1;
+                                provName = "No Provider";
+                                noProvider = true;
+                            }
+                            else
+                            {
+                                noProvider = false;
+                                provName = ImportedLicenseInfo[pocRow][rowItem];
                                 var prov = db.Providers.Where(r => r.Provider_Name.Equals(provName)).ToList();
                                 if (prov.Count != 0) //New Provider
                                 {
-                                    provID = prov[0].Provider_ID;
+                                   provID = prov[0].Provider_ID;
                                 }
                                 else
                                 {
-                                    provID = GenerateProviderID();
+                                   provID = GenerateProviderID();
                                 }
+                            
                             }
-                        }
 
-                        if (inspRow == -1 || ImportedLicenseInfo[inspRow][rowItem].Equals(""))
-                        {
-                            using (HomeInspectionEntities db = new HomeInspectionEntities())
+                                if (recentRow == -1 || ImportedLicenseInfo[recentRow][rowItem].Equals(""))
+                                {
+                                    recentInspect = DateTime.Now.ToShortDateString();
+                                }
+                                else
+                                {
+                                    recentInspect = ImportedLicenseInfo[recentRow][rowItem];
+                                }
+
+                            if (inspRow == -1 || ImportedLicenseInfo[inspRow][rowItem].Equals("") 
+                                || IsPastRecentDate(recentInspect, ImportedLicenseInfo[inspRow][rowItem]))
                             {
-                                var outcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code.Equals("NEW")).First();
-
                                 string inspectDate = SchedulingAlgorithm.NextScheduledDate(outcome,
-                                           ImportedLicenseInfo[recentRow][rowItem]);
+                                           recentInspect);
 
                                 DateTime scheduleInspect = SchedulingAlgorithm.ExtractDateTime(inspectDate);
 
-                                if (!alg.CheckingForUniqueInspection(db, scheduleInspect, GenerateHomeID()))
+
+                                while (!provName.Equals("No Provider") &&
+                                    UniqueInspectionDates.Contains(new UniqueDateImportItem(provName, scheduleInspect)))
                                 {
-                                    bool dateCleared = false;
-                                    do
-                                    {
-                                        scheduleInspect.AddDays(1);
-                                        SchedulingAlgorithm.CheckDay(scheduleInspect);
-                                        if (alg.CheckingForUniqueInspection(db, scheduleInspect, GenerateHomeID()))
-                                        {
-                                            dateCleared = true;
-                                        }
-                                    } while (!dateCleared);
+                                    scheduleInspect.AddDays(1);
+                                    SchedulingAlgorithm.CheckDay(scheduleInspect);
                                 }
                                 nextInspect = scheduleInspect.ToShortDateString();
+                                UniqueInspectionDates.Add(new UniqueDateImportItem(provName, scheduleInspect));
                             }
-                        }
-                        else
-                        {
-                            nextInspect = ImportedLicenseInfo[inspRow][rowItem];
-                        }
-                        ImportedHomes.Add(// * = From the Excel file
-                            new HomeModel
+                            else
                             {
-                                ProviderID = provID,
-                                HomeID = GenerateHomeID(),     //Home Database ID
-                                ProviderName = provName,                //Provider Name*
-                                HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
-                                HomeName = ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
-                                Phone = ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
-                                Address = ImportedLicenseInfo[addressRow][rowItem],     //Address*
-                                City = ImportedLicenseInfo[cityRow][rowItem],     //City*
-                                ZIP = ImportedLicenseInfo[zipRow][rowItem],     //Zip*
-                                RecentInspection = "",         //Recent
-                                NextInspection = ImportedLicenseInfo[inspRow][rowItem],               //Next Inspection*
-                                EighteenthMonthDate = alg.DropDateMonth(ImportedLicenseInfo[inspRow][rowItem], Drop.EIGHTEEN_MONTH),//18th Month Drop Date
-                                HasNoProvider = true,
-                                RcsRegion = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
+                                nextInspect = ImportedLicenseInfo[inspRow][rowItem];
                             }
-                        );
+                            ImportedHomes.Add(// * = From the Excel file
+                                new HomeModel
+                                {
+                                    ProviderID = provID,
+                                    HomeID = homeID,     //Home Database ID
+                                    ProviderName = provName,                //Provider Name*
+                                    HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
+                                    HomeName = ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
+                                    Phone = ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
+                                    Address = ImportedLicenseInfo[addressRow][rowItem],     //Address*
+                                    City = ImportedLicenseInfo[cityRow][rowItem],     //City*
+                                    ZIP = ImportedLicenseInfo[zipRow][rowItem],     //Zip*
+                                    RecentInspection = recentInspect,         //Recent
+                                    NextInspection = nextInspect,               //Next Inspection*
+                                    EighteenthMonthDate = alg.DropDateMonth(recentInspect, Drop.EIGHTEEN_MONTH),//18th Month Drop Date
+                                    SeventeenMonthDate = alg.DropDateMonth(recentInspect, Drop.SEVENTEEN_MONTH),
+                                    ForecastedDate = SchedulingAlgorithm.NextScheduledDate(outcome, recentInspect),
+                                    HasNoProvider = noProvider,
+                                    IsActive = true,
+                                    RcsRegionUnit = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
+                                }
+                            );
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        string message = "There has been an error with loading this row, look through the excel file";
+                        errorlist.Add(new ImportErrorModel(rowItem + 1, message));
                     }
                 }
-                catch (Exception e)
+
+                if (errorlist.Count > 0)
                 {
-                    string message = "There has been an error with loading this row";
-                    MessageService.ReleaseMessageBox(message);
+                    LoadErrorListAsync(errorlist);
                 }
             }
+        }
 
-            if (errorlist.Count > 0)
+        private bool IsPastRecentDate(string recentInspect, string nextInspect)
+        {
+            var recentTemp = SchedulingAlgorithm.ExtractDateTime(recentInspect);
+            var nextTemp = SchedulingAlgorithm.ExtractDateTime(nextInspect);
+            if (DateTime.Compare(recentTemp, nextTemp) < 0)
             {
-                /*string message = "There has been an error with loading this row: " + errorlist.Count + " rows were not added to the table.\n" +
-                    "Be sure that each row's cells filled in the required columns: " +
-                    "LicenseNumber, FacilityName, LocationAddress, LocationCity, LocationZipCode, NextInspection, RCSRegionUnit.";*/
-                //MessageService.ReleaseMessageBox(message);
-                LoadErrorListAsync(errorlist);
-            }
+                return false;
+            }//otherwise, recent date >= next inspection
+            return true;
         }
 
         public async void LoadErrorListAsync(List<ImportErrorModel> errorlist)
@@ -574,7 +603,7 @@ namespace AFH_Scheduler.Dialogs
 
         public long GenerateHomeID()
         {
-            long newID;
+            long newID = 0;
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 try
@@ -596,17 +625,16 @@ namespace AFH_Scheduler.Dialogs
                     }
                     else
                         newID = recentHomeID.PHome_ID + 1;
-                    while (UniqueHomeIDs.Contains(newID))
-                    {
-                        newID++;
-                    }
-                    UniqueHomeIDs.Add(newID);
-                    return newID;
                 }
                 catch (Exception e)
                 {
-                    return 0;
                 }
+                while (UniqueHomeIDs.Contains(newID))
+                {
+                    newID++;
+                }
+                UniqueHomeIDs.Add(newID);
+                return newID;
             }
         }
 

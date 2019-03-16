@@ -176,10 +176,10 @@ namespace AFH_Scheduler.Algorithm
         {
             bool isUniqueDate = false;
             string dateComparison = newInspection.ToShortDateString();
-
-            long providerID = table.Provider_Homes.First(r => r.PHome_ID == pHome_ID).FK_Provider_ID.Value;
+            
             try
             {
+                long providerID = table.Provider_Homes.First(r => r.PHome_ID == pHome_ID).FK_Provider_ID.Value;
                 Scheduled_Inspections scheduled = table.Scheduled_Inspections.Where(r => r.SInspections_Date == dateComparison && r.FK_PHome_ID != pHome_ID).First();
                 var phID2 = scheduled.FK_PHome_ID;
                 var providerCompare = table.Provider_Homes.Where(r => r.PHome_ID == phID2).First().FK_Provider_ID;
