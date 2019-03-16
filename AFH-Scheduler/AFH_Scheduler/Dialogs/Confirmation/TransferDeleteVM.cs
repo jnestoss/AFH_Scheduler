@@ -15,6 +15,26 @@ namespace AFH_Scheduler.Dialogs.Confirmation
 {
     public class TransferDeleteVM : ObservableObject, IPageViewModel
     {
+        private double _currentAverage;
+        public double CurrentAverage {
+            get { return _currentAverage; }
+            set {
+                if (_currentAverage == value) return;
+                _currentAverage = value;
+                OnPropertyChanged("NormalCurve");
+            }
+        }
+
+        private double _desiredAverage;
+        public double DesiredAverage {
+            get => _desiredAverage;
+            set {
+                if (_desiredAverage == value) return;
+                _desiredAverage = value;
+                OnPropertyChanged("DesiredValue");
+            }
+        }
+
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
         private static ObservableCollection<HomeModel> _remainingHomes;
         public ObservableCollection<HomeModel> RemainingHomes
@@ -93,9 +113,9 @@ namespace AFH_Scheduler.Dialogs.Confirmation
         private async void EditHomeLicense(object obj)
         {
             var selectItem = (HomeModel)obj;
-            var view = new EditDialog();
-
-            view.setDataContext(selectItem);
+            var view = new EditDialog {
+                DataContext = new EditVM(selectItem, DesiredAverage, CurrentAverage)
+            };
 
             var result = await DialogHost.Show(view, "TransferDialog", ClosingEventHandlerLicense);
             if (!result.Equals("CANCEL"))
@@ -135,8 +155,10 @@ namespace AFH_Scheduler.Dialogs.Confirmation
 
         }
 
-        public TransferDeleteVM(long id, string name)
+        public TransferDeleteVM(long id, string name, double desiredAverage, double currentAverage)
         {
+            DesiredAverage = desiredAverage;
+            CurrentAverage = currentAverage;
             AllHomesCleared = false;
             _chowedHomes = new ObservableCollection<HomeModel>();
             _remainingHomes = new ObservableCollection<HomeModel>();

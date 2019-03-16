@@ -448,7 +448,7 @@
                     VerticalAlignment="Center"
                     FontSize="12"
                     FontWeight="Bold">
-                    Normal Curve:
+                    Next Inspection Average
                 </TextBlock>
                 <TextBlock
                     HorizontalAlignment="Left"

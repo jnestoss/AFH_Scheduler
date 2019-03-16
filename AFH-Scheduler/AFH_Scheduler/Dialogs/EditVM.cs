@@ -70,6 +70,26 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private double _currentAverage;
+        public double CurrentAverage {
+            get { return _currentAverage; }
+            set {
+                if (_currentAverage == value) return;
+                _currentAverage = value;
+                OnPropertyChanged("CurrentAverage");
+            }
+        }
+
+        private double _desiredAverage;
+        public double DesiredAverage {
+            get => _desiredAverage;
+            set {
+                if (_desiredAverage == value) return;
+                _desiredAverage = value;
+                OnPropertyChanged("DesiredAverage");
+            }
+        }
+
         private DateTime _nextInspection;
         public DateTime NextInspection {
             get
@@ -79,6 +99,7 @@ namespace AFH_Scheduler.Dialogs
             set {
                 if (_nextInspection == value) return;
                 _nextInspection = value;
+                OnPropertyChanged("NextInspection");
             }
         }
 
@@ -130,7 +151,7 @@ namespace AFH_Scheduler.Dialogs
         //public event EventHandler<EventArgs> RequestClose;      
         //public RelayCommand CloseCommand { get; private set; }
 
-        public EditVM(HomeModel scheduleData)
+        public EditVM(HomeModel scheduleData, double desiredAverage, double currentAverage)
         {
             SelectedSchedule = scheduleData;
             //CurrentProvider = new Tuple<int, string>((int) SelectedSchedule.ProviderID, SelectedSchedule.ProviderName);
@@ -147,9 +168,13 @@ namespace AFH_Scheduler.Dialogs
             SelectedCode = GetMostRecentOutcome();
 
             TextSearch = SelectedSchedule.ProviderName;
+            NextInspection = SchedulingAlgorithm.ExtractDateTime(SelectedSchedule.NextInspection);
 
             //saving the previous date
             PreviousInspection = SelectedSchedule.NextInspection;
+
+            DesiredAverage = desiredAverage;
+            CurrentAverage = currentAverage;
         }
 
         private int ProviderSort(string x, string y)
@@ -198,8 +223,8 @@ namespace AFH_Scheduler.Dialogs
 
         private void CalcNextInspectionDate(object o)
         {
-            string date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
-            SelectedSchedule.NextInspection = date;
+            string date = SchedulingAlgorithm.CalculateNextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"), CurrentAverage, DesiredAverage);
+            NextInspection = SchedulingAlgorithm.ExtractDateTime(date);
         }
 
         private List<String> GrabProviderInformation()
@@ -215,11 +240,6 @@ namespace AFH_Scheduler.Dialogs
                 }
             }
             return providerNames;
-        }
-
-        private void SaveAndCloseCommand(Window window)
-        {
-
         }
 
         private int GetDistance(string provider)

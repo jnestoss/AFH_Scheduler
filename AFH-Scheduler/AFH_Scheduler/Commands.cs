@@ -28,18 +28,25 @@ namespace AFH_Scheduler
 
         public static readonly RelayCommand OpenSettingsCommand = new RelayCommand(async w =>
         {
+            
             if (!DialogAlreadyOpen)
             {
                 DialogAlreadyOpen = true;
-                var settings = new SettingsVM();
-                var view = new SettingsDialog(settings);
-                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
+
                 var viewVM = (MainWindow)w;
+                DataVM data = (DataVM)w;
                 if (viewVM.Name.Equals("Schedules"))
                 {
-                    DataVM data = (DataVM)w;
-                    data.NormalCurve = settings.NormalCurve;
+                    data = (DataVM)w;
+                    //data.NormalCurve = settings.NormalCurve;
                 }
+
+                var settings = new SettingsVM(Convert.ToDouble(data.NormalCurve), data.DesiredAverage);
+                var view = new SettingsDialog(settings);
+                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
+
+                //settings.NormalCurve
+
                 DialogAlreadyOpen = false;
             }
         });

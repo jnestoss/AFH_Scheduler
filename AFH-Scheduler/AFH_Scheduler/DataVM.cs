@@ -1,5 +1,4 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System;
 using AFH_Scheduler.Helper_Classes;
@@ -57,6 +56,16 @@ namespace AFH_Scheduler
                 _normalCurveValue = value;
                 OnPropertyChanged("NormalCurve");
                 CheckNormalCurveState();
+            }
+        }
+
+        private double _desiredAverage;
+        public double DesiredAverage {
+            get => _desiredAverage;
+            set {
+                if (_desiredAverage == value) return;
+                _desiredAverage = value;
+                OnPropertyChanged("DesiredAverage");
             }
         }
 
@@ -370,8 +379,6 @@ namespace AFH_Scheduler
             }
         }
 
-
-
         private RelayCommand _filterTableCommand;
         public ICommand FilterTableCommand
         {
@@ -380,6 +387,14 @@ namespace AFH_Scheduler
                 if (_filterTableCommand == null)
                     _filterTableCommand = new RelayCommand(FilterTheTable);
                 return _filterTableCommand;
+            }
+        }
+
+        private RelayCommand _openSettingsDialog;
+        public ICommand OpenSettingsDialogCommand {
+            get {
+                if (_openSettingsDialog == null) _openSettingsDialog = new RelayCommand(ExecuteSettingDialog);
+                return _openSettingsDialog;
             }
         }
 
@@ -490,7 +505,8 @@ namespace AFH_Scheduler
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
                 text = "15.99";
             }
-            NormalCurve = text;
+            DesiredAverage = testCase;
+            UpdateInspectionAverage();
         }
 
         #endregion
@@ -639,7 +655,7 @@ namespace AFH_Scheduler
 
         public void ReadHomeData()
         {
-            //Providers = new ObservableCollection<HomeModel>();
+            Providers = new ObservableCollection<HomeModel>();
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var homes = db.Provider_Homes.ToList();
@@ -668,13 +684,13 @@ namespace AFH_Scheduler
                             Address = house.PHome_Address,
                             City = house.PHome_City,
                             ZIP = house.PHome_Zipcode,
-                            RecentInspection = "No History",
+                            RecentInspection = homeHistory.HHistory_Date,
                             NextInspection = inspections.SInspections_Date,
                             EighteenthMonthDate = inspections.SInspections_EighteenMonth,
                             SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
                             ForecastedDate = inspections.SInspection_ForecastedDate,
                             IsActive = true,
-                            RcsUnit = house.PHome_RCSUnit
+                            RcsRegionUnit = house.PHome_RCSUnit
                         };
                     }
                     else
@@ -696,13 +712,14 @@ namespace AFH_Scheduler
                             SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
                             ForecastedDate = inspections.SInspection_ForecastedDate,
                             IsActive = true,
-                            RcsUnit = "",
+                            RcsRegionUnit = house.PHome_RCSUnit
                         };
                     }
 
                     Providers.Add(newHome);
                 }               
             }
+            
             //FilterTheTable(null);
         }
         #endregion
@@ -790,46 +807,9 @@ namespace AFH_Scheduler
 
                 }
 
-                ReadHomeData();
-
-                //Add to database
-                /*
-                using (HomeInspectionEntities db = new HomeInspectionEntities())
-                {
-                    db.Provider_Homes.Add(new Provider_Homes { 
-                        PHome_ID = Convert.ToInt64(home.HomeID),
-                        PHome_Address = home.Address,
-                        PHome_City = home.City,
-                        PHome_Zipcode = home.Zipcode,
-                        PHome_Phonenumber = "don't call",
-                        FK_Provider_ID = Convert.ToInt64(home.ProviderID) });
-                    db.SaveChanges();
-
-                    Random randomiz = new Random();
-                    int id = randomiz.Next(111, 8000 + 1);
-                    while (true)
-                    {
-                        var scheduled = db.Scheduled_Inspections.Where(r => r.SInspections_Id == id).ToList();
-                        if (scheduled.Count != 0)
-                        {
-                            id = randomiz.Next(111, 8000 + 1);//456789
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                    db.Scheduled_Inspections.Add(new Scheduled_Inspections { 
-                        SInspections_Id = id,
-                        SInspections_Date = alg.ConvertDateToString(home.InspectionDate),
-                        FK_PHome_ID = Convert.ToInt64(home.HomeID) }
-                    );
-                    db.SaveChanges();
-
-                }
-                */
-                //MessageService.ReleaseMessageBox("New Home has been added to the database");
+                RefreshTable(null);
+                FilterTheTable(null);
+                UpdateInspectionAverage();
             }
         }
 
@@ -930,7 +910,12 @@ namespace AFH_Scheduler
         //    }
         //}
 
-
+        private async void ExecuteSettingDialog(object o)
+        {
+            var settingsVM = new SettingsVM(Convert.ToDouble(NormalCurve), DesiredAverage);
+            var settingsView = new SettingsDialog(settingsVM);
+            var result = await DialogHost.Show(settingsView, "WindowDialogs", SettingsClosingEventHandler);
+        }
 
         private async void ExecuteEditDialog(object o)
         {
@@ -941,8 +926,8 @@ namespace AFH_Scheduler
             else
             {
                 var view = new EditDialog();
-
-                view.setDataContext(SelectedHome);
+                view.DataContext = new EditVM(SelectedHome, DesiredAverage, Convert.ToDouble(NormalCurve));
+                //view.setDataContext(SelectedHome);
 
                 var result = await DialogHost.Show(view, "WindowDialogs", EditClosingEventHandler);
 
@@ -987,6 +972,13 @@ namespace AFH_Scheduler
         #endregion
 
         #region Closing Event Handlers
+
+        private void SettingsClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            SettingsVM settingsContext = (SettingsVM)((SettingsDialog)eventArgs.Session.Content).DataContext;
+            DesiredAverage = Convert.ToDouble(settingsContext.NormalCurve);
+        }
+
         private void NewHomeClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("Dialog closed successfully");
@@ -1036,7 +1028,9 @@ namespace AFH_Scheduler
                 }
             }
 
-            ReadHomeData();
+            RefreshTable(null);
+            FilterTheTable(null);
+            UpdateInspectionAverage();
         }
 
         private void EditClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
@@ -1058,7 +1052,8 @@ namespace AFH_Scheduler
                     var city = editedHomeData.City;
                     var zip = editedHomeData.ZIP;
                     var phone = editedHomeData.Phone;
-                    var nextInspection = editedHomeData.NextInspection;
+                    var rcsUnit = editedHomeData.RcsRegionUnit;
+                    var nextInspection = editDialogContext.NextInspection;
 
                     Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == editedHomeData.HomeID);
 
@@ -1071,22 +1066,25 @@ namespace AFH_Scheduler
                         selectHome.PHome_City = city;
                         selectHome.PHome_Zipcode = zip;
                         selectHome.PHome_Phonenumber = phone;
+                        selectHome.PHome_RCSUnit = rcsUnit;
                         Scheduled_Inspections homeDates = selectHome.Scheduled_Inspections.First();
 
                         Home_History homeHistory = selectHome.Home_History.FirstOrDefault(x => x.FK_PHome_ID == editedHomeData.HomeID);
 
-                        homeDates.SInspections_Date = nextInspection;
+                        String nextScheduledInspection = nextInspection.ToString("MM/dd/yyyy");
+
+                        homeDates.SInspections_Date = nextScheduledInspection;
                         //homeDates.SInspections_EighteenMonth  = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.EIGHTEEN_MONTH);
                         //homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.SEVENTEEN_MONTH);
-                        homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(homeHistory.Inspection_Outcome, nextInspection);
-
-                        //selectHome.Scheduled_Inspections.First(r => r.SInspections_Date == editDialogContext.PreviousInspection).SInspections_Date = nextInspection;
-                        //SelectedHome.NextInspection = nextInspection;
+                        homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(homeHistory.Inspection_Outcome, nextScheduledInspection, Convert.ToDouble(NormalCurve), DesiredAverage);
 
                         db.SaveChanges();
                     }
                 }
             }
+            RefreshTable(null);
+            FilterTheTable(null);
+            UpdateInspectionAverage();
         }
 
         private void GenericClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
@@ -1203,23 +1201,33 @@ namespace AFH_Scheduler
             }
             return false;
         }
+
+        private void UpdateInspectionAverage()
+        {
+            NormalCurve = String.Format("{0:0.00}", SchedulingAlgorithm.CalculateInspectionAverage());
+            CheckNormalCurveState();
+        }
+
         private void CheckNormalCurveState()
         {
             double curveValue = Convert.ToDouble(NormalCurve);
-            if (curveValue < 15.99)
+            if (curveValue < DesiredAverage - 0.3 || curveValue > DesiredAverage + 0.3)
             {
-                NormalCurveState = System.Windows.Media.Brushes.SkyBlue;
-                NormalCurveResultMsg = "The list of inspections average out below the normal curve.";
+                NormalCurveState = System.Windows.Media.Brushes.Red;
+                //NormalCurveResultMsg = "The list of inspections average out below the normal curve.";
             }
-            else if (curveValue > 15.99)
+            else if (curveValue < DesiredAverage - 0.2 || curveValue > DesiredAverage + 0.2)
             {
-                NormalCurveState = System.Windows.Media.Brushes.OrangeRed;
-                NormalCurveResultMsg = "The list of inspections average out above the normal curve.";
+                NormalCurveState = System.Windows.Media.Brushes.Orange;
+            }
+            else if (curveValue < DesiredAverage - 0.1 || curveValue > DesiredAverage + 0.1)
+            {
+                NormalCurveState = System.Windows.Media.Brushes.Yellow;
             }
             else
             {
-                NormalCurveState = System.Windows.Media.Brushes.LightGreen;
-                NormalCurveResultMsg = "The list of inspections average out approximatly at the normal curve.";
+                NormalCurveState = System.Windows.Media.Brushes.Green;
+                //NormalCurveResultMsg = "The list of inspections average out approximatly at the normal curve.";
             }
         }
 
@@ -1306,6 +1314,11 @@ namespace AFH_Scheduler
             }
 
             return rows[curRow][m];
+        }
+
+        public DataVM GetDataInstance()
+        {
+            return this;
         }
 
         #endregion
