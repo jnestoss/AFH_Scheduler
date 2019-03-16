@@ -3,7 +3,10 @@
     x:Class="AFH_Scheduler.DataView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+    xmlns:conv="clr-namespace:AFH_Scheduler.Converters"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
 
     <UserControl.Resources>
@@ -18,134 +21,155 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <conv:InverseBooleanConverter x:Key="inverseBooleanConverter" />
+
+            <col:ArrayList x:Key="FilterByComboBoxItems">
+                <system:String>Provider Name</system:String>
+                <system:String>License Number</system:String>
+                <system:String>Home Name</system:String>
+                <system:String>Address</system:String>
+                <system:String>Next Inspection Date</system:String>
+            </col:ArrayList>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
 
-    <DockPanel LastChildFill="False">
+    <Grid>
 
-        <StackPanel
-            VerticalAlignment="Bottom" 
-            DockPanel.Dock="Top" 
-            Orientation="Horizontal" 
-            HorizontalAlignment="Center" 
-            Margin="0 15 0 0">
-            <TextBlock Margin="0 0 10 0" FontSize="16">Normal Curve: </TextBlock>
-            <TextBlock Text="{Binding NormalCurve}" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-            <TextBlock Margin="20 0 0 0" FontSize="16" Background="{Binding NormalCurveState}" Text="{Binding NormalCurveResultMsg}"/>
-        </StackPanel>
-        <StackPanel 
-            VerticalAlignment="Bottom" 
-            DockPanel.Dock="Top" 
-            Orientation="Horizontal" 
-            HorizontalAlignment="Center" 
-            Margin="0 15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="320"/>
-                    <ColumnDefinition Width="Auto" MinWidth="133"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                    <ColumnDefinition Width="Auto" MinWidth="133"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock 
-                    FontSize="18" 
-                    Grid.Column="0" 
-                    HorizontalAlignment="Right">Filter By:</TextBlock>
-                <TextBox 
-                    Name="FilterTextBox" 
-                    IsEnabledChanged="FilterTextBox_IsEnabledChanged"  
-                    IsEnabled="{Binding TextFieldEnabled}" 
-                    Text="{Binding FilterItem}" FontSize="18" Grid.Column="1" Margin="20 0"/>
+        <DockPanel
+            Grid.Row="0"
+            Height="656"
+            LastChildFill="False">
 
-                <DatePicker 
-                    SelectedDate="{Binding StartDatePicked}"
-                    Name="DatePickerStart" 
-                    Visibility="Hidden" 
-                    IsEnabled="true"  
-                    Grid.Column="1" 
-                    FlowDirection="LeftToRight" 
-                    FontSize="18" 
-                    HorizontalAlignment="Left" 
-                    Margin="10 0" 
-                    MinWidth="100" 
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+            <ToolBarTray Margin="16,0,0,0" DockPanel.Dock="Top">
+                <ToolBar ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
 
-                <TextBlock 
-                    Name="ToTextBlock" 
-                    FontSize="18" 
-                    Visibility="Hidden" 
-                    Grid.Column="1" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"  
-                    Margin="10 0" FlowDirection="LeftToRight">To</TextBlock>
+                    <ComboBox
+                        Name="FilterTextBox"
+                        Width="160"
+                        materialDesign:HintAssist.Hint="Search"
+                        materialDesign:HintAssist.HintOpacity=".26"
+                        IsEditable="True"
+                        IsEnabled="{Binding TextFieldEnabled}"
+                        IsTextSearchEnabled="True"
+                        ItemsSource="{Binding ComboBoxProviderItems}"
+                        StaysOpenOnEdit="True"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        Text="{Binding TextSearch, Delay=250}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                <DatePicker 
-                    SelectedDate="{Binding EndDatePicked}"
-                    Name="DatePickerEnd" 
-                    Visibility="Hidden" 
-                    IsEnabled="true" 
-                    Grid.Column="1" 
-                    FlowDirection="LeftToRight" 
-                    FontSize="18" 
-                    HorizontalAlignment="Right" 
-                    Margin="10 0" 
-                    MinWidth="100" 
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    <Separator />
 
-                <ComboBox FontSize="18" Grid.Column="2" SelectedItem="{Binding SelectedFilter}">
-                    <ComboBoxItem Content="Provider Name"/>
-                    <ComboBoxItem Content="License Number"/>
-                    <ComboBoxItem Content="License Name"/>
-                    <ComboBoxItem Content="Address"/>
-                    <ComboBoxItem IsSelected="{Binding DatePickerEnabled}" Content="Next Inspection Date"/>
-                </ComboBox>
-                <Button 
-                    Grid.Column="3" 
-                    Command="{Binding Path=FilterTableCommand}" 
-                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
-                    Margin="10 0" FontSize="14" 
-                    Width="100" 
-                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
-                    _FILTER
-                </Button>
+                    <DatePicker
+                        Name="DatePickerStart"
+                        MinWidth="100"
+                        Margin="10,0,10,0"
+                        FlowDirection="LeftToRight"
+                        IsEnabled="{Binding Path=TextFieldEnabled, Converter={StaticResource inverseBooleanConverter}}"
+                        SelectedDate="{Binding StartDatePicked}"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
-                <Button
-                Grid.Column="4"
-                MaxWidth="255"
-                Margin="10"
-                Command="{Binding Path=RefreshTableCommand}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
-                ToolTip="Refresh the Table">
-                    REFRESH TABLE
-                </Button>
-            </Grid>
-        </StackPanel>
+                    <DatePicker
+                        Name="DatePickerEnd"
+                        MinWidth="100"
+                        Margin="10,0,10,0"
+                        FlowDirection="LeftToRight"
+                        IsEnabled="{Binding Path=TextFieldEnabled, Converter={StaticResource inverseBooleanConverter}}"
+                        SelectedDate="{Binding EndDatePicked}"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
-        <Canvas
-            Width="1000"
-            Height="500"
-            Margin="40,0,40,0"
-            Background="White"
-            DockPanel.Dock="Top">
-            <DataGrid
+                    <Separator />
+
+                    <ComboBox
+                        Width="120"
+                        HorizontalAlignment="Center"
+                        SelectedIndex="0"
+                        SelectedItem="{Binding SelectedFilter, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemsSource>
+                            <CompositeCollection>
+                                <ListBoxItem>Select Filter</ListBoxItem>
+                                <CollectionContainer Collection="{Binding Source={StaticResource FilterByComboBoxItems}, Mode=OneWay}" />
+                            </CompositeCollection>
+                        </ComboBox.ItemsSource>
+                        <!--<ComboBoxItem Content="Provider Name" />
+                      IsSelected="{Binding FilterByProviderName}"
+                    <ComboBoxItem Content="License Number" />
+                      IsSelected="{Binding FilterByLicenseNumber}"
+                    <ComboBoxItem Content="Home Name" />
+                      IsSelected="{Binding FilterByHomeName}"
+                    <ComboBoxItem Content="Address" />
+                      IsSelected="{Binding FilterByAddress}"
+                    <ComboBoxItem Content="Next Inspection Date" IsSelected="{Binding DatePickerEnabled}" />-->
+                    </ComboBox>
+
+                    <Separator />
+
+                    <Button Command="{Binding Path=FilterTableCommand}" ToolTip="Filter the Table">
+                        <materialDesign:PackIcon Kind="TableSearch" />
+                    </Button>
+
+                    <Button Command="{Binding Path=RefreshTableCommand}" ToolTip="Refresh the Table">
+                        <materialDesign:PackIcon Kind="Refresh" />
+                    </Button>
+
+                    <Button Command="{Binding Path=InactiveListCommand}" ToolTip="List all Inactive homes">
+                        <materialDesign:PackIcon Kind="AccountRemove" />
+                    </Button>
+
+                    <Separator />
+
+                    <Button Command="{Binding ImportTableCommand}" ToolTip="Import Table From Excel Spreadsheet">
+                        <materialDesign:PackIcon Kind="FileImport" />
+                    </Button>
+                    <Button Command="{Binding Path=ExportTableCommand}" ToolTip="Export Table to Excel Spreadsheet">
+                        <materialDesign:PackIcon Kind="FileExport" />
+                    </Button>
+
+                    <Separator />
+
+                    <Button Command="{Binding Path=AddNewHomeCommand}" ToolTip="Add a new home to database">
+                        <materialDesign:PackIcon Kind="HomePlus" />
+                    </Button>
+
+                </ToolBar>
+            </ToolBarTray>
+
+            <Canvas
                 Width="1000"
-                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-                AutoGenerateColumns="False"
-                SelectedItem="{Binding SelectedHome}"
-                SelectionMode="Single"
-                SelectionUnit="FullRow"
-                CanUserAddRows="False"
-                CanUserSortColumns="True"
-                ItemsSource="{Binding Providers}"
-                VerticalScrollBarVisibility="Auto"
-                MaxHeight="450">
-                <DataGrid.Columns>
+                Height="550"
+                Margin="40,12,40,0"
+                Panel.ZIndex="0"
+                Background="White"
+                DockPanel.Dock="Top">
+                <DataGrid
+                    Width="1000"
+                    MaxHeight="500"
+                    materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                    materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    CanUserSortColumns="True"
+                    ItemsSource="{Binding SelectedProviders}"
+                    SelectedItem="{Binding SelectedHome}"
+                    SelectionMode="Single"
+                    SelectionUnit="FullRow"
+                    VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
 
-                    <!--
+                        <!--
                     <DataGridCheckBoxColumn
                         Binding="{Binding IsSelected}"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
@@ -163,94 +187,93 @@
                         IsReadOnly="True"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                         Header="Provider ID" />
-                    -->
-                    <DataGridTemplateColumn IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image 
-                                    Name="NoProviderImage"
-                                    Width="20" 
-                                    Height="20"
-                                    Visibility="{Binding HasNoProvider, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                                    Source="Images/NoProviderWarning.bmp"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                        -->
+                        <DataGridTemplateColumn IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image
+                                        Name="NoProviderImage"
+                                        Width="20"
+                                        Height="20"
+                                        Source="Images/NoProviderWarning.bmp"
+                                        Visibility="{Binding HasNoProvider, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                    <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding HomeLicenseNum}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="License Number" />
-
-                    <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding HomeName}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Licensed Home's Name" />
-
-                    <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding Address}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Address">
-                        <DataGridTextColumn.HeaderStyle>
-                            <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                                <Setter Property="ContentTemplate">
-                                    <Setter.Value>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                Text="{Binding}"
-                                                TextAlignment="Right"
-                                                TextWrapping="Wrap" />
-                                        </DataTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DataGridTextColumn.HeaderStyle>
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </materialDesign:MaterialDataGridTextColumn>
-                    
-                    <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding RecentInspection}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Recent Inspection"
-                        MaxLength="255" />
-                    <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding NextInspection}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="Next Inspection"
-                        MaxLength="255" />
-
-                    <materialDesign:MaterialDataGridTextColumn
-                        Binding="{Binding EighteenthMonthDate}"
-                        IsReadOnly="True"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                        Header="18th Month Drop"
-                        MaxLength="255" />
-
-
-                    <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsRegionUnit}"
-                            IsReadOnly="True"
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding HomeLicenseNum}"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="RCS Region/Unit">
-                    </materialDesign:MaterialDataGridTextColumn>
-                    <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
+                            Header="License Number"
+                            IsReadOnly="True" />
 
-                </DataGrid.Columns>
-                <!--
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding HomeName}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Licensed Home's Name"
+                            IsReadOnly="True" />
+
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding Address}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Address"
+                            IsReadOnly="True">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    Text="{Binding}"
+                                                    TextAlignment="Right"
+                                                    TextWrapping="Wrap" />
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </materialDesign:MaterialDataGridTextColumn>
+
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RecentInspection}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Recent Inspection"
+                            IsReadOnly="True"
+                            MaxLength="255" />
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding NextInspection}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="Next Inspection"
+                            IsReadOnly="True"
+                            MaxLength="255" />
+
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding EighteenthMonthDate}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="18th Month Drop"
+                            IsReadOnly="True"
+                            MaxLength="255" />
+
+
+                        <materialDesign:MaterialDataGridTextColumn
+                            Binding="{Binding RcsRegionUnit}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Header="RCS Region/Unit"
+                            IsReadOnly="True" />
+                        <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
+
+                    </DataGrid.Columns>
+                    <!--
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <DataGrid
-                        
+
                     Margin="36 0 36 0"
                     ItemsSource="{Binding HomesHistory}"
                     CanUserSortColumns="True"
@@ -263,28 +286,28 @@
 
                             <DataGrid.Columns>
 
-                                <materialDesign:MaterialDataGridTextColumn 
+                                <materialDesign:MaterialDataGridTextColumn
                                     Binding="{Binding ProviderID}"
-                                    IsReadOnly="True" 
-                                    Header="Provider ID" 
+                                    IsReadOnly="True"
+                                    Header="Provider ID"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
-                                <materialDesign:MaterialDataGridTextColumn 
+                                <materialDesign:MaterialDataGridTextColumn
                                     Binding="{Binding HomeID}"
-                                    IsReadOnly="True" 
-                                    Header="Home ID" 
+                                    IsReadOnly="True"
+                                    Header="Home ID"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                                <materialDesign:MaterialDataGridTextColumn 
+                                <materialDesign:MaterialDataGridTextColumn
                                     Binding="{Binding InspectionDate}"
-                                    IsReadOnly="True" 
-                                    Header="Previous Inspection Date" 
+                                    IsReadOnly="True"
+                                    Header="Previous Inspection Date"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
-                                <materialDesign:MaterialDataGridTextColumn 
+                                <materialDesign:MaterialDataGridTextColumn
                                     Binding="{Binding InspectionOutcome}"
-                                    IsReadOnly="True" 
-                                    Header="Inspection Outcome" 
+                                    IsReadOnly="True"
+                                    Header="Inspection Outcome"
                                     MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                                 <DataGridTemplateColumn>
@@ -302,33 +325,34 @@
                         </DataGrid>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
-                -->
-            </DataGrid>
+                    -->
+                </DataGrid>
 
 
-            <materialDesign:PopupBox
-                Canvas.Left="972"
-                Canvas.Top="472"
-                PlacementMode="TopAndAlignCentres"
-                Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
-                ToolTipService.Placement="Right">
-                <StackPanel>
-                    <Button Command="{Binding RunCompleteDialogCommand}" 
-                            ToolTip="Complete Inspection">
-                        <materialDesign:PackIcon Kind="Archive" />
-                    </Button>
-                    <Button Command="{Binding RunHistoryDialogCommand}" 
+                <materialDesign:PopupBox
+                    Canvas.Left="972"
+                    Canvas.Top="522"
+                    PlacementMode="TopAndAlignCentres"
+                    Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                    ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
+                    ToolTipService.Placement="Right">
+                    <StackPanel>
+                        <Button Command="{Binding RunCompleteDialogCommand}" ToolTip="Complete Inspection">
+                            <materialDesign:PackIcon Kind="Archive" />
+                        </Button>
+                        <Button
+                            Command="{Binding RunHistoryDialogCommand}"
                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
                             ToolTip="Home History">
-                        <materialDesign:PackIcon Kind="HomeVariant" />
-                    </Button>
-                    <Button Command="{Binding RunEditDialogCommand}" 
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}" 
+                            <materialDesign:PackIcon Kind="HomeVariant" />
+                        </Button>
+                        <Button
+                            Command="{Binding RunEditDialogCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
                             ToolTip="Edit">
-                        <materialDesign:PackIcon Kind="Edit" />
-                    </Button>
-                    <!--
+                            <materialDesign:PackIcon Kind="Edit" />
+                        </Button>
+                        <!--
                     <Button Command="{Binding Path=RefreshTableCommand}" ToolTip="Refresh Table">
                         <materialDesign:PackIcon Kind="Refresh" />
                     </Button>
@@ -343,55 +367,120 @@
                     </Button>-->
 
 
-                </StackPanel>
-            </materialDesign:PopupBox>
+                    </StackPanel>
+                </materialDesign:PopupBox>
 
-        </Canvas>
+            </Canvas>
 
 
-        
-        <StackPanel        
-            VerticalAlignment="Top" 
-            Orientation="Horizontal" 
-            HorizontalAlignment="Left"                            
-            Margin="0">
+            <materialDesign:Snackbar
+                x:Name="MySnackbar"
+                Height="46"
+                Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                Panel.ZIndex="10"
+                DockPanel.Dock="Bottom"
+                FlowDirection="LeftToRight"
+                MessageQueue="{Binding MessageQueue}" />
+
+
+
+
+
+            <!--<StackPanel
+            Margin="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
 
             <Button
-                Command="{Binding Path=AddNewHomeCommand}"
                 MaxWidth="255"
-                Margin="30 0 0 0"
+                Margin="30,0,0,0"
+                Command="{Binding Path=AddNewHomeCommand}"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Add a new home to database">
                 ADD NEW HOME
             </Button>
             <Button
-                Command="{Binding Path=InactiveListCommand}"
                 MaxWidth="255"
-                Margin="30 0 0 0"
+                Margin="30,0,0,0"
+                Command="{Binding Path=InactiveListCommand}"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="List all Inactive homes">
                 InActive Homes
             </Button>
             <Button
-                Command="{Binding ImportTableCommand}"
                 MaxWidth="255"
-                Margin="30 0 0 0"
+                Margin="30,0,0,0"
+                Command="{Binding ImportTableCommand}"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Import Table From Excel Spreadsheet">
                 IMPORT
             </Button>
             <Button
-                Command="{Binding Path=ExportTableCommand}"
                 MaxWidth="255"
-                Margin="30 0 0 0"
+                Margin="30"
+                Command="{Binding Path=ExportTableCommand}"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 ToolTip="Export Table to Excel Spreadsheet">
                 EXPORT
             </Button>
-        </StackPanel>
-            
-    </DockPanel>
+        </StackPanel>-->
 
+
+
+
+        </DockPanel>
+
+        <materialDesign:ColorZone
+            Grid.Row="1"
+            Height="24"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Mode="PrimaryLight">
+            <StackPanel
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,12,0"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    FontWeight="Bold">
+                    Normal Curve:
+                </TextBlock>
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Text="{Binding NormalCurve}"
+                    TextWrapping="Wrap" />
+                <!--<TextBlock
+                    Margin="20,0,0,0"
+                    Background="{Binding NormalCurveState}"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Text="{Binding NormalCurveResultMsg}" />-->
+
+                <Canvas
+                    Width="20"
+                    Height="20"
+                    Margin="8,0,0,4">
+                    <Path
+                        Width="36"
+                        Height="36"
+                        Data="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,19C10.1,19 8.3,18.2 7.1,16.9C5.9,15.6 5,13.9 5,12C5,10.1 5.8,8.3 7.1,7.1C8.4,5.9 10.1,5 12,5C13.9,5 15.7,5.8 16.9,7.1C18.1,8.4 19,10.1 19,12C19,13.9 18.2,15.7 16.9,16.9C15.6,18.1 13.9,19 12,19Z"
+                        Fill="{Binding NormalCurveState}" />
+                </Canvas>
+
+            </StackPanel>
+        </materialDesign:ColorZone>
+
+
+
+    </Grid>
     <!--
     <Grid>
         <TextBlock Text="This is the First Page"
