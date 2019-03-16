@@ -9,197 +9,113 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d">
 
-    <StackPanel Orientation="Vertical">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid
+            Width="800"
+            Height="600"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <materialDesign:ColorZone
+                Grid.Row="0"
+                Padding="16"
+                materialDesign:ShadowAssist.Darken="True"
+                materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                Mode="Accent">
+            <TextBlock
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                    Help
+            </TextBlock>
+        </materialDesign:ColorZone>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="450" Grid.Row="1">
             <StackPanel Orientation="Vertical">
+                <TreeView MinWidth="800" MaxWidth="800">
+                    <TreeViewItem Header="Main Table">
+                        <TextBlock MaxWidth="730" TextWrapping="Wrap" Text="{Binding MainDecription}"/>
 
-                <Expander
-                    Margin="10"
-                    HorizontalAlignment="Stretch"
-                    Header="Main Table">
-                    <ScrollViewer MaxHeight="150" VerticalScrollBarVisibility="Auto">
-                        <StackPanel
-                            Orientation="Vertical"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="10">
-                            <TextBlock
-                                Text="Description: Here the data each home is listed."
-                                TextWrapping="Wrap" 
-                                MaxWidth="400"/>
+                        <TreeViewItem Header="Complete Inspection">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding CompleteInspectDescription}"/>
+                        </TreeViewItem>
 
-                            <Expander
-                                Margin="10"
-                                HorizontalAlignment="Stretch"
-                                ExpandDirection="Right"
-                                Header="Edit Homes">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="Based on selected home, you can edit the current licensing information."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
+                        <TreeViewItem Header="Home History">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding HistoryDescription}"/>
+                        </TreeViewItem>
 
-                            <Expander
-                            Margin="10"
-                            HorizontalAlignment="Stretch"
-                            ExpandDirection="Right"
-                            Header="Complete Homes">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="Complete an inspection."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
+                        <TreeViewItem Header="Edit Homes">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding EditDescription}"/>
+                        </TreeViewItem>
 
-                            <Expander
-                                Margin="10"
-                                HorizontalAlignment="Stretch"
-                                ExpandDirection="Right"
-                                Header="Home History">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="Look into a home's history."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
+                        <TreeViewItem Header="Inactive homes">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding InactiveHomeDescription}"/>
+                        </TreeViewItem>
 
-                            <Expander
-                                Margin="10"
-                                HorizontalAlignment="Stretch"
-                                ExpandDirection="Right"
-                                Header="Inactive homes">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="Homes that are set on stand-by, and not removed from the database. But will not have any inspections scheduled."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
+                        <TreeViewItem Header="Import">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding ImportDescription}"/>
+                        </TreeViewItem>
 
-                            <Expander
-                                Margin="10"
-                                HorizontalAlignment="Stretch"
-                                ExpandDirection="Right"
-                                Header="Import/Export Homes">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="Import/Export."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
-                        </StackPanel>
+                        <TreeViewItem Header="Export">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding ExportDescription}"/>
+                        </TreeViewItem>
+                    </TreeViewItem>
+                </TreeView>
 
-                    </ScrollViewer>
-                </Expander>
+                <TreeView Margin="0 10 0 0" MinWidth="800" MaxWidth="800">
+                    <TreeViewItem Header="Settings Page">
+                        <TextBlock MaxWidth="730" TextWrapping="Wrap" Text="{Binding SettingsDescription}"/>
 
-                <Expander
-                    Margin="10"
-                    HorizontalAlignment="Stretch"
-                    Header="Settings Page">
-                    <ScrollViewer MaxHeight="150" VerticalScrollBarVisibility="Auto">
-                        <StackPanel
-                            Orientation="Vertical"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="10"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto">
-                            <TextBlock
-                                Margin="0 0 0 10"
-                                Text="Description: Here you can change certain options revolving the application."
-                                TextWrapping="Wrap"
-                                MaxWidth="400"/>
+                        <TreeViewItem Header="Provider List">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding ProvidersDescription}"/>
+                        </TreeViewItem>
 
-                            <Expander
-                                Margin="0 0 0 10"
-                                HorizontalAlignment="Stretch"
-                                ExpandDirection="Right"
-                                Header="Provider List">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="Description: Here you can change certain options revolving the application."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
+                        <TreeViewItem Header="Normal Curve">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding NormalValueDescription}"/>
+                        </TreeViewItem>
 
-                            <Expander
-                                Margin="0 0 0 10"
-                                HorizontalAlignment="Stretch"
-                                ExpandDirection="Right"
-                                Header="Normal Curve">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="Description: Here you can change certain options revolving the application."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
-
-                            <Expander
-                                Margin="10"
-                                HorizontalAlignment="Stretch"
-                                ExpandDirection="Right"
-                                Header="Outcome List">
-                                <StackPanel
-                                    Orientation="Vertical"
-                                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                    Margin="10">
-                                    <TextBlock
-                                        Text="List of all outcomes that can be use after each inspection to give a result."
-                                        TextWrapping="Wrap" 
-                                        MaxWidth="300"/>
-                                </StackPanel>
-                            </Expander>
-
-                        </StackPanel>
-                    </ScrollViewer>
-                </Expander>
-                
-            </StackPanel>            
+                        <TreeViewItem Header="Outcome List">
+                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding OutcomeDescription}"/>
+                        </TreeViewItem>
+                    </TreeViewItem>
+                </TreeView>
+            </StackPanel>
+            
         </ScrollViewer>
+        
+        <Separator
+                Grid.Row="2"
+                Margin="8,0,8,0"
+                Style="{StaticResource MaterialDesignDarkSeparator}" />
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10">
-            <Button 
+        <StackPanel
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                Orientation="Horizontal">
+
+            <Button
+                    Width="108"
+                    Margin="20,0,0,0"
                     IsCancel="True"
-                    HorizontalAlignment="Right"
                     Command="{x:Static wpf:DialogHost.CloseDialogCommand}" 
-                    Style="{StaticResource MaterialDesignFlatButton}" 
-                    MaxWidth="100" Margin="10" 
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    TextBlock.Foreground="Black"
                     ToolTip="Close Help Page" 
                     FontSize="14">
-                <Button.CommandParameter>
-
-                    <system:String>Cancel</system:String>
-
-                </Button.CommandParameter>
-
-                _CLOSE
+                Close
             </Button>
+
         </StackPanel>
-        
-    </StackPanel>
+
+    </Grid>
 </UserControl>
