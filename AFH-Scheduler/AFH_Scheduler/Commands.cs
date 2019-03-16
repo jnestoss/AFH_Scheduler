@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,15 @@ namespace AFH_Scheduler
     {
         private static bool DialogAlreadyOpen = false;
 
-        public static readonly RelayCommand CloseCommand = new RelayCommand(o => ((Window)o).Close());
+        public static readonly RelayCommand CloseCommand = new RelayCommand(w => 
+        {
+            var window = (MainWindow)w;
+            DataVM data = (DataVM)((MainVM)window.DataContext).CurrentPageViewModel;
+
+            WriteDesiredAverage(data.DesiredAverage.ToString());
+
+            ((Window)w).Close();
+        });
 
         public static readonly RelayCommand MinimizeCommand = new RelayCommand(w =>
         {
@@ -27,31 +36,31 @@ namespace AFH_Scheduler
         });
 
         public static readonly RelayCommand OpenSettingsCommand = new RelayCommand(async w =>
-        {
-            
+        {           
             if (!DialogAlreadyOpen)
             {
                 DialogAlreadyOpen = true;
 
                 var viewVM = (MainWindow)w;
-                DataVM data = (DataVM)w;
-                if (viewVM.Name.Equals("Schedules"))
-                {
-                    data = (DataVM)w;
-                    //data.NormalCurve = settings.NormalCurve;
-                }
+                DataVM data = (DataVM)((MainVM)viewVM.DataContext).CurrentPageViewModel;
 
                 var settings = new SettingsVM(Convert.ToDouble(data.NormalCurve), data.DesiredAverage);
                 var view = new SettingsDialog(settings);
                 var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
 
-                //settings.NormalCurve
+                data.DesiredAverage = Convert.ToDouble(settings.NormalCurve);
+                data.CheckNormalCurveState();
 
                 DialogAlreadyOpen = false;
             }
         });
 
-        public static void ClosingEventHandlerSettings(object sender, DialogClosingEventArgs eventArgs)
+        private static void WriteDesiredAverage(string desiredAverage) 
+        {
+            File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Format("{0:0.00}", desiredAverage));
+        } 
+
+        private static void ClosingEventHandlerSettings(object sender, DialogClosingEventArgs eventArgs)
         {
             if ((String)eventArgs.Parameter == "Cancel")
             {

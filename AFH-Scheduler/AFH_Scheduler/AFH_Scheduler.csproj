@@ -171,6 +171,7 @@
     </ApplicationDefinition>
     <Compile Include="Algorithm\LoadedDie.cs" />
     <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\DesiredAverageConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\OutcomeCodeConverter.cs" />
     <Compile Include="Converters\ProviderConverter.cs" />

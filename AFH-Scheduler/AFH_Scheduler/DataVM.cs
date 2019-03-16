@@ -36,6 +36,16 @@ namespace AFH_Scheduler
 
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
 
+        private int _homeCount;
+        public int HomeCount {
+            get => _homeCount;
+            set {
+                if (_homeCount == value) return;
+                _homeCount = value;
+                OnPropertyChanged("HomeCount");
+            }
+        }
+
         private SnackbarMessageQueue _messageQueue;
         public SnackbarMessageQueue MessageQueue {
             get => _messageQueue;
@@ -503,7 +513,6 @@ namespace AFH_Scheduler
             {
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
-                text = "15.99";
             }
             DesiredAverage = testCase;
             UpdateInspectionAverage();
@@ -719,7 +728,7 @@ namespace AFH_Scheduler
                     Providers.Add(newHome);
                 }               
             }
-            
+            HomeCount = Providers.Count;
             //FilterTheTable(null);
         }
         #endregion
@@ -1208,7 +1217,7 @@ namespace AFH_Scheduler
             CheckNormalCurveState();
         }
 
-        private void CheckNormalCurveState()
+        public void CheckNormalCurveState()
         {
             double curveValue = Convert.ToDouble(NormalCurve);
             if (curveValue < DesiredAverage - 0.3 || curveValue > DesiredAverage + 0.3)
