@@ -308,6 +308,7 @@
     <Compile Include="Dialogs\SettingSubWindows\ProviderListVM.cs" />
     <Compile Include="Dialogs\SettingsVM.cs" />
     <Compile Include="Excel\ExcelClass.cs" />
+    <Compile Include="HelperClasses\GenerateNewIDs.cs" />
     <Compile Include="HelperClasses\ICloseable.cs" />
     <Compile Include="HelperClasses\UniqueDateImportItem.cs" />
     <Compile Include="HomeInspectionDataSet.Designer.cs">

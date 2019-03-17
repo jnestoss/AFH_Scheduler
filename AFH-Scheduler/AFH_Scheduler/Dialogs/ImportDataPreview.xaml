@@ -18,21 +18,22 @@
                 Margin="10"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 Command="{Binding ImportDataCommand}"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                ToolTip="Load in an excel file.">
                     _LOAD FILE
                 </Button>
             </StackPanel>
 
             <DataGrid
-           VerticalScrollBarVisibility="Auto"
-           MaxHeight="200"
-            MaxWidth="1080"
-           materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-           materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-           AutoGenerateColumns="False"
-           CanUserAddRows="False"
-           CanUserSortColumns="True"
-           ItemsSource="{Binding ImportedHomes}">
+               VerticalScrollBarVisibility="Auto"
+               HorizontalScrollBarVisibility="Auto"
+               MaxHeight="200"
+               MaxWidth="1160"
+               materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+               materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+               AutoGenerateColumns="False"
+               CanUserAddRows="False"
+               CanUserSortColumns="True"
+               ItemsSource="{Binding ImportedHomes}">
 
                 <DataGrid.Columns>
                     <materialDesign:MaterialDataGridTextColumn
@@ -130,7 +131,7 @@
             IsDefault="True"
             Margin="10,0,10,1" 
             FontSize="18" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+            ToolTip="Add homes to main database table." 
             MinWidth="100"
             Style="{StaticResource MaterialDesignRaisedLightButton}"        
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
@@ -148,7 +149,7 @@
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
             MinWidth="100" Margin="10,0,11,0" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+            ToolTip="Cancel Import Table" 
             FontSize="18">
                     <Button.CommandParameter>
 

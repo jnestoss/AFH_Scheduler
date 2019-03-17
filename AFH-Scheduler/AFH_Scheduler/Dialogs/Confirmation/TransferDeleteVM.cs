@@ -124,14 +124,31 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                 var editedItem = editVM.SelectedSchedule;
                 if (result.Equals("SUBMIT"))
                 {
-                    //selectItem.ProviderID = editedItem.ProviderID;
-                    //selectItem.ProviderName = editedItem.ProviderName;
-                    selectItem.ProviderName = editVM.TextSearch;
-                    selectItem.Address = editedItem.Address;
-                    selectItem.City = editedItem.City;
-                    selectItem.ZIP = editedItem.ZIP;
-                    selectItem.Phone = editedItem.Phone;
-                    ChowedHomes.Add(selectItem);
+                    string editedProvider = editVM.TextSearch;
+                    using (HomeInspectionEntities db = new HomeInspectionEntities())
+                    {
+                        Provider prov;
+                        try
+                        {
+                            prov = db.Providers.FirstOrDefault(r => r.Provider_Name == editedProvider);
+                            selectItem.ProviderID = prov.Provider_ID;
+                            selectItem.ProviderName = prov.Provider_Name;
+                        }
+                        catch (Exception e)
+                        {
+                            selectItem.ProviderID = -1;
+                            selectItem.ProviderName = "No Provider";
+                        }
+                        selectItem.HomeLicenseNum = editedItem.HomeLicenseNum;
+                        selectItem.HomeName = editedItem.HomeName;
+                        selectItem.Address = editedItem.Address;
+                        selectItem.City = editedItem.City;
+                        selectItem.ZIP = editedItem.ZIP;
+                        selectItem.Phone = editedItem.Phone;
+                        selectItem.NextInspection = editedItem.NextInspection;
+
+                        ChowedHomes.Add(selectItem);
+                    }
                 }
                 if (result.Equals("DELETE"))
                 {
@@ -186,9 +203,9 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                             ProviderID = id,
                             HomeID = house.PHome_ID,
                             ProviderName = name,
-                            HomeLicenseNum = -1,
-                            HomeName = "",
-                            Phone = "",
+                            HomeLicenseNum = Convert.ToInt32(house.PHome_LicenseNumber),
+                            HomeName = house.PHome_Name,
+                            Phone = house.PHome_Phonenumber,
                             Address = house.PHome_Address,
                             City = house.PHome_City,
                             ZIP = house.PHome_Zipcode,

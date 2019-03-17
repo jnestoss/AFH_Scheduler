@@ -163,7 +163,7 @@
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
                     CanUserSortColumns="True"
-                    ItemsSource="{Binding SelectedProviders}"
+                    ItemsSource="{Binding Providers}"
                     SelectedItem="{Binding SelectedHome}"
                     SelectionMode="Single"
                     SelectionUnit="FullRow"
@@ -477,7 +477,7 @@
                     VerticalAlignment="Center"
                     FontSize="12"
                     FontWeight="Bold"
-                    Text="{Binding DesiredAverage, Converter={StaticResource desiredAverageConverter}, Mode=OneTime}"
+                    Text="{Binding DesiredAverage, Converter={StaticResource desiredAverageConverter}}"
                     TextWrapping="Wrap" />
 
                 <TextBlock
