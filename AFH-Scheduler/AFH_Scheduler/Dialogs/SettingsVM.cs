@@ -21,6 +21,7 @@ namespace AFH_Scheduler.Dialogs
             {
                 if (_normalCurveValue == value) return;
                 _normalCurveValue = value;
+                //File.WriteAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt", "15.99");
                 OnPropertyChanged("NormalCurve");
             }
         }
@@ -33,6 +34,26 @@ namespace AFH_Scheduler.Dialogs
             {
                 _dialogSettingBool = value;
                 OnPropertyChanged("DialogSettingBoolReturn");
+            }
+        }
+
+        private double _currentAverage;
+        public double CurrentAverage {
+            get { return _currentAverage; }
+            set {
+                if (_currentAverage == value) return;
+                _currentAverage = value;
+                OnPropertyChanged("CurrentAverage");
+            }
+        }
+
+        private double _desiredAverage;
+        public double DesiredAverage {
+            get => _desiredAverage;
+            set {
+                if (_desiredAverage == value) return;
+                _desiredAverage = value;
+                OnPropertyChanged("DesiredAverage");
             }
         }
 
@@ -49,7 +70,7 @@ namespace AFH_Scheduler.Dialogs
 
         private async void ShowProviderList(object obj)
         {
-            var vm = new ProviderListVM();
+            var vm = new ProviderListVM(CurrentAverage, DesiredAverage);
             var view = new ProviderListDialog(vm);
             var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
         }
@@ -105,8 +126,11 @@ namespace AFH_Scheduler.Dialogs
             DialogSettingBoolReturn = true;
         }
 
-        public SettingsVM()
+        public SettingsVM(double normalCurve, double desiredAverage)
         {
+            CurrentAverage = normalCurve;
+            DesiredAverage = desiredAverage;
+
             string text = File.ReadAllText(@"..\..\NormalCurve\NormalCurveValue.txt");
             double testCase;
             if (!Double.TryParse(text, out testCase))

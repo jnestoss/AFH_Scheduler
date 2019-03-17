@@ -66,7 +66,7 @@ namespace AFH_Scheduler.Data
                 _followUpSelected = value;
                 if (_followUpSelected)
                 {
-                    FollowUpDate = alg.SettingFollowUps(InspectionDate);
+                    FollowUpDate = SchedulingAlgorithm.SettingFollowUps(InspectionDate);
                 }
                 else
                 {

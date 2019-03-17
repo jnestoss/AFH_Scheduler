@@ -19,6 +19,7 @@
         <conv:ProviderListConverter x:Key="providerListConverter" />
         <conv:OutcomeCodeConverter x:Key="outcomeCodeConverter" />
         <conv:DateConverter x:Key="dateConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
 
     <Grid
@@ -256,7 +257,7 @@
                 materialDesign:HintAssist.HintOpacity="0.9"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -285,6 +286,38 @@
                 Grid.Column="2"
                 ItemsSource="{Binding OutcomeCodes}"
                 SelectedItem="{Binding SelectedCode, Converter={StaticResource outcomeCodeConverter}}" />
+
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="4"
+                Grid.ColumnSpan="1"
+                Margin="0,10,0,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Opacity="0.9"
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter}}">
+                Last Inspection
+            </TextBlock>
+
+            <DatePicker
+                x:Name="RecentDatePicker"
+                Grid.Row="5"
+                Grid.Column="5"
+                Width="100"
+                Margin="20,10,0,10"
+                materialDesign:HintAssist.Hint="Recent Inspection"
+                SelectedDateFormat="Short"
+                Visibility="{Binding Path=RecentInspectionVisibility, Converter={StaticResource BoolToVisConverter}}">
+                <DatePicker.SelectedDate>
+                    <Binding
+                        Converter="{StaticResource dateConverter}"
+                        Mode="TwoWay"
+                        Path="NewHomeCreated.RecentInspection"
+                        UpdateSourceTrigger="PropertyChanged" />
+                </DatePicker.SelectedDate>
+            </DatePicker>
 
             <Button
                 Grid.Row="5"
@@ -327,7 +360,6 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </DatePicker.SelectedDate>
-
             </DatePicker>
         </Grid>
 

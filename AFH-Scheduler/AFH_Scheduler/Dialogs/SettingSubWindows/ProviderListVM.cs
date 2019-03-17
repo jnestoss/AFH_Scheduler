@@ -43,6 +43,26 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
             }
         }
 
+        private double _currentAverage;
+        public double CurrentAverage {
+            get { return _currentAverage; }
+            set {
+                if (_currentAverage == value) return;
+                _currentAverage = value;
+                OnPropertyChanged("CurrentAverage");
+            }
+        }
+
+        private double _desiredAverage;
+        public double DesiredAverage {
+            get => _desiredAverage;
+            set {
+                if (_desiredAverage == value) return;
+                _desiredAverage = value;
+                OnPropertyChanged("DesiredAverage");
+            }
+        }
+
         #region Delete Provider Command
         private RelayCommand _providerDeleteCommand;
         public ICommand ProviderDeleteCommand
@@ -72,7 +92,7 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                     if (list.Count > 0)
                     {
 
-                        var transferOrDeleteVM = new TransferDeleteVM(id, provider.ProviderName);
+                        var transferOrDeleteVM = new TransferDeleteVM(id, provider.ProviderName, DesiredAverage, CurrentAverage);
                         var transferView = new TransferOrDeleteHomes(transferOrDeleteVM);
                         var remainingHomeOption = await DialogHost.Show(transferView, "AddProviderDialog", ClosingEventHandlerAddProviders);
 
@@ -226,7 +246,7 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
             DialogBoolReturn = true;
         }
 
-        public ProviderListVM()
+        public ProviderListVM(double currentAverage, double desiredAverage)
         {
             _providersList = new ObservableCollection<ProvidersModel>();
 

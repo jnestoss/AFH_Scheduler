@@ -28,6 +28,16 @@ namespace AFH_Scheduler.Dialogs
             }
         }
 
+        private string _nextInspection;
+        public String NextInspection {
+            get => _nextInspection;
+            set {
+                if (_nextInspection == value) return;
+                _nextInspection = value;
+                OnPropertyChanged("NextInspection");
+            }
+        }
+
         private string _previousInspection;
         public string PreviousInspection {
             get => _previousInspection;
@@ -44,6 +54,16 @@ namespace AFH_Scheduler.Dialogs
             }
             set {
                 if (!(_outcomeCodes == value)) _outcomeCodes = value;
+            }
+        }
+
+        private Boolean _followUpSelected;
+        public Boolean FollowUpSelected {
+            get => _followUpSelected;
+            set {
+                if (_followUpSelected == value) return;
+                _followUpSelected = value;
+                OnPropertyChanged("FollowUpSelected");
             }
         }
 
@@ -69,9 +89,11 @@ namespace AFH_Scheduler.Dialogs
         public CompleteVM(HomeModel scheduleData)
         {
             SelectedHome = scheduleData;
+            NextInspection = SelectedHome.NextInspection;
             PreviousInspection = SelectedHome.NextInspection;
             GrabOutcomeCodes();
             SelectedCode = GetMostRecentOutcome();
+            FollowUpSelected = false;
         }
 
         private Inspection_Outcome GetMostRecentOutcome()
@@ -106,8 +128,17 @@ namespace AFH_Scheduler.Dialogs
 
         private void CalcNextInspectionDate(object o)
         {
-            string date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, SelectedHome.NextInspection);
-            SelectedHome.NextInspection = date;
+            string date;
+            if(FollowUpSelected == true)
+            {
+                date = SchedulingAlgorithm.SettingFollowUps(SelectedHome.NextInspection);
+            }
+            else
+            {
+                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, SelectedHome.NextInspection);
+            }
+
+            NextInspection = date;
         }
 
         private void GrabOutcomeCodes()

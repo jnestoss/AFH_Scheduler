@@ -59,11 +59,11 @@ namespace AFH_Scheduler.Dialogs
                 {
                     homeName = db.Provider_Homes.First(r => r.PHome_ID == item.FK_PHome_ID.Value).PHome_Name;//providerID;
 
-                    HomeHistory.Add(
+                    HomeHistory.Insert(0,
                         new HistoryDetailModel
                         (
                             homeName,
-                            item.HHistory_Date,//InspectionDate
+                            item.HHistory_Date,
                             item.Inspection_Outcome.IOutcome_Code
                         )
                     );

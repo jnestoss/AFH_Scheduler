@@ -32,7 +32,7 @@ namespace AFH_Scheduler
                 DatePickerStart.Visibility = Visibility.Hidden;
                 DatePickerEnd.IsEnabled = false;
                 DatePickerEnd.Visibility = Visibility.Hidden;
-                ToTextBlock.Visibility = Visibility.Hidden;
+                //ToTextBlock.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -41,7 +41,7 @@ namespace AFH_Scheduler
                 DatePickerStart.Visibility = Visibility.Visible;
                 DatePickerEnd.IsEnabled = true;
                 DatePickerEnd.Visibility = Visibility.Visible;
-                ToTextBlock.Visibility = Visibility.Visible;
+                //ToTextBlock.Visibility = Visibility.Visible;
             }
         }
 
