@@ -1,12 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AFH-Scheduler",
-    "\\AFH-Scheduler\\AFH_Scheduler",
-    "\\AFH-Scheduler\\AFH_Scheduler\\Dialogs",
-    "\\AFH-Scheduler\\AFH_Scheduler\\ObsoleteCode",
-    "\\AFH-Scheduler\\AFH_Scheduler\\ObsoleteCode\\Complete"
+    "\\AFH-Scheduler"
   ],
-  "SelectedNode": "\\AFH-Scheduler\\AFH_Scheduler\\DataVM.cs",
+  "SelectedNode": "\\AFH-Scheduler\\AFH_Scheduler.sln",
   "PreviewInSolutionExplorer": false
 }

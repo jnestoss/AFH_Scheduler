@@ -70,35 +70,7 @@ namespace AFH_Scheduler.Database.LoginDB
             string[] files = Directory.GetFiles(folder, filter);
             return new SQLiteConnection(("Data Source=" + files[0] + ";Version=3;FailIfMissing=True"));
         }
-        public static User DebugCreate_User(string username,string password)
-        {
-            string insertUser = "Insert INTO Login (Username,Password,Salt,Administrator) Values (@username,@password,@salt,0);";
-            SQLiteConnection connect = GetConnection();
-            connect.Open();
-            string salt = CryptSharp.Sha512Crypter.Blowfish.GenerateSalt();
-            string hashedpass = CryptSharp.Sha512Crypter.Blowfish.Crypt(password, salt);
-            SQLiteCommand command = new SQLiteCommand(insertUser, connect);
-            SQLiteParameter temp = new SQLiteParameter("@username");
-            temp.Value = username;
-            command.Parameters.Add(temp);
-            temp = new SQLiteParameter("@password");
-            temp.Value = hashedpass;
-            command.Parameters.Add(temp);
-            temp = new SQLiteParameter("@salt");
-            temp.Value = hashedpass;
-            command.Parameters.Add(temp);
-            try
-            {
-                command.ExecuteNonQuery();
-                connect.Close();
-                return new User(username,password,true);
-            }
-            catch (Exception e)
-            {
-                connect.Close();
-                return null;
-            }
-        }
+
         private static string GetSalt(string username)
         {
             // return new User("admin", "password",true);
@@ -130,10 +102,6 @@ namespace AFH_Scheduler.Database.LoginDB
                 connect.Close();
                 return "Not Found";
             }
-        }
-        public static bool CreateUser(string username, string password, bool admin)
-        {
-            return false;
         }
 
         public static User[] LoadUsers()

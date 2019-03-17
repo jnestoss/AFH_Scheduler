@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.SettingSubWindows.AddAccountDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Behaviors="clr-namespace:AFH_Scheduler.Validations"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib" 
+             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.SettingSubWindows"
+             mc:Ignorable="d">
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock FontSize="22" HorizontalAlignment="Center" Margin="20">
+            ADD New Account
+        </TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="100"/>
+                <ColumnDefinition Width="Auto" MinWidth="100"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="1">Username:</TextBlock>
+            <TextBox 
+                    Name="UsernameTextBox"
+                    Margin="10" 
+                    FontSize="18" 
+                    Grid.Column="1" 
+                    Grid.Row="1" 
+                    MinWidth="255"
+                    Text="{Binding NewUsername}">
+            </TextBox>
+            <TextBlock Margin="10" FontSize="18" Grid.Column="0" Grid.Row="2">Password:</TextBlock>
+            <TextBox 
+                    Name="PasswordTextBox"
+                    Margin="10" 
+                    FontSize="18" 
+                    Grid.Column="1" 
+                    Grid.Row="2" 
+                    MinWidth="255"
+                    Text="{Binding NewPassword}">
+            </TextBox>
+            <CheckBox x:Name="AdminCheckBox"
+                          IsThreeState="False"
+                          Margin="20 8 0 0"
+                          FontSize="18"
+                          Grid.Column="0" Grid.Row="3">Administrator?</CheckBox>
+        </Grid>
+
+        <Grid Margin="30" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="100"/>
+                <ColumnDefinition Width="Auto" MinWidth="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Button 
+            Grid.Column="0"
+            IsDefault="True"
+            Margin="10,0,10,1" 
+            FontSize="18" 
+            ToolTip="Add New Account" 
+            Width="100"
+            Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+
+                    <system:String>Add Account</system:String>
+
+                </Button.CommandParameter>
+
+                _SUBMIT
+            </Button>
+
+            <Button 
+            IsCancel="True"
+            Grid.Column="1"
+            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+            Style="{StaticResource MaterialDesignRaisedLightButton}" 
+            MaxWidth="100" Margin="10,0,11,0" 
+            ToolTip="Close Add Account" 
+            FontSize="14">
+                <Button.CommandParameter>
+
+                    <system:String>Cancel</system:String>
+
+                </Button.CommandParameter>
+
+                _CANCEL
+            </Button>
+        </Grid>
+    </StackPanel>
+</UserControl>

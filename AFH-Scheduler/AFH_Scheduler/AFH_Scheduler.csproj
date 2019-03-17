@@ -198,8 +198,26 @@
     <Compile Include="Database\Inspection_Outcome.cs">
       <DependentUpon>HomeInspection.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\LoginDB\Login.cs">
+      <DependentUpon>Users.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\LoginDB\User.cs" />
     <Compile Include="Database\LoginDB\UserFactory.cs" />
+    <Compile Include="Database\LoginDB\Users.Context1.cs">
+      <DependentUpon>Users.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Database\LoginDB\Users1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Users.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\LoginDB\Users1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Users.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Database\Provider.cs">
       <DependentUpon>HomeInspection.tt</DependentUpon>
     </Compile>
@@ -213,6 +231,7 @@
       <DependentUpon>DataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataVM.cs" />
+    <Compile Include="Data\AccountModel.cs" />
     <Compile Include="Data\CompletedHomes.cs" />
     <Compile Include="Data\DropPeriodEnum.cs" />
     <Compile Include="Data\HomeModel.cs" />
@@ -221,6 +240,10 @@
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml.cs">
+      <DependentUpon>AccountManagerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\AccountManagerVM.cs" />
     <Compile Include="Dialogs\CompleteDialog.xaml.cs">
       <DependentUpon>CompleteDialog.xaml</DependentUpon>
     </Compile>
@@ -279,6 +302,14 @@
     <Compile Include="Dialogs\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\AddAccountDialog.xaml.cs">
+      <DependentUpon>AddAccountDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\AddAccountVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\EditAccount.xaml.cs">
+      <DependentUpon>EditAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\EditAccountVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\EditOutcome.xaml.cs">
       <DependentUpon>EditOutcome.xaml</DependentUpon>
     </Compile>
@@ -310,6 +341,7 @@
     <Compile Include="Excel\ExcelClass.cs" />
     <Compile Include="HelperClasses\GenerateNewIDs.cs" />
     <Compile Include="HelperClasses\ICloseable.cs" />
+    <Compile Include="HelperClasses\LoginDBhelper.cs" />
     <Compile Include="HelperClasses\UniqueDateImportItem.cs" />
     <Compile Include="HomeInspectionDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -330,6 +362,10 @@
     <Page Include="DataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\CompleteDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -390,6 +426,14 @@
     <Page Include="Dialogs\SettingsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\AddAccountDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SettingSubWindows\EditAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\EditOutcome.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -486,6 +530,13 @@
     <None Include="Database\LoginDB\LoginDB.db" />
     <None Include="Database\LoginDB\LoginDB.db&amp;quot" />
     <None Include="Database\LoginDB\UserLogin.db" />
+    <EntityDeploy Include="Database\LoginDB\Users.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Users1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Database\LoginDB\Users.edmx.diagram">
+      <DependentUpon>Users.edmx</DependentUpon>
+    </None>
     <None Include="HomeInspectionDataSet.xsc">
       <DependentUpon>HomeInspectionDataSet.xsd</DependentUpon>
     </None>
@@ -581,6 +632,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HomeInspection.edmx</DependentUpon>
       <LastGenOutput>HomeInspection.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\LoginDB\Users.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Users.Context1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\LoginDB\Users.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Users1.cs</LastGenOutput>
     </Content>
     <Resource Include="Images\NoProviderWarning.bmp" />
     <Resource Include="NormalCurve\NormalCurveValue.txt" />

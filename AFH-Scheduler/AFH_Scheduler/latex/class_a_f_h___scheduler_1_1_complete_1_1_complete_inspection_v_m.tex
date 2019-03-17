@@ -1,0 +1,50 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Complete.\+Complete\+Inspection\+VM Class Reference}
+\label{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m}\index{AFH\_Scheduler.Complete.CompleteInspectionVM@{AFH\_Scheduler.Complete.CompleteInspectionVM}}
+Inheritance diagram for A\+F\+H\+\_\+\+Scheduler.\+Complete.\+Complete\+Inspection\+VM\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.700965cm]{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Gen\+Data} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m_a2fafffeca4f6f566fb1d7c61f452b7f1}} 
+Observable\+Collection$<$ \textbf{ Complete\+Schedule\+\_\+\+Model} $>$ {\bfseries Providers}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m_ae743f398581fd3ca0da85b6000de0e54}} 
+I\+Command {\bfseries Submitting\+Form\+Command}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m_af2df0b1c1297a29b0c0dc6c3ed8e194b}} 
+\textbf{ Open\+Message\+Dialog\+Service} {\bfseries Message\+Service}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m_a3d7a97178524e0fc2351b3d39b7838de}} 
+I\+Command {\bfseries Open\+Follow\+Up\+Dialog\+Command}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m_a8303320722f5c426187c072b210d22f7}} 
+string {\bfseries Name}\hspace{0.3cm}{\ttfamily  [get]}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m_aff0a19975352ecba2895c0d5f8a03fa5}} 
+\index{AFH\_Scheduler.Complete.CompleteInspectionVM@{AFH\_Scheduler.Complete.CompleteInspectionVM}!GenData@{GenData}}
+\index{GenData@{GenData}!AFH\_Scheduler.Complete.CompleteInspectionVM@{AFH\_Scheduler.Complete.CompleteInspectionVM}}
+\subsubsection{GenData()}
+{\footnotesize\ttfamily void A\+F\+H\+\_\+\+Scheduler.\+Complete.\+Complete\+Inspection\+V\+M.\+Gen\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+using (Home\+Inspection\+Entities db = new Home\+Inspection\+Entities()) \{ var outcome = db.\+Inspection\+\_\+\+Outcome.\+To\+List(); List$<$string$>$ code\+Word\+List = new List$<$string$>$(); foreach (var code\+Word in outcome) \{ code\+Word\+List.\+Add(code\+Word.\+I\+Outcome\+\_\+\+Code); \}
+
+var insp = db.\+Scheduled\+\_\+\+Inspections.\+To\+List(); List$<$long?$>$ prov\+List = new List$<$long?$>$();
+
+foreach (var inspection in insp) \{ if (Date\+Time.\+Compare(alg.\+Extract\+Date\+Time(inspection.\+S\+Inspections\+\_\+\+Date), Date\+Time.\+Today) $<$/long$>$/= 0) \{ var provider\+Home = db.\+Provider\+\_\+\+Homes.\+Where(r =$>$ r.\+P\+Home\+\_\+\+ID == inspection.\+F\+K\+\_\+\+P\+Home\+\_\+\+ID).First(); var name = db.\+Providers.\+Where(r =$>$ r.\+Provider\+\_\+\+ID == provider\+Home.\+F\+K\+\_\+\+Provider\+\_\+\+ID).First().Provider\+\_\+\+Name; Providers.\+Add( new Complete\+Schedule\+\_\+\+Model ( provider\+Home.\+F\+K\+\_\+\+Provider\+\_\+\+ID, name, provider\+Home, inspection.\+S\+Inspections\+\_\+\+Date, code\+Word\+List ) ); \} \} \}
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Obsolete\+Code/\+Complete/Complete\+Inspection\+V\+M.\+cs\end{DoxyCompactItemize}

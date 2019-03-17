@@ -1,0 +1,4 @@
+<map id="AFH_Scheduler.Helper_Classes.RelayCommand" name="AFH_Scheduler.Helper_Classes.RelayCommand">
+<area shape="rect" id="node1" title="A command whose sole purpose is to relay its functionality to other objects by invoking delegates...." alt="" coords="5,80,177,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="49,5,133,32"/>
+</map>

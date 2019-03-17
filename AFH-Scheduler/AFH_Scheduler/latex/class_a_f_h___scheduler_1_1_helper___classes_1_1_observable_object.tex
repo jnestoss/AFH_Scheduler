@@ -1,0 +1,104 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Observable\+Object Class Reference}
+\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_observable_object}\index{AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}}
+Inheritance diagram for A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Observable\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_a_f_h___scheduler_1_1_helper___classes_1_1_observable_object}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \textbf{ Verify\+Property\+Name} (string property\+Name)
+\begin{DoxyCompactList}\small\item\em Warns the developer if this object does not have a public property with the specified name. This method does not exist in a Release build. \end{DoxyCompactList}\item 
+virtual void \textbf{ Raise\+Property\+Changed} (string property\+Name)
+\begin{DoxyCompactList}\small\item\em Raises the Property\+Change event for the property specified \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \textbf{ On\+Property\+Changed} (string property\+Name)
+\begin{DoxyCompactList}\small\item\em Raises this object\textquotesingle{}s Property\+Changed event. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \textbf{ Throw\+On\+Invalid\+Property\+Name}\hspace{0.3cm}{\ttfamily  [get]}
+\begin{DoxyCompactList}\small\item\em Returns whether an exception is thrown, or if a Debug.\+Fail() is used when an invalid property name is passed to the Verify\+Property\+Name method. The default value is false, but subclasses used by unit tests might override this property\textquotesingle{}s getter to return true. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+Property\+Changed\+Event\+Handler \textbf{ Property\+Changed}
+\begin{DoxyCompactList}\small\item\em Raised when a property on this object has a new value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_observable_object_a49d86e90da59bd87569515e20a83766a}} 
+\index{AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}!OnPropertyChanged@{OnPropertyChanged}}
+\index{OnPropertyChanged@{OnPropertyChanged}!AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}}
+\subsubsection{OnPropertyChanged()}
+{\footnotesize\ttfamily virtual void A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Observable\+Object.\+On\+Property\+Changed (\begin{DoxyParamCaption}\item[{string}]{property\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Raises this object\textquotesingle{}s Property\+Changed event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em property\+Name} & The property that has a new value.\\
+\hline
+\end{DoxyParams}
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_observable_object_a1aeecfa9800035629db7ca8d08322dc5}} 
+\index{AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}!RaisePropertyChanged@{RaisePropertyChanged}}
+\index{RaisePropertyChanged@{RaisePropertyChanged}!AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}}
+\subsubsection{RaisePropertyChanged()}
+{\footnotesize\ttfamily virtual void A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Observable\+Object.\+Raise\+Property\+Changed (\begin{DoxyParamCaption}\item[{string}]{property\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Raises the Property\+Change event for the property specified 
+
+
+\begin{DoxyParams}{Parameters}
+{\em property\+Name} & Property name to update. Is case-\/sensitive.\\
+\hline
+\end{DoxyParams}
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_observable_object_ab8361d16e697573b81c84829a8d448cc}} 
+\index{AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}!VerifyPropertyName@{VerifyPropertyName}}
+\index{VerifyPropertyName@{VerifyPropertyName}!AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}}
+\subsubsection{VerifyPropertyName()}
+{\footnotesize\ttfamily virtual void A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Observable\+Object.\+Verify\+Property\+Name (\begin{DoxyParamCaption}\item[{string}]{property\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Warns the developer if this object does not have a public property with the specified name. This method does not exist in a Release build. 
+
+
+
+\subsection{Property Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_observable_object_a07b41b9e4ddf03f2dc031cdce854eee5}} 
+\index{AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}!ThrowOnInvalidPropertyName@{ThrowOnInvalidPropertyName}}
+\index{ThrowOnInvalidPropertyName@{ThrowOnInvalidPropertyName}!AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}}
+\subsubsection{ThrowOnInvalidPropertyName}
+{\footnotesize\ttfamily virtual bool A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Observable\+Object.\+Throw\+On\+Invalid\+Property\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected]}}
+
+
+
+Returns whether an exception is thrown, or if a Debug.\+Fail() is used when an invalid property name is passed to the Verify\+Property\+Name method. The default value is false, but subclasses used by unit tests might override this property\textquotesingle{}s getter to return true. 
+
+
+
+\subsection{Event Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_observable_object_ad081083858a319387cad74c739ebc339}} 
+\index{AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}!PropertyChanged@{PropertyChanged}}
+\index{PropertyChanged@{PropertyChanged}!AFH\_Scheduler.Helper\_Classes.ObservableObject@{AFH\_Scheduler.Helper\_Classes.ObservableObject}}
+\subsubsection{PropertyChanged}
+{\footnotesize\ttfamily Property\+Changed\+Event\+Handler A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Observable\+Object.\+Property\+Changed}
+
+
+
+Raised when a property on this object has a new value. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Helper\+Classes/Observable\+Object.\+cs\end{DoxyCompactItemize}

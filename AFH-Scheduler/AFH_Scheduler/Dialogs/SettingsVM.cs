@@ -56,6 +56,22 @@ namespace AFH_Scheduler.Dialogs
                 OnPropertyChanged("DesiredAverage");
             }
         }
+        private RelayCommand _accountManagerCommand;
+        public ICommand AccountManagerCommand
+        {
+            get
+            {
+                if (_accountManagerCommand == null)
+                    _accountManagerCommand = new RelayCommand(ShowAccountManager);
+                return _accountManagerCommand;
+            }
+        }
+        private async void ShowAccountManager(object obj)
+        {
+            var vm = new AccountManagerVM();
+            var view = new AccountManagerDialog(vm);
+            var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerAccounts);
+        }
 
         private RelayCommand _providerListCommand;
         public ICommand ProviderListCommand
@@ -125,7 +141,15 @@ namespace AFH_Scheduler.Dialogs
             }
             DialogSettingBoolReturn = true;
         }
-
+        public void ClosingEventHandlerAccounts(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if ((String)eventArgs.Parameter == "Cancel")
+            {
+                DialogSettingBoolReturn = false;
+                return;
+            }
+            DialogSettingBoolReturn = true;
+        }
         public SettingsVM(double normalCurve, double desiredAverage)
         {
             CurrentAverage = normalCurve;

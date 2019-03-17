@@ -1,0 +1,270 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table Class Reference}
+\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table}\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+
+
+Represents the strongly named Data\+Table class. /summary$>$  
+
+
+
+
+Inheritance diagram for A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Data\+Table} ()
+\item 
+void \textbf{ Add\+Inspection\+\_\+\+History\+Row} (\textbf{ Inspection\+\_\+\+History\+Row} row)
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row} \textbf{ Add\+Inspection\+\_\+\+History\+Row} (System.\+Date\+Time Inspect\+Hist\+\_\+\+Inspection\+Date, \textbf{ Inspection\+\_\+\+Outcomes\+Row} parent\+Inspection\+\_\+\+Outcomes\+Row\+By\+Inspection\+\_\+\+Outcomes\+Inspection\+\_\+\+History, \textbf{ Home\+Row} parent\+Home\+Row\+By\+Home\+Inspection\+\_\+\+History)
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row} \textbf{ Find\+By\+Inspect\+Hist\+\_\+\+ID} (int Inspect\+Hist\+\_\+\+ID)
+\item 
+override global\+::\+System.\+Data.\+Data\+Table \textbf{ Clone} ()
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row} \textbf{ New\+Inspection\+\_\+\+History\+Row} ()
+\item 
+void \textbf{ Remove\+Inspection\+\_\+\+History\+Row} (\textbf{ Inspection\+\_\+\+History\+Row} row)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static global\+::\+System.\+Xml.\+Schema.\+Xml\+Schema\+Complex\+Type \textbf{ Get\+Typed\+Table\+Schema} (global\+::\+System.\+Xml.\+Schema.\+Xml\+Schema\+Set xs)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Data\+Table} (global\+::\+System.\+Runtime.\+Serialization.\+Serialization\+Info info, global\+::\+System.\+Runtime.\+Serialization.\+Streaming\+Context context)
+\item 
+override global\+::\+System.\+Data.\+Data\+Table \textbf{ Create\+Instance} ()
+\item 
+override global\+::\+System.\+Data.\+Data\+Row \textbf{ New\+Row\+From\+Builder} (global\+::\+System.\+Data.\+Data\+Row\+Builder builder)
+\item 
+override global\+::\+System.\+Type \textbf{ Get\+Row\+Type} ()
+\item 
+override void \textbf{ On\+Row\+Changed} (global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args e)
+\item 
+override void \textbf{ On\+Row\+Changing} (global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args e)
+\item 
+override void \textbf{ On\+Row\+Deleted} (global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args e)
+\item 
+override void \textbf{ On\+Row\+Deleting} (global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args e)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+global\+::\+System.\+Data.\+Data\+Column \textbf{ Inspect\+Hist\+\_\+\+I\+D\+Column}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+global\+::\+System.\+Data.\+Data\+Column \textbf{ Inspect\+Hist\+\_\+\+Inspection\+Date\+Column}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+global\+::\+System.\+Data.\+Data\+Column \textbf{ F\+K\+\_\+\+Outcome\+\_\+\+Code\+Column}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+global\+::\+System.\+Data.\+Data\+Column \textbf{ F\+K\+\_\+\+Home\+\_\+\+I\+D\+Column}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+int \textbf{ Count}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row} \textbf{ this[int index]}\hspace{0.3cm}{\ttfamily  [get]}
+\end{DoxyCompactItemize}
+\subsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} \textbf{ Inspection\+\_\+\+History\+Row\+Changing}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} \textbf{ Inspection\+\_\+\+History\+Row\+Changed}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} \textbf{ Inspection\+\_\+\+History\+Row\+Deleting}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} \textbf{ Inspection\+\_\+\+History\+Row\+Deleted}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents the strongly named Data\+Table class. /summary$>$ 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a995c06d01c13270fc68a31828391a1d9}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Inspection\_HistoryDataTable@{Inspection\_HistoryDataTable}}
+\index{Inspection\_HistoryDataTable@{Inspection\_HistoryDataTable}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Inspection\_HistoryDataTable()\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspection\+\_\+\+History\+Data\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a083d5eaaf16f95a98fb5e4adaa486cfd}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Inspection\_HistoryDataTable@{Inspection\_HistoryDataTable}}
+\index{Inspection\_HistoryDataTable@{Inspection\_HistoryDataTable}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Inspection\_HistoryDataTable()\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspection\+\_\+\+History\+Data\+Table (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Runtime.\+Serialization.\+Serialization\+Info}]{info,  }\item[{global\+::\+System.\+Runtime.\+Serialization.\+Streaming\+Context}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a255c87b191ca065583c03b7ceaf97c44}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!AddInspection\_HistoryRow@{AddInspection\_HistoryRow}}
+\index{AddInspection\_HistoryRow@{AddInspection\_HistoryRow}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{AddInspection\_HistoryRow()\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Add\+Inspection\+\_\+\+History\+Row (\begin{DoxyParamCaption}\item[{\textbf{ Inspection\+\_\+\+History\+Row}}]{row }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a19a92b92af1eb00d0caa1acd7b71fbee}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!AddInspection\_HistoryRow@{AddInspection\_HistoryRow}}
+\index{AddInspection\_HistoryRow@{AddInspection\_HistoryRow}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{AddInspection\_HistoryRow()\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Add\+Inspection\+\_\+\+History\+Row (\begin{DoxyParamCaption}\item[{System.\+Date\+Time}]{Inspect\+Hist\+\_\+\+Inspection\+Date,  }\item[{\textbf{ Inspection\+\_\+\+Outcomes\+Row}}]{parent\+Inspection\+\_\+\+Outcomes\+Row\+By\+Inspection\+\_\+\+Outcomes\+Inspection\+\_\+\+History,  }\item[{\textbf{ Home\+Row}}]{parent\+Home\+Row\+By\+Home\+Inspection\+\_\+\+History }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_acaff3b174c4068119736503f75e520dd}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Clone@{Clone}}
+\index{Clone@{Clone}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Clone()}
+{\footnotesize\ttfamily override global.\+System.\+Data.\+Data\+Table A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_abacc36a8c459bbcc88790ffbc07a89e5}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!CreateInstance@{CreateInstance}}
+\index{CreateInstance@{CreateInstance}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{CreateInstance()}
+{\footnotesize\ttfamily override global.\+System.\+Data.\+Data\+Table A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Create\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_adf59580df9defc24a3fa3b061bbd3ba7}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!FindByInspectHist\_ID@{FindByInspectHist\_ID}}
+\index{FindByInspectHist\_ID@{FindByInspectHist\_ID}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{FindByInspectHist\_ID()}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Find\+By\+Inspect\+Hist\+\_\+\+ID (\begin{DoxyParamCaption}\item[{int}]{Inspect\+Hist\+\_\+\+ID }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a66ed0c6c46a1f7cc800e05014a84b257}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!GetRowType@{GetRowType}}
+\index{GetRowType@{GetRowType}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{GetRowType()}
+{\footnotesize\ttfamily override global.\+System.\+Type A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Get\+Row\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a40c1f8344f069949a826a0e6be176306}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!GetTypedTableSchema@{GetTypedTableSchema}}
+\index{GetTypedTableSchema@{GetTypedTableSchema}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{GetTypedTableSchema()}
+{\footnotesize\ttfamily static global.\+System.\+Xml.\+Schema.\+Xml\+Schema\+Complex\+Type A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Get\+Typed\+Table\+Schema (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Xml.\+Schema.\+Xml\+Schema\+Set}]{xs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_ab199cde396af8c99578fb3d84ebb331e}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!NewInspection\_HistoryRow@{NewInspection\_HistoryRow}}
+\index{NewInspection\_HistoryRow@{NewInspection\_HistoryRow}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{NewInspection\_HistoryRow()}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+New\+Inspection\+\_\+\+History\+Row (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_aa1eab16b269b2bcf23a495f5dc37d454}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!NewRowFromBuilder@{NewRowFromBuilder}}
+\index{NewRowFromBuilder@{NewRowFromBuilder}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{NewRowFromBuilder()}
+{\footnotesize\ttfamily override global.\+System.\+Data.\+Data\+Row A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+New\+Row\+From\+Builder (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Data.\+Data\+Row\+Builder}]{builder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a01e7bf85178cb20b8fedc017d4f1c6b0}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!OnRowChanged@{OnRowChanged}}
+\index{OnRowChanged@{OnRowChanged}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{OnRowChanged()}
+{\footnotesize\ttfamily override void A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+On\+Row\+Changed (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_aa28e01a30189b901fecbc3ad0b2ca0e2}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!OnRowChanging@{OnRowChanging}}
+\index{OnRowChanging@{OnRowChanging}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{OnRowChanging()}
+{\footnotesize\ttfamily override void A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+On\+Row\+Changing (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a1c127f684d8de500406bad74900dd0fc}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!OnRowDeleted@{OnRowDeleted}}
+\index{OnRowDeleted@{OnRowDeleted}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{OnRowDeleted()}
+{\footnotesize\ttfamily override void A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+On\+Row\+Deleted (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_aae363e59fcd9c22dc4663fef46c8bfb6}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!OnRowDeleting@{OnRowDeleting}}
+\index{OnRowDeleting@{OnRowDeleting}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{OnRowDeleting()}
+{\footnotesize\ttfamily override void A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+On\+Row\+Deleting (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Data.\+Data\+Row\+Change\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_abc26197b6d618d48e6b1905e6c0882e2}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!RemoveInspection\_HistoryRow@{RemoveInspection\_HistoryRow}}
+\index{RemoveInspection\_HistoryRow@{RemoveInspection\_HistoryRow}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{RemoveInspection\_HistoryRow()}
+{\footnotesize\ttfamily void A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Remove\+Inspection\+\_\+\+History\+Row (\begin{DoxyParamCaption}\item[{\textbf{ Inspection\+\_\+\+History\+Row}}]{row }\end{DoxyParamCaption})}
+
+
+
+\subsection{Property Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a19b68571bde57f9a16f3d813ef243bc4}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Count@{Count}}
+\index{Count@{Count}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Count}
+{\footnotesize\ttfamily int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Count\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a857ecdd7d78836bf3eb11413a2cdf099}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!FK\_Home\_IDColumn@{FK\_Home\_IDColumn}}
+\index{FK\_Home\_IDColumn@{FK\_Home\_IDColumn}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{FK\_Home\_IDColumn}
+{\footnotesize\ttfamily global.\+System.\+Data.\+Data\+Column A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+F\+K\+\_\+\+Home\+\_\+\+I\+D\+Column\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a5ab64d4df6bb5f98d04c6933e82de843}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!FK\_Outcome\_CodeColumn@{FK\_Outcome\_CodeColumn}}
+\index{FK\_Outcome\_CodeColumn@{FK\_Outcome\_CodeColumn}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{FK\_Outcome\_CodeColumn}
+{\footnotesize\ttfamily global.\+System.\+Data.\+Data\+Column A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+F\+K\+\_\+\+Outcome\+\_\+\+Code\+Column\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a7447171dab892d75076afc33b867ee03}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!InspectHist\_IDColumn@{InspectHist\_IDColumn}}
+\index{InspectHist\_IDColumn@{InspectHist\_IDColumn}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{InspectHist\_IDColumn}
+{\footnotesize\ttfamily global.\+System.\+Data.\+Data\+Column A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspect\+Hist\+\_\+\+I\+D\+Column\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a0e73b76f9ba2832d30fe258fa8d6254d}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!InspectHist\_InspectionDateColumn@{InspectHist\_InspectionDateColumn}}
+\index{InspectHist\_InspectionDateColumn@{InspectHist\_InspectionDateColumn}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{InspectHist\_InspectionDateColumn}
+{\footnotesize\ttfamily global.\+System.\+Data.\+Data\+Column A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspect\+Hist\+\_\+\+Inspection\+Date\+Column\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a373767920b809c388b60e802a9a482dc}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!this[int index]@{this[int index]}}
+\index{this[int index]@{this[int index]}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{this[int index]}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+this[int index]\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+\subsection{Event Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_aa588222c58dd32a6efdbe0988ad14272}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Inspection\_HistoryRowChanged@{Inspection\_HistoryRowChanged}}
+\index{Inspection\_HistoryRowChanged@{Inspection\_HistoryRowChanged}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Inspection\_HistoryRowChanged}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspection\+\_\+\+History\+Row\+Changed}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_af3162291e2b8003bdddda39007c8c74a}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Inspection\_HistoryRowChanging@{Inspection\_HistoryRowChanging}}
+\index{Inspection\_HistoryRowChanging@{Inspection\_HistoryRowChanging}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Inspection\_HistoryRowChanging}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspection\+\_\+\+History\+Row\+Changing}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a89fdf12328fae995c00328db176b1996}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Inspection\_HistoryRowDeleted@{Inspection\_HistoryRowDeleted}}
+\index{Inspection\_HistoryRowDeleted@{Inspection\_HistoryRowDeleted}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Inspection\_HistoryRowDeleted}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspection\+\_\+\+History\+Row\+Deleted}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_1_1_inspection___history_data_table_a5305bef7c4c42977428d69804dc47441}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}!Inspection\_HistoryRowDeleting@{Inspection\_HistoryRowDeleting}}
+\index{Inspection\_HistoryRowDeleting@{Inspection\_HistoryRowDeleting}!AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable@{AFH\_Scheduler.HomeInspectionDbDataSet.Inspection\_HistoryDataTable}}
+\subsubsection{Inspection\_HistoryRowDeleting}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+History\+Row\+Change\+Event\+Handler} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table.\+Inspection\+\_\+\+History\+Row\+Deleting}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/jnestoss/source/repos/\+A\+F\+H\+\_\+\+Scheduler/\+A\+F\+H-\/\+Scheduler/\+A\+F\+H\+\_\+\+Scheduler/\textbf{ Home\+Inspection\+Db\+Data\+Set.\+Designer.\+cs}\end{DoxyCompactItemize}

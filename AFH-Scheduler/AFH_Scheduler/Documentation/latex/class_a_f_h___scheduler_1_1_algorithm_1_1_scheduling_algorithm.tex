@@ -1,0 +1,104 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm Class Reference}
+\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm}\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Home\+\_\+\+History} \textbf{ Grabbing\+Recent\+Inspection} (int p\+Home\+\_\+\+ID)
+\item 
+string \textbf{ Scheduling\+Next\+Date} (int p\+Home\+\_\+\+ID)
+\item 
+bool \textbf{ Checking\+For\+Unique\+Inspection} (\textbf{ Home\+Inspection\+Entities} table, Date\+Time new\+Inspection, long p\+Home\+\_\+\+ID)
+\item 
+string \textbf{ Setting\+Follow\+Ups} (string last\+\_\+correction\+Date)
+\item 
+string \textbf{ Drop\+Date\+Month} (string scheduled\+\_\+\+Date, \textbf{ Drop} drop\+Period)
+\item 
+double \textbf{ Inspection\+Interval} (string recent\+Inspecion, string current\+Inspection, bool month\+Or\+Days)
+\item 
+int \textbf{ Checking\+Month} (Date\+Time date)
+\item 
+\textbf{ Inspection\+\_\+\+Outcome} \textbf{ Forecasting\+Future\+Inspection} (long home\+ID)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \textbf{ Next\+Scheduled\+Date} (\textbf{ Inspection\+\_\+\+Outcome} outcome, string recent\+\_\+inspection)
+\item 
+static Date\+Time \textbf{ Check\+Day} (Date\+Time new\+\_\+inspection\+Date)
+\item 
+static Date\+Time \textbf{ Extract\+Date\+Time} (string date)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_a754f106dde63b9814b3d8148b5bf03ab}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!CheckDay@{CheckDay}}
+\index{CheckDay@{CheckDay}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{CheckDay()}
+{\footnotesize\ttfamily static Date\+Time A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Check\+Day (\begin{DoxyParamCaption}\item[{Date\+Time}]{new\+\_\+inspection\+Date }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_ad0c83caf1e34689117f8bfa5be119503}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!CheckingForUniqueInspection@{CheckingForUniqueInspection}}
+\index{CheckingForUniqueInspection@{CheckingForUniqueInspection}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{CheckingForUniqueInspection()}
+{\footnotesize\ttfamily bool A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Checking\+For\+Unique\+Inspection (\begin{DoxyParamCaption}\item[{\textbf{ Home\+Inspection\+Entities}}]{table,  }\item[{Date\+Time}]{new\+Inspection,  }\item[{long}]{p\+Home\+\_\+\+ID }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_af536c7153f238a345d0b4d98523c815f}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!CheckingMonth@{CheckingMonth}}
+\index{CheckingMonth@{CheckingMonth}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{CheckingMonth()}
+{\footnotesize\ttfamily int A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Checking\+Month (\begin{DoxyParamCaption}\item[{Date\+Time}]{date }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_a6a229de0d36fff9bb422f7bcfedbff04}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!DropDateMonth@{DropDateMonth}}
+\index{DropDateMonth@{DropDateMonth}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{DropDateMonth()}
+{\footnotesize\ttfamily string A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Drop\+Date\+Month (\begin{DoxyParamCaption}\item[{string}]{scheduled\+\_\+\+Date,  }\item[{\textbf{ Drop}}]{drop\+Period }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_a376f1b31013d108590d666ba59c80911}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!ExtractDateTime@{ExtractDateTime}}
+\index{ExtractDateTime@{ExtractDateTime}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{ExtractDateTime()}
+{\footnotesize\ttfamily static Date\+Time A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Extract\+Date\+Time (\begin{DoxyParamCaption}\item[{string}]{date }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_a0f7eff0f3e3a06c7fe363baf96337826}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!ForecastingFutureInspection@{ForecastingFutureInspection}}
+\index{ForecastingFutureInspection@{ForecastingFutureInspection}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{ForecastingFutureInspection()}
+{\footnotesize\ttfamily \textbf{ Inspection\+\_\+\+Outcome} A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Forecasting\+Future\+Inspection (\begin{DoxyParamCaption}\item[{long}]{home\+ID }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_a35a97d7813e8b62756642426d6d00f3c}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!GrabbingRecentInspection@{GrabbingRecentInspection}}
+\index{GrabbingRecentInspection@{GrabbingRecentInspection}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{GrabbingRecentInspection()}
+{\footnotesize\ttfamily \textbf{ Home\+\_\+\+History} A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Grabbing\+Recent\+Inspection (\begin{DoxyParamCaption}\item[{int}]{p\+Home\+\_\+\+ID }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_a08731157abc1d52ff09643386561ad9d}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!InspectionInterval@{InspectionInterval}}
+\index{InspectionInterval@{InspectionInterval}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{InspectionInterval()}
+{\footnotesize\ttfamily double A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Inspection\+Interval (\begin{DoxyParamCaption}\item[{string}]{recent\+Inspecion,  }\item[{string}]{current\+Inspection,  }\item[{bool}]{month\+Or\+Days }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_a2c98f9baf4e9e5aff8d36e0066ab6743}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!NextScheduledDate@{NextScheduledDate}}
+\index{NextScheduledDate@{NextScheduledDate}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{NextScheduledDate()}
+{\footnotesize\ttfamily static string A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Next\+Scheduled\+Date (\begin{DoxyParamCaption}\item[{\textbf{ Inspection\+\_\+\+Outcome}}]{outcome,  }\item[{string}]{recent\+\_\+inspection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_af1f6b5be3788638053a30757496ff021}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!SchedulingNextDate@{SchedulingNextDate}}
+\index{SchedulingNextDate@{SchedulingNextDate}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{SchedulingNextDate()}
+{\footnotesize\ttfamily string A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Scheduling\+Next\+Date (\begin{DoxyParamCaption}\item[{int}]{p\+Home\+\_\+\+ID }\end{DoxyParamCaption})}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_algorithm_1_1_scheduling_algorithm_add0743684e331fae88d77057fe3fa786}} 
+\index{AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}!SettingFollowUps@{SettingFollowUps}}
+\index{SettingFollowUps@{SettingFollowUps}!AFH\_Scheduler.Algorithm.SchedulingAlgorithm@{AFH\_Scheduler.Algorithm.SchedulingAlgorithm}}
+\subsubsection{SettingFollowUps()}
+{\footnotesize\ttfamily string A\+F\+H\+\_\+\+Scheduler.\+Algorithm.\+Scheduling\+Algorithm.\+Setting\+Follow\+Ups (\begin{DoxyParamCaption}\item[{string}]{last\+\_\+correction\+Date }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/jnestoss/source/repos/\+A\+F\+H\+\_\+\+Scheduler/\+A\+F\+H-\/\+Scheduler/\+A\+F\+H\+\_\+\+Scheduler/\+Algorithm/\textbf{ Scheduling\+Algorithm.\+cs}\end{DoxyCompactItemize}
