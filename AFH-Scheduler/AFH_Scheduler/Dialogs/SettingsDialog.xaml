@@ -40,6 +40,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <TextBlock
@@ -67,7 +68,7 @@
                     Grid.Column="0"
                     Margin="10"
                     FontSize="18">
-                    Normal Month Curve:
+                    Average
                 </TextBlock>
                 <TextBox
                     Grid.Row="1"
@@ -77,7 +78,7 @@
                     IsReadOnly="True"
                     Text="{Binding DesiredAverage, Converter={StaticResource desiredAverageConverter}}" />
 
-                <Button
+                <!--<Button
                     Grid.Row="1"
                     Grid.Column="2"
                     Command="{Binding NormalCurveCommand}"
@@ -88,7 +89,20 @@
                         Height="25"
                         Foreground="WhiteSmoke"
                         Kind="Wrench" />
-                </Button>
+                </Button>-->
+
+                <Slider
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Width="280"
+                    Height="50"
+                    Maximum="15.99"
+                    Minimum="12.00"
+                    TickFrequency="0.1"
+                    TickPlacement="Both"
+                    ToolTip="MaterialDesignDiscreteSlider"
+                    Value="{Binding DesiredAverage}" />
 
                 <TextBlock
                     Grid.Row="3"
@@ -97,6 +111,7 @@
                     FontSize="18">
                     Outcome Codewords:
                 </TextBlock>
+                
                 <Button
                     Grid.Row="3"
                     Grid.Column="1"
