@@ -515,6 +515,7 @@ namespace AFH_Scheduler
             {
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
+                testCase = 15.99;
             }
             DesiredAverage = testCase;
             UpdateInspectionAverage();
@@ -907,7 +908,7 @@ namespace AFH_Scheduler
         private void SettingsClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             SettingsVM settingsContext = (SettingsVM)((SettingsDialog)eventArgs.Session.Content).DataContext;
-            DesiredAverage = Convert.ToDouble(settingsContext.NormalCurve);
+            DesiredAverage = settingsContext.DesiredAverage;
         }
 
         private void NewHomeClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)

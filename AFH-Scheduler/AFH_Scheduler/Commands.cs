@@ -20,9 +20,12 @@ namespace AFH_Scheduler
         public static readonly RelayCommand CloseCommand = new RelayCommand(w => 
         {
             var window = (MainWindow)w;
-            DataVM data = (DataVM)((MainVM)window.DataContext).CurrentPageViewModel;
+            if (((MainVM)window.DataContext).CurrentPageViewModel.GetType() == typeof(DataVM))
+            {
+                DataVM data = (DataVM)((MainVM)window.DataContext).CurrentPageViewModel;
 
-            WriteDesiredAverage(data.DesiredAverage.ToString());
+                WriteDesiredAverage(data.DesiredAverage.ToString());
+            }
 
             ((Window)w).Close();
         });
@@ -55,14 +58,15 @@ namespace AFH_Scheduler
             {
                 DialogAlreadyOpen = true;
 
-                var viewVM = (MainWindow)w;
-                DataVM data = (DataVM)((MainVM)viewVM.DataContext).CurrentPageViewModel;
+                //var viewVM = (MainWindow)w;
+                //DataVM data = (DataVM)((MainVM)viewVM.DataContext).CurrentPageViewModel;
+                DataVM data = (DataVM)w;
 
                 var settings = new SettingsVM(Convert.ToDouble(data.NormalCurve), data.DesiredAverage);
                 var view = new SettingsDialog(settings);
                 var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
 
-                data.DesiredAverage = Convert.ToDouble(settings.NormalCurve);
+                data.DesiredAverage = settings.DesiredAverage;
                 data.CheckNormalCurveState();
 
                 DialogAlreadyOpen = false;
