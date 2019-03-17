@@ -162,7 +162,7 @@
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
                     CanUserSortColumns="True"
-                    ItemsSource="{Binding SelectedProviders}"
+                    ItemsSource="{Binding Providers}"
                     SelectedItem="{Binding SelectedHome}"
                     SelectionMode="Single"
                     SelectionUnit="FullRow"

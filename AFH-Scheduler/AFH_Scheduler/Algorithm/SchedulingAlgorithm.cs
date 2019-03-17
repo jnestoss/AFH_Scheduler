@@ -12,7 +12,7 @@ namespace AFH_Scheduler.Algorithm
     public class SchedulingAlgorithm
     {
         #region Grabbing Most Recent Inspection Date
-        public Home_History GrabbingRecentInspection(int pHome_ID)
+        public Home_History GrabbingRecentInspection(long pHome_ID)
         {
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = table.Home_History.Where(r => r.FK_PHome_ID == pHome_ID).ToList();
@@ -41,7 +41,7 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region Scheduling Next Inspection
-        public string SchedulingNextDate(int pHome_ID) //This will probably be a class somewhere in Main
+        public string SchedulingNextDate(int pHome_ID)
         {
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = GrabbingRecentInspection(pHome_ID);
@@ -73,9 +73,6 @@ namespace AFH_Scheduler.Algorithm
                 }
 
             } while (!dateCleared);
-
-            /*table.Scheduled_Inspections.Add(new Scheduled_Inspections { SInspections_Id = 456789, SInspections_Date = ConvertDateToString(newInspection), FK_PHome_ID = pHome_ID });
-            table.SaveChanges();*/
 
             return newDateObject.ToShortDateString();
         }
