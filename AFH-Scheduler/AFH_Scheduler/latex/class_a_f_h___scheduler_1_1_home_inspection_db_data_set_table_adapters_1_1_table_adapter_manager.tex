@@ -1,0 +1,74 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Table\+Adapter\+Manager Class Reference}
+\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager}\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.TableAdapterManager@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.TableAdapterManager}}
+
+
+\doxyref{Table\+Adapter\+Manager}{p.}{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager} is used to coordinate Table\+Adapters in the dataset to enable Hierarchical Update scenarios /summary$>$  
+
+
+Inheritance diagram for A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Table\+Adapter\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_acb52dbd4fb93eab2b0dd4a5d81f01e32}} 
+enum \textbf{ Update\+Order\+Option} \{ {\bfseries Insert\+Update\+Delete} = 0, 
+{\bfseries Update\+Insert\+Delete} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Update Order Option /summary$>$ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_a42c6b985d269067366d1bc50a3e23e14}} 
+virtual int \textbf{ Update\+All} (\textbf{ Home\+Inspection\+Db\+Data\+Set} data\+Set)
+\begin{DoxyCompactList}\small\item\em Update all changes to the dataset. /summary$>$ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_ab9ee836c9507993721847392f1e82e79}} 
+virtual void {\bfseries Sort\+Self\+Reference\+Rows} (global\+::\+System.\+Data.\+Data\+Row[$\,$] rows, global\+::\+System.\+Data.\+Data\+Relation relation, bool child\+First)
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_adb6222ee9ee2b705c7214b7f1e6ac974}} 
+virtual bool {\bfseries Match\+Table\+Adapter\+Connection} (global\+::\+System.\+Data.\+I\+Db\+Connection input\+Connection)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_ae954ea4d3ad148610460adad6b64b929}} 
+\textbf{ Update\+Order\+Option} {\bfseries Update\+Order}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_a88cb2d90a7c5de99622b4f6c9723f08e}} 
+\textbf{ Home\+Table\+Adapter} {\bfseries Home\+Table\+Adapter}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_a5dd9f11d438e19fbf5edabbc00edffae}} 
+\textbf{ Inspection\+\_\+\+History\+Table\+Adapter} {\bfseries Inspection\+\_\+\+History\+Table\+Adapter}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_a3a47304057383243ed1ceafe49a823b8}} 
+\textbf{ Inspection\+\_\+\+Outcomes\+Table\+Adapter} {\bfseries Inspection\+\_\+\+Outcomes\+Table\+Adapter}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_a376cff39e8d1aac1791c67f79a2d3ed5}} 
+\textbf{ Inspection\+\_\+\+Schedule\+Table\+Adapter} {\bfseries Inspection\+\_\+\+Schedule\+Table\+Adapter}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_a83d2a14ed82cbc363cec9b2ce0981d72}} 
+\textbf{ Provider\+Table\+Adapter} {\bfseries Provider\+Table\+Adapter}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_ad919bb6e5c483669203f58507ed989bd}} 
+bool {\bfseries Backup\+Data\+Set\+Before\+Update}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_aaeaf9398a2ccd241217dd25fe3c29363}} 
+global\+::\+System.\+Data.\+I\+Db\+Connection {\bfseries Connection}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager_aac93513b56859d5eeaaeb0d8c745be98}} 
+int {\bfseries Table\+Adapter\+Instance\+Count}\hspace{0.3cm}{\ttfamily  [get]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{Table\+Adapter\+Manager}{p.}{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager} is used to coordinate Table\+Adapters in the dataset to enable Hierarchical Update scenarios /summary$>$ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Home\+Inspection\+Db\+Data\+Set.\+Designer.\+cs\end{DoxyCompactItemize}

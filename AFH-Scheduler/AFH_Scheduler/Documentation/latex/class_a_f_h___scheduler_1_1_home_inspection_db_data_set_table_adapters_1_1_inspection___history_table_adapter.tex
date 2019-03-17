@@ -1,0 +1,154 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter Class Reference}
+\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter}\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+
+
+Represents the connection and commands used to retrieve and save data. /summary$>$  
+
+
+
+
+Inheritance diagram for A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Inspection\+\_\+\+History\+Table\+Adapter} ()
+\item 
+virtual int \textbf{ Fill} (\textbf{ Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table} data\+Table)
+\item 
+virtual \textbf{ Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table} \textbf{ Get\+Data} ()
+\item 
+virtual int \textbf{ Update} (\textbf{ Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table} data\+Table)
+\item 
+virtual int \textbf{ Update} (\textbf{ Home\+Inspection\+Db\+Data\+Set} data\+Set)
+\item 
+virtual int \textbf{ Update} (global\+::\+System.\+Data.\+Data\+Row data\+Row)
+\item 
+virtual int \textbf{ Update} (global\+::\+System.\+Data.\+Data\+Row[$\,$] data\+Rows)
+\item 
+virtual int \textbf{ Delete} (int Original\+\_\+\+Inspect\+Hist\+\_\+\+ID, global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$ Original\+\_\+\+Inspect\+Hist\+\_\+\+Inspection\+Date, string Original\+\_\+\+F\+K\+\_\+\+Outcome\+\_\+\+Code, string Original\+\_\+\+F\+K\+\_\+\+Home\+\_\+\+ID)
+\item 
+virtual int \textbf{ Insert} (global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$ Inspect\+Hist\+\_\+\+Inspection\+Date, string F\+K\+\_\+\+Outcome\+\_\+\+Code, string F\+K\+\_\+\+Home\+\_\+\+ID)
+\item 
+virtual int \textbf{ Update} (global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$ Inspect\+Hist\+\_\+\+Inspection\+Date, string F\+K\+\_\+\+Outcome\+\_\+\+Code, string F\+K\+\_\+\+Home\+\_\+\+ID, int Original\+\_\+\+Inspect\+Hist\+\_\+\+ID, global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$ Original\+\_\+\+Inspect\+Hist\+\_\+\+Inspection\+Date, string Original\+\_\+\+F\+K\+\_\+\+Outcome\+\_\+\+Code, string Original\+\_\+\+F\+K\+\_\+\+Home\+\_\+\+ID)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+internal global\+::\+System.\+Data.\+Ole\+Db.\+Ole\+Db\+Data\+Adapter \textbf{ Adapter}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+global\+::\+System.\+Data.\+Ole\+Db.\+Ole\+Db\+Command [$\,$] \textbf{ Command\+Collection}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+bool \textbf{ Clear\+Before\+Fill}\hspace{0.3cm}{\ttfamily  [get, set]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents the connection and commands used to retrieve and save data. /summary$>$ 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a20ed90cf262a43425595fd767ab6d102}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Inspection\_HistoryTableAdapter@{Inspection\_HistoryTableAdapter}}
+\index{Inspection\_HistoryTableAdapter@{Inspection\_HistoryTableAdapter}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Inspection\_HistoryTableAdapter()}
+{\footnotesize\ttfamily A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Inspection\+\_\+\+History\+Table\+Adapter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a784b8728226f2e643f8e82dc1f0173fa}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Delete@{Delete}}
+\index{Delete@{Delete}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Delete()}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Delete (\begin{DoxyParamCaption}\item[{int}]{Original\+\_\+\+Inspect\+Hist\+\_\+\+ID,  }\item[{global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$}]{Original\+\_\+\+Inspect\+Hist\+\_\+\+Inspection\+Date,  }\item[{string}]{Original\+\_\+\+F\+K\+\_\+\+Outcome\+\_\+\+Code,  }\item[{string}]{Original\+\_\+\+F\+K\+\_\+\+Home\+\_\+\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_ae164a14326a06fc6a74505bdb33f74b2}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Fill@{Fill}}
+\index{Fill@{Fill}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Fill()}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Fill (\begin{DoxyParamCaption}\item[{\textbf{ Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table}}]{data\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_aa6af6e6d8440353951d8242d397f0be6}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!GetData@{GetData}}
+\index{GetData@{GetData}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{GetData()}
+{\footnotesize\ttfamily virtual \textbf{ Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table} A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Get\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a6df0bc339eb01e4a65939ada679b17ee}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Insert@{Insert}}
+\index{Insert@{Insert}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Insert()}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Insert (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$}]{Inspect\+Hist\+\_\+\+Inspection\+Date,  }\item[{string}]{F\+K\+\_\+\+Outcome\+\_\+\+Code,  }\item[{string}]{F\+K\+\_\+\+Home\+\_\+\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a51d7439b959271c66c1eeb3b549fce0c}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Update@{Update}}
+\index{Update@{Update}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Update()\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Update (\begin{DoxyParamCaption}\item[{\textbf{ Home\+Inspection\+Db\+Data\+Set.\+Inspection\+\_\+\+History\+Data\+Table}}]{data\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a9b3f45b2b92acad07c1f2084c26cc87f}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Update@{Update}}
+\index{Update@{Update}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Update()\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Update (\begin{DoxyParamCaption}\item[{\textbf{ Home\+Inspection\+Db\+Data\+Set}}]{data\+Set }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_ad164c616f041a8fb58f955c21a7410de}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Update@{Update}}
+\index{Update@{Update}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Update()\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Update (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Data.\+Data\+Row}]{data\+Row }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a9017ce96a13ea21346a1039f7ffb7b0a}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Update@{Update}}
+\index{Update@{Update}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Update()\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Update (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Data.\+Data\+Row [$\,$]}]{data\+Rows }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a68f36ac0e3e7e8e9d0dc38c4e2db12d2}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Update@{Update}}
+\index{Update@{Update}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Update()\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily virtual int A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Update (\begin{DoxyParamCaption}\item[{global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$}]{Inspect\+Hist\+\_\+\+Inspection\+Date,  }\item[{string}]{F\+K\+\_\+\+Outcome\+\_\+\+Code,  }\item[{string}]{F\+K\+\_\+\+Home\+\_\+\+ID,  }\item[{int}]{Original\+\_\+\+Inspect\+Hist\+\_\+\+ID,  }\item[{global\+::\+System.\+Nullable$<$ global\+::\+System.\+Date\+Time $>$}]{Original\+\_\+\+Inspect\+Hist\+\_\+\+Inspection\+Date,  }\item[{string}]{Original\+\_\+\+F\+K\+\_\+\+Outcome\+\_\+\+Code,  }\item[{string}]{Original\+\_\+\+F\+K\+\_\+\+Home\+\_\+\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Property Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a55ecf0fed09e52c3b0462de436aa5361}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!Adapter@{Adapter}}
+\index{Adapter@{Adapter}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{Adapter}
+{\footnotesize\ttfamily internal global.\+System.\+Data.\+Ole\+Db.\+Ole\+Db\+Data\+Adapter A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Adapter\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_aacaa45988db85a2865fd0301d38310fd}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!ClearBeforeFill@{ClearBeforeFill}}
+\index{ClearBeforeFill@{ClearBeforeFill}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{ClearBeforeFill}
+{\footnotesize\ttfamily bool A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Clear\+Before\+Fill\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_inspection___history_table_adapter_a745351fff12b3bfe26d774eceae46637}} 
+\index{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}!CommandCollection@{CommandCollection}}
+\index{CommandCollection@{CommandCollection}!AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter@{AFH\_Scheduler.HomeInspectionDbDataSetTableAdapters.Inspection\_HistoryTableAdapter}}
+\subsubsection{CommandCollection}
+{\footnotesize\ttfamily global.\+System.\+Data.\+Ole\+Db.\+Ole\+Db\+Command [$\,$] A\+F\+H\+\_\+\+Scheduler.\+Home\+Inspection\+Db\+Data\+Set\+Table\+Adapters.\+Inspection\+\_\+\+History\+Table\+Adapter.\+Command\+Collection\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/jnestoss/source/repos/\+A\+F\+H\+\_\+\+Scheduler/\+A\+F\+H-\/\+Scheduler/\+A\+F\+H\+\_\+\+Scheduler/\textbf{ Home\+Inspection\+Db\+Data\+Set.\+Designer.\+cs}\end{DoxyCompactItemize}

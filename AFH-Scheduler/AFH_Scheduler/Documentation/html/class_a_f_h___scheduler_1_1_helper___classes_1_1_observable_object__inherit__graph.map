@@ -1,0 +1,30 @@
+<map id="AFH_Scheduler.Helper_Classes.ObservableObject" name="AFH_Scheduler.Helper_Classes.ObservableObject">
+<area shape="rect" id="node1" title=" " alt="" coords="212,755,395,796"/>
+<area shape="rect" id="node3" href="$class_a_f_h___scheduler_1_1_complete_1_1_complete_inspection_v_m.html" title=" " alt="" coords="459,5,690,47"/>
+<area shape="rect" id="node4" href="$class_a_f_h___scheduler_1_1_complete_1_1_reschedule_v_m.html" title=" " alt="" coords="443,71,707,98"/>
+<area shape="rect" id="node5" href="$class_a_f_h___scheduler_1_1_data_1_1_observable_providers.html" title=" " alt="" coords="469,123,681,164"/>
+<area shape="rect" id="node6" href="$class_a_f_h___scheduler_1_1_data_v_m.html" title=" " alt="" coords="493,189,657,215"/>
+<area shape="rect" id="node7" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_complete_v_m.html" title=" " alt="" coords="455,239,694,266"/>
+<area shape="rect" id="node8" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_confirmation_1_1_delete_v_m.html" title=" " alt="" coords="455,291,695,332"/>
+<area shape="rect" id="node9" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_confirmation_1_1_transfer_delete_v_m.html" title=" " alt="" coords="455,356,695,397"/>
+<area shape="rect" id="node10" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_edit_v_m.html" title=" " alt="" coords="471,422,678,449"/>
+<area shape="rect" id="node11" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_errors_1_1_import_error_list_v_m.html" title=" " alt="" coords="473,473,676,515"/>
+<area shape="rect" id="node12" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_hist_v_m.html" title=" " alt="" coords="471,539,678,566"/>
+<area shape="rect" id="node13" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_import_data_preview_v_m.html" title=" " alt="" coords="475,591,675,632"/>
+<area shape="rect" id="node14" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_inactive_home_list_v_m.html" title=" " alt="" coords="471,656,678,697"/>
+<area shape="rect" id="node15" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_new_home_dialog_v_m.html" title=" " alt="" coords="480,721,669,763"/>
+<area shape="rect" id="node16" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_rescheduling_1_1_rescheduling_v_m.html" title=" " alt="" coords="451,787,698,828"/>
+<area shape="rect" id="node17" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_setting_sub_windows_1_1_edit_provider_v_m.html" title=" " alt="" coords="472,852,677,893"/>
+<area shape="rect" id="node18" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_setting_sub_windows_1_1_new_provider_creator_v_m.html" title=" " alt="" coords="457,917,692,959"/>
+<area shape="rect" id="node19" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_setting_sub_windows_1_1_normal_curve_adjuster_v_m.html" title=" " alt="" coords="453,983,696,1024"/>
+<area shape="rect" id="node20" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_setting_sub_windows_1_1_outcome_code_list_v_m.html" title=" " alt="" coords="461,1048,688,1089"/>
+<area shape="rect" id="node21" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_setting_sub_windows_1_1_outcome_dialogs_v_m.html" title=" " alt="" coords="465,1113,684,1155"/>
+<area shape="rect" id="node22" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_setting_sub_windows_1_1_provider_list_v_m.html" title=" " alt="" coords="472,1179,677,1220"/>
+<area shape="rect" id="node23" href="$class_a_f_h___scheduler_1_1_dialogs_1_1_settings_v_m.html" title=" " alt="" coords="459,1245,691,1271"/>
+<area shape="rect" id="node24" href="$class_a_f_h___scheduler_1_1_edit_u_c.html" title=" " alt="" coords="495,1295,654,1322"/>
+<area shape="rect" id="node25" href="$class_a_f_h___scheduler_1_1_history_1_1_history_detail_view_v_m.html" title=" " alt="" coords="473,1347,676,1388"/>
+<area shape="rect" id="node26" href="$class_a_f_h___scheduler_1_1_history_1_1_history_v_m.html" title=" " alt="" coords="463,1413,686,1439"/>
+<area shape="rect" id="node27" href="$class_a_f_h___scheduler_1_1_login_1_1_login_view_v_m.html" title=" " alt="" coords="483,1464,666,1505"/>
+<area shape="rect" id="node28" href="$class_a_f_h___scheduler_1_1_main_v_m.html" title=" " alt="" coords="492,1530,657,1557"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,762,164,789"/>
+</map>

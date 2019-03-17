@@ -1,0 +1,77 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Relay\+Command Class Reference}
+\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_relay_command}\index{AFH\_Scheduler.Helper\_Classes.RelayCommand@{AFH\_Scheduler.Helper\_Classes.RelayCommand}}
+
+
+A command whose sole purpose is to relay its functionality to other objects by invoking delegates. The default return value for the Can\+Execute method is \textquotesingle{}true\textquotesingle{}.  
+
+
+Inheritance diagram for A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Relay\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_a_f_h___scheduler_1_1_helper___classes_1_1_relay_command}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Relay\+Command} (Action$<$ object $>$ execute)
+\begin{DoxyCompactList}\small\item\em Creates a new command that can always execute. \end{DoxyCompactList}\item 
+\textbf{ Relay\+Command} (Action$<$ object $>$ execute, Predicate$<$ object $>$ can\+Execute)
+\begin{DoxyCompactList}\small\item\em Creates a new command. \end{DoxyCompactList}\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_relay_command_a2aa7e10167235d08223fab7d5d9844ed}} 
+bool {\bfseries Can\+Execute} (object parameters)
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_relay_command_a6b2a2d71fadd06b09b58c28d71036286}} 
+void {\bfseries Execute} (object parameters)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_relay_command_ab7fc1c75db46185dcdf12e28efa34286}} 
+Event\+Handler {\bfseries Can\+Execute\+Changed}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A command whose sole purpose is to relay its functionality to other objects by invoking delegates. The default return value for the Can\+Execute method is \textquotesingle{}true\textquotesingle{}. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_relay_command_ab7eb476950fee37c8aa552f15a7cc92b}} 
+\index{AFH\_Scheduler.Helper\_Classes.RelayCommand@{AFH\_Scheduler.Helper\_Classes.RelayCommand}!RelayCommand@{RelayCommand}}
+\index{RelayCommand@{RelayCommand}!AFH\_Scheduler.Helper\_Classes.RelayCommand@{AFH\_Scheduler.Helper\_Classes.RelayCommand}}
+\subsubsection{RelayCommand()\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Relay\+Command.\+Relay\+Command (\begin{DoxyParamCaption}\item[{Action$<$ object $>$}]{execute }\end{DoxyParamCaption})}
+
+
+
+Creates a new command that can always execute. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em execute} & The execution logic.\\
+\hline
+\end{DoxyParams}
+\mbox{\label{class_a_f_h___scheduler_1_1_helper___classes_1_1_relay_command_aae03715968d32f5b266c478a21b90525}} 
+\index{AFH\_Scheduler.Helper\_Classes.RelayCommand@{AFH\_Scheduler.Helper\_Classes.RelayCommand}!RelayCommand@{RelayCommand}}
+\index{RelayCommand@{RelayCommand}!AFH\_Scheduler.Helper\_Classes.RelayCommand@{AFH\_Scheduler.Helper\_Classes.RelayCommand}}
+\subsubsection{RelayCommand()\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily A\+F\+H\+\_\+\+Scheduler.\+Helper\+\_\+\+Classes.\+Relay\+Command.\+Relay\+Command (\begin{DoxyParamCaption}\item[{Action$<$ object $>$}]{execute,  }\item[{Predicate$<$ object $>$}]{can\+Execute }\end{DoxyParamCaption})}
+
+
+
+Creates a new command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em execute} & The execution logic.\\
+\hline
+{\em can\+Execute} & The execution status logic.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Helper\+Classes/Relay\+Command.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,125 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+VM Class Reference}
+\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m}\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+
+
+Inheritance diagram for A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+VM\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{class_a_f_h___scheduler_1_1_history_1_1_history_v_m__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+VM\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{class_a_f_h___scheduler_1_1_history_1_1_history_v_m__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ History\+VM} ()
+\item 
+void \textbf{ Gen\+Data} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+Observable\+Collection$<$ \textbf{ History\+Model} $>$ \textbf{ Homes}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+I\+Command \textbf{ Open\+Edit\+History\+Dialog\+Command}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+I\+Command \textbf{ Load\+Home\+History\+Command}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+\textbf{ Open\+Message\+Dialog\+Service} \textbf{ Message\+Service}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+bool \textbf{ Is\+Expanded}\hspace{0.3cm}{\ttfamily  [get, set]}
+\item 
+string \textbf{ Name}\hspace{0.3cm}{\ttfamily  [get]}
+\item 
+I\+Command \textbf{ Refresh\+Table\+Command}\hspace{0.3cm}{\ttfamily  [get]}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_a174c521b9867dd07e204219fcddb06d8}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!HistoryVM@{HistoryVM}}
+\index{HistoryVM@{HistoryVM}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{HistoryVM()}
+{\footnotesize\ttfamily A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+History\+VM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_a877d693985c6f03639ae2888494688f2}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!GenData@{GenData}}
+\index{GenData@{GenData}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{GenData()}
+{\footnotesize\ttfamily void A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Gen\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}        using (HomeInspectionEntities db = new HomeInspectionEntities())
+        {
+            string providername;
+            var provs = db.Provider_Homes.ToList();
+            foreach (var item in provs)
+            {
+                providername = db.Providers.First(r => r.Provider_ID == item.FK_Provider_ID.Value).Provider_Name;//providerName;
+\end{DoxyVerb}
+ Console.\+Write\+Line(item. + \char`\"{}$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$\char`\"{}); Homes.\+Add( new History\+Model ( item.\+F\+K\+\_\+\+Provider\+\_\+\+I\+D.\+Value,//provider\+ID item.\+P\+Home\+\_\+\+ID,//\+Home\+\_\+\+ID providername,//provider\+Name item.\+P\+Home\+\_\+\+Address, item.\+P\+Home\+\_\+\+Zipcode ) ); \}
+
+\}
+
+\subsection{Property Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_a2c46178b0d9e553fe83d519b8fe92c82}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!Homes@{Homes}}
+\index{Homes@{Homes}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{Homes}
+{\footnotesize\ttfamily Observable\+Collection$<$\textbf{ History\+Model}$>$ A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Homes\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_a21900f0eed24adedff2dcd498529279e}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!IsExpanded@{IsExpanded}}
+\index{IsExpanded@{IsExpanded}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{IsExpanded}
+{\footnotesize\ttfamily bool A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Is\+Expanded\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_ae96f861081ed41cddfd5d16cbf78ee9f}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!LoadHomeHistoryCommand@{LoadHomeHistoryCommand}}
+\index{LoadHomeHistoryCommand@{LoadHomeHistoryCommand}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{LoadHomeHistoryCommand}
+{\footnotesize\ttfamily I\+Command A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Load\+Home\+History\+Command\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_ac98860bde61ed69d0b91dfbca78ab34b}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!MessageService@{MessageService}}
+\index{MessageService@{MessageService}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{MessageService}
+{\footnotesize\ttfamily \textbf{ Open\+Message\+Dialog\+Service} A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Message\+Service\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_a4959f6a48b98467d15f5a41835e3c7a4}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!Name@{Name}}
+\index{Name@{Name}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{Name}
+{\footnotesize\ttfamily string A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_a9c89be7cb9f0ef739c40721ef0e9d3cf}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!OpenEditHistoryDialogCommand@{OpenEditHistoryDialogCommand}}
+\index{OpenEditHistoryDialogCommand@{OpenEditHistoryDialogCommand}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{OpenEditHistoryDialogCommand}
+{\footnotesize\ttfamily I\+Command A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Open\+Edit\+History\+Dialog\+Command\hspace{0.3cm}{\ttfamily [get]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_history_1_1_history_v_m_ab89a9ebdd65b08acf8784ca5e3a7e966}} 
+\index{AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}!RefreshTableCommand@{RefreshTableCommand}}
+\index{RefreshTableCommand@{RefreshTableCommand}!AFH\_Scheduler.History.HistoryVM@{AFH\_Scheduler.History.HistoryVM}}
+\subsubsection{RefreshTableCommand}
+{\footnotesize\ttfamily I\+Command A\+F\+H\+\_\+\+Scheduler.\+History.\+History\+V\+M.\+Refresh\+Table\+Command\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/jnestoss/source/repos/\+A\+F\+H\+\_\+\+Scheduler/\+A\+F\+H-\/\+Scheduler/\+A\+F\+H\+\_\+\+Scheduler/\+Obsolete\+Code/\+History/\textbf{ History\+V\+M.\+cs}\end{DoxyCompactItemize}

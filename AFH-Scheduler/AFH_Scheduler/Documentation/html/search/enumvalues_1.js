@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['insertupdatedelete',['InsertUpdateDelete',['../class_a_f_h___scheduler_1_1_home_inspection_data_set_table_adapters_1_1_table_adapter_manager.html#ae6d0986b580f52e92b245e0e299ec524a27b77cb15d3da7ded0250d0001bc6755',1,'AFH_Scheduler.HomeInspectionDataSetTableAdapters.TableAdapterManager.InsertUpdateDelete()'],['../class_a_f_h___scheduler_1_1_home_inspection_db_data_set_table_adapters_1_1_table_adapter_manager.html#acb52dbd4fb93eab2b0dd4a5d81f01e32a27b77cb15d3da7ded0250d0001bc6755',1,'AFH_Scheduler.HomeInspectionDbDataSetTableAdapters.TableAdapterManager.InsertUpdateDelete()']]]
+];

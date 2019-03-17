@@ -1,0 +1,94 @@
+\section{A\+F\+H\+\_\+\+Scheduler.\+Commands Class Reference}
+\label{class_a_f_h___scheduler_1_1_commands}\index{AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}}
+
+
+Collaboration diagram for A\+F\+H\+\_\+\+Scheduler.\+Commands\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{class_a_f_h___scheduler_1_1_commands__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \textbf{ Closing\+Event\+Handler\+Settings} (object sender, Dialog\+Closing\+Event\+Args event\+Args)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly \textbf{ Relay\+Command} \textbf{ Close\+Command} = new \textbf{ Relay\+Command}(o =$>$ ((Window)o).Close())
+\item 
+static readonly \textbf{ Relay\+Command} \textbf{ Minimize\+Command}
+\item 
+static readonly \textbf{ Relay\+Command} \textbf{ Open\+Settings\+Command}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_commands_aa52a371f73558498c8ba1dd79b9f20a7}} 
+\index{AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}!ClosingEventHandlerSettings@{ClosingEventHandlerSettings}}
+\index{ClosingEventHandlerSettings@{ClosingEventHandlerSettings}!AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}}
+\subsubsection{ClosingEventHandlerSettings()}
+{\footnotesize\ttfamily static void A\+F\+H\+\_\+\+Scheduler.\+Commands.\+Closing\+Event\+Handler\+Settings (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Dialog\+Closing\+Event\+Args}]{event\+Args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\label{class_a_f_h___scheduler_1_1_commands_a0e9a15fef4857a1fc327c55c4bd82b26}} 
+\index{AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}!CloseCommand@{CloseCommand}}
+\index{CloseCommand@{CloseCommand}!AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}}
+\subsubsection{CloseCommand}
+{\footnotesize\ttfamily readonly \textbf{ Relay\+Command} A\+F\+H\+\_\+\+Scheduler.\+Commands.\+Close\+Command = new \textbf{ Relay\+Command}(o =$>$ ((Window)o).Close())\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\label{class_a_f_h___scheduler_1_1_commands_ac129378d4c164a7ff5d5a3eed7eae7cc}} 
+\index{AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}!MinimizeCommand@{MinimizeCommand}}
+\index{MinimizeCommand@{MinimizeCommand}!AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}}
+\subsubsection{MinimizeCommand}
+{\footnotesize\ttfamily readonly \textbf{ Relay\+Command} A\+F\+H\+\_\+\+Scheduler.\+Commands.\+Minimize\+Command\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \textcolor{keyword}{new} RelayCommand(w =>}
+\DoxyCodeLine{        \{}
+\DoxyCodeLine{            var win = (Window)w;}
+\DoxyCodeLine{            \textcolor{keywordflow}{if} (win.WindowState == WindowState.Normal)}
+\DoxyCodeLine{            \{}
+\DoxyCodeLine{                win.WindowState = WindowState.Minimized;}
+\DoxyCodeLine{            \}}
+\DoxyCodeLine{        \})}
+
+\end{DoxyCode}
+\mbox{\label{class_a_f_h___scheduler_1_1_commands_ad9bc4e8e4c087bf101e8e8e9e315eaaa}} 
+\index{AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}!OpenSettingsCommand@{OpenSettingsCommand}}
+\index{OpenSettingsCommand@{OpenSettingsCommand}!AFH\_Scheduler.Commands@{AFH\_Scheduler.Commands}}
+\subsubsection{OpenSettingsCommand}
+{\footnotesize\ttfamily readonly \textbf{ Relay\+Command} A\+F\+H\+\_\+\+Scheduler.\+Commands.\+Open\+Settings\+Command\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \textcolor{keyword}{new} RelayCommand(async w =>}
+\DoxyCodeLine{        \{}
+\DoxyCodeLine{            \textcolor{keywordflow}{if} (!DialogAlreadyOpen)}
+\DoxyCodeLine{            \{}
+\DoxyCodeLine{                DialogAlreadyOpen = \textcolor{keyword}{true};}
+\DoxyCodeLine{                var settings = \textcolor{keyword}{new} SettingsVM();}
+\DoxyCodeLine{                var view = \textcolor{keyword}{new} SettingsDialog(settings);}
+\DoxyCodeLine{                var result = await DialogHost.Show(view, \textcolor{stringliteral}{"WindowDialogs"}, ClosingEventHandlerSettings);}
+\DoxyCodeLine{                var viewVM = (MainWindow)w;}
+\DoxyCodeLine{                \textcolor{keywordflow}{if} (viewVM.Name.Equals(\textcolor{stringliteral}{"Schedules"}))}
+\DoxyCodeLine{                \{}
+\DoxyCodeLine{                    DataVM data = (DataVM)w;}
+\DoxyCodeLine{                    data.NormalCurve = settings.NormalCurve;}
+\DoxyCodeLine{                \}}
+\DoxyCodeLine{                DialogAlreadyOpen = \textcolor{keyword}{false};}
+\DoxyCodeLine{            \}}
+\DoxyCodeLine{        \})}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/jnestoss/source/repos/\+A\+F\+H\+\_\+\+Scheduler/\+A\+F\+H-\/\+Scheduler/\+A\+F\+H\+\_\+\+Scheduler/\textbf{ Commands.\+cs}\end{DoxyCompactItemize}

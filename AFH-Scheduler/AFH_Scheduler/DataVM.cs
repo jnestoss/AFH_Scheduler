@@ -23,12 +23,20 @@ using System.IO;
 
 namespace AFH_Scheduler
 {
+    /**
+    * @file DataVM.cs
+    *
+    * @brief Main View Model
+    * @details This is the main view model, which supports all data loading and event firing functions for MainWindow.xaml
+    */
     public class DataVM : ObservableObject, IPageViewModel
     {
         #region variables
 
-        public string Name {
-            get {
+        public string Name
+        {
+            get
+            {
                 return "Schedules";
             }
         }
@@ -76,9 +84,11 @@ namespace AFH_Scheduler
 
         //Observable and bound to DataGrid
         private static ObservableCollection<HomeModel> _providers;
-        public ObservableCollection<HomeModel> Providers {
+        public ObservableCollection<HomeModel> Providers
+        {
             get { return _providers; }
-            set {
+            set
+            {
                 if (value != _providers)
                 {
                     _providers = value;
@@ -115,10 +125,12 @@ namespace AFH_Scheduler
 
 
         private HomeModel _selectedHome;
-        public HomeModel SelectedHome {
+        public HomeModel SelectedHome
+        {
             get => _selectedHome;
-            set {
-                if ( _selectedHome != value )
+            set
+            {
+                if (_selectedHome != value)
                 {
                     _selectedHome = value;
                     OnPropertyChanged("SelectedHome");
@@ -256,8 +268,10 @@ namespace AFH_Scheduler
         }
 
         private RelayCommand _refreshTable;
-        public ICommand RefreshTableCommand {
-            get {
+        public ICommand RefreshTableCommand
+        {
+            get
+            {
                 if (_refreshTable == null)
                     _refreshTable = new RelayCommand(RefreshTable);
                 return _refreshTable;
@@ -265,8 +279,10 @@ namespace AFH_Scheduler
         }
 
         private RelayCommand _importTableCommand;
-        public ICommand ImportTableCommand {
-            get {
+        public ICommand ImportTableCommand
+        {
+            get
+            {
                 if (_importTableCommand == null)
                     _importTableCommand = new RelayCommand(ImportExcelTable);
                 return _importTableCommand;
@@ -274,8 +290,10 @@ namespace AFH_Scheduler
         }
 
         private RelayCommand _exportTable;
-        public ICommand ExportTableCommand {
-            get {
+        public ICommand ExportTableCommand
+        {
+            get
+            {
                 if (_exportTable == null)
                     _exportTable = new RelayCommand(ExportTable);
                 return _exportTable;
@@ -283,8 +301,10 @@ namespace AFH_Scheduler
         }
 
         private RelayCommand _addNewHomeCommand;
-        public ICommand AddNewHomeCommand {
-            get {
+        public ICommand AddNewHomeCommand
+        {
+            get
+            {
                 if (_addNewHomeCommand == null)
                     _addNewHomeCommand = new RelayCommand(CreateNewHomeAsync);
                 return _addNewHomeCommand;
@@ -473,14 +493,17 @@ namespace AFH_Scheduler
         #endregion
 
         #region Generators
-
+        /*
+         * @brief Loads View Model Data
+         * @details Queries initial schedule data from database and loads it into the MainWindow ViewModel
+         **/
         public void GenData()
         {
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var homes = db.Provider_Homes.ToList();
 
-                foreach(Provider_Homes house in homes)
+                foreach (Provider_Homes house in homes)
                 {
                     Provider homeProvider = db.Providers.FirstOrDefault(x => x.Provider_ID == house.FK_Provider_ID);
 
@@ -508,8 +531,8 @@ namespace AFH_Scheduler
                         RcsUnit = "",
                     };
                     Providers.Add(newHome);
-                }               
-                
+                }
+
                 //foreach (var item in provs)
                 //{
                 //    var homes = db.Provider_Homes.Where(r=> r.FK_Provider_ID == item.Provider_ID).ToList();
@@ -553,7 +576,10 @@ namespace AFH_Scheduler
         #endregion
 
         #region Dialogs
-
+        /*
+         * @brief Creates New Home
+         * @details Makes asyncrounous call to database to save a new home record
+         * */
         private async void CreateNewHomeAsync(object obj)
         {
             var createdHome = new NewHomeDialogVM();
@@ -667,7 +693,10 @@ namespace AFH_Scheduler
                 //MessageService.ReleaseMessageBox("New Home has been added to the database");
             }
         }
-
+        /*
+         * @brief Opens History Dialog
+         * @details Called by the Home History button in MainWindow.xaml and opens Home history dialog
+         * */
         private async void ExecuteHistoryDialog(object o)
         {
             if (SelectedHome == null)
@@ -686,7 +715,10 @@ namespace AFH_Scheduler
                 var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
             }
         }
-
+        /*
+         * @brief Opens Complete Inspection Dialog
+         * @details Called by the Complete Inspection button in MainWindow.xaml and opens Complete Inspection dialog
+         * */
         private async void ExecuteCompleteDialog(object o)
         {
             if (SelectedHome == null)
@@ -705,7 +737,10 @@ namespace AFH_Scheduler
                 var result = await DialogHost.Show(view, "WindowDialogs", CompleteInspectionClosingEventHandler);
             }
         }
-
+        /*
+        * @brief Opens Inactive Home list dialog
+        * @details Called by the Inactive Home list button in MainWindow.xaml and opens Inactive home dialog
+        * */
         private async void InactiveListDisplayAsync(object obj)
         {
             var vm = new InactiveHomeListVM(InActiveHomes);
@@ -730,7 +765,10 @@ namespace AFH_Scheduler
                 }
             }
         }
-
+        /*
+        * @brief Delete Home from database
+        * @details Deletes home from database 
+        * */
         //private void DeleteHome(object obj)
         //{
         //    if (SelectedSchedule == null)
@@ -770,7 +808,10 @@ namespace AFH_Scheduler
         //}
 
 
-
+        /*
+         * @brief Opens Edit dialog 
+         * @details Called by the Edit Home button in MainWindow.xaml and opens Edit home dialog
+         * */
         private async void ExecuteEditDialog(object o)
         {
             if (SelectedHome == null)
@@ -816,7 +857,10 @@ namespace AFH_Scheduler
         //        }
         //    }
         //}
-
+        /*
+         * @brief Edit History dialog 
+         * @details Called by the Edit History button in MainWindow.xaml and opens Edit history dialog
+         * */
         private void EditHistoryDialogOpen(object obj)
         {
             /*HistoryModel historyModel = (HistoryModel)obj;
@@ -844,13 +888,13 @@ namespace AFH_Scheduler
             Console.WriteLine("Dialog closed successfully");
             if ((String)eventArgs.Parameter == "Cancel")
             {
-                if((String)eventArgs.Parameter == "SUBMIT")
+                if ((String)eventArgs.Parameter == "SUBMIT")
                 {
                     CompleteVM completeDialogContext = ((CompleteVM)((EditDialog)eventArgs.Session.Content).DataContext);
                     HomeModel updatedHomeValues = completeDialogContext.SelectedHome;
                     string newNextInspectionDate = completeDialogContext.SelectedCode.IOutcome_Code;
 
-                    using(HomeInspectionEntities db = new HomeInspectionEntities())
+                    using (HomeInspectionEntities db = new HomeInspectionEntities())
                     {
                         string nextInspection = updatedHomeValues.NextInspection;
 
@@ -858,7 +902,8 @@ namespace AFH_Scheduler
 
 
 
-                        db.Home_History.Add(new Home_History {
+                        db.Home_History.Add(new Home_History
+                        {
                             FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code.Equals(newNextInspectionDate)).IOutcome_Code,
                             FK_PHome_ID = updatedHomeValues.HomeID,
                             HHistory_Date = newNextInspectionDate,
@@ -871,7 +916,7 @@ namespace AFH_Scheduler
                             Scheduled_Inspections homeDates = selectHome.Scheduled_Inspections.First();
 
                             homeDates.SInspections_Date = nextInspection;
-                            homeDates.SInspections_EighteenMonth  = alg.DropDateMonth(homeDates.SInspections_Date, Drop.EIGHTEEN_MONTH);
+                            homeDates.SInspections_EighteenMonth = alg.DropDateMonth(homeDates.SInspections_Date, Drop.EIGHTEEN_MONTH);
                             homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeDates.SInspections_Date, Drop.SEVENTEEN_MONTH);
                             homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(completeDialogContext.SelectedCode, nextInspection);
                         }
@@ -1066,6 +1111,10 @@ namespace AFH_Scheduler
         }
         #endregion
 
+        /*
+         * @brief Clears User Object from VM
+         * @details Clears User object from VM as part of logout.
+         * */
         #region User Methods
         public void ClearUser() { _usr = null; }
         #endregion
