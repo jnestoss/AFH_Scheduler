@@ -1,52 +1,76 @@
-﻿<UserControl x:Class="AFH_Scheduler.Dialogs.ImportDataPreview"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"              
-             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs"
-             mc:Ignorable="d">
+﻿<UserControl
+    x:Class="AFH_Scheduler.Dialogs.ImportDataPreview"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AFH_Scheduler.Dialogs"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    mc:Ignorable="d">
 
-    <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="ImportErrorDialog">
-        <StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock FontSize="18" Margin="10" HorizontalAlignment="Center">Data Preview:</TextBlock>
+    <materialDesign:DialogHost
+        Height="Auto"
+        DockPanel.Dock="Top"
+        Identifier="ImportErrorDialog">
 
-                <Button  
-                Margin="10"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
-                Command="{Binding ImportDataCommand}"
-                ToolTip="Load in an excel file.">
-                    _LOAD FILE
-                </Button>
-            </StackPanel>
+
+        <Grid
+            Width="800"
+            Height="600"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <materialDesign:ColorZone
+                Grid.Row="0"
+                Padding="16"
+                materialDesign:ShadowAssist.Darken="True"
+                materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                Mode="Accent">
+                <TextBlock
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                    Import Home
+                </TextBlock>
+            </materialDesign:ColorZone>
+
 
             <DataGrid
-               VerticalScrollBarVisibility="Auto"
-               HorizontalScrollBarVisibility="Auto"
-               MaxHeight="200"
-               MaxWidth="1160"
-               materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-               materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-               AutoGenerateColumns="False"
-               CanUserAddRows="False"
-               CanUserSortColumns="True"
-               ItemsSource="{Binding ImportedHomes}">
+                Grid.Row="1"
+                Height="460"
+                Margin="20,0,20,0"
+                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserSortColumns="True"
+                HorizontalScrollBarVisibility="Visible"
+                ItemsSource="{Binding ImportedHomes}"
+                VerticalScrollBarVisibility="Auto">
 
                 <DataGrid.Columns>
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding ProviderName}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="Facility POC" />
+                        Binding="{Binding ProviderName}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="Facility POC"
+                        IsReadOnly="True" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding HomeLicenseNum}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="License Number" />
+                        Binding="{Binding HomeLicenseNum}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="License Number"
+                        IsReadOnly="True" />
 
                     <!--
                 <materialDesign:MaterialDataGridTextColumn
@@ -60,106 +84,117 @@
                             IsReadOnly="True"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="Home ID" />
-                -->
+                    -->
 
                     <materialDesign:MaterialDataGridTextColumn
-                    Binding="{Binding HomeName}"
-                    IsReadOnly="True" 
-                    Header="Facility Name" 
-                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Binding="{Binding HomeName}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="Facility Name"
+                        IsReadOnly="True" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Address}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Address">
-                    </materialDesign:MaterialDataGridTextColumn>
+                        Binding="{Binding Address}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="Address"
+                        IsReadOnly="True" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding City}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="City"
-                            MaxLength="255" />
+                        Binding="{Binding City}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="City"
+                        IsReadOnly="True"
+                        MaxLength="255" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding ZIP}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="ZipCode"
-                            MaxLength="255" />
+                        Binding="{Binding ZIP}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="ZipCode"
+                        IsReadOnly="True"
+                        MaxLength="255" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                    IsReadOnly="True"
-                    Binding="{Binding Phone}" 
-                    Header="Telephone" 
-                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Binding="{Binding Phone}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="Telephone"
+                        IsReadOnly="True" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RecentInspection}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Recent Inspection Date">
-                    </materialDesign:MaterialDataGridTextColumn>
+                        Binding="{Binding RecentInspection}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="Recent Inspection Date"
+                        IsReadOnly="True" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding NextInspection}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="Next Inspection Date">
-                    </materialDesign:MaterialDataGridTextColumn>
+                        Binding="{Binding NextInspection}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="Next Inspection Date"
+                        IsReadOnly="True" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding EighteenthMonthDate}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="18th Month Date">
-                    </materialDesign:MaterialDataGridTextColumn>
+                        Binding="{Binding EighteenthMonthDate}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="18th Month Date"
+                        IsReadOnly="True" />
 
                     <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding RcsRegionUnit}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            Header="RCS Region/Unit">
-                    </materialDesign:MaterialDataGridTextColumn>
+                        Binding="{Binding RcsRegionUnit}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                        Header="RCS Region/Unit"
+                        IsReadOnly="True" />
 
                 </DataGrid.Columns>
             </DataGrid>
 
-            <StackPanel Margin="30" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button 
-            IsDefault="True"
-            Margin="10,0,10,1" 
-            FontSize="18" 
-            ToolTip="Add homes to main database table." 
-            MinWidth="100"
-            Style="{StaticResource MaterialDesignRaisedLightButton}"        
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
+            <Separator
+                Grid.Row="2"
+                Margin="8,0,8,0"
+                Style="{StaticResource MaterialDesignDarkSeparator}" />
+
+            <StackPanel
+                Grid.Row="3"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    Width="100"
+                    Margin="20,0,400,8"
+                    Command="{Binding ImportDataCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    ToolTip="Load in an excel file.">
+                    _LOAD FILE
+                </Button>
+
+                <Button
+                    MinWidth="100"
+                    Margin="10,0,10,8"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                    IsDefault="True"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Add homes to database">
                     <Button.CommandParameter>
 
                         <system:String>IMPORT</system:String>
 
                     </Button.CommandParameter>
-
-                    _ADD HOMES?
+                    _IMPORT HOMES
                 </Button>
 
-                <Button 
+                <Button
+                    Width="100"
+                    Margin="10,0,10,8"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
                     IsCancel="True"
-            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-            Style="{StaticResource MaterialDesignRaisedLightButton}" 
-            MinWidth="100" Margin="10,0,11,0" 
-            ToolTip="Cancel Import Table" 
-            FontSize="18">
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Cancel Import Table">
                     <Button.CommandParameter>
 
                         <system:String>Cancel</system:String>
 
                     </Button.CommandParameter>
-
                     _CANCEL
                 </Button>
             </StackPanel>
-        </StackPanel>
+
+        </Grid>
+
     </materialDesign:DialogHost>
 </UserControl>

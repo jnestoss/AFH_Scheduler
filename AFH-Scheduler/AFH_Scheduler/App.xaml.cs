@@ -15,6 +15,7 @@ namespace AFH_Scheduler
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+
             base.OnStartup(e);
 
             MainWindow app = new MainWindow();
