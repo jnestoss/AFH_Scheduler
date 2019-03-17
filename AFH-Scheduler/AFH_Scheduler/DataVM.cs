@@ -21,6 +21,8 @@ using AFH_Scheduler.Database.LoginDB;
 using System.IO;
 using System.Windows.Data;
 using System.Windows.Controls;
+using AFH_Scheduler.Excel;
+using AFH_Scheduler.HelperClasses;
 
 namespace AFH_Scheduler
 {
@@ -533,6 +535,7 @@ namespace AFH_Scheduler
             {
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
+                testCase = 15.99;
             }
             DesiredAverage = testCase;
             UpdateInspectionAverage();
@@ -549,6 +552,8 @@ namespace AFH_Scheduler
             var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
             if (result.Equals("IMPORT"))
             {
+                ExcelClass.ImportExcelTableNew(importData.ImportedHomes);
+
                 foreach (var importedHome in importData.ImportedHomes)
                 {
                     if (importedHome.IsActive)
@@ -565,118 +570,14 @@ namespace AFH_Scheduler
 
         private void ExportTable(object obj)
         {
-            //Console.WriteLine("WWWWWWWWWWWWWWWW   " + obj.GetType() + "WWWWWWWWWWWWWWWWW");
-            /*if (ExcelFileName.Equals("") || !(Directory.Exists(ExcelFileName)))
-            {
-                MessageService.ReleaseMessageBox("Directory not found");
-                return;
-            }*/
             string fileName = MessageService.ExcelSaveDialog();
             if (fileName == null)
             {
                 MessageQueue.Enqueue("File not saved");
                 return;
             }
-            using (HomeInspectionEntities db = new HomeInspectionEntities())
-            {
-                try
-                { //We write to an Excel file
-                    Microsoft.Office.Interop.Excel.Application xlApp;
-                    Workbook xlWorkbook;
-                    Worksheet xlWorksheet;
 
-                    xlApp = new Microsoft.Office.Interop.Excel.Application
-                    {
-                        //Visible = true
-                    };
-
-                    try
-                    {//Excel work here
-                        xlWorkbook = xlApp.Workbooks.Add("");
-                        xlWorksheet = (Worksheet)xlWorkbook.ActiveSheet;
-                        /*"Please include:  
-                         * Region/unit; Checked
-                         * last inspection; Checked
-                         * current inspection; Checked
-                         * how many months and days those are apart; Checked
-                         *** code (result) from current inspection (we have shared codes to use based performance); 
-                         *** forecasted next inspection date; 
-                         * 17 month drop dead date; Checked
-                         * 18 month drop dead date (for forecasted inspection). Checked"
-                         */
-
-                        xlWorksheet.Cells[1, 1] = "License Number";
-                        xlWorksheet.Cells[1, 2] = "Provider";
-                        xlWorksheet.Cells[1, 3] = "Address";
-                        xlWorksheet.Cells[1, 4] = "City";
-                        xlWorksheet.Cells[1, 5] = "Zipcode";
-                        xlWorksheet.Cells[1, 6] = "Recent Inspection Date";
-                        xlWorksheet.Cells[1, 7] = "Next Inspection Date";
-                        xlWorksheet.Cells[1, 8] = "Interval in Months";
-                        xlWorksheet.Cells[1, 9] = "Interval in Days";
-                        xlWorksheet.Cells[1, 10] = "17th Month Drop Dead";
-                        xlWorksheet.Cells[1, 11] = "18th Month Drop Dead";
-                        xlWorksheet.Cells[1, 12] = "Current Outcome"; //From current inspection
-                        xlWorksheet.Cells[1, 13] = "Forecasted Next Inspection";//forecasted next inspection date
-                        xlWorksheet.Cells[1, 14] = "RCS Region";
-                        xlWorksheet.Cells[1, 15] = "RCS Unit";
-
-
-                        int row = 2;
-                        foreach (var provider in Providers)
-                        {
-                            //var home = db.Provider_Homes.Where(r => r.PHome_Address == provider.Address).First();                            
-
-                            xlWorksheet.Cells[row, 1] = provider.ProviderID;
-                            xlWorksheet.Cells[row, 2] = provider.ProviderName;
-                            xlWorksheet.Cells[row, 3] = provider.Address;
-                            xlWorksheet.Cells[row, 4] = provider.City;
-                            xlWorksheet.Cells[row, 5] = provider.ZIP;
-                            xlWorksheet.Cells[row, 6] = provider.RecentInspection;
-                            xlWorksheet.Cells[row, 7] = provider.NextInspection;
-                            xlWorksheet.Cells[row, 8] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, true);//Interval in Months
-                            xlWorksheet.Cells[row, 9] = alg.InspectionInterval(provider.RecentInspection, provider.NextInspection, false);//Interval in Days
-                            xlWorksheet.Cells[row, 10] = alg.DropDateMonth(provider.NextInspection, Drop.SEVENTEEN_MONTH);//17th Month Drop Date
-                            xlWorksheet.Cells[row, 11] = provider.EighteenthMonthDate;
-                            xlWorksheet.Cells[row, 12] = alg.ForecastingFutureInspection(provider.HomeID); //Outcome from current inspection
-                            xlWorksheet.Cells[row, 13] = "";//forecasted next inspection date
-                            xlWorksheet.Cells[row, 14] = provider.RcsRegion;//RCS Region
-                            xlWorksheet.Cells[row, 15] = provider.RcsUnit;//RCS Unit
-
-                            row++;
-                        }
-
-                        xlWorksheet.get_Range("A1", "N1").EntireColumn.AutoFit();
-
-                        //xlApp.Visible = false;
-                        //xlApp.UserControl = false;
-                        if (fileName.Contains(".xlsx"))
-                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlOpenXMLWorkbook);
-                        else if (fileName.Contains(".csv"))
-                        {
-                            xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlCSVWindows);
-                            xlWorkbook.Close(false);
-                        }
-
-
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Problem with Excel " + e.ToString());
-
-                    }
-                    finally
-                    {
-                        xlApp.Workbooks.Close();
-                        xlApp.Quit();
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Problem with Excel " + e.ToString());
-
-                }
-            }
+            ExcelClass.ExportTableNew(fileName, Providers);
         }
         #endregion
 
@@ -703,13 +604,29 @@ namespace AFH_Scheduler
                     Home_History homeHistory = allHomeHistory.Last();
 
                     HomeModel newHome;
-                    if(homeHistory.Inspection_Outcome.IOutcome_Code == "NEW")
+                    string provName;
+                    long provID;
+                    bool hasNoProv;
+                    if (homeProvider is null)
+                    {
+                        provName = "No Provider";
+                        provID = -1;
+                        hasNoProv = true;
+                    }
+                    else
+                    {
+                        provName = homeProvider.Provider_Name;
+                        provID = homeProvider.Provider_ID;
+                        hasNoProv = false;
+                    }
+
+                    if (homeHistory.Inspection_Outcome.IOutcome_Code == "NEW")
                     {
                         newHome = new HomeModel
                         {
-                            ProviderID = homeProvider.Provider_ID,
+                            ProviderID = provID,
                             HomeID = house.PHome_ID,
-                            ProviderName = homeProvider.Provider_Name,
+                            ProviderName = provName,
                             HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
                             HomeName = house.PHome_Name,
                             Phone = house.PHome_Phonenumber,
@@ -721,17 +638,18 @@ namespace AFH_Scheduler
                             EighteenthMonthDate = inspections.SInspections_EighteenMonth,
                             SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
                             ForecastedDate = inspections.SInspection_ForecastedDate,
+                            HasNoProvider = hasNoProv,
                             IsActive = true,
-                            RcsRegionUnit = house.PHome_RCSUnit
+                            RcsUnit = house.PHome_RCSUnit
                         };
                     }
                     else
                     {
                         newHome = new HomeModel
                         {
-                            ProviderID = homeProvider.Provider_ID,
+                            ProviderID = provID,
                             HomeID = house.PHome_ID,
-                            ProviderName = homeProvider.Provider_Name,
+                            ProviderName = provName,
                             HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
                             HomeName = house.PHome_Name,
                             Phone = house.PHome_Phonenumber,
@@ -743,8 +661,9 @@ namespace AFH_Scheduler
                             EighteenthMonthDate = inspections.SInspections_EighteenMonth,
                             SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
                             ForecastedDate = inspections.SInspection_ForecastedDate,
+                            HasNoProvider = hasNoProv,
                             IsActive = true,
-                            RcsRegionUnit = house.PHome_RCSUnit
+                            RcsRegionUnit = house.PHome_RCSUnit,
                         };
                     }
 
@@ -782,7 +701,11 @@ namespace AFH_Scheduler
 
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
-                    int newHomeID = new Random().Next(1, 1000000);
+                    long newHomeID = GenerateNewIDs.GenerateHomeID();
+
+                    long newHistID = GenerateNewIDs.GenerateHistoryID();
+
+                    long newschedID = GenerateNewIDs.GenerateScheduleID();
 
                     Scheduled_Inspections dates = new Scheduled_Inspections
                     {
@@ -790,7 +713,7 @@ namespace AFH_Scheduler
                         SInspections_Date = home.NextInspection,
                         SInspections_EighteenMonth = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
                         SInspections_SeventeenMonth = alg.DropDateMonth(recentDate, Drop.SEVENTEEN_MONTH),
-                        SInspections_Id = new Random().Next(1, 1000000),
+                        SInspections_Id = newschedID,
                         SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(db.Inspection_Outcome.First(), home.NextInspection)
                     };
 
@@ -807,7 +730,7 @@ namespace AFH_Scheduler
                             FK_PHome_ID = newHomeID,
                             FK_Outcome_Code = db.Inspection_Outcome.First(r => r.IOutcome_Code == "NEW").IOutcome_Code, //"NEW"
                             HHistory_Date = DateTime.Today.ToString("MM/dd/yyyy"),
-                            HHistory_ID = new Random().Next(1, 1000000)
+                            HHistory_ID = newHistID
                         });
                     }
                     else
@@ -817,7 +740,7 @@ namespace AFH_Scheduler
                             FK_PHome_ID = newHomeID,
                             FK_Outcome_Code = createdHome.SelectedCode.IOutcome_Code,
                             HHistory_Date = home.RecentInspection,
-                            HHistory_ID = new Random().Next(1, 1000000)
+                            HHistory_ID = newHistID
                         });
                     }
 
@@ -1031,7 +954,7 @@ namespace AFH_Scheduler
         private void SettingsClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             SettingsVM settingsContext = (SettingsVM)((SettingsDialog)eventArgs.Session.Content).DataContext;
-            DesiredAverage = Convert.ToDouble(settingsContext.NormalCurve);
+            DesiredAverage = settingsContext.DesiredAverage;
         }
 
         private void NewHomeClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
@@ -1068,7 +991,7 @@ namespace AFH_Scheduler
                             FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code == newNextInspectionDate).IOutcome_Code,
                             FK_PHome_ID = updatedHomeValues.HomeID,
                             HHistory_Date = updatedHomeValues.NextInspection,
-                            HHistory_ID = new Random().Next(1, 1000000)         //how to generate history ID?????
+                            HHistory_ID = GenerateNewIDs.GenerateHistoryID()
                         });
 
                         Scheduled_Inspections homeDates = selectHome.Scheduled_Inspections.First();
@@ -1229,11 +1152,11 @@ namespace AFH_Scheduler
                     }
                 }
 
-                //Providers.Clear();
-                //foreach (var returnItem in SelectedProviders)
-                //{
-                //    Providers.Add(returnItem);
-                //}
+                Providers.Clear();
+                foreach (var returnItem in SelectedProviders)
+                {
+                    Providers.Add(returnItem);
+                }
             }
         }
         #endregion

@@ -104,14 +104,14 @@ namespace AFH_Scheduler.Dialogs
 
         private async void AdjustNormalCurve(object obj)
         {
-            var vm = new NormalCurveAdjusterVM(NormalCurve);
+            var vm = new NormalCurveAdjusterVM(DesiredAverage.ToString());
             var view = new NormalCurveAdjuster(vm);
             var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
             if (DialogSettingBoolReturn)
             {
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", vm.CurveNumber);
-                NormalCurve = vm.CurveNumber;
+                DesiredAverage = Convert.ToDouble(vm.CurveNumber);
             }
         }
 
@@ -162,8 +162,9 @@ namespace AFH_Scheduler.Dialogs
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
                 File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
                 text = "15.99";
+                testCase = 15.99;
             }
-            NormalCurve = text;
+            DesiredAverage = testCase;
         }
     }
 }
