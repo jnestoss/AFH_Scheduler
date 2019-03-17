@@ -10,5 +10,7 @@
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/homeinspection.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/homeinspection.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/logindb/users.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/logindb/users.tt")]
 
 

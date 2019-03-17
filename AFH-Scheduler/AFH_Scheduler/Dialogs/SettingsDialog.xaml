@@ -40,8 +40,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
@@ -109,7 +109,25 @@
                         Foreground="WhiteSmoke"
                         Kind="ViewList" />
                 </Button>
-
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="10"
+                    FontSize="18">
+                    Manage Logins:
+                </TextBlock>
+                <Button
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Command="{Binding AccountManagerCommand}"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                    ToolTip="Add/Remove/Edit User Login Credentials">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="Account" />
+                </Button>
             </Grid>
 
             <Grid Margin="30" HorizontalAlignment="Right">

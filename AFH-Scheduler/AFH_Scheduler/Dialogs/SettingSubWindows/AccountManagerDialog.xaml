@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.SettingSubWindows.AccountManagerDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+
+    <materialDesign:DialogHost Height="Auto" DockPanel.Dock="Top" Identifier="AccountsDialog">
+        <StackPanel Orientation="Vertical">
+            <DataGrid
+            VerticalScrollBarVisibility="Auto"
+            MaxHeight="200"
+            Margin="36 0 36 0"
+            ItemsSource="{Binding AccountsList}"
+            CanUserSortColumns="True"
+            CanUserAddRows="False"
+            AutoGenerateColumns="False"
+            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+            materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+            DockPanel.Dock="Top">
+                <DataGrid.Columns>
+                    <materialDesign:MaterialDataGridTextColumn
+                    IsReadOnly="True"
+                    Binding="{Binding Username}" 
+                    Header="Username" 
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button  
+                                    CommandParameter="{Binding}"
+                                    Command="{Binding Path=DataContext.AccountEditCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                                    ToolTip="Edit User Account">
+                                    _EDIT PASSWORD
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button  
+                                    CommandParameter="{Binding}"
+                                    Command="{Binding Path=DataContext.AccountDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                                    ToolTip="Delete User Account">
+                                    _DELETE ACCOUNT
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal">
+
+                <Button           
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Command="{Binding AddAccountCommand}"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    MaxWidth="255" Margin="10,30,11,20" 
+                    ToolTip="Add New User Account" 
+                    FontSize="14">
+                    _ADD ACCOUNT
+                </Button>
+
+                <Button
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    IsCancel="True"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                    Name="CloseSettingsButton" 
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" 
+                    MaxWidth="100" Margin="10,30,11,20" 
+                    ToolTip="Close Account Manager" 
+                    FontSize="14">
+                    <Button.CommandParameter>
+                        <system:String>Cancel</system:String>
+                    </Button.CommandParameter>
+                    _CLOSE
+                </Button>
+
+            </StackPanel>
+
+        </StackPanel>
+    </materialDesign:DialogHost>
+</UserControl>

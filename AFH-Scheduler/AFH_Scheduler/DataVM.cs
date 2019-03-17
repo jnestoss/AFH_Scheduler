@@ -24,14 +24,13 @@ using System.Windows.Controls;
 
 namespace AFH_Scheduler
 {
-    public class DataVM : ObservableObject, IPageViewModel, INotifyPropertyChanged
     /**
     * @file DataVM.cs
     *
     * @brief Main View Model
     * @details This is the main view model, which supports all data loading and event firing functions for MainWindow.xaml
     */
-    public class DataVM : ObservableObject, IPageViewModel
+    public class DataVM : ObservableObject, IPageViewModel, INotifyPropertyChanged
     {
         #region variables
 
@@ -682,13 +681,11 @@ namespace AFH_Scheduler
         #endregion
 
         #region Generators
-
-        public void ReadHomeData()
         /*
-         * @brief Loads View Model Data
-         * @details Queries initial schedule data from database and loads it into the MainWindow ViewModel
-         **/
-        public void GenData()
+        * @brief Loads View Model Data
+        * @details Queries initial schedule data from database and loads it into the MainWindow ViewModel
+        **/
+        public void ReadHomeData()
         {
             Providers = new ObservableCollection<HomeModel>();
             using (HomeInspectionEntities db = new HomeInspectionEntities())
