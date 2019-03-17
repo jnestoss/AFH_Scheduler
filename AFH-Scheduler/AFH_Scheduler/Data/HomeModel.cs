@@ -33,6 +33,7 @@ namespace AFH_Scheduler.Data
         private string _rcsRegion;
         private string _rcsUnit;
         private string _rcsRegionUnit;
+        private int _homeCount;
 
         public HomeModel()
         {

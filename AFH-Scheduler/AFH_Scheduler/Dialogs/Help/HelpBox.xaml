@@ -1,19 +1,20 @@
-﻿<UserControl x:Class="AFH_Scheduler.Dialogs.Help.HelpBox"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.Help"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d">
+﻿<UserControl
+    x:Class="AFH_Scheduler.Dialogs.Help.HelpBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.Help"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    mc:Ignorable="d">
 
     <Grid
-            Width="800"
-            Height="600"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+        Width="800"
+        Height="600"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,99 +24,132 @@
         </Grid.RowDefinitions>
 
         <materialDesign:ColorZone
-                Grid.Row="0"
-                Padding="16"
-                materialDesign:ShadowAssist.Darken="True"
-                materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                Mode="Accent">
+            Grid.Row="0"
+            Padding="16"
+            materialDesign:ShadowAssist.Darken="True"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Mode="Accent">
             <TextBlock
-                    Margin="0,0,0,0"
-                    HorizontalAlignment="Center"
-                    FontSize="20"
-                    Style="{StaticResource MaterialDesignHeadlineTextBlock}">
-                    Help
+                Margin="0,0,0,0"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                Help
             </TextBlock>
         </materialDesign:ColorZone>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="450" Grid.Row="1">
+        <ScrollViewer
+            Grid.Row="1"
+            Height="480"
+            VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
                 <TreeView MinWidth="800" MaxWidth="800">
                     <TreeViewItem Header="Main Table">
-                        <TextBlock MaxWidth="730" TextWrapping="Wrap" Text="{Binding MainDecription}"/>
+                        <TextBlock
+                            MaxWidth="730"
+                            Text="{Binding MainDecription}"
+                            TextWrapping="Wrap" />
 
                         <TreeViewItem Header="Complete Inspection">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding CompleteInspectDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding CompleteInspectDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
 
                         <TreeViewItem Header="Home History">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding HistoryDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding HistoryDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
 
                         <TreeViewItem Header="Edit Homes">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding EditDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding EditDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
 
                         <TreeViewItem Header="Inactive homes">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding InactiveHomeDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding InactiveHomeDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
 
                         <TreeViewItem Header="Import">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding ImportDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding ImportDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
 
                         <TreeViewItem Header="Export">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding ExportDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding ExportDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
                     </TreeViewItem>
                 </TreeView>
 
-                <TreeView Margin="0 10 0 0" MinWidth="800" MaxWidth="800">
+                <TreeView
+                    MinWidth="800"
+                    MaxWidth="800"
+                    Margin="0,10,0,0">
                     <TreeViewItem Header="Settings Page">
-                        <TextBlock MaxWidth="730" TextWrapping="Wrap" Text="{Binding SettingsDescription}"/>
+                        <TextBlock
+                            MaxWidth="730"
+                            Text="{Binding SettingsDescription}"
+                            TextWrapping="Wrap" />
 
                         <TreeViewItem Header="Provider List">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding ProvidersDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding ProvidersDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
 
                         <TreeViewItem Header="Normal Curve">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding NormalValueDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding NormalValueDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
 
                         <TreeViewItem Header="Outcome List">
-                            <TextBlock MaxWidth="720" TextWrapping="Wrap" Text="{Binding OutcomeDescription}"/>
+                            <TextBlock
+                                MaxWidth="720"
+                                Text="{Binding OutcomeDescription}"
+                                TextWrapping="Wrap" />
                         </TreeViewItem>
                     </TreeViewItem>
                 </TreeView>
             </StackPanel>
-            
+
         </ScrollViewer>
-        
+
         <Separator
-                Grid.Row="2"
-                Margin="8,0,8,0"
-                Style="{StaticResource MaterialDesignDarkSeparator}" />
+            Grid.Row="2"
+            Margin="8,0,8,0"
+            Style="{StaticResource MaterialDesignDarkSeparator}" />
 
-        <StackPanel
-                Grid.Row="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="6"
-                Margin="0,0,0,0"
-                HorizontalAlignment="Stretch"
-                Orientation="Horizontal">
 
-            <Button
-                    Width="108"
-                    Margin="20,0,0,0"
-                    IsCancel="True"
-                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}" 
-                    Style="{DynamicResource MaterialDesignFlatButton}"
-                    TextBlock.Foreground="Black"
-                    ToolTip="Close Help Page" 
-                    FontSize="14">
-                Close
-            </Button>
-
-        </StackPanel>
+        <Button
+            Grid.Row="4"
+            Width="108"
+            Margin="0,0,0,8"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+            FontSize="14"
+            IsCancel="True"
+            Style="{DynamicResource MaterialDesignFlatButton}"
+            TextBlock.Foreground="Black"
+            ToolTip="Close Help Page">
+            Close
+        </Button>
 
     </Grid>
 </UserControl>

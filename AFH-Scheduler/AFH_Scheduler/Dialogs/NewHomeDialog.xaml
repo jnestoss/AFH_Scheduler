@@ -257,7 +257,7 @@
                 materialDesign:HintAssist.HintOpacity="0.9"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>

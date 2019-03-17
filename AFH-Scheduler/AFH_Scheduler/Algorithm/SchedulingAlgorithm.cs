@@ -6,11 +6,101 @@ using System.Text;
 using System.Threading.Tasks;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Data;
+using Nager.Date;
+using AFH_Scheduler.Algorithm;
 
 namespace AFH_Scheduler.Algorithm
 {
     public class SchedulingAlgorithm
     {
+
+        public static double CalculateInspectionAverage()
+        {
+            List<Provider_Homes> homes;
+            double average = 0;
+        
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                 homes= db.Provider_Homes.ToList();
+
+                foreach(var home in homes)
+                {
+                    Scheduled_Inspections homeInspections = home.Scheduled_Inspections.First();
+                    Home_History homeHistory = home.Home_History.First();
+
+                    DateTime lastInspection = ExtractDateTime(homeHistory.HHistory_Date);
+                    DateTime nextInspection = ExtractDateTime(homeInspections.SInspections_Date);
+
+                    TimeSpan diff = nextInspection - lastInspection;
+
+                    average += diff.TotalDays / 29.53;
+                }
+            }
+
+            return average / homes.Count;
+        }
+
+
+        public static string CalculateNextScheduledDate(Inspection_Outcome outcome, string recent_inspection, double averageInspectionTime, double desiredAverage)
+        {
+            List<DateTime> nextInspectionChoices = new List<DateTime>();
+
+            DateTime date = ExtractDateTime(recent_inspection);
+
+            int minMonthRange = Convert.ToInt32(outcome.IOutcome_Mintime);
+            int maxMonthRange = Convert.ToInt32(outcome.IOutcome_Maxtime) + 1;
+
+            DateTime minDate = date.AddMonths(minMonthRange);
+            DateTime maxDate = date.AddMonths(maxMonthRange).AddDays(-1);
+
+            while(minDate < maxDate)
+            {
+                if (!DateSystem.IsPublicHoliday(minDate, CountryCode.US) &&
+                    !DateSystem.IsWeekend(minDate, CountryCode.US))
+                {
+                    nextInspectionChoices.Add(minDate);
+                }
+
+                minDate = minDate.AddDays(1);
+            }
+
+            int[] probs = new int[nextInspectionChoices.Count];
+
+
+            double desiredAverageUpperLimit = desiredAverage + 0.3;
+            double desiredAverageLowerLimit = desiredAverage - 0.3;
+            if(averageInspectionTime < desiredAverageLowerLimit ||
+                averageInspectionTime > desiredAverageUpperLimit)
+            {
+                for (int i = 0; i < nextInspectionChoices.Count; i++)
+                {
+                    probs[i] = i;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < nextInspectionChoices.Count; i++)
+                {
+                    probs[i] = 1;
+                }
+            }
+
+            var loadedDie = new LoadedDie(probs);
+
+            int number = loadedDie.NextValue();
+
+            if (averageInspectionTime > desiredAverageUpperLimit)
+            {
+                return nextInspectionChoices[probs.Length - 1 - number].ToString("MM/dd/yyyy");
+            }
+            else
+            {
+                return nextInspectionChoices[number - 1].ToString("MM/dd/yyyy");
+            }
+        }
+
+
+
         #region Grabbing Most Recent Inspection Date
         public Home_History GrabbingRecentInspection(long pHome_ID)
         {

@@ -11,21 +11,5 @@ namespace AFH_Scheduler.Dialogs
         {
             InitializeComponent();   
         }
-
-        public void setDataContext(HomeModel schedule)
-        {
-            this.DataContext = new EditVM(schedule);
-
-
-            //trying to shut down this dialog after confirmation of deletion
-
-            //this.Loaded += (s, e) =>
-            //{
-            //    if (DataContext is ICloseable)
-            //    {
-            //        (DataContext as ICloseable).RequestClose += (_, __) => this.;
-            //    }
-            //};
-        }
     }
 }
