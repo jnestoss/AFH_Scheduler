@@ -335,7 +335,6 @@
                     Canvas.Top="522"
                     PlacementMode="TopAndAlignCentres"
                     Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                    ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
                     ToolTipService.Placement="Left">
                     <StackPanel>
                         <Button Command="{Binding RunCompleteDialogCommand}" ToolTip="Complete Inspection">
