@@ -271,9 +271,6 @@
     </Compile>
     <Compile Include="Dialogs\Errors\ImportErrorListVM.cs" />
     <Compile Include="Dialogs\Errors\ImportErrorModel.cs" />
-    <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
-      <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\Help\HelpBox.xaml.cs">
       <DependentUpon>HelpBox.xaml</DependentUpon>
     </Compile>
@@ -392,10 +389,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Errors\ImportErrorList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

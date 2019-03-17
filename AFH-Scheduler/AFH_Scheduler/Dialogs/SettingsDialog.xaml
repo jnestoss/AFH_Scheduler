@@ -17,67 +17,94 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-
     <materialDesign:DialogHost
-        Height="Auto"
-        DockPanel.Dock="Top"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
         Identifier="ProvidersDialog">
-        <StackPanel Margin="20,20,20,20" Orientation="Vertical">
-            <TextBlock
-                Margin="10"
-                HorizontalAlignment="Center"
-                FontSize="22">
-                Settings
-            </TextBlock>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Margin="10"
-                    FontSize="18">
-                    Provider List:
-                </TextBlock>
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Command="{Binding ProviderListCommand}"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
-                    ToolTip="Show Provider List">
-                    <materialDesign:PackIcon
-                        Width="25"
-                        Height="25"
-                        Foreground="WhiteSmoke"
-                        Kind="ViewList" />
-                </Button>
 
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="10"
-                    FontSize="18">
-                    Average
-                </TextBlock>
-                <TextBox
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="10"
-                    FontSize="18"
-                    IsReadOnly="True"
-                    Text="{Binding DesiredAverage, Converter={StaticResource desiredAverageConverter}}" />
+        <Grid
+            Width="800"
+            Height="600"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
 
-                <!--<Button
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <materialDesign:ColorZone
+                Grid.Row="0"
+                Padding="16"
+                materialDesign:ShadowAssist.Darken="True"
+                materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                Mode="Accent">
+                <TextBlock
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                    Settings
+                </TextBlock>
+            </materialDesign:ColorZone>
+
+            <StackPanel
+                Grid.Row="1"
+                Margin="20,20,20,20"
+                Orientation="Vertical">
+
+                <Grid Height="440">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="100" />
+                        <ColumnDefinition Width="Auto" MinWidth="100" />
+                        <ColumnDefinition Width="Auto" MinWidth="100" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="10"
+                        FontSize="18">
+                        Provider List:
+                    </TextBlock>
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Command="{Binding ProviderListCommand}"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        ToolTip="Show Provider List">
+                        <materialDesign:PackIcon
+                            Width="25"
+                            Height="25"
+                            Foreground="WhiteSmoke"
+                            Kind="ViewList" />
+                    </Button>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="10"
+                        FontSize="18">
+                        Average
+                    </TextBlock>
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="10"
+                        FontSize="18"
+                        IsReadOnly="True"
+                        Text="{Binding DesiredAverage, Converter={StaticResource desiredAverageConverter}}" />
+
+                    <!--<Button
                     Grid.Row="1"
                     Grid.Column="2"
                     Command="{Binding NormalCurveCommand}"
@@ -90,87 +117,87 @@
                         Kind="Wrench" />
                 </Button>-->
 
-                <Slider
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Width="280"
-                    Height="50"
-                    Maximum="15.99"
-                    Minimum="12.00"
-                    TickFrequency="0.1"
-                    TickPlacement="Both"
-                    ToolTip="MaterialDesignDiscreteSlider"
-                    Value="{Binding DesiredAverage}" />
+                    <Slider
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Width="280"
+                        Height="50"
+                        Maximum="15.99"
+                        Minimum="12.00"
+                        TickFrequency="0.25"
+                        TickPlacement="Both"
+                        ToolTip="MaterialDesignDiscreteSlider"
+                        Value="{Binding DesiredAverage}" />
 
-                <TextBlock
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Margin="10"
-                    FontSize="18">
-                    Outcome Codewords:
-                </TextBlock>
-                
-                <Button
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Command="{Binding OutcomeListCommand}"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
-                    ToolTip="Show Provider List">
-                    <materialDesign:PackIcon
-                        Width="25"
-                        Height="25"
-                        Foreground="WhiteSmoke"
-                        Kind="ViewList" />
-                </Button>
-                <TextBlock
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Margin="10"
-                    FontSize="18">
-                    Manage Logins:
-                </TextBlock>
-                <Button
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Command="{Binding AccountManagerCommand}"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
-                    ToolTip="Add/Remove/Edit User Login Credentials">
-                    <materialDesign:PackIcon
-                        Width="25"
-                        Height="25"
-                        Foreground="WhiteSmoke"
-                        Kind="Account" />
-                </Button>
-            </Grid>
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="10"
+                        FontSize="18">
+                        Outcome Codewords:
+                    </TextBlock>
 
-            <Grid Margin="30" HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
-                    <ColumnDefinition Width="Auto" MinWidth="100" />
-                </Grid.ColumnDefinitions>
-
-                <Button
-                    Name="CancelNewHome"
-                    Grid.Column="1"
-                    MaxWidth="100"
-                    Margin="10,0,11,0"
-                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
-                    FontSize="14"
-                    IsCancel="True"
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
-                    <Button.CommandParameter>
-
-                        <system:String>Cancel</system:String>
-
-                    </Button.CommandParameter>
-                    _CLOSE
-                </Button>
-            </Grid>
+                    <Button
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Command="{Binding OutcomeListCommand}"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        ToolTip="Show Provider List">
+                        <materialDesign:PackIcon
+                            Width="25"
+                            Height="25"
+                            Foreground="WhiteSmoke"
+                            Kind="ViewList" />
+                    </Button>
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="10"
+                        FontSize="18">
+                        Manage Logins:
+                    </TextBlock>
+                    <Button
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Command="{Binding AccountManagerCommand}"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        ToolTip="Add/Remove/Edit User Login Credentials">
+                        <materialDesign:PackIcon
+                            Width="25"
+                            Height="25"
+                            Foreground="WhiteSmoke"
+                            Kind="Account" />
+                    </Button>
+                </Grid>
 
 
-        </StackPanel>
+            </StackPanel>
+
+            <Separator
+                Grid.Row="2"
+                Margin="8,0,8,0"
+                Style="{StaticResource MaterialDesignDarkSeparator}" />
+
+            <Button
+                Name="CancelNewHome"
+                Grid.Row="4"
+                Width="100"
+                Margin="0,0,0,8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                IsCancel="True"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Close Help Window">
+                <Button.CommandParameter>
+                    <system:String>Cancel</system:String>
+                </Button.CommandParameter>
+                _CLOSE
+            </Button>
+
+        </Grid>
+
 
     </materialDesign:DialogHost>
 

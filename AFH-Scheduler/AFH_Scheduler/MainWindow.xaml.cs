@@ -10,6 +10,7 @@ namespace AFH_Scheduler
     {
         public MainWindow()
         {
+            //DoubleBuffered = true;
             InitializeComponent();
         }
 
