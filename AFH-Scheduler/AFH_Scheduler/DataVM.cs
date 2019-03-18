@@ -990,7 +990,7 @@ namespace AFH_Scheduler
                         {
                             FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code == newNextInspectionDate).IOutcome_Code,
                             FK_PHome_ID = updatedHomeValues.HomeID,
-                            HHistory_Date = updatedHomeValues.NextInspection,
+                            HHistory_Date = completeDialogContext.PreviousInspection,
                             HHistory_ID = GenerateNewIDs.GenerateHistoryID()
                         });
 
@@ -1015,6 +1015,16 @@ namespace AFH_Scheduler
         {
             Console.WriteLine("Dialog closed successfully");
             if ((String)eventArgs.Parameter == "Cancel") return;
+
+            if ((String)eventArgs.Parameter == "DEACTIVATE")
+            {
+                EditVM editDialogContext = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext);
+                HomeModel editedHomeData = editDialogContext.SelectedSchedule;
+                editedHomeData.IsActive = false;
+                Providers.Remove(editedHomeData);
+                InActiveHomes.Add(editedHomeData);
+                return;
+            }
 
             if ((String)eventArgs.Parameter == "SUBMIT")
             {
