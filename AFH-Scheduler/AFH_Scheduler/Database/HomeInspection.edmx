@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\jnestoss\source\repos\jnestoss\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HomeInspectionModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\Database\HomeInspection.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Home_History">
           <Key>
             <PropertyRef Name="HHistory_ID" />
@@ -35,6 +35,7 @@
           <Property Name="PHome_Name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="PHome_LicenseNumber" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="PHome_RCSUnit" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="PHome_Active" Type="integer" />
         </EntityType>
         <EntityType Name="Providers">
           <Key>
@@ -163,6 +164,7 @@
           <Property Name="PHome_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="PHome_LicenseNumber" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="PHome_RCSUnit" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="PHome_Active" Type="Int64" />
           <NavigationProperty Name="Home_History" Relationship="Self.FK_Home_History_1_0" FromRole="Provider_Homes" ToRole="Home_History" />
           <NavigationProperty Name="Provider" Relationship="Self.FK_Provider_Homes_0_0" FromRole="Provider_Homes" ToRole="Providers" />
           <NavigationProperty Name="Scheduled_Inspections" Relationship="Self.FK_Scheduled_Inspections_0_0" FromRole="Provider_Homes" ToRole="Scheduled_Inspections" />
@@ -295,6 +297,7 @@
                 <ScalarProperty Name="PHome_Name" ColumnName="PHome_Name" />
                 <ScalarProperty Name="PHome_LicenseNumber" ColumnName="PHome_LicenseNumber" />
                 <ScalarProperty Name="PHome_RCSUnit" ColumnName="PHome_RCSUnit" />
+                <ScalarProperty Name="PHome_Active" ColumnName="PHome_Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

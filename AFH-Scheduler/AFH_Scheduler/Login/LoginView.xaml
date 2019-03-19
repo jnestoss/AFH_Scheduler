@@ -57,7 +57,7 @@
             HorizontalAlignment="Center"
             Command="{Binding Path=LoginngInCommand}"
             Style="{StaticResource MaterialDesignRaisedButton}"
-            ToolTip="MaterialDesignRaisedButton">
+            ToolTip="Login">
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <materialDesign:PackIcon
                     Width="24"
