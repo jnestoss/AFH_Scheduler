@@ -1,25 +1,26 @@
-﻿using AFH_Scheduler.Helper_Classes;
+﻿using AFH_Scheduler.Dialogs.Help.Pages;
+using AFH_Scheduler.Helper_Classes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AFH_Scheduler.Dialogs.Help
 {
     public class HelpBoxVM : ObservableObject, IPageViewModel
     {
+
+        private ICommand _changePageCommand;
+
+        private IPageViewModel _currentPageViewModel;
+        private List<IPageViewModel> _pageViewModels;
+
         #region Main Table Tree Descriptions
         private string _mainDescription;
-        public string MainDecription
-        {
-            get
-            {
+        public string MainDecription {
+            get {
                 return _mainDescription;
             }
-            set
-            {
+            set {
                 if (value != _mainDescription)
                 {
                     _mainDescription = value;
@@ -29,14 +30,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _completeInspectDescription;
-        public string CompleteInspectDescription
-        {
-            get
-            {
+        public string CompleteInspectDescription {
+            get {
                 return _completeInspectDescription;
             }
-            set
-            {
+            set {
                 if (value != _completeInspectDescription)
                 {
                     _completeInspectDescription = value;
@@ -46,14 +44,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _historyDescription;
-        public string HistoryDescription
-        {
-            get
-            {
+        public string HistoryDescription {
+            get {
                 return _historyDescription;
             }
-            set
-            {
+            set {
                 if (value != _historyDescription)
                 {
                     _historyDescription = value;
@@ -63,14 +58,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _editDescription;
-        public string EditDescription
-        {
-            get
-            {
+        public string EditDescription {
+            get {
                 return _editDescription;
             }
-            set
-            {
+            set {
                 if (value != _editDescription)
                 {
                     _editDescription = value;
@@ -80,14 +72,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _inactiveHomeDescription;
-        public string InactiveHomeDescription
-        {
-            get
-            {
+        public string InactiveHomeDescription {
+            get {
                 return _inactiveHomeDescription;
             }
-            set
-            {
+            set {
                 if (value != _inactiveHomeDescription)
                 {
                     _inactiveHomeDescription = value;
@@ -97,14 +86,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _importDescription;
-        public string ImportDescription
-        {
-            get
-            {
+        public string ImportDescription {
+            get {
                 return _importDescription;
             }
-            set
-            {
+            set {
                 if (value != _importDescription)
                 {
                     _importDescription = value;
@@ -114,14 +100,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _exportDescription;
-        public string ExportDescription
-        {
-            get
-            {
+        public string ExportDescription {
+            get {
                 return _exportDescription;
             }
-            set
-            {
+            set {
                 if (value != _exportDescription)
                 {
                     _exportDescription = value;
@@ -132,15 +115,27 @@ namespace AFH_Scheduler.Dialogs.Help
         #endregion
 
         #region Settings Tree Descriptions
+        private string _selectedPath;
+        public string SelectedPath {
+            get => _selectedPath;
+            set {
+                if (_selectedPath == value)
+                {
+                    return;
+                }
+
+                _selectedPath = value;
+                Console.WriteLine("Selected path is:           " + _selectedPath);
+                OnPropertyChanged("SelectedPath");
+            }
+        }
+
         private string _settingsDescription;
-        public string SettingsDescription
-        {
-            get
-            {
+        public string SettingsDescription {
+            get {
                 return _settingsDescription;
             }
-            set
-            {
+            set {
                 if (value != _settingsDescription)
                 {
                     _settingsDescription = value;
@@ -150,14 +145,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _providersDescription;
-        public string ProvidersDescription
-        {
-            get
-            {
+        public string ProvidersDescription {
+            get {
                 return _providersDescription;
             }
-            set
-            {
+            set {
                 if (value != _providersDescription)
                 {
                     _providersDescription = value;
@@ -167,14 +159,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _normalValueDescription;
-        public string NormalValueDescription
-        {
-            get
-            {
+        public string NormalValueDescription {
+            get {
                 return _normalValueDescription;
             }
-            set
-            {
+            set {
                 if (value != _normalValueDescription)
                 {
                     _normalValueDescription = value;
@@ -184,14 +173,11 @@ namespace AFH_Scheduler.Dialogs.Help
         }
 
         private string _outcomeDescription;
-        public string OutcomeDescription
-        {
-            get
-            {
+        public string OutcomeDescription {
+            get {
                 return _outcomeDescription;
             }
-            set
-            {
+            set {
                 if (value != _outcomeDescription)
                 {
                     _outcomeDescription = value;
@@ -204,8 +190,65 @@ namespace AFH_Scheduler.Dialogs.Help
 
         public HelpBoxVM()
         {
+            // Add available pages
+            PageViewModels.Add(new MainHelpVM());
+
+            // Set starting page
+            CurrentPageViewModel = PageViewModels[0];
+
             LoadMainTableTree();
             LoadSettingsTree();
+        }
+
+        public ICommand ChangePageCommand {
+            get {
+                //SetThickness(_currentPageViewModel.Name);
+                if (_changePageCommand == null)
+                {
+                    _changePageCommand = new RelayCommand(
+                        p => ChangeViewModel((IPageViewModel)p),
+                        p => p is IPageViewModel);
+                }
+
+                return _changePageCommand;
+            }
+        }
+
+        public List<IPageViewModel> PageViewModels {
+            get {
+                if (_pageViewModels == null)
+                {
+                    _pageViewModels = new List<IPageViewModel>();
+                }
+
+                return _pageViewModels;
+            }
+        }
+
+        public IPageViewModel CurrentPageViewModel {
+            get {
+                //SetThickness(_currentPageViewModel.Name);
+                return _currentPageViewModel;
+            }
+            set {
+                if (_currentPageViewModel != value)
+                {
+                    _currentPageViewModel = value;
+                    //SetThickness(CurrentPageViewModel.Name);
+                    OnPropertyChanged("CurrentPageViewModel");
+                }
+                //SetThickness(_currentPageViewModel.Name);
+            }
+        }
+
+        private void ChangeViewModel(IPageViewModel viewModel)
+        {
+            if (!PageViewModels.Contains(viewModel))
+            {
+                PageViewModels.Add(viewModel);
+            }
+
+            CurrentPageViewModel = PageViewModels.Find(vm => vm == viewModel);
         }
 
         public void LoadMainTableTree()
@@ -266,7 +309,7 @@ namespace AFH_Scheduler.Dialogs.Help
                 "You can only edit the minimum and maximum value range of months added to randomize the next inspection date " +
                 "(Please note that change the values only take affect when the home has recently completed an inspection).";
         }
-        
+
         public string Name => "Help Page";
     }
 }

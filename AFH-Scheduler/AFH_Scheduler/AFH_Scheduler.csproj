@@ -16,7 +16,8 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\scott\Desktop\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,7 +29,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -243,6 +243,10 @@
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
     <Compile Include="Data\Schedule_Data.cs" />
+    <Compile Include="Dialogs\Help\Pages\MainHelpPage.xaml.cs">
+      <DependentUpon>MainHelpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Help\Pages\MainHelpVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml.cs">
       <DependentUpon>AccountManagerDialog.xaml</DependentUpon>
     </Compile>
@@ -362,6 +366,10 @@
     <Page Include="DataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Help\Pages\MainHelpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml">
       <SubType>Designer</SubType>
@@ -637,6 +645,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Users1.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\mainpage.png" />
     <Resource Include="icon.ico" />
     <Resource Include="Images\NoProviderWarning.bmp" />
     <Resource Include="NormalCurve\NormalCurveValue.txt" />
