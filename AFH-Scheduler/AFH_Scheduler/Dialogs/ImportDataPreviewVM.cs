@@ -541,23 +541,23 @@ namespace AFH_Scheduler.Dialogs
                                     {
                                         ProviderID = provID,
                                         HomeID = homeID,     //Home Database ID
-                                    ProviderName = provName,                //Provider Name*
-                                    HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
-                                    HomeName = ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
-                                    Phone = ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
-                                    Address = ImportedLicenseInfo[addressRow][rowItem],     //Address*
-                                    City = ImportedLicenseInfo[cityRow][rowItem],     //City*
-                                    ZIP = ImportedLicenseInfo[zipRow][rowItem],     //Zip*
-                                    RecentInspection = recentInspect,         //Recent
-                                    NextInspection = nextInspect,               //Next Inspection*
-                                    EighteenthMonthDate = alg.DropDateMonth(recentInspect, Drop.EIGHTEEN_MONTH),//18th Month Drop Date
-                                    SeventeenMonthDate = alg.DropDateMonth(recentInspect, Drop.SEVENTEEN_MONTH),
+                                        ProviderName = provName,                //Provider Name*
+                                        HomeLicenseNum = Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]),//License Number*
+                                        HomeName = ImportedLicenseInfo[nameRow][rowItem],     //Home Name*
+                                        Phone = ImportedLicenseInfo[phoneRow][rowItem],     //Phone Number*
+                                        Address = ImportedLicenseInfo[addressRow][rowItem],     //Address*
+                                        City = ImportedLicenseInfo[cityRow][rowItem],     //City*
+                                        ZIP = ImportedLicenseInfo[zipRow][rowItem],     //Zip*
+                                        RecentInspection = recentInspect,         //Recent
+                                        NextInspection = nextInspect,               //Next Inspection*
+                                        EighteenthMonthDate = alg.DropDateMonth(recentInspect, Drop.EIGHTEEN_MONTH),//18th Month Drop Date
+                                        SeventeenMonthDate = alg.DropDateMonth(recentInspect, Drop.SEVENTEEN_MONTH),
                                         ForecastedDate = SchedulingAlgorithm.NextScheduledDate(outcome, recentInspect),
                                         HasNoProvider = noProvider,
                                         IsActive = true,
                                         RcsRegionUnit = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
-                                }
-                                );
+                                    });
+
                                 UniqueLicenseNumbers.Add(Convert.ToInt64(ImportedLicenseInfo[licenseRow][rowItem]));
                             }
                         }

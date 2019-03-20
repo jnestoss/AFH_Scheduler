@@ -30,6 +30,7 @@ namespace AFH_Scheduler.Database
         public string PHome_Name { get; set; }
         public string PHome_LicenseNumber { get; set; }
         public string PHome_RCSUnit { get; set; }
+        public Nullable<long> PHome_Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Home_History> Home_History { get; set; }
