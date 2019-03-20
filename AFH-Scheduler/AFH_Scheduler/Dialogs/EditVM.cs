@@ -324,6 +324,7 @@ namespace AFH_Scheduler.Dialogs
                 {
                     //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
                     var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == SelectedSchedule.HomeID);
+                    var sched = db.Scheduled_Inspections.SingleOrDefault(r => r.FK_PHome_ID == SelectedSchedule.HomeID);
 
                     if (home != null)
                     {

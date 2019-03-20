@@ -9,6 +9,7 @@ using AFH_Scheduler.Dialogs;
 using System.Collections.ObjectModel;
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Algorithm;
+using AFH_Scheduler.HelperClasses;
 
 namespace AFH_Scheduler.Excel
 {
@@ -69,39 +70,13 @@ namespace AFH_Scheduler.Excel
                                 FK_Provider_ID = provID,
                                 PHome_Name = importedHome.HomeName,
                                 PHome_LicenseNumber = importedHome.HomeLicenseNum.ToString(),
-                                PHome_RCSUnit = importedHome.RcsRegionUnit
+                                PHome_RCSUnit = importedHome.RcsRegionUnit,
+                                PHome_Active = 1 //Null = Inactive, Whole Number = Active
                             };
-
-
-                           long newID;
-                           try
-                           {
-                               var recentHomeID = db.Scheduled_Inspections.OrderByDescending(r => r.SInspections_Id).FirstOrDefault();
-                               if (recentHomeID.SInspections_Id == Int64.MaxValue)
-                               {
-                                   newID = 0;
-                               }
-                               else
-                                   newID = recentHomeID.SInspections_Id + 1;
-                           }
-                           catch (Exception e)
-                           {
-                               newID = 0;
-                           }
-
-                           var isUniqueID = db.Scheduled_Inspections.Where(r => r.SInspections_Id == newID).ToList();
-                           if (isUniqueID.Count != 0)
-                           {
-                               do
-                               {
-                                   newID++;
-                                   isUniqueID = db.Scheduled_Inspections.Where(r => r.SInspections_Id == newID).ToList();
-                               } while (isUniqueID.Count != 0);
-                           }
 
                         Scheduled_Inspections dates = new Scheduled_Inspections
                         {
-                            SInspections_Id = newID,
+                            SInspections_Id = GenerateNewIDs.GenerateScheduleID(),
                             SInspections_Date = importedHome.NextInspection,
                             FK_PHome_ID = importedHome.HomeID,
                             SInspections_SeventeenMonth = importedHome.SeventeenMonthDate,
@@ -109,35 +84,9 @@ namespace AFH_Scheduler.Excel
                             SInspection_ForecastedDate = importedHome.ForecastedDate
                         };
 
-                        long newHistoryID;
-                        try
-                        {
-                            var recentHomeID = db.Home_History.OrderByDescending(r => r.HHistory_ID).FirstOrDefault();
-                            if (recentHomeID.HHistory_ID == Int64.MaxValue)
-                            {
-                                newHistoryID = 0;
-                            }
-                            else
-                                newHistoryID = recentHomeID.HHistory_ID + 1;
-                        }
-                        catch (Exception e)
-                        {
-                            newHistoryID = 0;
-                        }
-
-                        var isUniqueHistoryID = db.Home_History.Where(r => r.HHistory_ID == newHistoryID).ToList();
-                        if (isUniqueHistoryID.Count != 0)
-                        {
-                            do
-                            {
-                                newHistoryID++;
-                                isUniqueHistoryID = db.Home_History.Where(r => r.HHistory_ID == newHistoryID).ToList();
-                            } while (isUniqueHistoryID.Count != 0);
-                        }
-
                         Home_History history = new Home_History
                         {
-                            HHistory_ID = newHistoryID,
+                            HHistory_ID = GenerateNewIDs.GenerateHistoryID(),
                             HHistory_Date = importedHome.RecentInspection,
                             FK_PHome_ID = importedHome.HomeID,
                             FK_Outcome_Code = db.Inspection_Outcome.FirstOrDefault(r => r.IOutcome_Code.Equals("NEW")).IOutcome_Code

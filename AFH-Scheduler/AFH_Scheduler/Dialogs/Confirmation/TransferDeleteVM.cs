@@ -77,6 +77,20 @@ namespace AFH_Scheduler.Dialogs.Confirmation
             }
         }
 
+        private static ObservableCollection<HomeModel> _deactiveHomes;
+        public ObservableCollection<HomeModel> DeactiveHomes
+        {
+            get { return _deactiveHomes; }
+            set
+            {
+                if (value != _deactiveHomes)
+                {
+                    _deactiveHomes = value;
+                    OnPropertyChanged("DeactiveHomes");
+                }
+            }
+        }
+
         private bool _allHomesCleared;
         public bool AllHomesCleared
         {
@@ -155,6 +169,11 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                     RemovedHomes.Add(selectItem);
                 }
 
+                if (result.Equals("DEAC"))
+                {
+                    DeactiveHomes.Add(selectItem);
+                }
+
                 RemainingHomes.Remove(selectItem);
 
                 if (RemainingHomes.Count == 0)
@@ -180,6 +199,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
             _chowedHomes = new ObservableCollection<HomeModel>();
             _remainingHomes = new ObservableCollection<HomeModel>();
             _removedHomes = new ObservableCollection<HomeModel>();
+            _deactiveHomes = new ObservableCollection<HomeModel>();
 
             ProvName = id + "-" + name;
             using (HomeInspectionEntities db = new HomeInspectionEntities())
@@ -197,6 +217,10 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                         recentDate = recentInspec.HHistory_Date;
                     var insp = db.Scheduled_Inspections.Where(r => r.FK_PHome_ID == house.PHome_ID).First().SInspections_Date;
 
+                    bool isActive = true;
+                    if (house.PHome_Active is null)
+                        isActive = false;
+
                     RemainingHomes.Add(
                         new HomeModel
                         {
@@ -212,7 +236,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                             RecentInspection = recentDate,
                             NextInspection = insp,
                             EighteenthMonthDate = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
-                            IsActive = true,
+                            IsActive = isActive,
                             RcsRegionUnit = house.PHome_RCSUnit
                         }
                     );

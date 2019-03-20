@@ -11,16 +11,16 @@ namespace AFH_Scheduler.Data
 {
     public class ProvidersModel : INotifyPropertyChanged
     {
-        private string _providerID;
+        private long _providerID;
         private string _providerName;
 
-        public ProvidersModel(string id, string name)
+        public ProvidersModel(long providerId, string name)
         {
-            ProviderID = id;
             ProviderName = name;
+            ProviderID = providerId;
         }
 
-        public string ProviderID
+        public long ProviderID
         {
             get { return _providerID; }
             set
