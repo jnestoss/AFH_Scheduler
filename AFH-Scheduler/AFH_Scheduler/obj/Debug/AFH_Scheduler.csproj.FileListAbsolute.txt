@@ -233,4 +233,3 @@ C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Deb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.exe
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.pdb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csprojAssemblyReference.cache
-C:\Users\jnestoss\source\repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csprojResolveAssemblyReference.cache

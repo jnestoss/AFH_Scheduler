@@ -1,6 +1,7 @@
 ﻿using AFH_Scheduler.Algorithm;
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Database.LoginDB;
+using AFH_Scheduler.Dialogs.Confirmation;
 using AFH_Scheduler.Dialogs.SettingSubWindows;
 using AFH_Scheduler.Helper_Classes;
 using AFH_Scheduler.HelperClasses;
@@ -48,23 +49,6 @@ namespace AFH_Scheduler.Dialogs
                 OnPropertyChanged("DialogBoolReturn");
             }
         }
-
-        #region Delete Account Command
-        private RelayCommand _accountDeleteCommand;
-        public ICommand AccountDeleteCommand
-        {
-            get
-            {
-                if (_accountDeleteCommand == null)
-                    _accountDeleteCommand = new RelayCommand(DeleteAccount);
-                return _accountDeleteCommand;
-            }
-        }
-        private async void DeleteAccount(object obj)
-        {
-
-        }
-        #endregion
 
         #region Add Account Command
         private RelayCommand _addAccountCommand;
@@ -129,7 +113,37 @@ namespace AFH_Scheduler.Dialogs
             }
         }
         #endregion
+        #region Delete Account Command
+        private RelayCommand _accountDeleteCommand;
+        public ICommand AccountDeleteCommand
+        {
+            get
+            {
+                if (_accountDeleteCommand == null)
+                    _accountDeleteCommand = new RelayCommand(DeleteAccount);
+                return _accountDeleteCommand;
+            }
+        }
+        private async void DeleteAccount(object obj)
+        {
+            var account = (AccountModel)obj;
+            var vm = new DeleteVM("Are you sure you want to remove this Account?", "Account:", account.Username);
+            var deleteView = new DeleteProviderDialog(vm);
 
+            var deleteResult = await DialogHost.Show(deleteView, "AccountsDialog", ClosingEventHandlerEditAccount);
+
+            if (deleteResult.Equals("Yes"))
+            {
+                using (UserLoginEntities db = new UserLoginEntities())
+                {
+                    Database.LoginDB.Login login = db.Logins.First(x => x.Username == account.Username);
+                    db.Logins.Remove(login);
+                    db.SaveChanges();
+                }
+                FillAccountTable();
+            }
+        }
+        #endregion
         private void ClosingEventHandlerEditAccount(object sender, DialogClosingEventArgs eventArgs)
         {
             if ((String)eventArgs.Parameter == "Cancel")
