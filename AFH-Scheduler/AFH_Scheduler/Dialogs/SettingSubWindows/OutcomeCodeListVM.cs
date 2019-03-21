@@ -1,6 +1,8 @@
-﻿using AFH_Scheduler.Data;
+﻿using AFH_Scheduler.Algorithm;
+using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Dialogs.Confirmation;
+using AFH_Scheduler.Dialogs.Errors;
 using AFH_Scheduler.Helper_Classes;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -15,6 +17,8 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
 {
     public class OutcomeCodeListVM : ObservableObject
     {
+        private SchedulingAlgorithm alg = new SchedulingAlgorithm();
+
         private ObservableCollection<OutcomeModel> _outcomeList;
         public ObservableCollection<OutcomeModel> OutcomeList
         {
@@ -113,16 +117,44 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
         }
         private async void DeleteOutcome(object obj)
         {
-            OutcomeModel model = (OutcomeModel)obj;
-            var vm = new DeleteVM("Are you sure you want to remove this codeword from the database?", "Codeword:",
-                model.Outcome_code);
-            var deleteView = new DeleteProviderDialog(vm);
-
-            var deleteResult = await DialogHost.Show(deleteView, "OutcomeListDialog", ClosingEventHandlerOutcome);
-
-            if (deleteResult.Equals("Yes"))
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                OutcomeList.Remove(model);
+                OutcomeModel model = (OutcomeModel)obj;
+
+                var homes = db.Provider_Homes.ToList();
+
+                foreach (var home in homes)
+                {
+                    var recentInspect = alg.GrabbingRecentInspection(home.PHome_ID);
+                    if (recentInspect.FK_Outcome_Code.Equals(model.Outcome_code))
+                    {
+                        var errorView = new CanNotDeleteOutcome();
+                        var errorResult = await DialogHost.Show(errorView, "OutcomeListDialog", ClosingEventHandlerOutcome);
+                        return;
+                    }
+                }
+                
+                var vm = new DeleteVM("Are you sure you want to remove this codeword from the database?", "Codeword:",
+                    model.Outcome_code);
+                var deleteView = new DeleteProviderDialog(vm);
+
+                var deleteResult = await DialogHost.Show(deleteView, "OutcomeListDialog", ClosingEventHandlerOutcome);
+
+                if (deleteResult.Equals("Yes"))
+                {
+                    try
+                    {
+                        var outcome = db.Inspection_Outcome.First(r => r.IOutcome_Code.Equals(model.Outcome_code));
+                        db.Inspection_Outcome.Remove(outcome);
+                        db.SaveChanges();
+
+                        OutcomeList.Remove(model);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
             }
         }
         #endregion
