@@ -237,6 +237,12 @@
     <Compile Include="Data\LoginModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
+    <Compile Include="Dialogs\Errors\CanNotDeleteOutcome.xaml.cs">
+      <DependentUpon>CanNotDeleteOutcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
+      <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Help\Pages\MainHelpPage.xaml.cs">
       <DependentUpon>MainHelpPage.xaml</DependentUpon>
     </Compile>
@@ -358,6 +364,14 @@
     <Compile Include="Validations\UniqueOutcomeCodeword.cs" />
     <Compile Include="Validations\UniqueProviderIDValidation.cs" />
     <Page Include="DataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\CanNotDeleteOutcome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
