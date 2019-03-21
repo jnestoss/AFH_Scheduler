@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using AFH_Scheduler.Data;
+using AFH_Scheduler.Database;
+using Nager.Date;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AFH_Scheduler.Database;
-using AFH_Scheduler.Data;
-using Nager.Date;
-using AFH_Scheduler.Algorithm;
 
 namespace AFH_Scheduler.Algorithm
 {
@@ -18,12 +14,12 @@ namespace AFH_Scheduler.Algorithm
         {
             List<Provider_Homes> homes;
             double average = 0;
-        
+
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                 homes= db.Provider_Homes.ToList();
+                homes = db.Provider_Homes.ToList();
 
-                foreach(var home in homes)
+                foreach (var home in homes)
                 {
                     Scheduled_Inspections homeInspections = home.Scheduled_Inspections.First();
                     Home_History homeHistory = home.Home_History.First();
@@ -53,7 +49,7 @@ namespace AFH_Scheduler.Algorithm
             DateTime minDate = date.AddMonths(minMonthRange);
             DateTime maxDate = date.AddMonths(maxMonthRange).AddDays(-1);
 
-            while(minDate < maxDate)
+            while (minDate < maxDate)
             {
                 if (!DateSystem.IsPublicHoliday(minDate, CountryCode.US) &&
                     !DateSystem.IsWeekend(minDate, CountryCode.US))
@@ -69,7 +65,7 @@ namespace AFH_Scheduler.Algorithm
 
             double desiredAverageUpperLimit = desiredAverage + 0.3;
             double desiredAverageLowerLimit = desiredAverage - 0.3;
-            if(averageInspectionTime < desiredAverageLowerLimit ||
+            if (averageInspectionTime < desiredAverageLowerLimit ||
                 averageInspectionTime > desiredAverageUpperLimit)
             {
                 for (int i = 0; i < nextInspectionChoices.Count; i++)
@@ -91,11 +87,11 @@ namespace AFH_Scheduler.Algorithm
 
             if (averageInspectionTime > desiredAverageUpperLimit)
             {
-                return nextInspectionChoices[probs.Length - 1 - number].ToString("MM/dd/yyyy");
+                return nextInspectionChoices[probs.Length - number].ToString("MM/dd/yyyy");
             }
             else
             {
-                return nextInspectionChoices[number - 1].ToString("MM/dd/yyyy");
+                return nextInspectionChoices[number].ToString("MM/dd/yyyy");
             }
         }
 
@@ -107,7 +103,7 @@ namespace AFH_Scheduler.Algorithm
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = table.Home_History.Where(r => r.FK_PHome_ID == pHome_ID).ToList();
 
-            if(history.Count == 0)
+            if (history.Count == 0)
             {
                 return null;
             }
@@ -125,7 +121,7 @@ namespace AFH_Scheduler.Algorithm
                 }//otherwise, recentDate >= temp
 
             }
-            
+
             return historyReturn;
         }
         #endregion
@@ -135,14 +131,14 @@ namespace AFH_Scheduler.Algorithm
         {
             HomeInspectionEntities table = new HomeInspectionEntities();
             var history = GrabbingRecentInspection(pHome_ID);
-            if(history == null)
+            if (history == null)
             {
                 return "";
             }
 
             Inspection_Outcome outcome = table.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_Outcome_Code);
 
-            string newInspection = NextScheduledDate(outcome,  history.HHistory_Date);
+            string newInspection = NextScheduledDate(outcome, history.HHistory_Date);
             DateTime newDateObject = ExtractDateTime(newInspection);
 
             bool dateCleared = false;
@@ -173,7 +169,7 @@ namespace AFH_Scheduler.Algorithm
         {
             bool isUniqueDate = false;
             string dateComparison = newInspection.ToShortDateString();
-            
+
             try
             {
                 long providerID = table.Provider_Homes.First(r => r.PHome_ID == pHome_ID).FK_Provider_ID.Value;
@@ -186,7 +182,7 @@ namespace AFH_Scheduler.Algorithm
                     return false;
                 }
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 //That means this new inspection date is unique, no other provider is on that day.
                 isUniqueDate = true;
@@ -265,14 +261,16 @@ namespace AFH_Scheduler.Algorithm
         public string DropDateMonth(string scheduled_Date, Drop dropPeriod)
         {
             if (scheduled_Date == null || scheduled_Date.Length == 0)
+            {
                 return "";
+            }
 
             DateTime dropDateMonthDate;
             if (dropPeriod == Drop.SEVENTEEN_MONTH)
             {
                 dropDateMonthDate = ExtractDateTime(scheduled_Date).AddDays(517);
             }
-            else if(dropPeriod == Drop.EIGHTEEN_MONTH)
+            else if (dropPeriod == Drop.EIGHTEEN_MONTH)
             {
                 dropDateMonthDate = ExtractDateTime(scheduled_Date).AddDays(548);
             }
@@ -288,7 +286,9 @@ namespace AFH_Scheduler.Algorithm
         public double InspectionInterval(string recentInspecion, string currentInspection, bool monthOrDays)
         {
             if (recentInspecion == null || recentInspecion.Length == 0 || currentInspection == null || currentInspection.Length == 0)
+            {
                 return 0;
+            }
 
             //true = months, false = days
             DateTime recent = ExtractDateTime(recentInspecion);

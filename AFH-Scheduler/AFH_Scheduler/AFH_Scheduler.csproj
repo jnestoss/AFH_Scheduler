@@ -235,14 +235,11 @@
     </Compile>
     <Compile Include="DataVM.cs" />
     <Compile Include="Data\AccountModel.cs" />
-    <Compile Include="Data\CompletedHomes.cs" />
     <Compile Include="Data\DropPeriodEnum.cs" />
     <Compile Include="Data\HomeModel.cs" />
     <Compile Include="Data\LoginModel.cs" />
-    <Compile Include="Data\NewHomeModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
-    <Compile Include="Data\Schedule_Data.cs" />
     <Compile Include="Dialogs\Help\Pages\MainHelpPage.xaml.cs">
       <DependentUpon>MainHelpPage.xaml</DependentUpon>
     </Compile>
@@ -482,9 +479,7 @@
     </Compile>
     <Compile Include="Commands.cs" />
     <Compile Include="DataReader.cs" />
-    <Compile Include="Data\CompleteSchedule_Model.cs" />
     <Compile Include="Data\HistoryDetailModel.cs" />
-    <Compile Include="Data\HistoryModel.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\RelayCommand.cs" />
     <Compile Include="HomeInspectionDbDataSet.Designer.cs">

@@ -32,6 +32,7 @@
           <ScalarProperty Name="PHome_Name" ColumnName="PHome_Name" />
           <ScalarProperty Name="PHome_LicenseNumber" ColumnName="PHome_LicenseNumber" />
           <ScalarProperty Name="PHome_RCSUnit" ColumnName="PHome_RCSUnit" />
+          <ScalarProperty Name="PHome_Active" ColumnName="PHome_Active" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
