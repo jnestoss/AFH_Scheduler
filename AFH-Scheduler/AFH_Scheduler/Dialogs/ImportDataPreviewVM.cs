@@ -75,6 +75,19 @@ namespace AFH_Scheduler.Dialogs
                 }
             }
         }
+        private List<ProvidersModel> _uniqueProvider;
+        public List<ProvidersModel> UniqueProvider
+        {
+            get { return _uniqueProvider; }
+            set
+            {
+                if (value != _uniqueProvider)
+                {
+                    _uniqueProvider = value;
+                    OnPropertyChanged("UniqueProvider");
+                }
+            }
+        }
 
         private List<UniqueDateImportItem> _uniqueInspectionDates;
         public List<UniqueDateImportItem> UniqueInspectionDates
@@ -124,6 +137,7 @@ namespace AFH_Scheduler.Dialogs
             _uniqueHomeIDs = new List<long>();
             _uniqueInspectionDates = new List<UniqueDateImportItem>();
             _uniqueLicenseNumbers = new List<long>();
+            _uniqueProvider = new List<ProvidersModel>();
         }
 
 
@@ -146,6 +160,7 @@ namespace AFH_Scheduler.Dialogs
             UniqueHomeIDs.Clear();
             UniqueInspectionDates.Clear();
             UniqueLicenseNumbers.Clear();
+            UniqueProvider.Clear();
 
             int pocRow = -1, licenseRow = -1, nameRow = -1, addressRow = -1, cityRow = -1, zipRow = -1,
                 phoneRow = -1, inspRow = -1, rcsRow = -1, recentRow = -1;
@@ -503,6 +518,18 @@ namespace AFH_Scheduler.Dialogs
                                         provID = GenerateProviderID();
                                     }
 
+                                    bool isUnique = true;
+                                    foreach(var provider in UniqueProvider)
+                                    {
+                                        if (provider.ProviderName.Equals(provName))
+                                        {
+                                            provID = provider.ProviderID;
+                                            isUnique = false;
+                                            break;
+                                        }
+                                    }
+                                    if (isUnique)
+                                        UniqueProvider.Add(new ProvidersModel(provID, provName));
                                 }
 
                                 if (recentRow == -1 || ImportedLicenseInfo[recentRow][rowItem].Equals(""))
