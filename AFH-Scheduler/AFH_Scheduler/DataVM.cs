@@ -573,6 +573,8 @@ namespace AFH_Scheduler
                     Providers.Add(importedHome);
                 }
             }
+
+            UpdateInspectionAverage();
         }
 
         private void ExportTable(object obj)

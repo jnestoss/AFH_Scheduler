@@ -237,6 +237,9 @@
     <Compile Include="Data\LoginModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
+    <Compile Include="Dialogs\Errors\CanNotDeleteOutcome.xaml.cs">
+      <DependentUpon>CanNotDeleteOutcome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml.cs">
       <DependentUpon>AccountManagerDialog.xaml</DependentUpon>
     </Compile>
@@ -356,6 +359,10 @@
     <Page Include="DataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Errors\CanNotDeleteOutcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml">
       <SubType>Designer</SubType>
