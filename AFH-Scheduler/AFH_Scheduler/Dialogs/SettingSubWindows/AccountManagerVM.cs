@@ -18,10 +18,21 @@ namespace AFH_Scheduler.Dialogs
 {
     public class AccountManagerVM : ObservableObject
     {
+        private SnackbarMessageQueue _messageQueue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get => _messageQueue;
+            set
+            {
+                if (_messageQueue == value) return;
+                _messageQueue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
         public AccountManagerVM()
         {
             _accountsList = new ObservableCollection<AccountModel>();
-
+            MessageQueue = new SnackbarMessageQueue();
             FillAccountTable();
         }
 
@@ -107,7 +118,6 @@ namespace AFH_Scheduler.Dialogs
                     Database.LoginDB.Login editUser = db.Logins.Single(x => x.Username == vm.EditUsername);
                     editUser.Password = crypt.Crypt(vm.EditPassword, salt);
                     editUser.Salt = salt;
-                    //db.Logins.Add(newUser);
                     db.SaveChanges();
                 }
             }
@@ -127,20 +137,28 @@ namespace AFH_Scheduler.Dialogs
         private async void DeleteAccount(object obj)
         {
             var account = (AccountModel)obj;
-            var vm = new DeleteVM("Are you sure you want to remove this Account?", "Account:", account.Username);
-            var deleteView = new DeleteProviderDialog(vm);
-
-            var deleteResult = await DialogHost.Show(deleteView, "AccountsDialog", ClosingEventHandlerEditAccount);
-
-            if (deleteResult.Equals("Yes"))
+            if(account.Username == "admin")
             {
-                using (UserLoginEntities db = new UserLoginEntities())
+                MessageQueue.Enqueue("Cannot remove admin account");
+                return;
+            }
+            else
+            {
+                var vm = new DeleteVM("Are you sure you want to remove this Account?", "Account:", account.Username);
+                var deleteView = new DeleteProviderDialog(vm);
+
+                var deleteResult = await DialogHost.Show(deleteView, "AccountsDialog", ClosingEventHandlerEditAccount);
+
+                if (deleteResult.Equals("Yes"))
                 {
-                    Database.LoginDB.Login login = db.Logins.First(x => x.Username == account.Username);
-                    db.Logins.Remove(login);
-                    db.SaveChanges();
+                    using (UserLoginEntities db = new UserLoginEntities())
+                    {
+                        Database.LoginDB.Login login = db.Logins.First(x => x.Username == account.Username);
+                        db.Logins.Remove(login);
+                        db.SaveChanges();
+                    }
+                    FillAccountTable();
                 }
-                FillAccountTable();
             }
         }
         #endregion
