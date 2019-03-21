@@ -111,11 +111,27 @@ namespace AFH_Scheduler.Algorithm
                     }
 
                 } while (!dateCleared);
-                return nextInspectionChoices[probs.Length - 1 - number].ToString("MM/dd/yyyy");
+                return newDateObject.ToString("MM/dd/yyyy");
             }
             else
             {
-                return nextInspectionChoices[number - 1].ToString("MM/dd/yyyy");
+                newDateObject = nextInspectionChoices[number - 1];
+                do
+                {
+                    if (!CheckingForUniqueInspection(newDateObject, homeID))
+                    {
+
+                        max = CheckingMonth(newDateObject);
+                        added_days = randomiz.Next(min, max + 1);
+                        newDateObject = newDateObject.AddDays(1);
+                    }
+                    else
+                    {
+                        dateCleared = true;
+                    }
+
+                } while (!dateCleared);
+                return newDateObject.ToString("MM/dd/yyyy");
             }
         }
 
