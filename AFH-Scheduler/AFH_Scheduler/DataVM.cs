@@ -552,8 +552,13 @@ namespace AFH_Scheduler
                 var newOutcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code == "NEW").ToList();
                 if (newOutcome.Count == 0)
                 {
-                    MessageQueue.Enqueue("Codeword \"NEW\" is missing from the outcome list. Please go to settings and add it.");
-                    return;
+                    db.Inspection_Outcome.Add(new Inspection_Outcome
+                    {
+                        IOutcome_Code = "NEW",
+                        IOutcome_Mintime = "9",
+                        IOutcome_Maxtime = "9"
+                    });
+                    db.SaveChanges();
                 }
             }
             var importData = new ImportDataPreviewVM();
@@ -702,8 +707,13 @@ namespace AFH_Scheduler
                 var newOutcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code == "NEW").ToList();
                 if(newOutcome.Count == 0)
                 {
-                    MessageQueue.Enqueue("Codeword \"NEW\" is missing from the outcome list. Please go to settings and add it.");
-                    return;
+                    db.Inspection_Outcome.Add(new Inspection_Outcome
+                    {
+                        IOutcome_Code = "NEW",
+                        IOutcome_Mintime = "9",
+                        IOutcome_Maxtime = "9"
+                    });
+                    db.SaveChanges();
                 }
             }
             var createdHome = new NewHomeDialogVM();
