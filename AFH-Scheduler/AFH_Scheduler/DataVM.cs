@@ -1,28 +1,20 @@
-﻿using System.Linq;
-using System.Text;
-using System;
-using AFH_Scheduler.Helper_Classes;
-using AFH_Scheduler.Database;
-using System.Collections.ObjectModel;
+﻿using AFH_Scheduler.Algorithm;
 using AFH_Scheduler.Data;
-using System.Windows;
-using AFH_Scheduler.Algorithm;
-using System.Windows.Input;
-using AFH_Scheduler.Dialogs;
-using AFH_Scheduler.Dialogs.Errors;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using MaterialDesignThemes.Wpf;
-using Microsoft.Office.Interop.Excel;
-using AFH_Scheduler.Dialogs.Confirmation;
-using System.Data.Entity;
-using System.Collections.Generic;
+using AFH_Scheduler.Database;
 using AFH_Scheduler.Database.LoginDB;
-using System.IO;
-using System.Windows.Data;
-using System.Windows.Controls;
+using AFH_Scheduler.Dialogs;
 using AFH_Scheduler.Excel;
+using AFH_Scheduler.Helper_Classes;
 using AFH_Scheduler.HelperClasses;
+using MaterialDesignThemes.Wpf;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace AFH_Scheduler
 {
@@ -36,10 +28,8 @@ namespace AFH_Scheduler
     {
         #region variables
 
-        public string Name
-        {
-            get
-            {
+        public string Name {
+            get {
                 return "Schedules";
             }
         }
@@ -50,7 +40,11 @@ namespace AFH_Scheduler
         public int HomeCount {
             get => _homeCount;
             set {
-                if (_homeCount == value) return;
+                if (_homeCount == value)
+                {
+                    return;
+                }
+
                 _homeCount = value;
                 OnPropertyChanged("HomeCount");
             }
@@ -60,19 +54,25 @@ namespace AFH_Scheduler
         public SnackbarMessageQueue MessageQueue {
             get => _messageQueue;
             set {
-                if (_messageQueue == value) return;
+                if (_messageQueue == value)
+                {
+                    return;
+                }
+
                 _messageQueue = value;
                 OnPropertyChanged("MessageQueue");
             }
         }
 
         private string _normalCurveValue;
-        public string NormalCurve
-        {
+        public string NormalCurve {
             get { return _normalCurveValue; }
-            set
-            {
-                if (_normalCurveValue == value) return;
+            set {
+                if (_normalCurveValue == value)
+                {
+                    return;
+                }
+
                 _normalCurveValue = value;
                 OnPropertyChanged("NormalCurve");
                 CheckNormalCurveState();
@@ -83,31 +83,39 @@ namespace AFH_Scheduler
         public double DesiredAverage {
             get => _desiredAverage;
             set {
-                if (_desiredAverage == value) return;
+                if (_desiredAverage == value)
+                {
+                    return;
+                }
+
                 _desiredAverage = value;
                 OnPropertyChanged("DesiredAverage");
             }
         }
 
         private string _normalCurveResultMsg;
-        public string NormalCurveResultMsg
-        {
+        public string NormalCurveResultMsg {
             get { return _normalCurveResultMsg; }
-            set
-            {
-                if (_normalCurveResultMsg == value) return;
+            set {
+                if (_normalCurveResultMsg == value)
+                {
+                    return;
+                }
+
                 _normalCurveResultMsg = value;
                 OnPropertyChanged("NormalCurveResultMsg");
             }
         }
 
         private System.Windows.Media.Brush _normalCurveState;
-        public System.Windows.Media.Brush NormalCurveState
-        {
+        public System.Windows.Media.Brush NormalCurveState {
             get { return _normalCurveState; }
-            set
-            {
-                if (_normalCurveState == value) return;
+            set {
+                if (_normalCurveState == value)
+                {
+                    return;
+                }
+
                 _normalCurveState = value;
                 OnPropertyChanged("NormalCurveState");
             }
@@ -119,7 +127,11 @@ namespace AFH_Scheduler
         public string SnackBarContent {
             get => _snackBarContent;
             set {
-                if (_snackBarContent == value) return;
+                if (_snackBarContent == value)
+                {
+                    return;
+                }
+
                 _snackBarContent = value;
                 OnPropertyChanged("SnackBarContent");
             }
@@ -138,11 +150,9 @@ namespace AFH_Scheduler
         }
 
         private static ObservableCollection<HomeModel> _providers;
-        public ObservableCollection<HomeModel> Providers
-        {
+        public ObservableCollection<HomeModel> Providers {
             get { return _providers; }
-            set
-            {
+            set {
                 if (value != _providers)
                 {
                     _providers = value;
@@ -200,11 +210,9 @@ namespace AFH_Scheduler
         }
 
         private static ObservableCollection<HomeModel> _inActiveHomes;
-        public ObservableCollection<HomeModel> InActiveHomes
-        {
+        public ObservableCollection<HomeModel> InActiveHomes {
             get { return _inActiveHomes; }
-            set
-            {
+            set {
                 if (value != _inActiveHomes)
                 {
                     _inActiveHomes = value;
@@ -227,11 +235,9 @@ namespace AFH_Scheduler
 
 
         private HomeModel _selectedHome;
-        public HomeModel SelectedHome
-        {
+        public HomeModel SelectedHome {
             get => _selectedHome;
-            set
-            {
+            set {
                 if (_selectedHome != value)
                 {
                     _selectedHome = value;
@@ -242,22 +248,18 @@ namespace AFH_Scheduler
 
 
         public bool _dialogHostSuccess;
-        public bool DialogHostSuccess
-        {
+        public bool DialogHostSuccess {
             get { return _dialogHostSuccess; }
-            set
-            {
+            set {
                 _dialogHostSuccess = value;
                 OnPropertyChanged("DialogHostSuccess");
             }
         }
 
         public bool _datePickerEnabled;
-        public bool DatePickerEnabled
-        {
+        public bool DatePickerEnabled {
             get { return _datePickerEnabled; }
-            set
-            {
+            set {
                 _datePickerEnabled = value;
                 TextFieldEnabled = !_datePickerEnabled;
                 OnPropertyChanged("DatePickerEnabled");
@@ -265,35 +267,32 @@ namespace AFH_Scheduler
         }
 
         public bool _textFieldEnabled;
-        public bool TextFieldEnabled
-        {
+        public bool TextFieldEnabled {
             get { return _textFieldEnabled; }
-            set
-            {
+            set {
                 _textFieldEnabled = value;
                 OnPropertyChanged("TextFieldEnabled");
             }
         }
 
         public string _selectedFilter;
-        public string SelectedFilter
-        {
+        public string SelectedFilter {
             get { return _selectedFilter; }
-            set
-            {
+            set {
                 _selectedFilter = value;
 
-                if(_selectedFilter == "Next Inspection Date")
+                if (_selectedFilter == "Next Inspection Date")
                 {
                     TextFieldEnabled = false;
                     DatePickerEnabled = true;
-                } else
+                }
+                else
                 {
                     TextFieldEnabled = false;
                     DatePickerEnabled = false;
                 }
 
-                switch(_selectedFilter)
+                switch (_selectedFilter)
                 {
                     case "Provider Name":
                         UpdateSearchBoxSuggestions(ProviderNames);
@@ -328,11 +327,9 @@ namespace AFH_Scheduler
         //}
 
         private DateTime _startDatePicked;
-        public DateTime StartDatePicked
-        {
+        public DateTime StartDatePicked {
             get { return _startDatePicked; }
-            set
-            {
+            set {
                 _startDatePicked = value;
 
                 OnPropertyChanged("StartDatePicked");
@@ -340,11 +337,9 @@ namespace AFH_Scheduler
         }
 
         private DateTime _endDatePicked;
-        public DateTime EndDatePicked
-        {
+        public DateTime EndDatePicked {
             get { return _endDatePicked; }
-            set
-            {
+            set {
                 _endDatePicked = value;
 
                 OnPropertyChanged("EndDatePicked");
@@ -352,17 +347,18 @@ namespace AFH_Scheduler
         }
 
         private IOpenMessageDialogService _messageService;
-        public IOpenMessageDialogService MessageService
-        {
-            get
-            {
+        public IOpenMessageDialogService MessageService {
+            get {
                 if (_messageService == null)
+                {
                     _messageService = new SchedulesOpenDialog();
+                }
+
                 return _messageService;
             }
         }
 
-        private  ICollectionView _comboBoxProviderItems;
+        private ICollectionView _comboBoxProviderItems;
         public ICollectionView ComboBoxProviderItems {
             get => _comboBoxProviderItems;
             set {
@@ -393,23 +389,25 @@ namespace AFH_Scheduler
 
         #region commands
         private RelayCommand _inactiveListCommand;
-        public ICommand InactiveListCommand
-        {
-            get
-            {
+        public ICommand InactiveListCommand {
+            get {
                 if (_inactiveListCommand == null)
+                {
                     _inactiveListCommand = new RelayCommand(InactiveListDisplayAsync);
+                }
+
                 return _inactiveListCommand;
             }
         }
 
         private RelayCommand _filterTableCommand;
-        public ICommand FilterTableCommand
-        {
-            get
-            {
+        public ICommand FilterTableCommand {
+            get {
                 if (_filterTableCommand == null)
+                {
                     _filterTableCommand = new RelayCommand(FilterTheTable);
+                }
+
                 return _filterTableCommand;
             }
         }
@@ -417,62 +415,71 @@ namespace AFH_Scheduler
         private RelayCommand _openSettingsDialog;
         public ICommand OpenSettingsDialogCommand {
             get {
-                if (_openSettingsDialog == null) _openSettingsDialog = new RelayCommand(ExecuteSettingDialog);
+                if (_openSettingsDialog == null)
+                {
+                    _openSettingsDialog = new RelayCommand(ExecuteSettingDialog);
+                }
+
                 return _openSettingsDialog;
             }
         }
 
         private RelayCommand _openEditHistoryDialog;
-        public ICommand OpenEditHistoryDialogCommand
-        {
-            get
-            {
+        public ICommand OpenEditHistoryDialogCommand {
+            get {
                 if (_openEditHistoryDialog == null)
+                {
                     _openEditHistoryDialog = new RelayCommand(EditHistoryDialogOpen);
+                }
+
                 return _openEditHistoryDialog;
             }
         }
 
         private RelayCommand _refreshTable;
-        public ICommand RefreshTableCommand
-        {
-            get
-            {
+        public ICommand RefreshTableCommand {
+            get {
                 if (_refreshTable == null)
+                {
                     _refreshTable = new RelayCommand(RefreshTable);
+                }
+
                 return _refreshTable;
             }
         }
 
         private RelayCommand _importTableCommand;
-        public ICommand ImportTableCommand
-        {
-            get
-            {
+        public ICommand ImportTableCommand {
+            get {
                 if (_importTableCommand == null)
+                {
                     _importTableCommand = new RelayCommand(ImportExcelTable);
+                }
+
                 return _importTableCommand;
             }
         }
 
         private RelayCommand _exportTable;
-        public ICommand ExportTableCommand
-        {
-            get
-            {
+        public ICommand ExportTableCommand {
+            get {
                 if (_exportTable == null)
+                {
                     _exportTable = new RelayCommand(ExportTable);
+                }
+
                 return _exportTable;
             }
         }
 
         private RelayCommand _addNewHomeCommand;
-        public ICommand AddNewHomeCommand
-        {
-            get
-            {
+        public ICommand AddNewHomeCommand {
+            get {
                 if (_addNewHomeCommand == null)
+                {
                     _addNewHomeCommand = new RelayCommand(CreateNewHomeAsync);
+                }
+
                 return _addNewHomeCommand;
             }
         }
@@ -627,7 +634,7 @@ namespace AFH_Scheduler
                         hasNoProv = false;
                     }
 
-                    if(house.PHome_Active is null)
+                    if (house.PHome_Active is null)
                     {
                         isActive = false;
                     }
@@ -684,11 +691,14 @@ namespace AFH_Scheduler
                     }
 
                     if (isActive)
+                    {
                         Providers.Add(newHome);
-
+                    }
                     else
+                    {
                         InActiveHomes.Add(newHome);
-                }               
+                    }
+                }
             }
             HomeCount = Providers.Count;
             //FilterTheTable(null);
@@ -705,7 +715,7 @@ namespace AFH_Scheduler
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var newOutcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code == "NEW").ToList();
-                if(newOutcome.Count == 0)
+                if (newOutcome.Count == 0)
                 {
                     db.Inspection_Outcome.Add(new Inspection_Outcome
                     {
@@ -716,7 +726,7 @@ namespace AFH_Scheduler
                     db.SaveChanges();
                 }
             }
-            var createdHome = new NewHomeDialogVM();
+            var createdHome = new NewHomeDialogVM(Convert.ToDouble(NormalCurve), DesiredAverage);
             var view = new NewHomeDialog(createdHome);
             var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
 
@@ -731,7 +741,9 @@ namespace AFH_Scheduler
                     recentDate = DateTime.Today.ToString("MM/dd/yyyy");
                 }
                 else
+                {
                     recentDate = recentInspec.HHistory_Date;
+                }
 
                 using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
@@ -785,7 +797,7 @@ namespace AFH_Scheduler
                     {
                         providerID = db.Providers.First(r => r.Provider_Name == createdHome.TextSearch).Provider_ID;
                     }
-                    catch(Exception e)
+                    catch (Exception)
                     {
                         providerID = null;
                     }
@@ -1016,13 +1028,13 @@ namespace AFH_Scheduler
         {
             Console.WriteLine("Dialog closed successfully");
 
-            if((String)eventArgs.Parameter == "SUBMIT")
+            if ((String)eventArgs.Parameter == "SUBMIT")
             {
                 CompleteVM completeDialogContext = ((CompleteVM)((CompleteDialog)eventArgs.Session.Content).DataContext);
                 HomeModel updatedHomeValues = completeDialogContext.SelectedHome;
                 string newNextInspectionDate = completeDialogContext.SelectedCode.IOutcome_Code;
 
-                using(HomeInspectionEntities db = new HomeInspectionEntities())
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
                 {
                     string nextInspection = completeDialogContext.NextInspection;
 
@@ -1041,7 +1053,7 @@ namespace AFH_Scheduler
                         Scheduled_Inspections homeDates = selectHome.Scheduled_Inspections.First();
 
                         homeDates.SInspections_Date = nextInspection;
-                        homeDates.SInspections_EighteenMonth  = alg.DropDateMonth(homeDates.SInspections_Date, Drop.EIGHTEEN_MONTH);
+                        homeDates.SInspections_EighteenMonth = alg.DropDateMonth(homeDates.SInspections_Date, Drop.EIGHTEEN_MONTH);
                         homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeDates.SInspections_Date, Drop.SEVENTEEN_MONTH);
                         homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(completeDialogContext.SelectedCode, nextInspection);
                     }
@@ -1058,7 +1070,10 @@ namespace AFH_Scheduler
         private void EditClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             Console.WriteLine("Dialog closed successfully");
-            if ((String)eventArgs.Parameter == "Cancel") return;
+            if ((String)eventArgs.Parameter == "Cancel")
+            {
+                return;
+            }
 
             if ((String)eventArgs.Parameter == "DELETE")
             {
@@ -1315,7 +1330,7 @@ namespace AFH_Scheduler
                 return 0;
             }
 
-            if(SelectedFilter.Equals("Provider Name"))
+            if (SelectedFilter.Equals("Provider Name"))
             {
                 string[] splitName = provider.Split(' ');
 
@@ -1349,8 +1364,15 @@ namespace AFH_Scheduler
 
             int n = first.Length;
             int m = second.Length;
-            if (n == 0) return m;
-            if (m == 0) return n;
+            if (n == 0)
+            {
+                return m;
+            }
+
+            if (m == 0)
+            {
+                return n;
+            }
 
             int curRow = 0, nextRow = 1;
             int[][] rows = { new int[m + 1], new int[m + 1] };

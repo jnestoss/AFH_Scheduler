@@ -1,19 +1,15 @@
-﻿using AFH_Scheduler.Helper_Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+﻿using AFH_Scheduler.Algorithm;
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
-using AFH_Scheduler.Dialogs.Errors;
 using AFH_Scheduler.Dialogs.Confirmation;
+using AFH_Scheduler.Helper_Classes;
 using MaterialDesignThemes.Wpf;
-using AFH_Scheduler.Algorithm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Data;
-using System.Windows;
 
 namespace AFH_Scheduler.Dialogs
 {
@@ -25,7 +21,11 @@ namespace AFH_Scheduler.Dialogs
         public HomeModel SelectedSchedule {
             get { return _selectedSchedule; }
             set {
-                if (_selectedSchedule == value) return;
+                if (_selectedSchedule == value)
+                {
+                    return;
+                }
+
                 _selectedSchedule = value;
                 OnPropertyChanged("SelectedSchedule");
             }
@@ -36,8 +36,7 @@ namespace AFH_Scheduler.Dialogs
 
         private string _TextSearch;
         public string TextSearch {
-            get
-            {
+            get {
                 return _TextSearch;
             }
             set {
@@ -52,12 +51,14 @@ namespace AFH_Scheduler.Dialogs
 
         private List<String> _outcomeCodes;
         public List<String> OutcomeCodes {
-            get
-            {
+            get {
                 return _outcomeCodes;
             }
             set {
-                if (!(_outcomeCodes == value)) _outcomeCodes = value;
+                if (!(_outcomeCodes == value))
+                {
+                    _outcomeCodes = value;
+                }
             }
         }
 
@@ -65,7 +66,11 @@ namespace AFH_Scheduler.Dialogs
         public Inspection_Outcome SelectedCode {
             get { return _selectedCode; }
             set {
-                if (_selectedCode == value) return;
+                if (_selectedCode == value)
+                {
+                    return;
+                }
+
                 _selectedCode = value;
             }
         }
@@ -74,7 +79,11 @@ namespace AFH_Scheduler.Dialogs
         public double CurrentAverage {
             get { return _currentAverage; }
             set {
-                if (_currentAverage == value) return;
+                if (_currentAverage == value)
+                {
+                    return;
+                }
+
                 _currentAverage = value;
                 OnPropertyChanged("CurrentAverage");
             }
@@ -84,7 +93,11 @@ namespace AFH_Scheduler.Dialogs
         public double DesiredAverage {
             get => _desiredAverage;
             set {
-                if (_desiredAverage == value) return;
+                if (_desiredAverage == value)
+                {
+                    return;
+                }
+
                 _desiredAverage = value;
                 OnPropertyChanged("DesiredAverage");
             }
@@ -92,12 +105,15 @@ namespace AFH_Scheduler.Dialogs
 
         private DateTime _nextInspection;
         public DateTime NextInspection {
-            get
-            {
+            get {
                 return _nextInspection;
             }
             set {
-                if (_nextInspection == value) return;
+                if (_nextInspection == value)
+                {
+                    return;
+                }
+
                 _nextInspection = value;
                 OnPropertyChanged("NextInspection");
             }
@@ -107,7 +123,11 @@ namespace AFH_Scheduler.Dialogs
         public string PreviousInspection {
             get => _previousInspection;
             set {
-                if (_previousInspection == value) return;
+                if (_previousInspection == value)
+                {
+                    return;
+                }
+
                 _previousInspection = value;
             }
         }
@@ -123,7 +143,11 @@ namespace AFH_Scheduler.Dialogs
         private RelayCommand _calcDate;
         public RelayCommand CalcDate {
             get {
-                if (_calcDate == null) _calcDate = new RelayCommand(CalcNextInspectionDate);
+                if (_calcDate == null)
+                {
+                    _calcDate = new RelayCommand(CalcNextInspectionDate);
+                }
+
                 return _calcDate;
             }
         }
@@ -132,7 +156,10 @@ namespace AFH_Scheduler.Dialogs
         public RelayCommand DeleteProviderCommand {
             get {
                 if (_deleteProviderCommand == null)
+                {
                     _deleteProviderCommand = new RelayCommand(ShowProviderList);
+                }
+
                 return _deleteProviderCommand;
             }
         }
@@ -202,7 +229,7 @@ namespace AFH_Scheduler.Dialogs
                     {
                         return outcomes.Where(x => x.IOutcome_Code == mostRecentInspectionOutcome.Inspection_Outcome.IOutcome_Code).FirstOrDefault();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         return outcomes[0];
                     }
@@ -233,11 +260,11 @@ namespace AFH_Scheduler.Dialogs
         private List<String> GrabProviderInformation()
         {
             List<string> providerNames = new List<string>();
-            using(HomeInspectionEntities db = new HomeInspectionEntities())
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var provs = db.Providers.ToList();
 
-                foreach(Provider prov in provs)
+                foreach (Provider prov in provs)
                 {
                     providerNames.Add(prov.Provider_Name);
                 }
@@ -278,8 +305,15 @@ namespace AFH_Scheduler.Dialogs
 
             int n = first.Length;
             int m = second.Length;
-            if (n == 0) return m;
-            if (m == 0) return n;
+            if (n == 0)
+            {
+                return m;
+            }
+
+            if (m == 0)
+            {
+                return n;
+            }
 
             int curRow = 0, nextRow = 1;
             int[][] rows = { new int[m + 1], new int[m + 1] };
@@ -321,6 +355,21 @@ namespace AFH_Scheduler.Dialogs
 
         public void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
+            if ((String)eventArgs.Parameter == "YES")
+            {
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
+                    var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == SelectedSchedule.HomeID);
+                    var sched = db.Scheduled_Inspections.SingleOrDefault(r => r.FK_PHome_ID == SelectedSchedule.HomeID);
+
+                    if (home != null)
+                    {
+                        db.Provider_Homes.Remove(home);
+                        db.SaveChanges();
+                    }
+                }
+            }
         }
     }
 }
