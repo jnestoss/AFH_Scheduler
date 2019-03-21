@@ -161,6 +161,22 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
 
                                 }
                             }
+
+                            foreach(var deactiveHome in transferOrDeleteVM.DeactiveHomes)
+                            {
+                                try
+                                {
+                                    Provider_Homes activeHome = db.Provider_Homes.First(r => r.PHome_ID == deactiveHome.HomeID);
+
+                                    activeHome.FK_Provider_ID = null;
+                                    activeHome.PHome_Active = null;
+                                    db.SaveChanges();
+                                }
+                                catch (InvalidOperationException e)
+                                {
+
+                                }
+                            }
                         }
                         
                     }
@@ -197,20 +213,14 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                 {
                     db.Providers.Add(new Provider
                     {
-                        Provider_ID = Convert.ToInt64(vm.NewProviderAdded.ProviderID),
+                        Provider_ID = vm.NewProviderAdded.ProviderID,
                         Provider_Name = vm.NewProviderAdded.ProviderName
                     });
                     db.SaveChanges();
 
                 }
 
-                ProvidersList.Add(
-                          new ProvidersModel
-                          (
-                              vm.NewProviderAdded.ProviderID,
-                              vm.NewProviderAdded.ProviderName
-                          )
-                      );
+                ProvidersList.Add(vm.NewProviderAdded);
             }
         }
         #endregion
@@ -282,7 +292,7 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                     ProvidersList.Add(
                             new ProvidersModel
                             (
-                                item.Provider_ID.ToString(),
+                                item.Provider_ID,
                                 item.Provider_Name
                             )
                         );

@@ -1,5 +1,6 @@
 ﻿using AFH_Scheduler.Data;
 using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
 
         public NewProviderCreatorVM()
         {
-            NewProviderAdded = new ProvidersModel("", "");
+            NewProviderAdded = new ProvidersModel(GenerateNewIDs.GenerateProviderID(), "");
         }
 
         public string Name

@@ -9,29 +9,9 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" >
-    
-    <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Margin="10" FontSize="18">Provider ID:</TextBlock>
-            <TextBox 
-                Name="ProviderIDTextBox"
-                    Margin="10" 
-                    FontSize="18"
-                    MinWidth="255">
-                <TextBox.Text>
-                    <Binding Path="NewProviderAdded.ProviderID" UpdateSourceTrigger="LostFocus">
-                        <Binding.ValidationRules>
-                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:NewHomeValidation Message="Please use only whole numbers." 
-                                                     Regex="^[0-9]+$"
-                                                     ValidatesOnTargetUpdated="True"/>
-                            <Behaviors:UniqueProviderIDValidation ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-        </StackPanel>
 
+    <StackPanel Orientation="Vertical">
+        
         <StackPanel Orientation="Horizontal" Margin="10">
             <TextBlock Margin="10" FontSize="18">Provider Name:</TextBlock>
             <TextBox 
@@ -40,7 +20,7 @@
                     FontSize="18"
                     MinWidth="255">
                 <TextBox.Text>
-                    <Binding Path="NewProviderAdded.ProviderName" UpdateSourceTrigger="LostFocus">
+                    <Binding Path="NewProviderAdded.ProviderName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                             <Behaviors:NewHomeValidation Message="Please enter the name in the following format: First Last. Hypens are allowed." 
@@ -66,8 +46,6 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderIDTextBox}" 
-                                               Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=NameTextBox}" 
                                                Value="False"/>
                                 </MultiDataTrigger.Conditions>

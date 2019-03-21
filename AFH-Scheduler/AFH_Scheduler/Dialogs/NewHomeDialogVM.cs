@@ -203,8 +203,37 @@ namespace AFH_Scheduler.Dialogs
             {
                 date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
             }
+            DateTime testUnique = SchedulingAlgorithm.ExtractDateTime(date);
+
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
+            {
+                Provider prov;
+                try
+                {
+                    prov = db.Providers.First(r => r.Provider_Name.Equals(TextSearch));
+                }catch(Exception e)
+                {
+                    prov = null;
+                }
             
-            NewHomeCreated.NextInspection = date;
+                if (!(prov is null) || !SchedulingAlgorithm.CheckingForUniqueInspection(testUnique, NewHomeCreated.HomeID))
+                {
+
+                    bool dateCleared = false;
+                    do
+                    {
+                        testUnique = testUnique.AddDays(1);
+                        SchedulingAlgorithm.CheckDay(testUnique);
+                        if (SchedulingAlgorithm.CheckingForUniqueInspection(testUnique, NewHomeCreated.HomeID))
+                        {
+                            date = testUnique.ToShortDateString();
+                            dateCleared = true;
+                        }
+                    } while (!dateCleared);
+                }
+
+                NewHomeCreated.NextInspection = date;
+            }
         }
 
         private int GetDistance(string provider)

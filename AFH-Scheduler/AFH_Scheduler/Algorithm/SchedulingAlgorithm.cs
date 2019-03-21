@@ -41,7 +41,7 @@ namespace AFH_Scheduler.Algorithm
         }
 
 
-        public static string CalculateNextScheduledDate(Inspection_Outcome outcome, string recent_inspection, double averageInspectionTime, double desiredAverage)
+        public static string CalculateNextScheduledDate(long homeID, Inspection_Outcome outcome, string recent_inspection, double averageInspectionTime, double desiredAverage)
         {
             List<DateTime> nextInspectionChoices = new List<DateTime>();
 
@@ -89,8 +89,28 @@ namespace AFH_Scheduler.Algorithm
 
             int number = loadedDie.NextValue();
 
+            bool dateCleared = false;
+            int min = 1, max, added_days;
+            DateTime newDateObject;
+            Random randomiz = new Random();
             if (averageInspectionTime > desiredAverageUpperLimit)
             {
+                newDateObject = nextInspectionChoices[probs.Length - 1 - number];
+                do
+                {
+                    if (!CheckingForUniqueInspection(newDateObject, homeID))
+                    {
+
+                        max = CheckingMonth(newDateObject);
+                        added_days = randomiz.Next(min, max + 1);
+                        newDateObject = newDateObject.AddDays(1);
+                    }
+                    else
+                    {
+                        dateCleared = true;
+                    }
+
+                } while (!dateCleared);
                 return nextInspectionChoices[probs.Length - 1 - number].ToString("MM/dd/yyyy");
             }
             else
@@ -133,57 +153,62 @@ namespace AFH_Scheduler.Algorithm
         #region Scheduling Next Inspection
         public string SchedulingNextDate(int pHome_ID)
         {
-            HomeInspectionEntities table = new HomeInspectionEntities();
-            var history = GrabbingRecentInspection(pHome_ID);
-            if(history == null)
+            using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
-                return "";
-            }
-
-            Inspection_Outcome outcome = table.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_Outcome_Code);
-
-            string newInspection = NextScheduledDate(outcome,  history.HHistory_Date);
-            DateTime newDateObject = ExtractDateTime(newInspection);
-
-            bool dateCleared = false;
-            Random randomiz = new Random();
-            int min = 1, max, added_days;
-            do
-            {
-                if (!CheckingForUniqueInspection(table, newDateObject, pHome_ID))
-                {//If the newly calculated date is shared with another home, it must be adjusted.
-
-                    max = CheckingMonth(newDateObject);
-                    added_days = randomiz.Next(min, max + 1);
-                    newDateObject = newDateObject.AddDays(1);
-                }
-                else
+                var history = GrabbingRecentInspection(pHome_ID);
+                if (history == null)
                 {
-                    dateCleared = true;
+                    return "";
                 }
 
-            } while (!dateCleared);
+                Inspection_Outcome outcome = db.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_Outcome_Code);
 
-            return newDateObject.ToShortDateString();
+                string newInspection = NextScheduledDate(outcome, history.HHistory_Date);
+                DateTime newDateObject = ExtractDateTime(newInspection);
+
+                bool dateCleared = false;
+                Random randomiz = new Random();
+                int min = 1, max, added_days;
+                do
+                {
+                    if (!CheckingForUniqueInspection(newDateObject, pHome_ID))
+                    {//If the newly calculated date is shared with another home, it must be adjusted.
+
+                        max = CheckingMonth(newDateObject);
+                        added_days = randomiz.Next(min, max + 1);
+                        newDateObject = newDateObject.AddDays(1);
+                    }
+                    else
+                    {
+                        dateCleared = true;
+                    }
+
+                } while (!dateCleared);
+
+                return newDateObject.ToShortDateString();
+            }
         }
         #endregion
 
         #region Checking For Unique Inspection
-        public bool CheckingForUniqueInspection(HomeInspectionEntities table, DateTime newInspection, long pHome_ID)
+        public static bool CheckingForUniqueInspection(DateTime newInspection, long pHome_ID)
         {
             bool isUniqueDate = false;
             string dateComparison = newInspection.ToShortDateString();
             
             try
             {
-                long providerID = table.Provider_Homes.First(r => r.PHome_ID == pHome_ID).FK_Provider_ID.Value;
-                Scheduled_Inspections scheduled = table.Scheduled_Inspections.Where(r => r.SInspections_Date == dateComparison && r.FK_PHome_ID != pHome_ID).First();
-                var phID2 = scheduled.FK_PHome_ID;
-                var providerCompare = table.Provider_Homes.Where(r => r.PHome_ID == phID2).First().FK_Provider_ID;
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {
+                    long providerID = db.Provider_Homes.First(r => r.PHome_ID == pHome_ID).FK_Provider_ID.Value;
+                    Scheduled_Inspections scheduled = db.Scheduled_Inspections.Where(r => r.SInspections_Date == dateComparison && r.FK_PHome_ID != pHome_ID).First();
+                    var phID2 = scheduled.FK_PHome_ID;
+                    var providerCompare = db.Provider_Homes.Where(r => r.PHome_ID == phID2).First().FK_Provider_ID;
 
-                if (providerID == providerCompare)
-                {//If both homes share the same day for inspections under the same provider, change the date
-                    return false;
+                    if (providerID == providerCompare)
+                    {//If both homes share the same day for inspections under the same provider, change the date
+                        return false;
+                    }
                 }
             }
             catch (InvalidOperationException e)
@@ -322,7 +347,7 @@ namespace AFH_Scheduler.Algorithm
         #endregion
 
         #region Checking Month
-        public int CheckingMonth(DateTime date)
+        public static int CheckingMonth(DateTime date)
         {
             int month = date.Month;
             switch (month)
