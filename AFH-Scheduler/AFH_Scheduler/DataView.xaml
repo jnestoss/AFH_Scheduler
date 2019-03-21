@@ -480,11 +480,11 @@
                     TextWrapping="Wrap" />
 
                 <TextBlock
-                    Margin="340,0,6,0"
+                    Margin="400,0,6,0"
                     VerticalAlignment="Center"
                     FontSize="12"
                     FontWeight="Bold">
-                    P:
+                    H:
                 </TextBlock>
 
                 <TextBlock
