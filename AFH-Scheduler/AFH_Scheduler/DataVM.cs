@@ -1107,8 +1107,6 @@ namespace AFH_Scheduler
                     db.SaveChanges();
                 }
                 editedHomeData.IsActive = false;
-                Providers.Remove(editedHomeData);
-                InActiveHomes.Add(editedHomeData);
                 return;
             }
 
@@ -1171,6 +1169,7 @@ namespace AFH_Scheduler
         private void RefreshTable(object obj)
         {
             Providers.Clear();
+            InActiveHomes.Clear();
             ReadHomeData();
         }
 
