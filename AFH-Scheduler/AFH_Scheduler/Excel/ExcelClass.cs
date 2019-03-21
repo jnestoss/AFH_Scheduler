@@ -159,7 +159,7 @@ namespace AFH_Scheduler.Excel
                                 var forecastedOutcome = alg.ForecastingFutureInspection(provider.HomeID);
 
                                 xlWorksheet.Cells[row, 1] = provider.HomeLicenseNum;
-                                xlWorksheet.Cells[row, 1] = provider.HomeName;
+                                xlWorksheet.Cells[row, 2] = provider.HomeName;
                                 xlWorksheet.Cells[row, 3] = provider.ProviderName;
                                 xlWorksheet.Cells[row, 4] = provider.Address;
                                 xlWorksheet.Cells[row, 5] = provider.City;

@@ -230,12 +230,12 @@ namespace AFH_Scheduler.Dialogs
             string date;
             if (RecentInspectionVisibility == true)
             {
-                date = SchedulingAlgorithm.CalculateNextScheduledDate(SelectedCode, NewHomeCreated.RecentInspection, CurrentAverage, DesiredAverage);
+                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, NewHomeCreated.RecentInspection);
                 //date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, NewHomeCreated.RecentInspection);
             }
             else
             {
-                date = SchedulingAlgorithm.CalculateNextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"), CurrentAverage, DesiredAverage);
+                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
                 //date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
             }
             DateTime testUnique = SchedulingAlgorithm.ExtractDateTime(date);

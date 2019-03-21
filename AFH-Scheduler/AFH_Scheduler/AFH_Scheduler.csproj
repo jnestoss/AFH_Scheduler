@@ -237,6 +237,10 @@
     <Compile Include="Data\LoginModel.cs" />
     <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
+    <Compile Include="Dialogs\Help\Pages\MainHelpPage.xaml.cs">
+      <DependentUpon>MainHelpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Help\Pages\MainHelpVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml.cs">
       <DependentUpon>AccountManagerDialog.xaml</DependentUpon>
     </Compile>
@@ -354,6 +358,10 @@
     <Compile Include="Validations\UniqueOutcomeCodeword.cs" />
     <Compile Include="Validations\UniqueProviderIDValidation.cs" />
     <Page Include="DataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Help\Pages\MainHelpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
