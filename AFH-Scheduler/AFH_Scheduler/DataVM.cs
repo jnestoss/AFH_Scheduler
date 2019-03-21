@@ -1050,6 +1050,38 @@ namespace AFH_Scheduler
             Console.WriteLine("Dialog closed successfully");
             if ((String)eventArgs.Parameter == "Cancel") return;
 
+            if ((String)eventArgs.Parameter == "DELETE")
+            {
+                try
+                {
+                    EditVM editDialogContext = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext);
+                    HomeModel editedHomeData = editDialogContext.SelectedSchedule;
+
+                    using (HomeInspectionEntities db = new HomeInspectionEntities())
+                    {
+                        Provider_Homes deletingHome = db.Provider_Homes.First(r => r.PHome_ID == editedHomeData.HomeID);
+                        Scheduled_Inspections deletingSchedule = db.Scheduled_Inspections.First(r => r.FK_PHome_ID == editedHomeData.HomeID);
+
+                        var homesHistory = db.Home_History.Where(r => r.FK_PHome_ID == editedHomeData.HomeID).ToList();
+
+                        db.Provider_Homes.Remove(deletingHome);
+                        db.SaveChanges();
+
+                        db.Scheduled_Inspections.Remove(deletingSchedule);
+                        db.SaveChanges();
+                        foreach (var historyItem in homesHistory)
+                        {
+                            db.Home_History.Remove(historyItem);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                catch (InvalidOperationException e)
+                {
+
+                }
+            }
+
             if ((String)eventArgs.Parameter == "DEACTIVATE")
             {
                 EditVM editDialogContext = ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext);
@@ -1106,7 +1138,7 @@ namespace AFH_Scheduler
                         homeDates.SInspections_Date = nextScheduledInspection;
                         //homeDates.SInspections_EighteenMonth  = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.EIGHTEEN_MONTH);
                         //homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.SEVENTEEN_MONTH);
-                        homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(homeHistory.Inspection_Outcome, nextScheduledInspection, Convert.ToDouble(NormalCurve), DesiredAverage);
+                        homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(editedHomeData.HomeID, homeHistory.Inspection_Outcome, nextScheduledInspection, Convert.ToDouble(NormalCurve), DesiredAverage);
 
                         db.SaveChanges();
                     }

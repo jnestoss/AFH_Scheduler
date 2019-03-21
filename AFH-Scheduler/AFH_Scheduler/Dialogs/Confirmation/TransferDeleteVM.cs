@@ -164,12 +164,13 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                         ChowedHomes.Add(selectItem);
                     }
                 }
+
                 if (result.Equals("DELETE"))
                 {
                     RemovedHomes.Add(selectItem);
                 }
 
-                if (result.Equals("DEAC"))
+                if (result.Equals("DEACTIVATE"))
                 {
                     DeactiveHomes.Add(selectItem);
                 }

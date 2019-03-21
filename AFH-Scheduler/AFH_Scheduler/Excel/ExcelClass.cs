@@ -184,7 +184,7 @@ namespace AFH_Scheduler.Excel
 
                                     var inspection = SchedulingAlgorithm.ExtractDateTime(insp);
 
-                                    if (alg.CheckingForUniqueInspection(db, inspection, provider.HomeID))
+                                    if (SchedulingAlgorithm.CheckingForUniqueInspection(inspection, provider.HomeID))
                                     {
                                         xlWorksheet.Cells[row, 14] = insp;//forecasted next inspection date
                                     }
@@ -193,9 +193,9 @@ namespace AFH_Scheduler.Excel
                                         bool dateCleared = false;
                                         do
                                         {
-                                            inspection.AddDays(1);
+                                            inspection = inspection.AddDays(1);
                                             SchedulingAlgorithm.CheckDay(inspection);
-                                            if (alg.CheckingForUniqueInspection(db, inspection, provider.HomeID))
+                                            if (SchedulingAlgorithm.CheckingForUniqueInspection(inspection, provider.HomeID))
                                             {
                                                 xlWorksheet.Cells[row, 14] = insp;//forecasted next inspection date
                                                 dateCleared = true;

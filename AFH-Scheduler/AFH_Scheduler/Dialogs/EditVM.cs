@@ -141,8 +141,11 @@ namespace AFH_Scheduler.Dialogs
         {
             var view = new DeleteConfirmationDialog();
             var result = await DialogHost.Show(view, "DeleteConfirmationDialog", ClosingEventHandler);
-            //ClosingEventHandler(this, new DialogClosingEventArgs());
-            
+            if (result.Equals("YES"))
+            {
+                DialogHost.CloseDialogCommand.Execute("DELETE", null);
+            }
+
         }
 
         public static long _homeIDSave;
@@ -223,7 +226,7 @@ namespace AFH_Scheduler.Dialogs
 
         private void CalcNextInspectionDate(object o)
         {
-            string date = SchedulingAlgorithm.CalculateNextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"), CurrentAverage, DesiredAverage);
+            string date = SchedulingAlgorithm.CalculateNextScheduledDate(SelectedSchedule.HomeID, SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"), CurrentAverage, DesiredAverage);
             NextInspection = SchedulingAlgorithm.ExtractDateTime(date);
         }
 
@@ -318,21 +321,6 @@ namespace AFH_Scheduler.Dialogs
 
         public void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
-            if((String)eventArgs.Parameter == "YES")
-            {
-                using (HomeInspectionEntities db = new HomeInspectionEntities())
-                {
-                    //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
-                    var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == SelectedSchedule.HomeID);
-                    var sched = db.Scheduled_Inspections.SingleOrDefault(r => r.FK_PHome_ID == SelectedSchedule.HomeID);
-
-                    if (home != null)
-                    {
-                        db.Provider_Homes.Remove(home);
-                        db.SaveChanges();
-                    }
-                }
-            }
         }
     }
 }

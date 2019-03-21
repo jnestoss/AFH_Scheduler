@@ -526,7 +526,7 @@ namespace AFH_Scheduler.Dialogs
                                     while (!provName.Equals("No Provider") &&
                                         UniqueInspectionDates.Contains(new UniqueDateImportItem(provName, scheduleInspect)))
                                     {
-                                        scheduleInspect.AddDays(1);
+                                        scheduleInspect = scheduleInspect.AddDays(1);
                                         SchedulingAlgorithm.CheckDay(scheduleInspect);
                                     }
                                     nextInspect = scheduleInspect.ToShortDateString();

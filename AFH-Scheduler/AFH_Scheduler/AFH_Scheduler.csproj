@@ -351,6 +351,7 @@
     <Compile Include="Validations\NonDuplicateHomeIDValidationRule.cs" />
     <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
+    <Compile Include="Validations\UniqueDateValidation.cs" />
     <Compile Include="Validations\UniqueOutcomeCodeword.cs" />
     <Compile Include="Validations\UniqueProviderIDValidation.cs" />
     <Page Include="DataView.xaml">
