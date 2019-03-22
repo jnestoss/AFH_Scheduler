@@ -73,7 +73,7 @@
             IsDefault="True"
             Margin="10,0,10,1" 
             FontSize="18" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+            ToolTip="Submit new Outcome Codeword" 
             Width="100"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
                 <Button.Style>
@@ -108,7 +108,7 @@
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
             MaxWidth="100" Margin="10,0,11,0" 
-            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+            ToolTip="Cancel new Outcome Codeword" 
             FontSize="14">
                 <Button.CommandParameter>
 

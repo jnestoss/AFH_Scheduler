@@ -68,7 +68,7 @@
                 Margin="10,0,10,1"
                 Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
                 IsDefault="True"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                ToolTip="Submit Edit Changes">
                 <Button.Style>
                     <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
                         <Setter Property="IsEnabled" Value="False" />
@@ -95,7 +95,7 @@
                 Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
                 IsCancel="True"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                ToolTip="Cancel Edit Changes">
                 <Button.CommandParameter>
 
                     <system:String>Cancel</system:String>
