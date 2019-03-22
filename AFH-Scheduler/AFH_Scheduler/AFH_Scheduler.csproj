@@ -91,6 +91,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
@@ -634,6 +637,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Users1.cs</LastGenOutput>
     </Content>
+    <Resource Include="icon.ico" />
     <Resource Include="Images\NoProviderWarning.bmp" />
     <Resource Include="NormalCurve\NormalCurveValue.txt" />
   </ItemGroup>

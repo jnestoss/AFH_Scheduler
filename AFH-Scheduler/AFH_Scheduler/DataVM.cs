@@ -1330,10 +1330,6 @@ namespace AFH_Scheduler
 
         #endregion
 
-        /*
-         * @brief Clears User Object from VM
-         * @details Clears User object from VM as part of logout.
-         * */
         #region User Methods
         public void ClearUser() { _usr = null; }
         #endregion
