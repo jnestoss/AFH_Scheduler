@@ -104,7 +104,7 @@
                                     Command="{Binding Path=DataContext.ReactivateCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}"
                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
-                                    ToolTip="Reactivate the Home">
+                                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
                                     _REACTIVATE?
                                 </Button>
                             </DataTemplate>

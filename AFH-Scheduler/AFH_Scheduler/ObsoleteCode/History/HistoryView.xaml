@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UserControl x:Class="AFH_Scheduler.History.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+
+    <DockPanel LastChildFill="False">
+        <DataGrid
+            Margin="36 0 36 0"
+            ItemsSource="{Binding Homes}"
+            CanUserSortColumns="True"
+            CanUserAddRows="True"
+            AutoGenerateColumns="False"
+            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+            materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+            DockPanel.Dock="Top">
+
+            <DataGrid.Columns>
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ProviderID}" Header="Provider ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ProviderName}" Header="Name" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding HomeID}" Header="Home ID" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding Address}" Header="Address" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding ZipCode}" Header="ZipCode" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <!-- set a max length to get an indicator in the editor -->
+                <!--
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding NextInspection}" Header="Next Inspection" MaxLength="255" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                 -->
+                <DataGridTemplateColumn Header="View History">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding Path=DataContext.LoadHomeHistoryCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" x:Name="LoadHomeHistory_Button" Style="{StaticResource MaterialDesignRaisedLightButton}" ToolTip="Show Inspection History">
+                                <materialDesign:PackIcon Kind="ViewList" Foreground="WhiteSmoke" Width="25" Height="25" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="50,50,50,50">
+            <!--<StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="100,100,100,100"/>
+                </Style>
+            </StackPanel.Resources>-->
+            <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10 0" FontSize="10" Width="120" ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                _EXPORT TO EXCEL
+            </Button>
+            <Button Command="{Binding Path=RefreshTableCommand}" Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10 0" MaxWidth="255" ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                _REFRESH TABLE
+            </Button>
+        </StackPanel>
+
+    </DockPanel>
+
+
+    <!-- 
+    <Grid>
+        <TextBlock Text="This is the Second Page" 
+                   FontWeight="Bold" FontSize="18"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </Grid>
+    -->
+
+
+    <!--
+    <UserControl.Resources>
+  
+        <DataTemplate DataType="{x:Type local:ProductModel}">
+            <Border BorderBrush="Black" BorderThickness="1" Padding="20">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0"  Text="ID" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding ProductId}" Margin="5" Width="150" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="1"  Text="Name" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Grid.Row="1" Grid.Column="1"  Text="{Binding ProductName}" Margin="5" Width="150" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="2"  Text="Unit Price" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding UnitPrice}" Margin="5" Width="150" />
+
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <DockPanel Margin="20">
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock Margin="10,2" DockPanel.Dock="Left" Text="Enter Product Id" VerticalAlignment="Center" />
+
+            <TextBox Margin="10,2" Width="50" VerticalAlignment="Center" Text="{Binding Path=ProductId, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button Content="Save Product" DockPanel.Dock="Right" Margin="10,2" VerticalAlignment="Center"
+                        Command="{Binding Path=SaveProductCommand}" Width="100" />
+
+            <Button Content="Get Product" DockPanel.Dock="Right" Margin="10,2" VerticalAlignment="Center"
+                        Command="{Binding Path=GetProductCommand}" IsDefault="True" Width="100" />
+        </DockPanel>
+
+        <ContentControl Margin="10" Content="{Binding Path=CurrentProduct}" />
+    </DockPanel>
+    -->
+</UserControl>

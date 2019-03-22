@@ -386,6 +386,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
+                                    <!--<Condition Binding="{Binding Path=IsProviderSelected}" Value="True" />-->
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LicenseNumber}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeName}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ProviderAddress}" Value="False" />
@@ -428,4 +429,346 @@
         </StackPanel>
 
     </Grid>
+
+
+    <!--
+    <StackPanel Orientation="Vertical">
+        <TextBlock
+            Margin="10"
+            HorizontalAlignment="Center"
+            FontSize="22">
+            Create A New Home
+        </TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+                <ColumnDefinition Width="Auto" MinWidth="200" />
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+                <ColumnDefinition Width="Auto" MinWidth="200" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Provider:
+            </TextBlock>
+            <ComboBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="20,10,0,10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                materialDesign:HintAssist.Hint="Search"
+                materialDesign:HintAssist.HintOpacity=".26"
+                DisplayMemberPath="ProviderName"
+                IsEditable="True"
+                IsTextSearchEnabled="True"
+                ItemsSource="{Binding ComboBoxProviderItems}"
+                SelectedValue="{Binding SelectedProviderName}"
+                StaysOpenOnEdit="True"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Text="{Binding TextSearch, Delay=250}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Home License Number:
+            </TextBlock>
+            <TextBox
+                Name="HomeLicenseTextBox"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeLicenseNum" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation
+                                Message="Please use only whole numbers."
+                                Regex="^[0-9]+$"
+                                ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+
+            </TextBox>
+
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="10"
+                FontSize="16">
+                Licensed Home Name:
+            </TextBlock>
+            <TextBox
+                Name="HomeNameTextBox"
+                Grid.Row="1"
+                Grid.Column="3"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeName" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+    -->
+    <!--
+            <TextBlock Margin="10" FontSize="16" Grid.Column="0" Grid.Row="2">Home ID:</TextBlock>
+            <TextBox
+                Name="HomeIDTextBox"
+                    Margin="10"
+                    FontSize="16"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    IsReadOnly="True"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomeID" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Behaviors:NonDuplicateHomeIDValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation Message="Please use only whole numbers."
+                                                     Regex="^[0-9]+$"
+                                                     ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+
+            </TextBox>
+    -->
+    <!--
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Address:
+            </TextBlock>
+            <TextBox
+                Name="AddressTextBox"
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.Address" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="2"
+                Margin="10"
+                FontSize="16">
+                City:
+            </TextBlock>
+            <TextBox
+                Name="CityTextBox"
+                Grid.Row="2"
+                Grid.Column="3"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.City" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <Behaviors:NewHomeValidation
+                                Message="City isn't in correct format."
+                                Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
+                                ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Zipcode:
+            </TextBlock>
+            <TextBox
+                Name="ZipCodeTextBox"
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.ZIP" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+
+                            <Behaviors:NewHomeValidation
+                                Message="Zipcode isn't in correct format."
+                                Regex="^[0-9]{5}(-[0-9]{4})?$"
+                                ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="2"
+                Margin="10"
+                VerticalAlignment="Center"
+                FontSize="16">
+                Phone Number(Optional):
+            </TextBlock>
+            <TextBox
+                Name="PhoneTextBox"
+                Grid.Row="3"
+                Grid.Column="3"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.HomePhoneNumber" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules />
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                RCS-Region/Unit:
+            </TextBlock>
+            <TextBox
+                Name="RegionTextBox"
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="10"
+                FontSize="16">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.RcsRegionUnit" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+    -->
+    <!--
+            <TextBlock Margin="10" FontSize="16" Grid.Column="2" Grid.Row="4">RCS-Unit:</TextBlock>
+            <TextBox
+                Name="UnitTextBox"
+                    Margin="10"
+                    FontSize="16"
+                    Grid.Column="3"
+                    Grid.Row="4">
+                <TextBox.Text>
+                    <Binding Path="NewHomeCreated.RcsUnit" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+    -->
+    <!--
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                Margin="10"
+                FontSize="16">
+                Inspection Date:
+            </TextBlock>
+            <DatePicker
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="10"
+                DisplayDateStart="{x:Static system:DateTime.Today}"
+                FontSize="16"
+                SelectedDate="{Binding DatePicked, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+        </Grid>
+
+        <Grid Margin="30" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Name="SubmitButton"
+                Grid.Column="0"
+                Width="100"
+                Margin="10,0,10,1"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                FontSize="16"
+                IsDefault="True"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource MaterialDesignRaisedLightButton}" TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=IsProviderSelected}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeLicenseTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HomeNameTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=AddressTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CityTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ZipCodeTextBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RegionTextBox}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.CommandParameter>
+
+                    <system:String>Submit</system:String>
+
+                </Button.CommandParameter>
+                _SUBMIT
+            </Button>
+
+            <Button
+                Name="CancelNewHome"
+                Grid.Column="1"
+                MaxWidth="100"
+                Margin="10,0,11,0"
+                Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                FontSize="16"
+                IsCancel="True"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                <Button.CommandParameter>
+
+                    <system:String>Cancel</system:String>
+
+                </Button.CommandParameter>
+                _CANCEL
+            </Button>
+        </Grid>
+    </StackPanel>
+    -->
 </UserControl>

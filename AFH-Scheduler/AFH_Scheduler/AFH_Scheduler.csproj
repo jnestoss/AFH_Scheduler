@@ -238,6 +238,7 @@
     <Compile Include="Data\DropPeriodEnum.cs" />
     <Compile Include="Data\HomeModel.cs" />
     <Compile Include="Data\LoginModel.cs" />
+    <Compile Include="Data\ObservableProviders.cs" />
     <Compile Include="Data\ProvidersModel.cs" />
     <Compile Include="Dialogs\Errors\CanNotDeleteOutcome.xaml.cs">
       <DependentUpon>CanNotDeleteOutcome.xaml</DependentUpon>
@@ -323,6 +324,10 @@
       <DependentUpon>NewProviderCreator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingSubWindows\NewProviderCreatorVM.cs" />
+    <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml.cs">
+      <DependentUpon>NormalCurveAdjuster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingSubWindows\NormalCurveAdjusterVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\OutcomeCodeListDialog.xaml.cs">
       <DependentUpon>OutcomeCodeListDialog.xaml</DependentUpon>
     </Compile>
@@ -445,6 +450,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dialogs\SettingSubWindows\NormalCurveAdjuster.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\SettingSubWindows\OutcomeCodeListDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -504,7 +513,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Database\HomeInspection.db" />
     <None Include="Database\HomeInspection.db.sqbpro" />
