@@ -220,7 +220,20 @@ namespace AFH_Scheduler
                 }
             }
         }
-                     
+
+        /*public string _excelFilename;
+        public string ExcelFileName
+        {
+            get { return _excelFilename; }
+            set
+            {
+                _excelFilename = value;
+                OnPropertyChanged("ExcelFileName");
+            }
+        }*/
+
+
+
         private HomeModel _selectedHome;
         public HomeModel SelectedHome {
             get => _selectedHome;
@@ -400,6 +413,18 @@ namespace AFH_Scheduler
             }
         }
 
+        private RelayCommand _openEditHistoryDialog;
+        public ICommand OpenEditHistoryDialogCommand {
+            get {
+                if (_openEditHistoryDialog == null)
+                {
+                    _openEditHistoryDialog = new RelayCommand(EditHistoryDialogOpen);
+                }
+
+                return _openEditHistoryDialog;
+            }
+        }
+
         private RelayCommand _refreshTable;
         public ICommand RefreshTableCommand {
             get {
@@ -489,6 +514,9 @@ namespace AFH_Scheduler
 
             SelectedFilter = "Select Filter";
 
+            //UpdateSearchBoxSuggestions(ProviderNames);
+            //FilterByProviderName = true;
+
             string text = File.ReadAllText(@"..\..\NormalCurve\NormalCurveValue.txt");
             double testCase;
             if (!Double.TryParse(text, out testCase))
@@ -521,7 +549,7 @@ namespace AFH_Scheduler
                     db.SaveChanges();
                 }
             }
-            var importData = new ImportDataPreviewVM(Convert.ToDouble(NormalCurve), DesiredAverage);
+            var importData = new ImportDataPreviewVM();
             var view = new ImportDataPreview(importData);
             var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
             if (result.Equals("IMPORT"))
@@ -546,7 +574,7 @@ namespace AFH_Scheduler
                 return;
             }
 
-            ExcelClass.ExportTableNew(fileName, Providers, Convert.ToDouble(NormalCurve), DesiredAverage);
+            ExcelClass.ExportTableNew(fileName, Providers);
         }
         #endregion
 
@@ -657,6 +685,7 @@ namespace AFH_Scheduler
                 }
             }
             HomeCount = Providers.Count;
+            //FilterTheTable(null);
         }
         #endregion
 
@@ -715,8 +744,14 @@ namespace AFH_Scheduler
                         SInspections_EighteenMonth = alg.DropDateMonth(recentDate, Drop.EIGHTEEN_MONTH),
                         SInspections_SeventeenMonth = alg.DropDateMonth(recentDate, Drop.SEVENTEEN_MONTH),
                         SInspections_Id = newschedID,
-                        SInspection_ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(newHomeID, db.Inspection_Outcome.First(), home.NextInspection, Convert.ToDouble(NormalCurve), DesiredAverage)
+                        SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(db.Inspection_Outcome.First(), home.NextInspection)
                     };
+
+                    //db.Scheduled_Inspections.Add(dates);
+                    //db.SaveChanges();
+
+                    //List<Scheduled_Inspections> inspections = new List<Scheduled_Inspections>();
+                    //inspections.Add(dates);
 
                     if (createdHome.SelectedCode.IOutcome_Code == "NEW")
                     {
@@ -738,6 +773,8 @@ namespace AFH_Scheduler
                             HHistory_ID = newHistID
                         });
                     }
+
+                    //db.SaveChanges();
 
                     long? providerID;
                     try
@@ -763,9 +800,12 @@ namespace AFH_Scheduler
                         PHome_Active = 1
                     });
 
-                    db.Scheduled_Inspections.Add(dates);                    
+                    db.Scheduled_Inspections.Add(dates);
+                    //db.SaveChanges();
+                    
 
                     db.SaveChanges();
+                    //Providers.Add
                 }
 
                 RefreshTable(null);
@@ -807,7 +847,7 @@ namespace AFH_Scheduler
             {
                 var view = new CompleteDialog
                 {
-                    DataContext = new CompleteVM(SelectedHome, Convert.ToDouble(NormalCurve), DesiredAverage)
+                    DataContext = new CompleteVM(SelectedHome)
                 };
 
                 var result = await DialogHost.Show(view, "WindowDialogs", CompleteInspectionClosingEventHandler);
@@ -864,11 +904,24 @@ namespace AFH_Scheduler
             {
                 var view = new EditDialog();
                 view.DataContext = new EditVM(SelectedHome, DesiredAverage, Convert.ToDouble(NormalCurve));
+                //view.setDataContext(SelectedHome);
 
                 var result = await DialogHost.Show(view, "WindowDialogs", EditClosingEventHandler);
 
                 RefreshTable(null);
             }
+        }
+        
+        /*
+         * @brief Edit History dialog 
+         * @details Called by the Edit History button in MainWindow.xaml and opens Edit history dialog
+         * */
+        private void EditHistoryDialogOpen(object obj)
+        {
+            /*HistoryModel historyModel = (HistoryModel)obj;
+            HistoryDetailViewVM historyDetailView = new HistoryDetailViewVM(historyModel.HomeID, MessageService);
+            var updateOrNot = MessageService.ShowDialog(historyDetailView);*/
+            MessageService.ReleaseMessageBox("Outcome Code can not be edited currently.");
         }
 
         #endregion
@@ -923,7 +976,7 @@ namespace AFH_Scheduler
                         homeDates.SInspections_Date = nextInspection;
                         homeDates.SInspections_EighteenMonth = alg.DropDateMonth(homeDates.SInspections_Date, Drop.EIGHTEEN_MONTH);
                         homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeDates.SInspections_Date, Drop.SEVENTEEN_MONTH);
-                        homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(updatedHomeValues.HomeID, completeDialogContext.SelectedCode, nextInspection, Convert.ToDouble(NormalCurve), DesiredAverage);
+                        homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(completeDialogContext.SelectedCode, nextInspection);
                     }
 
                     db.SaveChanges();
@@ -958,12 +1011,14 @@ namespace AFH_Scheduler
                         var homesHistory = db.Home_History.Where(r => r.FK_PHome_ID == editedHomeData.HomeID).ToList();
 
                         db.Provider_Homes.Remove(deletingHome);
+                        //db.SaveChanges();
 
                         db.Scheduled_Inspections.Remove(deletingSchedule);
-                        
+                        //db.SaveChanges();
                         foreach (var historyItem in homesHistory)
                         {
                             db.Home_History.Remove(historyItem);
+                            //db.SaveChanges();
                         }
                         db.SaveChanges();
                     }
@@ -1026,7 +1081,8 @@ namespace AFH_Scheduler
                         String nextScheduledInspection = nextInspection.ToString("MM/dd/yyyy");
 
                         homeDates.SInspections_Date = nextScheduledInspection;
-                        
+                        //homeDates.SInspections_EighteenMonth  = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.EIGHTEEN_MONTH);
+                        //homeDates.SInspections_SeventeenMonth = alg.DropDateMonth(homeHistory.HHistory_Date, Drop.SEVENTEEN_MONTH);
                         homeDates.SInspection_ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(editedHomeData.HomeID, homeHistory.Inspection_Outcome, nextScheduledInspection, Convert.ToDouble(NormalCurve), DesiredAverage);
 
                         db.SaveChanges();

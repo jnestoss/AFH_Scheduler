@@ -56,7 +56,7 @@ namespace AFH_Scheduler.Excel
                                        Provider_ID = importedHome.ProviderID,
                                        Provider_Name = importedHome.ProviderName
                                    });
-                                   db.SaveChanges();
+                                   //db.SaveChanges();
                                }
                            }
 
@@ -93,8 +93,10 @@ namespace AFH_Scheduler.Excel
                         };
 
                         db.Provider_Homes.Add(newHome);
+                        //db.SaveChanges();
 
                         db.Scheduled_Inspections.Add(dates);
+                        //db.SaveChanges();
 
                         db.Home_History.Add(history);
                         db.SaveChanges();
@@ -103,7 +105,7 @@ namespace AFH_Scheduler.Excel
             }
         }
 
-        public static void ExportTableNew(string fileName, ObservableCollection<HomeModel> providers, double normalCurve, double desiredAverage)
+        public static void ExportTableNew(string fileName, ObservableCollection<HomeModel> providers)
         {
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
@@ -178,7 +180,7 @@ namespace AFH_Scheduler.Excel
                                 {
                                     xlWorksheet.Cells[row, 13] = forecastedOutcome.IOutcome_Code;//Outcome from current inspection
 
-                                    var insp = SchedulingAlgorithm.CalculateNextScheduledDate(provider.HomeID, forecastedOutcome, provider.NextInspection, normalCurve, desiredAverage);
+                                    var insp = SchedulingAlgorithm.NextScheduledDate(forecastedOutcome, provider.NextInspection);
 
                                     var inspection = SchedulingAlgorithm.ExtractDateTime(insp);
 

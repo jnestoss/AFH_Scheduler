@@ -61,7 +61,7 @@
             IsDefault="True"
             Margin="10,0,10,1" 
             FontSize="18" 
-            ToolTip="Submit Edit Changes" 
+            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             Width="100"
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
                 <Button.Style>
@@ -94,7 +94,7 @@
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
             MaxWidth="100" Margin="10,0,11,0" 
-            ToolTip="Cancel Edit Changes" 
+            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             FontSize="14">
                 <Button.CommandParameter>
 

@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.Help.Pages.MainHelpPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.Help.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid HorizontalAlignment="Center">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" 
+            Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+            Home Page
+        </TextBlock>
+
+        <TextBlock Grid.Row="1"
+            Style="{StaticResource MaterialDesignSubheadingTextBlock}" TextWrapping="Wrap">
+            Below is the primary window of this application. It hosts a datagrid where each row represents a 
+            home assigned to your office. In each row you will observe several pieces of information pertinent to that home. 
+            Above this grid is a set of controls used for filtering, exporting and adding new homes.
+        </TextBlock>
+
+        <Image Margin="10" Grid.Row="2" Source="../../../Images/mainpage.png" 
+               RenderOptions.BitmapScalingMode ="NearestNeighbor"/>
+
+    </Grid>
+</UserControl>

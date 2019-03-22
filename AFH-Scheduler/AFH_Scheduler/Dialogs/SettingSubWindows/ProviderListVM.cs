@@ -112,12 +112,14 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                                     var homesHistory = db.Home_History.Where(r => r.FK_PHome_ID == house.HomeID).ToList();
 
                                     db.Provider_Homes.Remove(deletingHome);
+                                    //db.SaveChanges();
 
                                     db.Scheduled_Inspections.Remove(deletingSchedule);
-                                    
+                                    //db.SaveChanges();
                                     foreach (var historyItem in homesHistory)
                                     {
                                        db.Home_History.Remove(historyItem);
+                                       //db.SaveChanges();
                                     }
                                     db.SaveChanges();
                                 }
@@ -152,7 +154,7 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                                     tranferingHome.PHome_RCSUnit = chowHome.RcsRegionUnit;
 
                                     updatingSchedule.SInspections_Date = chowHome.NextInspection;
-                                    updatingSchedule.SInspection_ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(tranferingHome.PHome_ID, homeHistory.Inspection_Outcome, chowHome.NextInspection, CurrentAverage, DesiredAverage);
+                                    updatingSchedule.SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(homeHistory.Inspection_Outcome, chowHome.NextInspection);
                                     db.SaveChanges();
                                 }
                                 catch (InvalidOperationException e)

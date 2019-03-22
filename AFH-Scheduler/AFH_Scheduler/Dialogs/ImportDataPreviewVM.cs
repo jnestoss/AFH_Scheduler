@@ -20,39 +20,6 @@ namespace AFH_Scheduler.Dialogs
     {
         #region Variables
         private SchedulingAlgorithm alg = new SchedulingAlgorithm();
-
-
-        private double _normalCurve;
-        public double NormalCurve
-        {
-            get => _normalCurve;
-            set
-            {
-                if (_normalCurve == value)
-                {
-                    return;
-                }
-
-                _normalCurve = value;
-                OnPropertyChanged("NormalCurve");
-            }
-        }
-
-        private double _desiredAverage;
-        public double DesiredAverage
-        {
-            get => _desiredAverage;
-            set
-            {
-                if (_desiredAverage == value)
-                {
-                    return;
-                }
-                _desiredAverage = value;
-                OnPropertyChanged("DesiredAverage");
-            }
-        }
-
         private static ObservableCollection<HomeModel> _importedHomes;
         public ObservableCollection<HomeModel> ImportedHomes
         {
@@ -162,7 +129,7 @@ namespace AFH_Scheduler.Dialogs
         }
         #endregion
 
-        public ImportDataPreviewVM(double normalCurveValue, double desiredValue)
+        public ImportDataPreviewVM()
         {
             _importedHomes = new ObservableCollection<HomeModel>();
             _importedLicenseInfo = new List<List<string>>();
@@ -171,8 +138,6 @@ namespace AFH_Scheduler.Dialogs
             _uniqueInspectionDates = new List<UniqueDateImportItem>();
             _uniqueLicenseNumbers = new List<long>();
             _uniqueProvider = new List<ProvidersModel>();
-            NormalCurve = normalCurveValue;
-            DesiredAverage = desiredValue;
         }
 
 
@@ -579,8 +544,8 @@ namespace AFH_Scheduler.Dialogs
                                 if (inspRow == -1 || ImportedLicenseInfo[inspRow][rowItem].Equals("")
                                     || IsPastRecentDate(recentInspect, ImportedLicenseInfo[inspRow][rowItem]))
                                 {
-                                    string inspectDate = SchedulingAlgorithm.CalculateNextScheduledDate(homeID, outcome,
-                                               recentInspect, NormalCurve, DesiredAverage);
+                                    string inspectDate = SchedulingAlgorithm.NextScheduledDate(outcome,
+                                               recentInspect);
 
                                     DateTime scheduleInspect = SchedulingAlgorithm.ExtractDateTime(inspectDate);
 
@@ -614,7 +579,7 @@ namespace AFH_Scheduler.Dialogs
                                         NextInspection = nextInspect,               //Next Inspection*
                                         EighteenthMonthDate = alg.DropDateMonth(recentInspect, Drop.EIGHTEEN_MONTH),//18th Month Drop Date
                                         SeventeenMonthDate = alg.DropDateMonth(recentInspect, Drop.SEVENTEEN_MONTH),
-                                        ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(homeID, outcome, nextInspect, NormalCurve, DesiredAverage),
+                                        ForecastedDate = SchedulingAlgorithm.NextScheduledDate(outcome, recentInspect),
                                         HasNoProvider = noProvider,
                                         IsActive = true,
                                         RcsRegionUnit = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*

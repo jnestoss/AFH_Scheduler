@@ -27,6 +27,12 @@
                     ItemsSource="{Binding RemainingHomes}">
 
                 <DataGrid.Columns>
+                    <!--
+                    <DataGridTextColumn
+                            Binding="{Binding ProviderID}"
+                            IsReadOnly="True"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                            Header="Provider ID" />-->
 
                     <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding ProviderName}"
@@ -80,7 +86,7 @@
                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
                                     Command="{Binding Path=DataContext.EditLicenseCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}"
-                                    ToolTip="Preform Change of Ownership">
+                                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
                                     _CHOW
                                 </Button>
                             </DataTemplate>
@@ -95,7 +101,7 @@
             IsDefault="True"
             Margin="10,0,10,1" 
             FontSize="18" 
-            ToolTip="Complete the Transfer" 
+            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             MinWidth="100"
             Style="{StaticResource MaterialDesignRaisedLightButton}"        
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
@@ -113,7 +119,7 @@
             Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
             Style="{StaticResource MaterialDesignRaisedLightButton}" 
             MinWidth="100" Margin="10,0,11,0" 
-            ToolTip="Cancel the Transfer" 
+            ToolTip="Resource name: MaterialDesignRaisedLightButton" 
             FontSize="18">
                     <Button.CommandParameter>
 

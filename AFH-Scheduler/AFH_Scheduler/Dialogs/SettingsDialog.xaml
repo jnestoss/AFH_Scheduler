@@ -104,6 +104,19 @@
                         IsReadOnly="True"
                         Text="{Binding DesiredAverage, Converter={StaticResource desiredAverageConverter}}" />
 
+                    <!--<Button
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Command="{Binding NormalCurveCommand}"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                    ToolTip="Adjust Normal Curve Value">
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Foreground="WhiteSmoke"
+                        Kind="Wrench" />
+                </Button>-->
+
                     <Slider
                         Grid.Row="2"
                         Grid.Column="0"
@@ -130,7 +143,7 @@
                         Grid.Column="1"
                         Command="{Binding OutcomeListCommand}"
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
-                        ToolTip="Show Outcome Codeword List">
+                        ToolTip="Show Provider List">
                         <materialDesign:PackIcon
                             Width="25"
                             Height="25"

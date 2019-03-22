@@ -58,6 +58,13 @@
                 ItemsSource="{Binding ProvidersList}"
                 VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
+                    <!--
+                    <materialDesign:MaterialDataGridTextColumn
+                    IsReadOnly="True"
+                    Binding="{Binding ProviderID}"
+                    Header="ID"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    -->
 
                     <materialDesign:MaterialDataGridTextColumn
                         Width="240"
@@ -113,7 +120,7 @@
                     Margin="10,0,10,8"
                     Command="{Binding ProviderListCommand}"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    ToolTip="Add Provider to List">
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
                     _ADD PROVIDER
                 </Button>
 
@@ -124,7 +131,7 @@
                     Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
                     IsCancel="True"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    ToolTip="Close Provider List">
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
                     <Button.CommandParameter>
                         <system:String>Cancel</system:String>
                     </Button.CommandParameter>

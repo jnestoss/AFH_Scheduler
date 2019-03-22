@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="AFH_Scheduler.Dialogs.Help.Pages.EditHomeHelp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AFH_Scheduler.Dialogs.Help.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid HorizontalAlignment="Center">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" 
+            Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+            Editing a current home
+        </TextBlock>
+
+        <TextBlock Grid.Row="1"
+            Style="{StaticResource MaterialDesignSubheadingTextBlock}" TextWrapping="Wrap">
+            The edit page will display all the import information on the selected AFH that can be edited.
+            Here you can alter the facilities POC, license number and/or facility name, etc. 
+            Rescheduling upcoming inspections are also performed through this window.
+        </TextBlock>
+
+    </Grid>
+</UserControl>

@@ -114,7 +114,54 @@ namespace AFH_Scheduler.Dialogs.Help
         }
         #endregion
 
-        #region Settings Tree Descriptions 
+        #region Settings Tree Descriptions
+        /*private string _selectedPath;
+        public string SelectedPath {
+            get => _selectedPath;
+            set {
+                if (_selectedPath == value)
+                {
+                    return;
+                }
+
+                _selectedPath = value;
+                
+                ChangeViewModel(UpdateHelpPage(_selectedPath));
+                OnPropertyChanged("SelectedPath");
+            }
+        }
+
+        private IPageViewModel UpdateHelpPage(string selectedPath)
+        {
+            if (selectedPath.Contains("Main Window"))
+            {
+                return PageViewModels[0];
+            }
+            if (selectedPath.Contains("Filtering Table"))
+            {
+                return PageViewModels[1];
+            }
+            if (selectedPath.Contains("Create New Home"))
+            {
+                return PageViewModels[2];
+            }
+            if (selectedPath.Contains("Edit Home Info"))
+            {
+                return PageViewModels[3];
+            }
+            if (selectedPath.Contains("Inactive Homes List"))
+            {
+                return PageViewModels[4];
+            }
+            if (selectedPath.Contains("Import/Export"))
+            {
+                return PageViewModels[5];
+            }
+            return CurrentPageViewModel;
+        }*/
+        
+        
+
         private string _settingsDescription;
         public string SettingsDescription {
             get {
@@ -175,9 +222,71 @@ namespace AFH_Scheduler.Dialogs.Help
 
         public HelpBoxVM()
         {
+            // Add available pages
+            /*PageViewModels.Add(new MainHelpVM());
+            PageViewModels.Add(new FilterHelpVM());
+            PageViewModels.Add(new CreateHomeHelpVM());
+            PageViewModels.Add(new EditHomeHelpVM());
+            PageViewModels.Add(new InactiveListHelpVM());
+            PageViewModels.Add(new ImportExportHelpVM());
+
+            // Set starting page
+            CurrentPageViewModel = PageViewModels[0];*/
+
             LoadMainTableTree();
             LoadSettingsTree();
         }
+
+        /*public ICommand ChangePageCommand {
+            get {
+                
+                if (_changePageCommand == null)
+                {
+                    _changePageCommand = new RelayCommand(
+                        p => ChangeViewModel((IPageViewModel)p),
+                        p => p is IPageViewModel);
+                }
+
+                return _changePageCommand;
+            }
+        }
+
+        public List<IPageViewModel> PageViewModels {
+            get {
+                if (_pageViewModels == null)
+                {
+                    _pageViewModels = new List<IPageViewModel>();
+                }
+
+                return _pageViewModels;
+            }
+        }
+
+        public IPageViewModel CurrentPageViewModel {
+            get {
+                
+                return _currentPageViewModel;
+            }
+            set {
+                if (_currentPageViewModel != value)
+                {
+                    _currentPageViewModel = value;
+                    
+                    OnPropertyChanged("CurrentPageViewModel");
+                }
+                
+            }
+        }
+
+        private void ChangeViewModel(IPageViewModel viewModel)
+        {
+            if (!PageViewModels.Contains(viewModel))
+            {
+                PageViewModels.Add(viewModel);
+            }
+
+            CurrentPageViewModel = PageViewModels.Find(vm => vm == viewModel);
+        }*/
 
         public void LoadMainTableTree()
         {
