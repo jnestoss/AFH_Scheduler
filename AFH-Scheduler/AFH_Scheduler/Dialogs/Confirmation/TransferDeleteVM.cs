@@ -159,6 +159,7 @@ namespace AFH_Scheduler.Dialogs.Confirmation
                         selectItem.City = editedItem.City;
                         selectItem.ZIP = editedItem.ZIP;
                         selectItem.Phone = editedItem.Phone;
+                        selectItem.RcsRegionUnit = editedItem.RcsRegionUnit;
                         selectItem.NextInspection = editedItem.NextInspection;
 
                         ChowedHomes.Add(selectItem);

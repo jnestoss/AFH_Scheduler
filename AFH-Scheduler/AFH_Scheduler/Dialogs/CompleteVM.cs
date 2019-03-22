@@ -18,6 +18,37 @@ namespace AFH_Scheduler.Dialogs
     {
         public string Name => "Complete Inspection Dialog";
 
+        private double _normalCurve;
+        public double NormalCurve
+        {
+            get => _normalCurve;
+            set
+            {
+                if (_normalCurve == value)
+                {
+                    return;
+                }
+
+                _normalCurve = value;
+                OnPropertyChanged("NormalCurve");
+            }
+        }
+
+        private double _desiredAverage;
+        public double DesiredAverage
+        {
+            get => _desiredAverage;
+            set
+            {
+                if (_desiredAverage == value)
+                {
+                    return;
+                }
+                _desiredAverage = value;
+                OnPropertyChanged("DesiredAverage");
+            }
+        }
+
         public HomeModel _selectedHome;
         public HomeModel SelectedHome {
             get { return _selectedHome; }
@@ -86,7 +117,7 @@ namespace AFH_Scheduler.Dialogs
 
         public static long _homeIDSave;
 
-        public CompleteVM(HomeModel scheduleData)
+        public CompleteVM(HomeModel scheduleData, double normalCurveValue, double desiredValue)
         {
             SelectedHome = scheduleData;
             NextInspection = SelectedHome.NextInspection;
@@ -94,6 +125,8 @@ namespace AFH_Scheduler.Dialogs
             GrabOutcomeCodes();
             SelectedCode = GetMostRecentOutcome();
             FollowUpSelected = false;
+            NormalCurve = normalCurveValue;
+            DesiredAverage = desiredValue;
         }
 
         private Inspection_Outcome GetMostRecentOutcome()
@@ -135,7 +168,7 @@ namespace AFH_Scheduler.Dialogs
             }
             else
             {
-                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, SelectedHome.NextInspection);
+                date = SchedulingAlgorithm.CalculateNextScheduledDate(SelectedHome.HomeID, SelectedCode, SelectedHome.NextInspection, NormalCurve, DesiredAverage);
             }
 
             NextInspection = date;

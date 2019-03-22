@@ -21,40 +21,5 @@ namespace AFH_Scheduler
         {
             InitializeComponent();
         }
-
-        private void FilterTextBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (FilterTextBox.IsEnabled)
-            {
-                
-                FilterTextBox.Visibility = Visibility.Visible;
-                DatePickerStart.IsEnabled = false;
-                DatePickerStart.Visibility = Visibility.Hidden;
-                DatePickerEnd.IsEnabled = false;
-                DatePickerEnd.Visibility = Visibility.Hidden;
-                //ToTextBlock.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                FilterTextBox.Visibility = Visibility.Hidden;
-                DatePickerStart.IsEnabled = true;
-                DatePickerStart.Visibility = Visibility.Visible;
-                DatePickerEnd.IsEnabled = true;
-                DatePickerEnd.Visibility = Visibility.Visible;
-                //ToTextBlock.Visibility = Visibility.Visible;
-            }
-        }
-
-        /*private void NoProviderImage_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (NoProviderImage.IsEnabled)
-            {
-                NoProviderImage.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                NoProviderImage.Visibility = Visibility.Hidden;
-            }
-        }*/
     }
 }
