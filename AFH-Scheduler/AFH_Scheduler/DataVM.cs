@@ -315,17 +315,6 @@ namespace AFH_Scheduler
             }
         }
 
-        //public string _filterItem;
-        //public string FilterItem
-        //{
-        //    get { return _filterItem; }
-        //    set
-        //    {
-        //        _filterItem = value;
-        //        OnPropertyChanged("FilterItem");
-        //    }
-        //}
-
         private DateTime _startDatePicked;
         public DateTime StartDatePicked {
             get { return _startDatePicked; }
@@ -483,15 +472,7 @@ namespace AFH_Scheduler
                 return _addNewHomeCommand;
             }
         }
-
-        //private RelayCommand _deleteHomeCommand;
-        //public ICommand DeleteHomeCommand {
-        //    get {
-        //        if (_deleteHomeCommand == null)
-        //            _deleteHomeCommand = new RelayCommand(DeleteHome);
-        //        return _deleteHomeCommand;
-        //    }
-        //}
+        
 
         public RelayCommand RunEditDialogCommand => new RelayCommand(ExecuteEditDialog);
 
@@ -611,95 +592,96 @@ namespace AFH_Scheduler
 
                 foreach (Provider_Homes house in homes)
                 {
-                    Provider homeProvider = db.Providers.FirstOrDefault(x => x.Provider_ID == house.FK_Provider_ID);
+                        Provider homeProvider = db.Providers.FirstOrDefault(x => x.Provider_ID == house.FK_Provider_ID);
 
-                    var inspections = db.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == house.PHome_ID);
+                        var inspections = db.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == house.PHome_ID);
 
-                    List<Home_History> allHomeHistory;
-                    allHomeHistory = db.Home_History.Where(x => x.FK_PHome_ID == house.PHome_ID).ToList();
-                    Home_History homeHistory = allHomeHistory.Last();
+                        List<Home_History> allHomeHistory;
+                        allHomeHistory = db.Home_History.Where(x => x.FK_PHome_ID == house.PHome_ID).ToList();
+                        Home_History homeHistory = allHomeHistory.Last();
 
-                    HomeModel newHome;
-                    string provName;
-                    long provID;
-                    bool hasNoProv, isActive = true;
-                    if (homeProvider is null)
-                    {
-                        provName = "No Provider";
-                        provID = -1;
-                        hasNoProv = true;
-                    }
-                    else
-                    {
-                        provName = homeProvider.Provider_Name;
-                        provID = homeProvider.Provider_ID;
-                        hasNoProv = false;
-                    }
-
-                    if (house.PHome_Active is null)
-                    {
-                        isActive = false;
-                    }
-                    else
-                    {
-                        isActive = true;
-                    }
-
-                    if (homeHistory.Inspection_Outcome.IOutcome_Code == "NEW")
-                    {
-                        newHome = new HomeModel
+                        HomeModel newHome;
+                        string provName;
+                        long provID;
+                        bool hasNoProv, isActive = true;
+                        if (homeProvider is null)
                         {
-                            ProviderID = provID,
-                            HomeID = house.PHome_ID,
-                            ProviderName = provName,
-                            HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
-                            HomeName = house.PHome_Name,
-                            Phone = house.PHome_Phonenumber,
-                            Address = house.PHome_Address,
-                            City = house.PHome_City,
-                            ZIP = house.PHome_Zipcode,
-                            RecentInspection = homeHistory.HHistory_Date,
-                            NextInspection = inspections.SInspections_Date,
-                            EighteenthMonthDate = inspections.SInspections_EighteenMonth,
-                            SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
-                            ForecastedDate = inspections.SInspection_ForecastedDate,
-                            HasNoProvider = hasNoProv,
-                            IsActive = isActive,
-                            RcsUnit = house.PHome_RCSUnit
-                        };
-                    }
-                    else
-                    {
-                        newHome = new HomeModel
+                            provName = "No Provider";
+                            provID = -1;
+                            hasNoProv = true;
+                        }
+                        else
                         {
-                            ProviderID = provID,
-                            HomeID = house.PHome_ID,
-                            ProviderName = provName,
-                            HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
-                            HomeName = house.PHome_Name,
-                            Phone = house.PHome_Phonenumber,
-                            Address = house.PHome_Address,
-                            City = house.PHome_City,
-                            ZIP = house.PHome_Zipcode,
-                            RecentInspection = homeHistory.HHistory_Date,
-                            NextInspection = inspections.SInspections_Date,
-                            EighteenthMonthDate = inspections.SInspections_EighteenMonth,
-                            SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
-                            ForecastedDate = inspections.SInspection_ForecastedDate,
-                            HasNoProvider = hasNoProv,
-                            IsActive = isActive,
-                            RcsRegionUnit = house.PHome_RCSUnit,
-                        };
-                    }
+                            provName = homeProvider.Provider_Name;
+                            provID = homeProvider.Provider_ID;
+                            hasNoProv = false;
+                        }
 
-                    if (isActive)
-                    {
-                        Providers.Add(newHome);
-                    }
-                    else
-                    {
-                        InActiveHomes.Add(newHome);
-                    }
+                        if (house.PHome_Active is null)
+                        {
+                            isActive = false;
+                        }
+                        else
+                        {
+                            isActive = true;
+                        }
+
+                        if (homeHistory.Inspection_Outcome.IOutcome_Code == "NEW")
+                        {
+                            newHome = new HomeModel
+                            {
+                                ProviderID = provID,
+                                HomeID = house.PHome_ID,
+                                ProviderName = provName,
+                                HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
+                                HomeName = house.PHome_Name,
+                                Phone = house.PHome_Phonenumber,
+                                Address = house.PHome_Address,
+                                City = house.PHome_City,
+                                ZIP = house.PHome_Zipcode,
+                                RecentInspection = homeHistory.HHistory_Date,
+                                NextInspection = inspections.SInspections_Date,
+                                EighteenthMonthDate = inspections.SInspections_EighteenMonth,
+                                SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
+                                ForecastedDate = inspections.SInspection_ForecastedDate,
+                                HasNoProvider = hasNoProv,
+                                IsActive = isActive,
+                                RcsUnit = house.PHome_RCSUnit
+                            };
+                        }
+                        else
+                        {
+                            newHome = new HomeModel
+                            {
+                                ProviderID = provID,
+                                HomeID = house.PHome_ID,
+                                ProviderName = provName,
+                                HomeLicenseNum = Convert.ToInt64(house.PHome_LicenseNumber),
+                                HomeName = house.PHome_Name,
+                                Phone = house.PHome_Phonenumber,
+                                Address = house.PHome_Address,
+                                City = house.PHome_City,
+                                ZIP = house.PHome_Zipcode,
+                                RecentInspection = homeHistory.HHistory_Date,
+                                NextInspection = inspections.SInspections_Date,
+                                EighteenthMonthDate = inspections.SInspections_EighteenMonth,
+                                SeventeenMonthDate = inspections.SInspections_SeventeenMonth,
+                                ForecastedDate = inspections.SInspection_ForecastedDate,
+                                HasNoProvider = hasNoProv,
+                                IsActive = isActive,
+                                RcsRegionUnit = house.PHome_RCSUnit,
+                            };
+                        }
+
+                        if (isActive)
+                        {
+                            Providers.Add(newHome);
+                        }
+                        else
+                        {
+                            InActiveHomes.Add(newHome);
+                        }
+                    
                 }
             }
             HomeCount = Providers.Count;
@@ -765,11 +747,11 @@ namespace AFH_Scheduler
                         SInspection_ForecastedDate = SchedulingAlgorithm.NextScheduledDate(db.Inspection_Outcome.First(), home.NextInspection)
                     };
 
-                    db.Scheduled_Inspections.Add(dates);
-                    db.SaveChanges();
+                    //db.Scheduled_Inspections.Add(dates);
+                    //db.SaveChanges();
 
-                    List<Scheduled_Inspections> inspections = new List<Scheduled_Inspections>();
-                    inspections.Add(dates);
+                    //List<Scheduled_Inspections> inspections = new List<Scheduled_Inspections>();
+                    //inspections.Add(dates);
 
                     if (createdHome.SelectedCode.IOutcome_Code == "NEW")
                     {
@@ -792,7 +774,7 @@ namespace AFH_Scheduler
                         });
                     }
 
-                    db.SaveChanges();
+                    //db.SaveChanges();
 
                     long? providerID;
                     try
@@ -817,6 +799,10 @@ namespace AFH_Scheduler
                         PHome_Zipcode = home.ZIP,
                         PHome_Active = 1
                     });
+
+                    db.Scheduled_Inspections.Add(dates);
+                    //db.SaveChanges();
+                    
 
                     db.SaveChanges();
                     //Providers.Add
@@ -895,47 +881,6 @@ namespace AFH_Scheduler
                 }
             }
         }
-        /*
-        * @brief Delete Home from database
-        * @details Deletes home from database 
-        * */
-        //private void DeleteHome(object obj)
-        //{
-        //    if (SelectedSchedule == null)
-        //    {
-        //        MessageService.ReleaseMessageBox("Please select a home to delete.");
-        //        return;
-        //    }
-        //    if (MessageService.MessageConfirmation("Are you sure you want to delete " + SelectedSchedule.Address + "?" +
-        //        " It will be removed from the database.", "Deleting Home"))
-        //    {
-        //        if (MessageService.MessageConfirmation("Are you TRULY sure you want to delete " + SelectedSchedule.Address + "?"
-        //            , "Deleting Home"))
-        //        {
-        //            using (HomeInspectionEntities db = new HomeInspectionEntities())
-        //            {
-        //                try
-        //                {
-        //                    Provider_Homes deletingHome = db.Provider_Homes.First(r => r.PHome_ID == SelectedSchedule.HomeID);
-        //                    db.Provider_Homes.Remove(deletingHome);
-        //                    db.SaveChanges();
-
-        //                    Scheduled_Inspections deletingSchedule = db.Scheduled_Inspections.First(r => r.FK_PHome_ID == SelectedSchedule.HomeID
-        //                    && r.SInspections_Date == SelectedSchedule.NextInspection);
-        //                    db.Scheduled_Inspections.Remove(deletingSchedule);
-        //                    db.SaveChanges();
-        //                    Providers.Remove(SelectedSchedule);
-        //                    MessageService.ReleaseMessageBox("Selected Home has been removed from the table.");
-        //                    RefreshTable("");
-        //                }
-        //                catch (InvalidOperationException e)
-        //                {
-        //                    MessageService.ReleaseMessageBox("Selected Home removal failed.");
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
 
         private async void ExecuteSettingDialog(object o)
         {
@@ -964,35 +909,9 @@ namespace AFH_Scheduler
                 var result = await DialogHost.Show(view, "WindowDialogs", EditClosingEventHandler);
 
                 RefreshTable(null);
-                //if (result.Equals("DELETE"))
-                //{
-                //    DeleteProviderConfirmationDialog(view);
-                //}
             }
         }
-
-
-        //private async void DeleteProviderConfirmationDialog(object view)
-        //{
-        //    var deleteView = new DeleteConfirmationDialog();
-
-        //    var deleteResult = await DialogHost.Show(deleteView, "DeleteConfirmationDialog", GenericClosingEventHandler);
-
-        //    if (deleteResult.Equals("Yes"))
-        //    {
-        //        using (HomeInspectionEntities db = new HomeInspectionEntities())
-        //        {
-        //            //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
-        //            var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == ((EditVM)((EditDialog)view).DataContext).SelectedSchedule.HomeID);
-
-        //            if (home != null)
-        //            {
-        //                db.Provider_Homes.Remove(home);
-        //                db.SaveChanges();
-        //            }
-        //        }
-        //    }
-        //}
+        
         /*
          * @brief Edit History dialog 
          * @details Called by the Edit History button in MainWindow.xaml and opens Edit history dialog
@@ -1092,15 +1011,16 @@ namespace AFH_Scheduler
                         var homesHistory = db.Home_History.Where(r => r.FK_PHome_ID == editedHomeData.HomeID).ToList();
 
                         db.Provider_Homes.Remove(deletingHome);
-                        db.SaveChanges();
+                        //db.SaveChanges();
 
                         db.Scheduled_Inspections.Remove(deletingSchedule);
-                        db.SaveChanges();
+                        //db.SaveChanges();
                         foreach (var historyItem in homesHistory)
                         {
                             db.Home_History.Remove(historyItem);
-                            db.SaveChanges();
+                            //db.SaveChanges();
                         }
+                        db.SaveChanges();
                     }
                 }
                 catch (InvalidOperationException e)
@@ -1190,12 +1110,6 @@ namespace AFH_Scheduler
 
         private void FilterTheTable(object obj)
         {
-            //RefreshTable(obj);//Comment out if you want to test the license number/name filter
-            //if (SelectedFilter == null)
-            //{
-            //    MessageService.ReleaseMessageBox("You have not specified what to filter out.");
-            //    return;
-            //}
             SelectedProviders.Clear();
 
             if (TextSearch.Equals("") && !DatePickerEnabled)
@@ -1302,7 +1216,6 @@ namespace AFH_Scheduler
             if (curveValue < DesiredAverage - 0.3 || curveValue > DesiredAverage + 0.3)
             {
                 NormalCurveState = System.Windows.Media.Brushes.Red;
-                //NormalCurveResultMsg = "The list of inspections average out below the normal curve.";
             }
             else if (curveValue < DesiredAverage - 0.2 || curveValue > DesiredAverage + 0.2)
             {
@@ -1315,7 +1228,6 @@ namespace AFH_Scheduler
             else
             {
                 NormalCurveState = System.Windows.Media.Brushes.Green;
-                //NormalCurveResultMsg = "The list of inspections average out approximatly at the normal curve.";
             }
         }
 

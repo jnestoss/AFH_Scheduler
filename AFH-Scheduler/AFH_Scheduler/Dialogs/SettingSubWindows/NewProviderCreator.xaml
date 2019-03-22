@@ -23,9 +23,6 @@
                     <Binding Path="NewProviderAdded.ProviderName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                            <Behaviors:NewHomeValidation Message="Please enter the name in the following format: First Last. Hypens are allowed." 
-                                                     Regex="^[A-Z]([a-z][-']?)* [A-Z]([a-z][-']?)*$"
-                                                     ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

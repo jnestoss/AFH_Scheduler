@@ -131,8 +131,6 @@ namespace AFH_Scheduler.Algorithm
             }
         }
 
-
-
         #region Grabbing Most Recent Inspection Date
         public Home_History GrabbingRecentInspection(long pHome_ID)
         {
@@ -162,7 +160,7 @@ namespace AFH_Scheduler.Algorithm
         }
         #endregion
 
-        #region Scheduling Next Inspection
+        /*#region Scheduling Next Inspection
         public string SchedulingNextDate(int pHome_ID)
         {
             using (HomeInspectionEntities db = new HomeInspectionEntities())
@@ -200,7 +198,7 @@ namespace AFH_Scheduler.Algorithm
                 return newDateObject.ToShortDateString();
             }
         }
-        #endregion
+        #endregion*/
 
         #region Checking For Unique Inspection
         public static bool CheckingForUniqueInspection(DateTime newInspection, long pHome_ID)
@@ -278,18 +276,6 @@ namespace AFH_Scheduler.Algorithm
         #region FOLLOW-UPS
         public static string SettingFollowUps(string last_correctionDate)
         {
-            //int min = 50; int max = 60;
-            //for now I set up the follow-up to be as soon as possible and let the user manually edit it
-
-            /* ArrayList followUp_list = new ArrayList();//This is an idea for if the user can select a follow up date in a popUp
-             DateTime temp;
-             for (int x = 50; x <= 60; x++)
-             {
-                 temp = last_correctionDate.AddDays(x);
-                 followUp_list.Add(temp);
-             }
-
-             followUp_list.Clear();*/
             DateTime followupDate = ExtractDateTime(last_correctionDate).AddDays(30);
             followupDate = CheckDay(followupDate);
             string followUp = followupDate.ToShortDateString();

@@ -32,7 +32,7 @@ namespace AFH_Scheduler.Dialogs
         {
             OpenFileDialog excelSaveFile = new OpenFileDialog();
             excelSaveFile.DefaultExt = ".csv";
-            excelSaveFile.Filter = "Excel Worksheets|*.xlsx|Comma Seperated Values|*.csv";
+            excelSaveFile.Filter = "Excel Worksheets|*.xlsx|Excel Worksheets 97-2003|*.xls|Comma Seperated Values|*.csv";
 
             if (excelSaveFile.ShowDialog() == true)
             {
@@ -46,7 +46,7 @@ namespace AFH_Scheduler.Dialogs
         {
             SaveFileDialog excelSaveFile = new SaveFileDialog();
             excelSaveFile.DefaultExt = ".csv";
-            excelSaveFile.Filter = "Excel Worksheets|*.xlsx|Comma Seperated Values|*.csv";
+            excelSaveFile.Filter = "Excel Worksheets|*.xlsx|Excel Worksheets 97-2003|*.xls|Comma Seperated Values|*.csv";
             excelSaveFile.OverwritePrompt = true;
 
             if(excelSaveFile.ShowDialog() == true)

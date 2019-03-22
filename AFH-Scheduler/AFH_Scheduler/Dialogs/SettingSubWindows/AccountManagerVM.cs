@@ -88,6 +88,7 @@ namespace AFH_Scheduler.Dialogs
                     db.Logins.Add(newUser);
                     db.SaveChanges();
                 }
+                FillAccountTable();
             }
         }
         #endregion
@@ -120,6 +121,7 @@ namespace AFH_Scheduler.Dialogs
                     editUser.Salt = salt;
                     db.SaveChanges();
                 }
+                FillAccountTable();
             }
         }
         #endregion

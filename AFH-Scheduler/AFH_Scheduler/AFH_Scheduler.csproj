@@ -240,13 +240,6 @@
     <Compile Include="Dialogs\Errors\CanNotDeleteOutcome.xaml.cs">
       <DependentUpon>CanNotDeleteOutcome.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml.cs">
-      <DependentUpon>NoHomeSelectedErrorDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\Help\Pages\MainHelpPage.xaml.cs">
-      <DependentUpon>MainHelpPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\Help\Pages\MainHelpVM.cs" />
     <Compile Include="Dialogs\SettingSubWindows\AccountManagerDialog.xaml.cs">
       <DependentUpon>AccountManagerDialog.xaml</DependentUpon>
     </Compile>
@@ -362,20 +355,11 @@
     <Compile Include="Validations\NotEmptyValidationRule.cs" />
     <Compile Include="Validations\TextBoxInputMaskBehavior.cs" />
     <Compile Include="Validations\UniqueOutcomeCodeword.cs" />
-    <Compile Include="Validations\UniqueProviderIDValidation.cs" />
     <Page Include="DataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\Errors\CanNotDeleteOutcome.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\Errors\NoHomeSelectedErrorDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\Help\Pages\MainHelpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -489,7 +473,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands.cs" />
-    <Compile Include="DataReader.cs" />
     <Compile Include="Data\HistoryDetailModel.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\RelayCommand.cs" />

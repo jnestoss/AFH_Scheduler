@@ -21,7 +21,7 @@ namespace AFH_Scheduler.Dialogs
             {
                 if (_normalCurveValue == value) return;
                 _normalCurveValue = value;
-                //File.WriteAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt", "15.99");
+                
                 OnPropertyChanged("NormalCurve");
             }
         }

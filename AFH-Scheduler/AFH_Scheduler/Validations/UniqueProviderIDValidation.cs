@@ -18,9 +18,7 @@ namespace AFH_Scheduler.Validations
                 NumberStyles.None,
                 CultureInfo.CurrentCulture,
                 out id)) return new ValidationResult(false, "Invalid ID Entry");
-
-            //var test = (string)value;
-            //var id = Convert.ToInt64(test);
+            
 
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {

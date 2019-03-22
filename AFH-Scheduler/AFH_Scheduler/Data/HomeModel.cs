@@ -191,7 +191,7 @@ namespace AFH_Scheduler.Data
         }
 
         public string SeventeenMonthDate {
-            get { return _eighteenthMonthDate;  }
+            get { return _seventeenMonthDate;  }
             set {
                 if (_seventeenMonthDate == value) return;
                 _seventeenMonthDate = value;

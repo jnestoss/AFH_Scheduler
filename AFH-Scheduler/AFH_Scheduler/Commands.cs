@@ -57,9 +57,7 @@ namespace AFH_Scheduler
             if (!DialogAlreadyOpen)
             {
                 DialogAlreadyOpen = true;
-
-                //var viewVM = (MainWindow)w;
-                //DataVM data = (DataVM)((MainVM)viewVM.DataContext).CurrentPageViewModel;
+                
                 DataVM data = (DataVM)w;
 
                 var settings = new SettingsVM(Convert.ToDouble(data.NormalCurve), data.DesiredAverage);

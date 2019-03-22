@@ -93,7 +93,7 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                     var dbOutcome = db.Inspection_Outcome.Where(r => r.IOutcome_Code.Equals(model.Outcome_code)).First();
 
                     dbOutcome.IOutcome_Mintime = vm.OutcomeData.Outcome_mintime;
-                    db.SaveChanges();
+                    //db.SaveChanges();
 
                     dbOutcome.IOutcome_Maxtime = vm.OutcomeData.Outcome_maxtime;
                     db.SaveChanges();

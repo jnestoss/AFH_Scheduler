@@ -56,7 +56,7 @@ namespace AFH_Scheduler.Excel
                                        Provider_ID = importedHome.ProviderID,
                                        Provider_Name = importedHome.ProviderName
                                    });
-                                   db.SaveChanges();
+                                   //db.SaveChanges();
                                }
                            }
 
@@ -93,10 +93,10 @@ namespace AFH_Scheduler.Excel
                         };
 
                         db.Provider_Homes.Add(newHome);
-                        db.SaveChanges();
+                        //db.SaveChanges();
 
                         db.Scheduled_Inspections.Add(dates);
-                        db.SaveChanges();
+                        //db.SaveChanges();
 
                         db.Home_History.Add(history);
                         db.SaveChanges();
@@ -210,11 +210,11 @@ namespace AFH_Scheduler.Excel
                             }
 
                             xlWorksheet.get_Range("A1", "N1").EntireColumn.AutoFit();
-
-                            //xlApp.Visible = false;
-                            //xlApp.UserControl = false;
-                            if (fileName.Contains(".xlsx"))
+                            
+                            if (fileName.Contains(".xlsx") || fileName.Contains(".xls"))
                                 xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlOpenXMLWorkbook);
+                            else if (fileName.Contains(".xls"))
+                                xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlWorkbookNormal);
                             else if (fileName.Contains(".csv"))
                             {
                                 xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlCSVWindows);

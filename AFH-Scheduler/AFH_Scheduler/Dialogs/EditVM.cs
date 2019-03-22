@@ -131,15 +131,7 @@ namespace AFH_Scheduler.Dialogs
                 _previousInspection = value;
             }
         }
-
-        //private RelayCommand _saveAndClose;
-        //public RelayCommand SaveAndClose {
-        //    get {
-        //        if (_saveAndClose == null) _saveAndClose = new RelayCommand<Window>(SaveAndCloseCommand);
-        //        return _saveAndClose;
-        //    }
-        //}
-
+        
         private RelayCommand _calcDate;
         public RelayCommand CalcDate {
             get {
@@ -176,16 +168,11 @@ namespace AFH_Scheduler.Dialogs
         }
 
         public static long _homeIDSave;
-
-
-        //public event EventHandler<EventArgs> RequestClose;      
-        //public RelayCommand CloseCommand { get; private set; }
-
+        
         public EditVM(HomeModel scheduleData, double desiredAverage, double currentAverage)
         {
             SelectedSchedule = scheduleData;
-            //CurrentProvider = new Tuple<int, string>((int) SelectedSchedule.ProviderID, SelectedSchedule.ProviderName);
-            //ProviderIDs = new List<Tuple<int,string>>();
+            
             Providers = new ObservableCollection<string>(GrabProviderInformation());
 
             var lv = (ListCollectionView)CollectionViewSource.GetDefaultView(Providers);
@@ -356,19 +343,7 @@ namespace AFH_Scheduler.Dialogs
         public void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             if ((String)eventArgs.Parameter == "YES")
-            {
-                using (HomeInspectionEntities db = new HomeInspectionEntities())
-                {
-                    //Console.WriteLine("********" + ((EditVM)((EditDialog)eventArgs.Session.Content).DataContext).SelectedSchedule.HomeID);
-                    var home = db.Provider_Homes.SingleOrDefault(r => r.PHome_ID == SelectedSchedule.HomeID);
-                    var sched = db.Scheduled_Inspections.SingleOrDefault(r => r.FK_PHome_ID == SelectedSchedule.HomeID);
-
-                    if (home != null)
-                    {
-                        db.Provider_Homes.Remove(home);
-                        db.SaveChanges();
-                    }
-                }
+            {//The delete will be handeled in the dataVM
             }
         }
     }

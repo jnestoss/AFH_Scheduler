@@ -14,14 +14,14 @@ namespace AFH_Scheduler.Algorithm
         // others.  For example, if probs is [3,4,2], then
         // the chances are 3/9, 4/9, and 2/9, since the probabilities
         // add up to 9.
-        public LoadedDie(int probs)
+        /*public LoadedDie(int probs)
         {
             this.prob = new List<long>();
             this.alias = new List<int>();
             this.total = 0;
             this.n = probs;
             this.even = true;
-        }
+        }*/
 
         Random random = new Random();
 
