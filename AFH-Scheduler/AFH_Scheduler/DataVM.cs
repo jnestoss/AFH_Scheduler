@@ -923,18 +923,6 @@ namespace AFH_Scheduler
             var updateOrNot = MessageService.ShowDialog(historyDetailView);*/
             MessageService.ReleaseMessageBox("Outcome Code can not be edited currently.");
         }
-        
-        /*
-         * @brief Edit History dialog 
-         * @details Called by the Edit History button in MainWindow.xaml and opens Edit history dialog
-         * */
-        private void EditHistoryDialogOpen(object obj)
-        {
-            /*HistoryModel historyModel = (HistoryModel)obj;
-            HistoryDetailViewVM historyDetailView = new HistoryDetailViewVM(historyModel.HomeID, MessageService);
-            var updateOrNot = MessageService.ShowDialog(historyDetailView);*/
-            MessageService.ReleaseMessageBox("Outcome Code can not be edited currently.");
-        }
 
         #endregion
 
