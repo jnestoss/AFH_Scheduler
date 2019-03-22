@@ -72,20 +72,6 @@
                         Header="License Number"
                         IsReadOnly="True" />
 
-                    <!--
-                <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding ProviderID}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="Provider ID" />
-
-                <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding HomeID}"
-                            IsReadOnly="True"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="Home ID" />
-                    -->
-
                     <materialDesign:MaterialDataGridTextColumn
                         Binding="{Binding HomeName}"
                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"

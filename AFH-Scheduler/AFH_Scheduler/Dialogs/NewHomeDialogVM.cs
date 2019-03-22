@@ -2,6 +2,7 @@
 using AFH_Scheduler.Data;
 using AFH_Scheduler.Database;
 using AFH_Scheduler.Helper_Classes;
+using AFH_Scheduler.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -230,11 +231,11 @@ namespace AFH_Scheduler.Dialogs
             string date;
             if (RecentInspectionVisibility == true)
             {
-                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, NewHomeCreated.RecentInspection);                
+                date = SchedulingAlgorithm.CalculateNextScheduledDate(GenerateNewIDs.GenerateHomeID(), SelectedCode, NewHomeCreated.RecentInspection, CurrentAverage, DesiredAverage);                
             }
             else
             {
-                date = SchedulingAlgorithm.NextScheduledDate(SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"));
+                date = SchedulingAlgorithm.CalculateNextScheduledDate(GenerateNewIDs.GenerateHomeID(), SelectedCode, DateTime.Now.ToString("MM/dd/yyyy"), CurrentAverage, DesiredAverage);
             }
             DateTime testUnique = SchedulingAlgorithm.ExtractDateTime(date);
 

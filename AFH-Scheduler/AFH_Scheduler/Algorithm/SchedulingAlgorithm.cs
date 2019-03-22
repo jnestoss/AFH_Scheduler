@@ -160,46 +160,6 @@ namespace AFH_Scheduler.Algorithm
         }
         #endregion
 
-        /*#region Scheduling Next Inspection
-        public string SchedulingNextDate(int pHome_ID)
-        {
-            using (HomeInspectionEntities db = new HomeInspectionEntities())
-            {
-                var history = GrabbingRecentInspection(pHome_ID);
-                if (history == null)
-                {
-                    return "";
-                }
-
-                Inspection_Outcome outcome = db.Inspection_Outcome.First(r => r.IOutcome_Code == history.FK_Outcome_Code);
-
-                string newInspection = NextScheduledDate(outcome, history.HHistory_Date);
-                DateTime newDateObject = ExtractDateTime(newInspection);
-
-                bool dateCleared = false;
-                Random randomiz = new Random();
-                int min = 1, max, added_days;
-                do
-                {
-                    if (!CheckingForUniqueInspection(newDateObject, pHome_ID))
-                    {//If the newly calculated date is shared with another home, it must be adjusted.
-
-                        max = CheckingMonth(newDateObject);
-                        added_days = randomiz.Next(min, max + 1);
-                        newDateObject = newDateObject.AddDays(1);
-                    }
-                    else
-                    {
-                        dateCleared = true;
-                    }
-
-                } while (!dateCleared);
-
-                return newDateObject.ToShortDateString();
-            }
-        }
-        #endregion*/
-
         #region Checking For Unique Inspection
         public static bool CheckingForUniqueInspection(DateTime newInspection, long pHome_ID)
         {
@@ -228,34 +188,6 @@ namespace AFH_Scheduler.Algorithm
             }
 
             return isUniqueDate;
-        }
-        #endregion
-
-        #region SCHEDULING ALGORITHM
-        public static string NextScheduledDate(Inspection_Outcome outcome, string recent_inspection)
-        {
-            DateTime date = ExtractDateTime(recent_inspection);
-
-            Random randomiz = new Random();
-            string minTime = outcome.IOutcome_Mintime;
-            string maxTime = outcome.IOutcome_Maxtime;
-
-            int min = Convert.ToInt32(minTime);
-            int max = Convert.ToInt32(maxTime);
-
-            int added_months = randomiz.Next(min, max + 1);
-
-            DateTime new_scheduled_inspection = date.AddMonths(added_months);
-
-            while (date.Month == new_scheduled_inspection.Month)
-            {
-                added_months = randomiz.Next(min, max + 1);
-                new_scheduled_inspection = date.AddMonths(added_months);
-            }
-
-            new_scheduled_inspection = CheckDay(new_scheduled_inspection);
-
-            return new_scheduled_inspection.ToString("MM/dd/yyyy");
         }
         #endregion
 

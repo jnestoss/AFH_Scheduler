@@ -89,31 +89,7 @@ namespace AFH_Scheduler.Dialogs
             var vm = new ProviderListVM(CurrentAverage, DesiredAverage);
             var view = new ProviderListDialog(vm);
             var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
-        }
-
-        private RelayCommand _normalCurveCommand;
-        public ICommand NormalCurveCommand
-        {
-            get
-            {
-                if (_normalCurveCommand == null)
-                    _normalCurveCommand = new RelayCommand(AdjustNormalCurve);
-                return _normalCurveCommand;
-            }
-        }
-
-        private async void AdjustNormalCurve(object obj)
-        {
-            var vm = new NormalCurveAdjusterVM(DesiredAverage.ToString());
-            var view = new NormalCurveAdjuster(vm);
-            var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerProviders);
-            if (DialogSettingBoolReturn)
-            {
-                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
-                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", vm.CurveNumber);
-                DesiredAverage = Convert.ToDouble(vm.CurveNumber);
-            }
-        }
+        }        
 
         private RelayCommand _outcomeListCommand;
         public ICommand OutcomeListCommand
