@@ -9,6 +9,33 @@ namespace AFH_Scheduler.Algorithm
 {
     public class SchedulingAlgorithm
     {
+        #region SCHEDULING ALGORITHM
+        public static string NextScheduledDate(Inspection_Outcome outcome, string recent_inspection)
+        {
+            DateTime date = ExtractDateTime(recent_inspection);
+
+            Random randomiz = new Random();
+            string minTime = outcome.IOutcome_Mintime;
+            string maxTime = outcome.IOutcome_Maxtime;
+
+            int min = Convert.ToInt32(minTime);
+            int max = Convert.ToInt32(maxTime);
+
+            int added_months = randomiz.Next(min, max + 1);
+
+            DateTime new_scheduled_inspection = date.AddMonths(added_months);
+
+            while (date.Month == new_scheduled_inspection.Month)
+            {
+                added_months = randomiz.Next(min, max + 1);
+                new_scheduled_inspection = date.AddMonths(added_months);
+            }
+
+            new_scheduled_inspection = CheckDay(new_scheduled_inspection);
+
+            return new_scheduled_inspection.ToString("MM/dd/yyyy");
+        }
+        #endregion
 
         public static double CalculateInspectionAverage()
         {

@@ -579,8 +579,7 @@ namespace AFH_Scheduler.Dialogs
                                 if (inspRow == -1 || ImportedLicenseInfo[inspRow][rowItem].Equals("")
                                     || IsPastRecentDate(recentInspect, ImportedLicenseInfo[inspRow][rowItem]))
                                 {
-                                    string inspectDate = SchedulingAlgorithm.CalculateNextScheduledDate(homeID, outcome,
-                                               recentInspect, NormalCurve, DesiredAverage);
+                                    string inspectDate = SchedulingAlgorithm.NextScheduledDate(outcome, recentInspect);
 
                                     DateTime scheduleInspect = SchedulingAlgorithm.ExtractDateTime(inspectDate);
 
@@ -614,7 +613,7 @@ namespace AFH_Scheduler.Dialogs
                                         NextInspection = nextInspect,               //Next Inspection*
                                         EighteenthMonthDate = alg.DropDateMonth(recentInspect, Drop.EIGHTEEN_MONTH),//18th Month Drop Date
                                         SeventeenMonthDate = alg.DropDateMonth(recentInspect, Drop.SEVENTEEN_MONTH),
-                                        ForecastedDate = SchedulingAlgorithm.CalculateNextScheduledDate(homeID, outcome, nextInspect, NormalCurve, DesiredAverage),
+                                        ForecastedDate = SchedulingAlgorithm.NextScheduledDate(outcome, recentInspect),
                                         HasNoProvider = noProvider,
                                         IsActive = true,
                                         RcsRegionUnit = ImportedLicenseInfo[rcsRow][rowItem]//RCSRegionUnit*
