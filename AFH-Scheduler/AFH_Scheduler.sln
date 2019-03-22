@@ -7,9 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFH_Scheduler", "AFH_Schedu
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		All|Any CPU = All|Any CPU
-		All|x64 = All|x64
-		All|x86 = All|x86
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -18,12 +15,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.All|Any CPU.ActiveCfg = Release|Any CPU
-		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.All|Any CPU.Build.0 = Release|Any CPU
-		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.All|x64.ActiveCfg = Release|x64
-		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.All|x64.Build.0 = Release|x64
-		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.All|x86.ActiveCfg = Release|x86
-		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.All|x86.Build.0 = Release|x86
 		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A027C20D-65E3-4426-BFF7-EBC7CEBE426B}.Debug|x64.ActiveCfg = Debug|x64

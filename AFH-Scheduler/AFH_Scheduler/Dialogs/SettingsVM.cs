@@ -131,12 +131,12 @@ namespace AFH_Scheduler.Dialogs
             CurrentAverage = normalCurve;
             DesiredAverage = desiredAverage;
 
-            string text = File.ReadAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt");
+            string text = File.ReadAllText(@"..\..\NormalCurve\NormalCurveValue.txt");
             double testCase;
             if (!Double.TryParse(text, out testCase))
             {
-                File.WriteAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
-                File.WriteAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt", "15.99");
+                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
+                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
                 text = "15.99";
                 testCase = 15.99;
             }

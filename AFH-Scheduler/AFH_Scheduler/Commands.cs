@@ -73,7 +73,7 @@ namespace AFH_Scheduler
 
         private static void WriteDesiredAverage(string desiredAverage) 
         {
-            File.WriteAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt", String.Format("{0:0.00}", desiredAverage));
+            File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Format("{0:0.00}", desiredAverage));
         } 
 
         private static void ClosingEventHandlerSettings(object sender, DialogClosingEventArgs eventArgs)
