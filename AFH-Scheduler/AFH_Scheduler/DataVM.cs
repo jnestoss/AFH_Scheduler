@@ -517,12 +517,12 @@ namespace AFH_Scheduler
             //UpdateSearchBoxSuggestions(ProviderNames);
             //FilterByProviderName = true;
 
-            string text = File.ReadAllText(@"..\..\NormalCurve\NormalCurveValue.txt");
+            string text = File.ReadAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt");
             double testCase;
             if (!Double.TryParse(text, out testCase))
             {
-                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
-                File.WriteAllText(@"..\..\NormalCurve\NormalCurveValue.txt", "15.99");
+                File.WriteAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt", String.Empty);
+                File.WriteAllText(@"..\..\..\NormalCurve\NormalCurveValue.txt", "15.99");
                 testCase = 15.99;
             }
             DesiredAverage = testCase;

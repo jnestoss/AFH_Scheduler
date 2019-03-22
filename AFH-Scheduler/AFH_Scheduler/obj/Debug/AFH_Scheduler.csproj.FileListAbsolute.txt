@@ -163,8 +163,8 @@ C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Deb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\Nager.Date.xml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\System.Data.SQLite.xml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\bin\Debug\System.Data.SQLite.dll.config
+C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csprojAssemblyReference.cache
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler.csproj.ResolveComReference.cache
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Errors\NoHomeSelectedErrorDialog.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\SettingSubWindows\AccountManagerDialog.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Confirmation\DeleteConfirmationDialog.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\HistoryDialog.baml
@@ -172,8 +172,6 @@ C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Deb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\App.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\DataView.g.cs
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Errors\CanNotDeleteOutcome.g.cs
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Errors\NoHomeSelectedErrorDialog.g.cs
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Help\Pages\MainHelpPage.g.cs
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\SettingSubWindows\AccountManagerDialog.g.cs
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\CompleteDialog.g.cs
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Confirmation\DeleteConfirmationDialog.g.cs
@@ -207,7 +205,6 @@ C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Deb
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\AFH_Scheduler_MarkupCompile.lref
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\DataView.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Errors\CanNotDeleteOutcome.baml
-C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Help\Pages\MainHelpPage.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\CompleteDialog.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Confirmation\DeleteProviderDialog.baml
 C:\Users\jnestoss\Source\Repos\AFH_Scheduler\AFH-Scheduler\AFH_Scheduler\obj\Debug\Dialogs\Confirmation\TransferOrDeleteHomes.baml

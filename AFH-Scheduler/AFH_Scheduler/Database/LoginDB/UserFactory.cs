@@ -18,43 +18,14 @@ namespace AFH_Scheduler.Database.LoginDB
             string salt = GetSalt(username);
             if (salt != "Not Found")
             {
+                UserLoginEntities userLogin = new UserLoginEntities();
                 string hashedpass = CryptSharp.Sha512Crypter.Blowfish.Crypt(password, salt);
-                string check = "Select Username,Password,Administrator From Login Where Username = @username AND Password = @password";
-                SQLiteConnection connect = GetConnection();
-                connect.Open();
-                SQLiteCommand command = new SQLiteCommand(check, connect);
-                SQLiteParameter temp = new SQLiteParameter("@username");
-                temp.Value = username;
-                command.Parameters.Add(temp);
-                temp = new SQLiteParameter("@password");
-                temp.Value = hashedpass;
-                command.Parameters.Add(temp);
-                SQLiteDataReader reader;
-                try
-                {
-                    reader = command.ExecuteReader();
-                }
-                catch (SQLiteException)
-                {
-                    connect.Close();
-                    return null;
-                }
-                if (reader.Read())
+                LoginDB.Login checkUser = userLogin.Logins.First(x => x.Username == username);
+                if (checkUser.Password == hashedpass)
                 { 
-                    bool insert;
-                    if(reader.GetInt16(2) == 0)
-                    {
-                        insert = false;
-                    }
-                    else
-                    {
-                        insert = true;
-                    }
-                    User user = new User(reader.GetString(0), reader.GetString(1), insert);
-                    reader.Close();
+                    User user = new User(checkUser.Username,checkUser.Password,false);
                     return user;
                 }
-                connect.Close();
                 return null;
             }
             else
@@ -63,45 +34,16 @@ namespace AFH_Scheduler.Database.LoginDB
             }
 
         }
-        private static SQLiteConnection GetConnection()
-        {
-            string folder = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"..\..\..\Database\LoginDB\";
-            string filter = "UserLogin.db";
-            string[] files = Directory.GetFiles(folder, filter);
-            return new SQLiteConnection(("Data Source=" + files[0] + ";Version=3;FailIfMissing=True"));
-        }
 
         private static string GetSalt(string username)
         {
-            // return new User("admin", "password",true);
-            string check = "Select Salt From Login Where Username = @username";
-            SQLiteConnection connect = GetConnection();
-            connect.Open();
-            SQLiteCommand command = new SQLiteCommand(check, connect);
-            SQLiteParameter temp = new SQLiteParameter("@username");
-            temp.Value = username;
-            command.Parameters.Add(temp);
-            SQLiteDataReader reader;
-            try
+            UserLoginEntities userLogin = new UserLoginEntities();
+            string salt = userLogin.Logins.First(x => x.Username == username).Salt;
+            if(salt == null || salt == "")
             {
-                reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    string ret = reader.GetString(0);
-                    reader.Close();
-                    return ret;
-                }
-                else
-                {
-                    connect.Close();
-                    return "Not Found";
-                }
-            }
-            catch (SQLiteException)
-            {
-                connect.Close();
                 return "Not Found";
             }
+            return salt; ;
         }
 
         public static User[] LoadUsers()
