@@ -211,7 +211,7 @@ namespace AFH_Scheduler.Excel
 
                             xlWorksheet.get_Range("A1", "N1").EntireColumn.AutoFit();
                             
-                            if (fileName.Contains(".xlsx") || fileName.Contains(".xls"))
+                            if (fileName.Contains(".xlsx"))
                                 xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlOpenXMLWorkbook);
                             else if (fileName.Contains(".xls"))
                                 xlWorkbook.SaveAs(fileName, FileFormat: XlFileFormat.xlWorkbookNormal);
