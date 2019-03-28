@@ -17,7 +17,7 @@ namespace AFH_Scheduler.Data
         public AccountModel(string username,string password,int administrator)
         {
             Username = username;
-
+            Administrator = administrator;
         }
 
         public string Username

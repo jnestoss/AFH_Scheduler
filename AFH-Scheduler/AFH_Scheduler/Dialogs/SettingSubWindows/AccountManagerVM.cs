@@ -80,15 +80,29 @@ namespace AFH_Scheduler.Dialogs
             var result = await DialogHost.Show(view, "AccountsDialog", ClosingEventHandlerAddAccount);
             if (DialogBoolReturn)
             {
-                using (UserLoginEntities db = new UserLoginEntities())
-                {
-                    CryptSharp.BlowfishCrypter crypt = new CryptSharp.BlowfishCrypter();
-                    string salt = crypt.GenerateSalt();
-                    Database.LoginDB.Login newUser = new Database.LoginDB.Login(vm.NewUsername, crypt.Crypt(vm.NewPassword, salt), salt, vm.NewAdministrator);
-                    db.Logins.Add(newUser);
-                    db.SaveChanges();
-                }
-                FillAccountTable();
+               using (UserLoginEntities db = new UserLoginEntities())
+               {
+                  if (vm.NewUsername == "admin")
+                  {
+                     MessageQueue.Enqueue("There is already an master admin account");
+                     return;
+                  }
+                  var loginAccounts = db.Logins.Where(x => x.Username == vm.NewUsername).ToList();
+
+                  if (loginAccounts.Count >= 1)
+                  {
+                     MessageQueue.Enqueue("That username is already taken. Try again.");
+                     return;
+                  }
+
+                  CryptSharp.BlowfishCrypter crypt = new CryptSharp.BlowfishCrypter();
+                  string salt = crypt.GenerateSalt();
+                  Database.LoginDB.Login newUser = new Database.LoginDB.Login(vm.NewUsername, crypt.Crypt(vm.NewPassword, salt), salt, vm.NewAdministrator);
+                  newUser.Administrator = vm.NewAdministrator;
+                  db.Logins.Add(newUser);
+                  db.SaveChanges();
+               }
+               FillAccountTable();
             }
         }
         #endregion
@@ -107,6 +121,11 @@ namespace AFH_Scheduler.Dialogs
         private async void EditAccount(object obj)
         {
             var account = (AccountModel)obj;
+            if (account.Username == "admin")
+            {
+                MessageQueue.Enqueue("Cannot edit admin account");
+                return;
+            }
             var vm = new EditAccountVM(account.Username, account.Password, account.Administrator);
             var view = new EditAccount(vm);
             var result = await DialogHost.Show(view, "AccountsDialog", ClosingEventHandlerEditAccount);
@@ -119,6 +138,7 @@ namespace AFH_Scheduler.Dialogs
                     Database.LoginDB.Login editUser = db.Logins.Single(x => x.Username == vm.EditUsername);
                     editUser.Password = crypt.Crypt(vm.EditPassword, salt);
                     editUser.Salt = salt;
+                    editUser.Administrator = vm.EditAdministrator;
                     db.SaveChanges();
                 }
                 FillAccountTable();

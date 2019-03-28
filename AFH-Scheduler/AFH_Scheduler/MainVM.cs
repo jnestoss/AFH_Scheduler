@@ -40,7 +40,7 @@ namespace AFH_Scheduler
             {
                 if (CurrentPageViewModel.GetType() == typeof(DataVM))
                 {
-                    _settingsEnabled = true;
+                    _settingsEnabled = value;
                     OnPropertyChanged("SettingsEnabled");
                 }
                 else
@@ -55,7 +55,10 @@ namespace AFH_Scheduler
             if (user != null)
             {
                 CurrentPageViewModel = new DataVM(user);
-                SettingsEnabled = true;
+                if (user.Admin)
+                    SettingsEnabled = true;
+                else
+                    SettingsEnabled = false;
             }
         }
        

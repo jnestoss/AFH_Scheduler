@@ -60,12 +60,15 @@ namespace AFH_Scheduler
                 
                 DataVM data = (DataVM)w;
 
-                var settings = new SettingsVM(Convert.ToDouble(data.NormalCurve), data.DesiredAverage);
-                var view = new SettingsDialog(settings);
-                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
+                if(!data.DisableSettingsButton)
+                {
+                    var settings = new SettingsVM(Convert.ToDouble(data.NormalCurve), data.DesiredAverage);
+                    var view = new SettingsDialog(settings);
+                    var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
 
-                data.DesiredAverage = settings.DesiredAverage;
-                data.CheckNormalCurveState();
+                    data.DesiredAverage = settings.DesiredAverage;
+                    data.CheckNormalCurveState();
+                }
 
                 DialogAlreadyOpen = false;
             }

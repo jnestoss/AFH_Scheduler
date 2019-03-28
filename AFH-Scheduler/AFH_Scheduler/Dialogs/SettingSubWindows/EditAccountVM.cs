@@ -39,11 +39,31 @@ namespace AFH_Scheduler.Dialogs.SettingSubWindows
                 OnPropertyChanged("EditAdministrator");
             }
         }
+        private bool _makeUserAdmin;
+        public bool MakeUserAdmin
+        {
+            get { return _makeUserAdmin; }
+            set
+            {
+                _makeUserAdmin = value;
+                if (_makeUserAdmin)
+                    EditAdministrator = 0;
+                else
+                    EditAdministrator = 1;
+
+                OnPropertyChanged("MakeUserAdmin");
+            }
+        }
         public EditAccountVM(string username,string password,int administrator)
         {
             EditUsername = username;
             EditPassword = password;
             EditAdministrator = administrator;
+            if (EditAdministrator == 0)
+                MakeUserAdmin = true;
+            else
+                MakeUserAdmin = false;
+
         }
 
         public string Name

@@ -233,6 +233,16 @@ namespace AFH_Scheduler
             }
         }
 
+        public bool _disableSettingsButton;
+        public bool DisableSettingsButton
+        {
+            get { return _disableSettingsButton; }
+            set
+            {
+                _disableSettingsButton = value;
+                OnPropertyChanged("DisableSettingsButton");
+            }
+        }
 
         public bool _dialogHostSuccess;
         public bool DialogHostSuccess {
@@ -460,6 +470,7 @@ namespace AFH_Scheduler
         #region constructor
         public DataVM(User user)
         {
+            DisableSettingsButton = false;
             MessageQueue = new SnackbarMessageQueue();
             Providers = new ObservableCollection<HomeModel>();
             SelectedProviders = new ObservableCollection<HomeModel>();
@@ -681,6 +692,7 @@ namespace AFH_Scheduler
                     db.SaveChanges();
                 }
             }
+            DisableSettingsButton = true;
             var createdHome = new NewHomeDialogVM(Convert.ToDouble(NormalCurve), DesiredAverage);
             var view = new NewHomeDialog(createdHome);
             var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
@@ -772,6 +784,8 @@ namespace AFH_Scheduler
                 FilterTheTable(null);
                 UpdateInspectionAverage();
             }
+
+            DisableSettingsButton = false;
         }
         /*
          * @brief Opens History Dialog
@@ -789,8 +803,11 @@ namespace AFH_Scheduler
                 {
                     DataContext = new HistVM(SelectedHome)
                 };
+                DisableSettingsButton = true;
 
                 var result = await DialogHost.Show(view, "WindowDialogs", GenericClosingEventHandler);
+
+                DisableSettingsButton = false;
             }
         }
         /*
@@ -810,7 +827,10 @@ namespace AFH_Scheduler
                     DataContext = new CompleteVM(SelectedHome, Convert.ToDouble(NormalCurve), DesiredAverage)
                 };
 
+                DisableSettingsButton = true;
                 var result = await DialogHost.Show(view, "WindowDialogs", CompleteInspectionClosingEventHandler);
+
+                DisableSettingsButton = false;
             }
         }
         /*
@@ -819,6 +839,7 @@ namespace AFH_Scheduler
         * */
         private async void InactiveListDisplayAsync(object obj)
         {
+            DisableSettingsButton = true;
             var vm = new InactiveHomeListVM(InActiveHomes);
             var view = new InactiveHomeList(vm);
             var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
@@ -840,6 +861,8 @@ namespace AFH_Scheduler
                     InActiveHomes.Remove(reactive);
                 }
             }
+
+            DisableSettingsButton = false;
         }
 
         private async void ExecuteSettingDialog(object o)
@@ -862,12 +885,15 @@ namespace AFH_Scheduler
             }
             else
             {
+                DisableSettingsButton = true;
                 var view = new EditDialog();
                 view.DataContext = new EditVM(SelectedHome, DesiredAverage, Convert.ToDouble(NormalCurve));
 
                 var result = await DialogHost.Show(view, "WindowDialogs", EditClosingEventHandler);
 
                 RefreshTable(null);
+
+                DisableSettingsButton = false;
             }
         }
 

@@ -22,8 +22,14 @@ namespace AFH_Scheduler.Database.LoginDB
                 string hashedpass = CryptSharp.Sha512Crypter.Blowfish.Crypt(password, salt);
                 LoginDB.Login checkUser = userLogin.Logins.First(x => x.Username == username);
                 if (checkUser.Password == hashedpass)
-                { 
-                    User user = new User(checkUser.Username,checkUser.Password,false);
+                {
+                    User user;
+                    if (!(checkUser.Administrator is null) && checkUser.Administrator == 0)
+                        user = new User(checkUser.Username, checkUser.Password, true);
+
+                    else
+                        user = new User(checkUser.Username,checkUser.Password,false);
+
                     return user;
                 }
                 return null;
@@ -37,13 +43,19 @@ namespace AFH_Scheduler.Database.LoginDB
 
         private static string GetSalt(string username)
         {
-            UserLoginEntities userLogin = new UserLoginEntities();
-            string salt = userLogin.Logins.First(x => x.Username == username).Salt;
-            if(salt == null || salt == "")
+            try
+            {
+                UserLoginEntities userLogin = new UserLoginEntities();
+                string salt = userLogin.Logins.First(x => x.Username == username).Salt;
+                if(salt == null || salt == "")
+                {
+                    return "Not Found";
+                }
+                return salt;
+            }catch (Exception e)
             {
                 return "Not Found";
             }
-            return salt; ;
         }
 
         public static User[] LoadUsers()

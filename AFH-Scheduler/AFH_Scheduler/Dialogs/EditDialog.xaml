@@ -221,10 +221,6 @@
                         <Binding Path="SelectedSchedule.City" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <Behaviors:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                                <Behaviors:NewHomeValidation
-                                    Message="City isn't in correct format."
-                                    Regex="^[A-Z][a-z]+([ -][A-Z][a-z]+)*$"
-                                    ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
