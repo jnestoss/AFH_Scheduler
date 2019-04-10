@@ -104,9 +104,6 @@
                         Mode="TwoWay"
                         Path="PreviousInspection"
                         UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Behaviors:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
                     </Binding>
                 </DatePicker.SelectedDate>
             </DatePicker>

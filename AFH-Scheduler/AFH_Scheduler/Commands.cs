@@ -44,10 +44,23 @@ namespace AFH_Scheduler
             if (!DialogAlreadyOpen)
             {
                 DialogAlreadyOpen = true;
-                var helpPage = new HelpBoxVM();
-                var view = new HelpBox(helpPage);
-                var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
+                bool openHelpPage = false;
 
+                try {
+
+                    DataVM data = (DataVM)w;
+                    openHelpPage = !data.DisableSettingsButton;
+                } catch(InvalidCastException e)
+                {
+                    openHelpPage = true;
+                }
+
+                if (openHelpPage)
+                {                
+                    var helpPage = new HelpBoxVM();
+                    var view = new HelpBox(helpPage);
+                    var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
+                }
                 DialogAlreadyOpen = false;
             }
         });

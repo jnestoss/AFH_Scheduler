@@ -495,6 +495,7 @@ namespace AFH_Scheduler
                 HomeAddresses.Add(home.Address);
                 HomeNames.Add(home.HomeName);
                 LicenseNums.Add(home.HomeLicenseNum.ToString());
+                if(!ProviderNames.Contains(home.ProviderName))
                 ProviderNames.Add(home.ProviderName);
             }
 

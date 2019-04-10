@@ -59,6 +59,7 @@
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
                     Command="{x:Static local:Commands.OpenHelpPageCommand}"
+                    CommandParameter="{Binding CurrentPageViewModel}"
                     Foreground="WhiteSmoke">
                     <materialDesign:PackIcon
                         Width="25"
