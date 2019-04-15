@@ -23,5 +23,11 @@ namespace AFH_Scheduler.Login
         {
             InitializeComponent();
         }
+
+        //Based on: https://stackoverflow.com/a/25001115
+        private void UpdateViewModelPassword(object sender, RoutedEventArgs e)
+        {
+            ((LoginViewVM)DataContext).Password = password.Password;
+        }
     }
 }

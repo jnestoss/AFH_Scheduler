@@ -53,7 +53,6 @@ namespace AFH_Scheduler.Login
         }
         private void LoginIn(object obj)//passes in username,password
         {
-            //_main.LoggedIn(UserFactory.CheckPassword(Username, Password));
             User user = UserFactory.CheckPassword(Username, Password);
             if (user != null)
             {
