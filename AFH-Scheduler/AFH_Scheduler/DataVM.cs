@@ -573,7 +573,7 @@ namespace AFH_Scheduler
             using (HomeInspectionEntities db = new HomeInspectionEntities())
             {
                 var homes = db.Provider_Homes.ToList();
-
+                
                 foreach (Provider_Homes house in homes)
                 {
                         Provider homeProvider = db.Providers.FirstOrDefault(x => x.Provider_ID == house.FK_Provider_ID);
@@ -847,19 +847,31 @@ namespace AFH_Scheduler
             if (result.Equals("Submit"))
             {
 
-                foreach (var reactive in vm.ReActiveHomes)
-                {
-                    foreach (var update in vm.UpdateHomeSchedules)
+                using (HomeInspectionEntities db = new HomeInspectionEntities())
+                {                
+                    foreach (var reactive in vm.ReActiveHomes)
                     {
-                        if (update.Contains(reactive.HomeID.ToString()))
+                        foreach (var update in vm.UpdateHomeSchedules)
                         {
-                            String[] inspect = update.Split('-');
-                            reactive.NextInspection = inspect[1];
-                            reactive.EighteenthMonthDate = alg.DropDateMonth(reactive.RecentInspection, Drop.EIGHTEEN_MONTH);
+                            if (update.Contains(reactive.HomeID.ToString()))
+                            {
+                                String[] inspect = update.Split('-');
+                                reactive.NextInspection = inspect[1];
+                                reactive.EighteenthMonthDate = alg.DropDateMonth(reactive.RecentInspection, Drop.EIGHTEEN_MONTH);
+
+                                Scheduled_Inspections selectInspect = db.Scheduled_Inspections.FirstOrDefault(r => r.FK_PHome_ID == reactive.HomeID);
+                                selectInspect.SInspections_Date = reactive.NextInspection;
+                            }
                         }
+
+                        Provider_Homes selectHome = db.Provider_Homes.FirstOrDefault(r => r.PHome_ID == reactive.HomeID);
+
+                        selectHome.PHome_Active = 1;
+                        db.SaveChanges();
+
+                        Providers.Add(reactive);
+                        InActiveHomes.Remove(reactive);
                     }
-                    Providers.Add(reactive);
-                    InActiveHomes.Remove(reactive);
                 }
             }
 

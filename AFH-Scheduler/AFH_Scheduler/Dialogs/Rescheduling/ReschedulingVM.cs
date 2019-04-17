@@ -20,9 +20,9 @@ namespace AFH_Scheduler.Dialogs.Rescheduling
             }
         }
 
-        public ReschedulingVM()
+        public ReschedulingVM(string date)
         {
-            DatePicked = DateTime.Today;
+            DatePicked = DateTime.Parse(date);
         }
         public string Name
         {

@@ -114,7 +114,7 @@
                         Minimum="12.00"
                         TickFrequency="0.25"
                         TickPlacement="Both"
-                        ToolTip="MaterialDesignDiscreteSlider"
+                        ToolTip="Select Desired Average"
                         Value="{Binding DesiredAverage}" />
 
                     <TextBlock

@@ -86,7 +86,7 @@ namespace AFH_Scheduler.Dialogs
                 var deleteResult2 = await DialogHost.Show(rescheduleView, "ReactivateDialog", ClosingEventHandlerAddProviders);
                 if (deleteResult2.Equals("Yes"))
                 {
-                    var vm2 = new ReschedulingVM();
+                    var vm2 = new ReschedulingVM(item.NextInspection);
                     var rescheduleView2 = new SettingUpAnInspection(vm2);
                     var deleteResult3 = await DialogHost.Show(rescheduleView2, "ReactivateDialog", ClosingEventHandlerAddProviders);
                     if (deleteResult3.Equals("SUBMIT"))

@@ -583,12 +583,25 @@ namespace AFH_Scheduler.Dialogs
 
                                     DateTime scheduleInspect = SchedulingAlgorithm.ExtractDateTime(inspectDate);
 
-
-                                    while (!provName.Equals("No Provider") &&
-                                        UniqueInspectionDates.Contains(new UniqueDateImportItem(provName, scheduleInspect)))
+                                    if (!provName.Equals("No Provider"))
                                     {
-                                        scheduleInspect = scheduleInspect.AddDays(1);
-                                        SchedulingAlgorithm.CheckDay(scheduleInspect);
+                                        var tempList = UniqueInspectionDates.Where(r => r.PocName.Equals(provName)).ToList();
+                                        bool notUnique = true;
+                                        if (tempList.Count == 0)
+                                            notUnique = false;
+                                        while (notUnique)
+                                        {
+                                            foreach (var comparison in tempList)
+                                            {
+                                                notUnique = false;
+                                                if (scheduleInspect == comparison.NextInspection)
+                                                {
+                                                    scheduleInspect = scheduleInspect.AddDays(1);
+                                                    SchedulingAlgorithm.CheckDay(scheduleInspect);
+                                                    notUnique = true;
+                                                }
+                                            }
+                                        }
                                     }
                                     nextInspect = scheduleInspect.ToShortDateString();
                                     UniqueInspectionDates.Add(new UniqueDateImportItem(provName, scheduleInspect));
