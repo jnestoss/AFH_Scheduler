@@ -138,6 +138,8 @@ namespace AFH_Scheduler.Algorithm
             }
             else
             {
+                if (number == 0)
+                    number = 1;
                 newDateObject = nextInspectionChoices[number - 1];
                 do
                 {
