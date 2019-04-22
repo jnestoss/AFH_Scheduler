@@ -122,6 +122,10 @@ namespace AFH_Scheduler
         }
 
         private User _usr;
+        public User UserSignedIn
+        {
+            get => _usr;
+        }
 
         private string _snackBarContent;
         public string SnackBarContent {
@@ -398,18 +402,6 @@ namespace AFH_Scheduler
             }
         }
 
-        private RelayCommand _openSettingsDialog;
-        public ICommand OpenSettingsDialogCommand {
-            get {
-                if (_openSettingsDialog == null)
-                {
-                    _openSettingsDialog = new RelayCommand(ExecuteSettingDialog);
-                }
-
-                return _openSettingsDialog;
-            }
-        }
-
         private RelayCommand _refreshTable;
         public ICommand RefreshTableCommand {
             get {
@@ -533,6 +525,7 @@ namespace AFH_Scheduler
                     db.SaveChanges();
                 }
             }
+            DisableSettingsButton = true;
             var importData = new ImportDataPreviewVM(Convert.ToDouble(NormalCurve), DesiredAverage);
             var view = new ImportDataPreview(importData);
             var result = await DialogHost.Show(view, "WindowDialogs", NewHomeClosingEventHandler);
@@ -545,7 +538,7 @@ namespace AFH_Scheduler
                     Providers.Add(importedHome);
                 }
             }
-
+            DisableSettingsButton = false;
             UpdateInspectionAverage();
         }
 
@@ -878,13 +871,6 @@ namespace AFH_Scheduler
             DisableSettingsButton = false;
         }
 
-        private async void ExecuteSettingDialog(object o)
-        {
-            var settingsVM = new SettingsVM(Convert.ToDouble(NormalCurve), DesiredAverage);
-            var settingsView = new SettingsDialog(settingsVM);
-            var result = await DialogHost.Show(settingsView, "WindowDialogs", SettingsClosingEventHandler);
-        }
-
 
         /*
          * @brief Opens Edit dialog 
@@ -913,12 +899,6 @@ namespace AFH_Scheduler
         #endregion
 
         #region Closing Event Handlers
-
-        private void SettingsClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            SettingsVM settingsContext = (SettingsVM)((SettingsDialog)eventArgs.Session.Content).DataContext;
-            DesiredAverage = settingsContext.DesiredAverage;
-        }
 
         private void NewHomeClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {

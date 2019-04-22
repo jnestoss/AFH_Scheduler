@@ -56,6 +56,13 @@ namespace AFH_Scheduler.Dialogs
                 OnPropertyChanged("DesiredAverage");
             }
         }
+
+        private string _usr;
+        public string UserSignedIn
+        {
+            get => _usr;
+        }
+
         private RelayCommand _accountManagerCommand;
         public ICommand AccountManagerCommand
         {
@@ -68,9 +75,13 @@ namespace AFH_Scheduler.Dialogs
         }
         private async void ShowAccountManager(object obj)
         {
-            var vm = new AccountManagerVM();
+            var vm = new AccountManagerVM(UserSignedIn);
             var view = new AccountManagerDialog(vm);
             var result = await DialogHost.Show(view, "ProvidersDialog", ClosingEventHandlerAccounts);
+            if (result.Equals("BACKTOLOGIN"))
+            {
+                DialogHost.CloseDialogCommand.Execute("BACKTOLOGIN", null);
+            }
         }
 
         private RelayCommand _providerListCommand;
@@ -126,8 +137,9 @@ namespace AFH_Scheduler.Dialogs
             }
             DialogSettingBoolReturn = true;
         }
-        public SettingsVM(double normalCurve, double desiredAverage)
+        public SettingsVM(string userSignedIn, double normalCurve, double desiredAverage)
         {
+            _usr = userSignedIn;
             CurrentAverage = normalCurve;
             DesiredAverage = desiredAverage;
 

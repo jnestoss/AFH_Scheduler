@@ -70,17 +70,22 @@ namespace AFH_Scheduler
             if (!DialogAlreadyOpen)
             {
                 DialogAlreadyOpen = true;
-                
-                DataVM data = (DataVM)w;
 
-                if(!data.DisableSettingsButton)
+                var window = (MainWindow)w;
+                DataVM data = (DataVM)((MainVM)window.DataContext).CurrentPageViewModel;
+
+                if (!data.DisableSettingsButton)
                 {
-                    var settings = new SettingsVM(Convert.ToDouble(data.NormalCurve), data.DesiredAverage);
+                    var settings = new SettingsVM(data.UserSignedIn.Username, Convert.ToDouble(data.NormalCurve), data.DesiredAverage);
                     var view = new SettingsDialog(settings);
                     var result = await DialogHost.Show(view, "WindowDialogs", ClosingEventHandlerSettings);
 
                     data.DesiredAverage = settings.DesiredAverage;
                     data.CheckNormalCurveState();
+                    if (result.Equals("BACKTOLOGIN"))
+                    {
+                        ((MainVM)window.DataContext).ResetBackToLogin();
+                    }
                 }
 
                 DialogAlreadyOpen = false;

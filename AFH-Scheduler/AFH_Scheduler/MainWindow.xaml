@@ -72,7 +72,7 @@
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
                     Command="{x:Static local:Commands.OpenSettingsCommand}"
-                    CommandParameter="{Binding CurrentPageViewModel}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType={x:Type Window}}}"
                     Foreground="WhiteSmoke"
                     IsEnabled="{Binding SettingsEnabled}">
                     <materialDesign:PackIcon

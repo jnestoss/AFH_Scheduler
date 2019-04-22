@@ -29,8 +29,15 @@ namespace AFH_Scheduler.Dialogs
                 OnPropertyChanged("MessageQueue");
             }
         }
-        public AccountManagerVM()
+        private string _usr;
+        public string UserSignedIn
         {
+            get => _usr;
+        }
+
+        public AccountManagerVM(string userSignedIn)
+        {
+            _usr = userSignedIn;
             _accountsList = new ObservableCollection<AccountModel>();
             MessageQueue = new SnackbarMessageQueue();
             FillAccountTable();
@@ -142,6 +149,10 @@ namespace AFH_Scheduler.Dialogs
                     db.SaveChanges();
                 }
                 FillAccountTable();
+                if(vm.EditUsername.Equals(UserSignedIn))
+                {
+                    DialogHost.CloseDialogCommand.Execute("BACKTOLOGIN", null);
+                }
             }
         }
         #endregion
@@ -180,6 +191,10 @@ namespace AFH_Scheduler.Dialogs
                         db.SaveChanges();
                     }
                     FillAccountTable();
+                    if (account.Username.Equals(UserSignedIn))
+                    {
+                        DialogHost.CloseDialogCommand.Execute("BACKTOLOGIN", null);
+                    }
                 }
             }
         }

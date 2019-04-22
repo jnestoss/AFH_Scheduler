@@ -61,6 +61,12 @@ namespace AFH_Scheduler
                     SettingsEnabled = false;
             }
         }
+
+        public void ResetBackToLogin()
+        {
+            CurrentPageViewModel = new LoginViewVM(this);
+            SettingsEnabled = false;
+        }
        
         #endregion
 
